@@ -12,8 +12,11 @@ ressources:
 https://pikuma.com/courses/raycasting-engine-tutorial-algorithm-javascript
 https://lodev.org/cgtutor/raycasting.html
 
+Youtube raycasting video
+https://www.youtube.com/watch?v=NbSee-XM7WA&ab_channel=javidx9
+
+
 Library:
 MLX 42 - https://github.com/codam-coding-college/MLX42
 https://github.com/codam-coding-college/MLX42/wiki
 
-reliving middleschool maths
