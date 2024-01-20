@@ -1,54 +1,39 @@
-NAME = cub3d
 
-CC = cc -g
-CFLAGS = -Wall -Wextra -Werror
-MLX42FLAGS = -ldl -lglfw -pthread -lm
+NAME	= cub3D
+LIB_FT	= lib/libft
+LIB_FT_A= lib/libft/libft.a
 
-LIBFT = ./lib/libft/libft.a
-FT_PRINTF = ./lib/ft_printf/libftprintf.a
-LIBMLX = ./lib/MLX42-master
-MLX42 = ./lib/MLX42-master/build/libmlx42.a
+MLX = lib/MLX42/build/libmlx42.a
+FLAG_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
+INCLUDE = -I/usr/local/Cellar/glfw/3.3.9/include/GLFW
+LIB = -L/usr/local/Cellar/glfw/3.3.9/lib
 
-INCLUDE = -I./include -I$(LIBMLX)/include -I./lib/libft/src
+CC		= cc
+CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math #-fsanitize=address -g
 
-SRC_DIR = src
-OBJ_DIR = obj
+MOBJS	= ${SRCS:%.c=%.o}
+SRCS	= main.c
 
-SOURCES = $(addprefix $(SRC_DIR)/, main.c)
-OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $(SOURCES:.c=.o)))
+all: $(NAME)
 
-MLX_REPO = https://github.com/codam-coding-college/MLX42.git
-MLX_DIR = lib/MLX42-master
+$(NAME): $(MOBJS)
+	@make -s -C $(LIB_FT)
+	@$(CC) $(CFLAGS) $(FLAG_MLX) $(MOBJS) $(LIB_FT_A) $(MLX) $(LIB) -o $(NAME)
 
-all: $(LIBFT) $(FT_PRINTF) $(MLX42) $(NAME)
-
-$(NAME): $(OBJECTS) $(LIBFT) $(MLX42) $(FT_PRINTF)
-	$(CC) $(CFLAGS) $(OBJECTS) -L./lib/libft -lft $(MLX42) $(MLX42FLAGS) $(FT_PRINTF) -o $@
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
+%.o: %.c cub3d.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C ./lib/libft
-
-$(FT_PRINTF):
-	$(MAKE) -C ./lib/ft_printf
-
-$(MLX42):
-	@git clone $(MLX_REPO) $(MLX_DIR)
-	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
-
 clean:
-	$(MAKE) clean -C ./lib/libft
-	$(MAKE) clean -C ./lib/ft_printf
-	$(RM) -r $(OBJ_DIR)
-	$(RM) -r $(MLX_DIR)
+	@make clean -s -C $(LIB_FT)
+	@rm -f $(MOBJS)
+
+mini:
+	cc -O3 -ffast-math -framework Cocoa -framework OpenGL -framework IOKit -lglfw $(MLX) $(LIB) mini_cub3D.c -o mini_cub3D
 
 fclean: clean
-	$(MAKE) fclean -C ./lib/libft
-	$(RM) $(NAME)
+	@make fclean -s -C $(LIB_FT)
+	@rm -f $(NAME)
+	@rm -f $(NAME_B)
+	@rm -f mini_cub3D
 
 re: fclean all
-
-.PHONY: all clean fclean re
