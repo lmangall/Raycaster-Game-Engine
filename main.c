@@ -11,19 +11,7 @@
 // example:
 // cc -O3 -ffast-math -framework Cocoa -framework OpenGL -framework IOKit -lglfw (path to libmlx42.a) -L(path to glfw library) cub3d.c -o cub
 
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <math.h>
-# include "lib/MLX42/include/MLX42/MLX42.h" 
-// # include "lib/MLX42/include/MLX42/MLX42_Int.h"
-
-# define S_W 1900 // screen width
-# define S_H 1000 // screen height
-# define TILE_SIZE 30 // tile size
-# define FOV 60 // field of view
-# define ROTATION_SPEED 0.045 // rotation speed
-# define PLAYER_SPEED 4 // player speed
+#include"cub3d.h"
 
 typedef struct s_player //the player structure
 {
@@ -69,7 +57,7 @@ void ft_exit(t_mlx *mlx)   // exit the game
 {
  int i = 0;
  while (mlx->dt->map2d[i])
-  free(mlx->dt->map2d[i++]); // free the map line by line
+free(mlx->dt->map2d[i++]); // free the map line by line
  free(mlx->dt->map2d); // free the map
  free(mlx->dt); // free the data structure
  free(mlx->ply); // free the player structure
@@ -299,19 +287,19 @@ int inter_check(float angle, float *inter, float *step, int is_horizon) // check
  if (is_horizon)
  {
   if (angle > 0 && angle < M_PI)
-  {
-   *inter += TILE_SIZE;
-   return (-1);
-  }
+    {
+    *inter += TILE_SIZE;
+    return (-1);
+    }
   *step *= -1;
  }
  else
  {
-  if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
-  {
-   *inter += TILE_SIZE;
-   return (-1);
-  }
+    if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
+    {
+    *inter += TILE_SIZE;
+    return (-1);
+    }
   *step *= -1;
  }
  return (1);
