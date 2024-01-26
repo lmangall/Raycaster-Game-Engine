@@ -18,6 +18,24 @@
 //############################## THE EXITING CODE ##############################//
 //##############################################################################//
 
+// static void free_textures(t_textures *textures)
+// {
+//     if (textures != NULL)
+//     {
+//         // Free individual texture paths
+//         mlx_delete_texture(textures->no);
+//         mlx_delete_texture(textures->so);
+//         mlx_delete_texture(textures->we);
+//         mlx_delete_texture(textures->ea);
+//         mlx_delete_texture(textures->f);
+//         mlx_delete_texture(textures->c);
+
+//         // Free the t_textures structure
+//         free(textures);
+//     }
+// }
+
+
 void ft_exit(t_mlx *mlx)   // exit the game
 {
  int i = 0;
@@ -27,12 +45,14 @@ free(mlx->dt->map2d[i++]); // free the map line by line
  free(mlx->dt); // free the data structure
  free(mlx->ply); // free the player structure
  free(mlx->ray); // free the ray structure
+//  free_textures(mlx->textures); // free the textures
  mlx_delete_image(mlx->mlx_p, mlx->img); // delete the image
  mlx_close_window(mlx->mlx_p); // close the window
  mlx_terminate(mlx->mlx_p); // terminate the mlx pointer
  printf("Game closed\n"); // print the message
  exit(0); // exit the game
 }
+
 
 //################################################################################//
 //############################## THE MOUVEMENT CODE ##############################//
@@ -385,9 +405,13 @@ void init_the_player(t_mlx mlx) // init the player structure
  //the rest of the variables are initialized to zero by calloc
 }
 
-void start_the_game(t_map *dt) // start the game
+void start_the_game(t_map *dt, char *map_argv) // start the game
 {
- t_mlx mlx;
+  t_mlx mlx;
+
+(void)map_argv;
+// load_textures(&mlx, map_argv);
+
 
  mlx.dt = dt; // init the mlx structure
  mlx.ply = calloc(1, sizeof(t_player)); // init the player structure i'm using calloc to initialize the variables to zero
@@ -434,13 +458,19 @@ int main(int argc, char **argv)
 {
  t_map *data = calloc(1, sizeof(t_map));
 
-  if (argc != 2)
-  {
-    printf("Error\nWrong number of arguments\n");
-    return (0);
-  }
+  (void)argc;
+
+  // if (argc != 2)
+  // {
+  //   printf("Error\nWrong number of arguments\n");
+  //   return (0);
+  // }
  atexit(v);
   parse_map(argv[1], data);
-  start_the_game(data); // start the game
+
+
+
+
+  start_the_game(data, argv[2]); // start the game
  return 0;
 }

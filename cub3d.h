@@ -30,12 +30,12 @@
  * @brief Structure to save the path to textures.
  */
 typedef struct s_textures {
-    char *no; /**< Path to the north texture. */
-    char *so; /**< Path to the south texture. */
-    char *we; /**< Path to the west texture. */
-    char *ea; /**< Path to the east texture. */
-    char *f; /**< Path to the floor texture. */
-    char *c; /**< Path to the ceiling texture. */
+    mlx_texture_t *no; /**< Path to the north texture. */
+    mlx_texture_t *so; /**< Path to the south texture. */
+    mlx_texture_t *we; /**< Path to the west texture. */
+    mlx_texture_t *ea; /**< Path to the east texture. */
+    mlx_texture_t *f; /**< Path to the floor texture. */
+    mlx_texture_t *c; /**< Path to the ceiling texture. */
 } t_textures;
 
 
@@ -82,6 +82,7 @@ typedef struct s_mlx {
     t_ray *ray; /**< Pointer to the ray structure. */
     t_map *dt; /**< Pointer to the data structure. */
     t_player *ply; /**< Pointer to the player structure. */
+    t_textures *textures; /**< Pointer to the textures structure. */
 } t_mlx;
 
 
@@ -109,7 +110,9 @@ char	*cub_to_str(char *map);
  *         The caller is responsible for freeing the memory using free().
  *         If the identifier is not found or memory allocation fails, it returns NULL.
  */
-// char *get_identifier_value(const char *val, const char *identifier);
+char *get_identifier_value(char *val, char *identifier);
+
+int	load_textures(t_mlx *mlx, char *map_str);
 
 
 
@@ -277,7 +280,7 @@ void init_the_player(t_mlx mlx);
  * @brief Function to start the Cub3D game.
  * @param dt Pointer to the game data structure.
  */
-void start_the_game(t_map *dt);
+void start_the_game(t_map *dt, char *map_argv);
 
 /**
  * @brief Function to initialize the game data structure with a predefined map.
