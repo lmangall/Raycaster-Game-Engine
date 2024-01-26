@@ -11,36 +11,34 @@
 # include <stdio.h>
 # include <math.h>
 # include "lib/MLX42/include/MLX42/MLX42.h"
+# include "lib/libft/src/libft.h"
+#include <sys/stat.h>
+#include <fcntl.h>
 
-/**
- * @brief Screen width.
- */
+
 # define S_W 1900
-
-/**
- * @brief Screen height.
- */
 # define S_H 1000
-
-/**
- * @brief Tile size.
- */
 # define TILE_SIZE 30
-
-/**
- * @brief Field of view.
- */
 # define FOV 60
-
-/**
- * @brief Rotation speed.
- */
 # define ROTATION_SPEED 0.045
+# define PLAYER_SPEED 4
+
+
+
 
 /**
- * @brief Player speed.
+ * @brief Structure to save the path to textures.
  */
-# define PLAYER_SPEED 4
+typedef struct s_textures {
+    char *no; /**< Path to the north texture. */
+    char *so; /**< Path to the south texture. */
+    char *we; /**< Path to the west texture. */
+    char *ea; /**< Path to the east texture. */
+    char *f; /**< Path to the floor texture. */
+    char *c; /**< Path to the ceiling texture. */
+} t_textures;
+
+
 
 /**
  * @brief Structure to represent the player in the game.
@@ -67,13 +65,13 @@ typedef struct s_ray {
 /**
  * @brief Structure to represent game data, including the map.
  */
-typedef struct s_data {
+typedef struct s_map {
     char **map2d; /**< 2D array representing the map. */
     int p_x; /**< Player x position in the map. */
     int p_y; /**< Player y position in the map. */
     int w_map; /**< Map width. */
     int h_map; /**< Map height. */
-} t_data;
+} t_map;
 
 /**
  * @brief Structure to hold MLX-related elements and game data.
@@ -82,9 +80,39 @@ typedef struct s_mlx {
     mlx_image_t *img; /**< Pointer to the image. */
     mlx_t *mlx_p; /**< Pointer to the MLX instance. */
     t_ray *ray; /**< Pointer to the ray structure. */
-    t_data *dt; /**< Pointer to the data structure. */
+    t_map *dt; /**< Pointer to the data structure. */
     t_player *ply; /**< Pointer to the player structure. */
 } t_mlx;
+
+
+
+
+
+//PARSER:
+void	parse_map(char *argv, t_map *map);
+char	*cub_to_str(char *map);
+
+
+
+
+
+//TEXTURES:
+/**
+ * @brief Get the value after a specified identifier in a string.
+ *
+ * This function extracts the part of the string that comes after the specified
+ * identifier. The identifier can be NO, SO, WE, EA, F, or C.
+ *
+ * @param val The value to search for.
+ * @param identifier The identifier to search for in the string.
+ * @return A dynamically allocated string containing the value after the identifier.
+ *         The caller is responsible for freeing the memory using free().
+ *         If the identifier is not found or memory allocation fails, it returns NULL.
+ */
+// char *get_identifier_value(const char *val, const char *identifier);
+
+
+
 
 /**
  * @brief Function to handle cleanup and exit the game.
@@ -249,13 +277,13 @@ void init_the_player(t_mlx mlx);
  * @brief Function to start the Cub3D game.
  * @param dt Pointer to the game data structure.
  */
-void start_the_game(t_data *dt);
+void start_the_game(t_map *dt);
 
 /**
  * @brief Function to initialize the game data structure with a predefined map.
  * @return Pointer to the initialized game data structure.
  */
-t_data *init_argumet();
+t_map *init_argumet();
 
 /**
  * @brief Main function to initialize the game and start the main loop.

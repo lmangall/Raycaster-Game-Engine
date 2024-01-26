@@ -13,41 +13,6 @@
 
 #include"cub3d.h"
 
-typedef struct s_player //the player structure
-{
- int  plyr_x; // player x position in pixels
- int  plyr_y; // player y position in pixels
- double angle; // player angle
- float fov_rd; // field of view in radians
- int  rot; // rotation flag
- int  l_r; // left right flag
- int  u_d; // up down flag
-} t_player;
-
-typedef struct s_ray //the ray structure
-{
- double ray_ngl; // ray angle
- double distance; // distance to the wall
- int  flag;  // flag for the wall
-} t_ray;
-
-typedef struct s_data //the data structure
-{
- char **map2d; // the map
- int  p_x;  // player x position in the map
- int  p_y;  // player y position in the map
- int  w_map;  // map width
- int  h_map;  // map height
-} t_data;
-
-typedef struct s_mlx //the mlx structure
-{
- mlx_image_t  *img; // the image
- mlx_t   *mlx_p; // the mlx pointer
- t_ray   *ray; // the ray structure
- t_data   *dt; // the data structure
- t_player  *ply; // the player structure
-} t_mlx;
 
 //##############################################################################//
 //############################## THE EXITING CODE ##############################//
@@ -286,7 +251,7 @@ int inter_check(float angle, float *inter, float *step, int is_horizon) // check
 {
  if (is_horizon)
  {
-  if (angle > 0 && angle < M_PI)
+  if (angle > 0 && angle < M_PI)//if we look down on the map (behind the player)
     {
     *inter += TILE_SIZE;
     return (-1);
@@ -295,7 +260,7 @@ int inter_check(float angle, float *inter, float *step, int is_horizon) // check
  }
  else
  {
-    if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
+    if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) //if we look right on the map
     {
     *inter += TILE_SIZE;
     return (-1);
@@ -325,13 +290,14 @@ int wall_hit(float x, float y, t_mlx *mlx) // check the wall hit
 float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
 {
  float h_x;
- float h_y;
+ float h_y; //y-coordinate of the horizontal intersection point of the ray with a wall.
  float x_step;
  float y_step;
  int  pixel;
 
  y_step = TILE_SIZE;
  x_step = TILE_SIZE / tan(angl);
+ //calculates the y-coordinate of the bottom edge of the grid cell in which the player is currently located, effectively aligning the intersection point with the horizontal grid lines in the game world
  h_y = floor(mlx->ply->plyr_y / TILE_SIZE) * TILE_SIZE;
  pixel = inter_check(angl, &h_y, &y_step, 1);
  h_x = mlx->ply->plyr_x + (h_y - mlx->ply->plyr_y) / tan(angl);
@@ -419,7 +385,7 @@ void init_the_player(t_mlx mlx) // init the player structure
  //the rest of the variables are initialized to zero by calloc
 }
 
-void start_the_game(t_data *dt) // start the game
+void start_the_game(t_map *dt) // start the game
 {
  t_mlx mlx;
 
@@ -438,9 +404,9 @@ void start_the_game(t_data *dt) // start the game
 //############################## THE MAIN FUNCTION AND INIT THE MAP ##############################//
 //################################################################################################//
 
-t_data *init_argumet() // init the data structure
+t_map *init_argumet() // init the data structure
 {
- t_data *dt = calloc(1, sizeof(t_data)); // init the data structure
+ t_map *dt = calloc(1, sizeof(t_map)); // init the data structure
  dt->map2d = calloc(10, sizeof(char *)); // init the map
  dt->map2d[0] = strdup("1111111111111111111111111"); //fill the map
  dt->map2d[1] = strdup("1000000000000000000100001");
@@ -458,15 +424,23 @@ t_data *init_argumet() // init the data structure
  dt->h_map = 9; // map height
  return (dt); // return the data structure
 }
+
 void v()
 {
  system("leaks mini_cub3D");
 }
-int main() // main function
+
+int main(int argc, char **argv)
 {
- t_data *data;
+ t_map *data = calloc(1, sizeof(t_map));
+
+  if (argc != 2)
+  {
+    printf("Error\nWrong number of arguments\n");
+    return (0);
+  }
  atexit(v);
- data = init_argumet(); // init the data structure
- start_the_game(data); // start the game
+  parse_map(argv[1], data);
+  start_the_game(data); // start the game
  return 0;
 }

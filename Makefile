@@ -12,7 +12,8 @@ CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math #-fsanitize=address -g
 
 MOBJS	= ${SRCS:%.c=%.o}
-SRCS	= main.c
+SRCS	= main.c \
+			parser.c
 
 all: $(NAME)
 
