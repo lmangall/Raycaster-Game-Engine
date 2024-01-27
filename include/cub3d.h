@@ -28,27 +28,72 @@
 
 /**
  * @brief Structure to save the path to textures.
+
  */
+
+// I removed the note 'path to the texture', because the mlx_texture_t structs
+// hold the texture itself not the path the @brief is then also wrong
 typedef struct s_textures {
-  mlx_texture_t *no; /**< Path to the north texture. */
-  mlx_texture_t *so; /**< Path to the south texture. */
-  mlx_texture_t *we; /**< Path to the west texture. */
-  mlx_texture_t *ea; /**< Path to the east texture. */
-  mlx_texture_t *f;  /**< Path to the floor texture. */
-  mlx_texture_t *c;  /**< Path to the ceiling texture. */
+  mlx_texture_t *north;
+  mlx_texture_t *south;
+  mlx_texture_t *west;
+  mlx_texture_t *east;
+  mlx_texture_t *floor;
+  mlx_texture_t *ceiling;
 } t_textures;
+
+/**
+ * @enum e_rotation
+ * @brief Enum for player rotation states.
+ *
+ * This enum defines possible states of rotation for the player.
+ */
+typedef enum e_rotation {
+  NONE = 0,  /**< No rotation. */
+  RIGHT = 1, /**< Rotate to the right. */
+  LEFT = 2   /**< Rotate to the left. */
+} t_rotation;
+
+/**
+ * @enum t_horizontal_move
+ * @brief Enum for player's lateral movement direction.
+ *
+ * This enum defines possible lateral movement directions for the player,
+ * relative to their current orientation.
+ */
+typedef enum t_lateral_move {
+  NONE = 0,  /**< No lateral movement. */
+  RIGHT = 1, /**< Move to the right relative to player's orientation. */
+  LEFT = 2   /**< Move to the left relative to player's orientation. */
+} t_lateral_move;
+
+/**
+ * @enum t_longitudinal_move
+ * @brief Enum for player's longitudinal (forward and backward) movement
+ * direction.
+ *
+ * This enum defines the possible directions for the player's longitudinal
+ * movement, indicating moving forward, moving backward, or not moving along
+ * this axis.
+ */
+typedef enum t_longitudinal_move {
+  NONE = 0,    /**< No longitudinal (forward/backward) movement. */
+  FORWARD = 1, /**< Move forward. */
+  BACKWARD = 2 /**< Move backward. */
+} t_longitudinal_move;
 
 /**
  * @brief Structure to represent the player in the game.
  */
 typedef struct s_player {
-  int plyr_x;   /**< Player x position in pixels. */
-  int plyr_y;   /**< Player y position in pixels. */
-  double angle; /**< Player angle. */
-  float fov_rd; /**< Field of view in radians. */
-  int rot;      /**< Rotation flag. */
-  int l_r;      /**< Left-right flag. */
-  int u_d;      /**< Up-down flag. */
+  int x_pos_px;                          /**< Player x position in pixels. */
+  int y_pos_px;                          /**< Player y position in pixels. */
+  double orientation_angle_rd;           /**< Player angle. */
+  float fov_rd;                          /**< Field of view in radians. */
+  t_rotation rotation;                   /**< Rotation state. */
+  t_lateral_move lateral_move;           /**< Lateral movement direction. */
+  t_longitudinal_move longitudinal_move; /**< Longitudinal (forward/backward)
+                                            movement direction. */
 } t_player;
 
 /**

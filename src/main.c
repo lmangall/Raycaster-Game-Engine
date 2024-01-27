@@ -23,12 +23,12 @@
 //     if (textures != NULL)
 //     {
 //         // Free individual texture paths
-//         mlx_delete_texture(textures->no);
-//         mlx_delete_texture(textures->so);
-//         mlx_delete_texture(textures->we);
-//         mlx_delete_texture(textures->ea);
-//         mlx_delete_texture(textures->f);
-//         mlx_delete_texture(textures->c);
+//         mlx_delete_texture(textures->north);
+//         mlx_delete_texture(textures->south);
+//         mlx_delete_texture(textures->west);
+//         mlx_delete_texture(textures->east);
+//         mlx_delete_texture(textures->floor);
+//         mlx_delete_texture(textures->ceiling);
 
 //         // Free the t_textures structure
 //         free(textures);
@@ -60,17 +60,17 @@ void ft_exit(t_mlx *mlx) // exit the game
 void ft_reles(mlx_key_data_t keydata, t_mlx *mlx) // release the key
 {
   if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
-    mlx->ply->l_r = 0;
+    mlx->ply->lateral_movement = NONE;
   else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
-    mlx->ply->l_r = 0;
+    mlx->ply->lateral_movement = NONE;
   else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
-    mlx->ply->u_d = 0;
+    mlx->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
-    mlx->ply->u_d = 0;
+    mlx->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-    mlx->ply->rot = 0;
+    mlx->ply->rotation = NONE;
   else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
-    mlx->ply->rot = 0;
+    mlx->ply->rotation = NONE;
 }
 
 void mlx_key(mlx_key_data_t keydata, void *ml) // key press
@@ -84,34 +84,34 @@ void mlx_key(mlx_key_data_t keydata, void *ml) // key press
     ft_exit(mlx);
   else if (keydata.key == MLX_KEY_A &&
            (keydata.action == MLX_PRESS)) // move left
-    mlx->ply->l_r = -1;
+    mlx->ply->lateral_movement = LEFT;
   else if (keydata.key == MLX_KEY_D &&
            (keydata.action == MLX_PRESS)) // move right
-    mlx->ply->l_r = 1;
+    mlx->ply->lateral_movement = RIGHT;
   else if (keydata.key == MLX_KEY_S &&
            (keydata.action == MLX_PRESS)) // move down
-    mlx->ply->u_d = -1;
+    mlx->ply->longitudinal_move = BACKWARD;
   else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS) // move up
-    mlx->ply->u_d = 1;
+    mlx->ply->longitudinal_move = FORWARD;
   else if (keydata.key == MLX_KEY_LEFT &&
            keydata.action == MLX_PRESS) // rotate left
-    mlx->ply->rot = -1;
+    mlx->ply->rotation = LEFT;
   else if (keydata.key == MLX_KEY_RIGHT &&
            keydata.action == MLX_PRESS) // rotate right
-    mlx->ply->rot = 1;
+    mlx->ply->rotation = RIGHT;
   ft_reles(keydata, mlx); // release the key
 }
 
 void rotate_player(t_mlx *mlx, int i) // rotate the player
 {
   if (i == 1) {
-    mlx->ply->angle += PLAYER_ROTATION_SPEED; // rotate right
-    if (mlx->ply->angle > 2 * M_PI)
-      mlx->ply->angle -= 2 * M_PI;
+    mlx->ply->orientation_angle_rd += PLAYER_ROTATION_SPEED; // rotate right
+    if (mlx->ply->orientation_angle_rd > 2 * M_PI)
+      mlx->ply->orientation_angle_rd -= 2 * M_PI;
   } else {
-    mlx->ply->angle -= PLAYER_ROTATION_SPEED; // rotate left
-    if (mlx->ply->angle < 0)
-      mlx->ply->angle += 2 * M_PI;
+    mlx->ply->orientation_angle_rd -= PLAYER_ROTATION_SPEED; // rotate left
+    if (mlx->ply->orientation_angle_rd < 0)
+      mlx->ply->orientation_angle_rd += 2 * M_PI;
   }
 }
 
@@ -122,45 +122,45 @@ void move_player(t_mlx *mlx, double move_x, double move_y) // move the player
   int new_x;
   int new_y;
 
-  new_x = roundf(mlx->ply->plyr_x + move_x); // get the new x position
-  new_y = roundf(mlx->ply->plyr_y + move_y); // get the new y position
-  map_grid_x = (new_x / TILE_SIZE);          // get the x position in the map
-  map_grid_y = (new_y / TILE_SIZE);          // get the y position in the map
+  new_x = roundf(mlx->ply->x_pos_px + move_x); // get the new x position
+  new_y = roundf(mlx->ply->y_pos_px + move_y); // get the new y position
+  map_grid_x = (new_x / TILE_SIZE);            // get the x position in the map
+  map_grid_y = (new_y / TILE_SIZE);            // get the y position in the map
   if (mlx->dt->map2d[map_grid_y][map_grid_x] != '1' &&
-      (mlx->dt->map2d[map_grid_y][mlx->ply->plyr_x / TILE_SIZE] != '1' &&
-       mlx->dt->map2d[mlx->ply->plyr_y / TILE_SIZE][map_grid_x] !=
+      (mlx->dt->map2d[map_grid_y][mlx->ply->x_pos_px / TILE_SIZE] != '1' &&
+       mlx->dt->map2d[mlx->ply->y_pos_px / TILE_SIZE][map_grid_x] !=
            '1')) // check the wall hit and the diagonal wall hit
   {
-    mlx->ply->plyr_x = new_x; // move the player
-    mlx->ply->plyr_y = new_y; // move the player
+    mlx->ply->x_pos_px = new_x; // move the player
+    mlx->ply->y_pos_px = new_y; // move the player
   }
 }
 
 void hook(t_mlx *mlx, double move_x, double move_y) // hook the player
 {
-  if (mlx->ply->rot == 1) // rotate right
+  if (mlx->ply->rotation == RIGHT)
     rotate_player(mlx, 1);
-  if (mlx->ply->rot == -1) // rotate left
+  if (mlx->ply->rotation == LEFT)
     rotate_player(mlx, 0);
-  if (mlx->ply->l_r == 1) // move right
+  if (mlx->ply->lateral_movement == RIGHT) // move right
   {
-    move_x = -sin(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
-    move_y = cos(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
+    move_x = -sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->l_r == -1) // move left
+  if (mlx->ply->lateral_movement == LEFT) // move left
   {
-    move_x = sin(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
-    move_y = -cos(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
+    move_x = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = -cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->u_d == 1) // move up
+  if (mlx->ply->longitudinal_move == FOIRWARD) // move up
   {
-    move_x = cos(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
-    move_y = sin(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
+    move_x = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->u_d == -1) // move down
+  if (mlx->ply->longitudinal_move == BACKWARD) // move down
   {
-    move_x = -cos(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
-    move_y = -sin(mlx->ply->angle) * PLAYER_TRANSLATION_SPEED;
+    move_x = -cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = -sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
   move_player(mlx, move_x, move_y); // move the player
 }
@@ -239,8 +239,8 @@ void render_wall(t_mlx *mlx, int ray) // render the wall
   double b_pix;
   double t_pix;
 
-  mlx->ray->distance *=
-      cos(nor_angle(mlx->ray->ray_ngl - mlx->ply->angle)); // fix the fisheye
+  mlx->ray->distance *= cos(nor_angle(
+      mlx->ray->ray_ngl - mlx->ply->orientation_angle_rd)); // fix the fisheye
   wall_h =
       (TILE_SIZE / mlx->ray->distance) *
       ((WINDOW_WIDTH / 2) / tan(mlx->ply->fov_rd / 2)); // get the wall height
@@ -325,9 +325,9 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
   // calculates the y-coordinate of the bottom edge of the grid cell in which
   // the player is currently located, effectively aligning the intersection
   // point with the horizontal grid lines in the game world
-  h_y = floor(mlx->ply->plyr_y / TILE_SIZE) * TILE_SIZE;
+  h_y = floor(mlx->ply->y_pos_px / TILE_SIZE) * TILE_SIZE;
   pixel = inter_check(angl, &h_y, &y_step, 1);
-  h_x = mlx->ply->plyr_x + (h_y - mlx->ply->plyr_y) / tan(angl);
+  h_x = mlx->ply->x_pos_px + (h_y - mlx->ply->y_pos_px) / tan(angl);
   if ((unit_circle(angl, 'y') && x_step > 0) ||
       (!unit_circle(angl, 'y') && x_step < 0)) // check x_step value
     x_step *= -1;
@@ -337,8 +337,8 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
     h_x += x_step;
     h_y += y_step;
   }
-  return (sqrt(pow(h_x - mlx->ply->plyr_x, 2) +
-               pow(h_y - mlx->ply->plyr_y, 2))); // get the distance
+  return (sqrt(pow(h_x - mlx->ply->x_pos_px, 2) +
+               pow(h_y - mlx->ply->y_pos_px, 2))); // get the distance
 }
 
 float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
@@ -351,10 +351,10 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
 
   x_step = TILE_SIZE;
   y_step = TILE_SIZE * tan(angl);
-  v_x = floor(mlx->ply->plyr_x / TILE_SIZE) * TILE_SIZE;
+  v_x = floor(mlx->ply->x_pos_px / TILE_SIZE) * TILE_SIZE;
   pixel = inter_check(angl, &v_x, &x_step,
                       0); // check the intersection and get the pixel value
-  v_y = mlx->ply->plyr_y + (v_x - mlx->ply->plyr_x) * tan(angl);
+  v_y = mlx->ply->y_pos_px + (v_x - mlx->ply->x_pos_px) * tan(angl);
   if ((unit_circle(angl, 'x') && y_step < 0) ||
       (!unit_circle(angl, 'x') && y_step > 0)) // check y_step value
     y_step *= -1;
@@ -364,8 +364,8 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
     v_x += x_step;
     v_y += y_step;
   }
-  return (sqrt(pow(v_x - mlx->ply->plyr_x, 2) +
-               pow(v_y - mlx->ply->plyr_y, 2))); // get the distance
+  return (sqrt(pow(v_x - mlx->ply->x_pos_px, 2) +
+               pow(v_y - mlx->ply->y_pos_px, 2))); // get the distance
 }
 
 void cast_rays(t_mlx *mlx) // cast the rays
@@ -375,9 +375,9 @@ void cast_rays(t_mlx *mlx) // cast the rays
   int ray;
 
   ray = 0;
-  mlx->ray->ray_ngl =
-      mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
-  while (ray < WINDOW_WIDTH)                    // loop for the rays
+  mlx->ray->ray_ngl = mlx->ply->orientation_angle_rd -
+                      (mlx->ply->fov_rd / 2); // the start angle
+  while (ray < WINDOW_WIDTH)                  // loop for the rays
   {
     mlx->ray->flag = 0; // flag for the wall
     h_inter = get_h_inter(
@@ -417,14 +417,14 @@ void game_loop(void *ml) // game loop
 
 void init_the_player(t_mlx mlx) // init the player structure
 {
-  mlx.ply->plyr_x =
+  mlx.ply->x_pos_px =
       mlx.dt->p_x * TILE_SIZE +
       TILE_SIZE / 2; // player x position in pixels in the center of the tile
-  mlx.ply->plyr_y =
+  mlx.ply->y_pos_px =
       mlx.dt->p_y * TILE_SIZE +
       TILE_SIZE / 2; // player y position in pixels in the center of the tile
   mlx.ply->fov_rd = (FOV * M_PI) / 180; // field of view in radians
-  mlx.ply->angle = M_PI;                // player angle
+  mlx.ply->orientation_angle_rd = M_PI; // player angle
   // the rest of the variables are initialized to zero by calloc
 }
 
