@@ -1,15 +1,3 @@
-// before you start, you need to install the mlx library and you need to install the glfw library
-// you need to incude the mlx library in your file
-// for compiling the code you need to include the required frameworks and the libmlx.a amd link the glfw library
-// the flag (-O3 -ffast-math) is for optimization
-// the flag (-framework) is for the required frameworks
-// the flag (-lglfw) is for linking the glfw library
-// the flag (-L) is for the path to the glfw library
-// the flag (-o) is for the name of the executable file
-// to run the program (./cub)
-
-// example:
-// cc -O3 -ffast-math -framework Cocoa -framework OpenGL -framework IOKit -lglfw (path to libmlx42.a) -L(path to glfw library) cub3d.c -o cub
 
 #include"cub3d.h"
 
@@ -273,27 +261,29 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
 
 void cast_rays(t_mlx *mlx) // cast the rays
 {
- double h_inter;
- double v_inter;
+  double h_inter;
+  double v_inter;
 
- mlx->ray->screen_x = 0;
- mlx->ray->angle = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
- while ( mlx->ray->screen_x < S_W) // loop for the rays
- {
-  mlx->ray->is_wall = 0; // flag for the wall
-  h_inter = get_h_inter(mlx, nor_angle(mlx->ray->angle)); // get the horizontal intersection
-  v_inter = get_v_inter(mlx, nor_angle(mlx->ray->angle)); // get the vertical intersection
-  if (v_inter <= h_inter) // check the distance
-   mlx->ray->distance = v_inter; // get the distance
-  else
+  mlx->ray->screen_x = 0;
+  mlx->ray->angle = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
+  while (mlx->ray->screen_x < S_W) // loop for the rays
   {
-   mlx->ray->distance = h_inter; // get the distance
-   mlx->ray->is_wall = 1; // flag for the wall
-  }
-  render_line(mlx); // render the wall
-   mlx->ray->screen_x++; // next ray
-  mlx->ray->angle += (mlx->ply->fov_rd / S_W); // next angle
- }
+    mlx->ray->is_wall = 0; // flag for the wall
+    h_inter = get_h_inter(mlx, nor_angle(mlx->ray->angle)); // get the horizontal intersection
+    v_inter = get_v_inter(mlx, nor_angle(mlx->ray->angle)); // get the vertical intersection
+    if (v_inter <= h_inter) // check the distance
+    mlx->ray->distance = v_inter; // get the distance
+    else
+    {
+    mlx->ray->distance = h_inter; // get the distance
+    mlx->ray->is_wall = 1; // flag for the wall
+    }
+    init_ray(mlx);
+    render_wall(mlx);
+    render_floor_ceiling(mlx);
+    mlx->ray->screen_x++; // next pixel/ray
+    mlx->ray->angle += (mlx->ply->fov_rd / S_W); // next angle
+  } 
 }
 
 //##############################################################################################//

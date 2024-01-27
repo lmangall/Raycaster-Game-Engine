@@ -208,7 +208,7 @@ float nor_angle(float angle);
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
  */
-void render_floor_ceiling(t_mlx *mlx, int t_pix, int b_pix);
+void render_floor_ceiling(t_mlx *mlx);
 
 // /**
 //  * @brief Function to get the color of the wall based on its orientation.
@@ -226,14 +226,14 @@ void render_floor_ceiling(t_mlx *mlx, int t_pix, int b_pix);
  * @param b_pix Bottom pixel of the wall.
  * @return Color of the wall.
  */
-void render_wall(t_mlx *mlx, int t_pix);
+void render_wall(t_mlx *mlx);
 
 /**
  * @brief Function to render a line (ceiling, wall, floor) on the screen.
  * @param mlx Pointer to the t_mlx structure.
  * @param ray Ray representing the current column.
  */
-void render_line(t_mlx *mlx);
+void init_ray(t_mlx *mlx);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
