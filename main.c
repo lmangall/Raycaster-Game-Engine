@@ -288,6 +288,23 @@ static int	reverse_bytes(int c)
 // 	}
 // }
 
+static double	get_x_o(mlx_texture_t	*texture, t_mlx *mlx)
+{
+	double	x_o;
+
+	if (mlx->ray->flag == 1)
+		x_o = (int)fmodf((mlx->ray->horizontal_x * \
+		(texture->width / TILE_SIZE)), texture->width);
+	else
+		x_o = (int)fmodf((mlx->ray->vertical_y * \
+		(texture->width / TILE_SIZE)), texture->width);
+
+		// x_o = (int)fmodf((mlx->ray->horizontal_x * (texture->width / TILE_SIZE)), texture->width);
+
+
+	return (x_o);
+}
+
 void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
 {
 	double			x_o;
@@ -300,8 +317,8 @@ void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
 
 	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
 	arr = (uint32_t *)texture->pixels;
-	factor = 1;//   (double)texture->height / wall_h;
-	x_o = 31.995;//      get_x_o(texture, mlx);
+	factor = 2;//   (double)texture->height / wall_h;
+	x_o = get_x_o(texture, mlx); // This calculates the index in the texture array (arr) 
 	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
 	if (y_o < 0)
 		y_o = 0;
@@ -424,6 +441,8 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
   h_x += x_step;
   h_y += y_step;
  }
+ mlx->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
+  mlx->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
  return (sqrt(pow(h_x - mlx->ply->plyr_x, 2) + pow(h_y - mlx->ply->plyr_y, 2))); // get the distance
 }
 
@@ -447,6 +466,8 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
   v_x += x_step;
   v_y += y_step;
  }
+  mlx->ray->vertical_x = v_x;
+  mlx->ray->vertical_y = v_y;
  return (sqrt(pow(v_x - mlx->ply->plyr_x, 2) + pow(v_y - mlx->ply->plyr_y, 2))); // get the distance
 }
 
@@ -513,8 +534,6 @@ map_lines = cub_to_str(map_argv);
 
 load_textures(&mlx, map_lines);
 
-
-printf("after load textures\n");
 
  mlx.dt = dt; // init the mlx structure
  mlx.ply = calloc(1, sizeof(t_player)); // init the player structure i'm using calloc to initialize the variables to zero

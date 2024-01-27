@@ -54,13 +54,32 @@ typedef struct s_player {
 } t_player;
 
 /**
- * @brief Structure to represent a ray in the game.
+ * @brief Structure representing a ray in the game.
+ *
+ * This structure contains information about a ray, including its column index,
+ * angle, intersection points, distance to the wall, and wall orientation.
+ *
+ * @param column_index Index of the ray's column.
+ * @param ray_angle Angle of the ray.
+ * @param horizontal_x X-coordinate of horizontal intersection point.
+ * @param horizontal_y Y-coordinate of horizontal intersection point.
+ * @param vertical_x X-coordinate of vertical intersection point.
+ * @param vertical_y Y-coordinate of vertical intersection point.
+ * @param distance Distance to the wall.
+ * @param wall_orientation Flag indicating wall orientation (horizontal/vertical).
  */
 typedef struct s_ray {
-    double ray_ngl; /**< Ray angle. */
-    double distance; /**< Distance to the wall. */
-    int flag; /**< Flag for the wall. */
+    int     column_index;
+    double  ray_ngl;
+    double  horizontal_x;
+    double  horizontal_y;
+    double  vertical_x;
+    double  vertical_y;
+    double  distance;
+    int     wall_orientation;
+    int     flag;
 } t_ray;
+
 
 /**
  * @brief Structure to represent game data, including the map.
@@ -73,6 +92,10 @@ typedef struct s_map {
     int h_map; /**< Map height. */
 } t_map;
 
+
+
+
+
 /**
  * @brief Structure to hold MLX-related elements and game data.
  */
@@ -84,9 +107,6 @@ typedef struct s_mlx {
     t_player *ply; /**< Pointer to the player structure. */
     t_textures *textures; /**< Pointer to the textures structure. */
 } t_mlx;
-
-
-
 
 
 //PARSER:
@@ -199,6 +219,7 @@ int get_color(t_mlx *mlx, int flag);
  * @param ray Ray representing the current column.
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
+ * @return Color of the wall.
  */
 void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix);
 
