@@ -17,6 +17,7 @@ OBJS_PATH = obj
 
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
+INCLUDE = -I./include
 
 AR = ar -rcs
 
@@ -72,7 +73,7 @@ $(NAME): $(OBJECTS)
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
 	@mkdir -p $(OBJS_PATH)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	$(RM) -r $(OBJS_PATH)
