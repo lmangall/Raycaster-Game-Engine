@@ -161,206 +161,6 @@ void hook(t_mlx *mlx, double move_x, double move_y) // hook the player
  move_player(mlx, move_x, move_y); // move the player
 }
 
-//#####################################################################################//
-//############################## THE WALL RENDERING CODE ##############################//
-//#####################################################################################//
-
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) // put the pixel
-{
- if (x < 0) // check the x position
-  return ;
- else if (x >= S_W)
-  return ;
- if (y < 0) // check the y position
-  return ;
- else if (y >= S_H)
-  return ;
- mlx_put_pixel(mlx->img, x, y, color); // put the pixel
-}
-
-float nor_angle(float angle) // normalize the angle
-{
- if (angle < 0)
-  angle += (2 * M_PI);
- if (angle > (2 * M_PI))
-  angle -= (2 * M_PI);
- return (angle);
-}
-
-void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling
-{
- int  i;
- int  c;
-
- (void)c;
-
- i = b_pix;
- while (i < S_H)
-  my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
- i = 0;
- while (i < t_pix)
-  my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
-}
-
-int get_color(t_mlx *mlx, int flag) // get the color of the wall
-{
- mlx->ray->ray_ngl = nor_angle(mlx->ray->ray_ngl); // normalize the angle
- if (flag == 0)
- {
-  if (mlx->ray->ray_ngl > M_PI / 2 && mlx->ray->ray_ngl < 3 * (M_PI / 2))
-   return (0xB5B5B5FF); // west wall
-  else
-   return (0xB5B5B5FF); // east wall
- }
- else
- {
-  if (mlx->ray->ray_ngl > 0 && mlx->ray->ray_ngl < M_PI)
-   return (0xF5F5F5FF); // south wall
-  else
-   return (0xF5F5F5FF); // north wall
- }
-}
-
-
-
-/**
- * @brief Reverses the byte order of a 32-bit integer.
- *
- * This function takes a 32-bit integer as input and reverses the byte order,
- * resulting in a new integer with the byte order reversed.
- *
- * @param c The 32-bit integer whose byte order needs to be reversed.
- * @return The new integer with the reversed byte order.
- *
- * @note The input integer is treated as an unsigned integer for byte reversal.
- * @warning This function assumes a little-endian architecture for the input integer.
- *          If used on a big-endian system, the result may not be as expected.
- *
- * Example:
- * @code
- * int original = 0x12345678;
- * int reversed = reverse_bytes(original);
- * // reversed will be 0x78563412 on a little-endian system
- * @endcode
- */
-static int	reverse_bytes(int c)
-{
-	unsigned int	b;
-
-	b = 0;
-	b |= (c & 0xFF) << 24;
-	b |= (c & 0xFF00) << 8;
-	b |= (c & 0xFF0000) >> 8;
-	b |= (c & 0xFF000000) >> 24;
-	return (b);
-}
-
-// void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
-// {
-//  int color;
-
-//  color = get_color(mlx, mlx->ray->flag);
-//  while (t_pix < b_pix)
-//   my_mlx_pixel_put(mlx, ray, t_pix++, color);
-// }
-
-// void	draw_wall(t_mlx *mlx, int t_pix, int b_pix, double wall_h)
-// {
-// 	double			x_o;
-// 	double			y_o;
-// 	mlx_texture_t	*texture;
-// 	uint32_t		*arr;
-// 	double			factor;
-
-// 	texture = get_texture(mlx, mlx->ray->flag);
-// 	arr = (uint32_t *)texture->pixels;
-// 	factor = (double)texture->height / wall_h;
-// 	x_o = get_x_o(texture, mlx);
-// 	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
-// 	if (y_o < 0)
-// 		y_o = 0;
-// 	while (t_pix < b_pix)
-// 	{
-// 		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-// 		my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-// 		y_o += factor;
-// 		t_pix++;
-// 	}
-// }
-
-static double	get_x_o(mlx_texture_t	*texture, t_mlx *mlx)
-{
-	double	x_o;
-
-	if (mlx->ray->flag == 1)
-		x_o = (int)fmodf((mlx->ray->horizontal_x * \
-		(texture->width / TILE_SIZE)), texture->width);
-	else
-		x_o = (int)fmodf((mlx->ray->vertical_y * \
-		(texture->width / TILE_SIZE)), texture->width);
-
-		// x_o = (int)fmodf((mlx->ray->horizontal_x * (texture->width / TILE_SIZE)), texture->width);
-
-
-	return (x_o);
-}
-
-void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
-{
-	double			x_o;
-	double			y_o;
-	mlx_texture_t	*texture;
-	uint32_t		*arr;
-	double			factor;
-  double      wall_h = 100;
-
-
-	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
-	arr = (uint32_t *)texture->pixels;
-	factor = 2;//   (double)texture->height / wall_h;
-	x_o = get_x_o(texture, mlx); // This calculates the index in the texture array (arr) 
-	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
-	if (y_o < 0)
-		y_o = 0;
-	while (t_pix < b_pix)
-	{
-		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-		my_mlx_pixel_put(mlx, ray, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-		y_o += factor;
-		t_pix++;
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-void render_wall(t_mlx *mlx, int ray) // render the wall
-{
- double wall_h;
- double b_pix;
- double t_pix;
-
- mlx->ray->distance *= cos(nor_angle(mlx->ray->ray_ngl - mlx->ply->angle)); // fix the fisheye
- wall_h = (TILE_SIZE / mlx->ray->distance) * ((S_W / 2) / tan(mlx->ply->fov_rd / 2)); // get the wall height
- b_pix = (S_H / 2) + (wall_h / 2); // get the bottom pixel
- t_pix = (S_H / 2) - (wall_h / 2); // get the top pixel
- if (b_pix > S_H) // check the bottom pixel
-  b_pix = S_H;
- if (t_pix < 0) // check the top pixel
-  t_pix = 0;
- draw_wall(mlx, ray, t_pix, b_pix); // draw the wall
- draw_floor_ceiling(mlx, ray, t_pix, b_pix); // draw the floor and the ceiling
-}
-
 //#################################################################################//
 //############################## THE RAYCASTING CODE ##############################//
 //#################################################################################//
@@ -481,7 +281,7 @@ void cast_rays(t_mlx *mlx) // cast the rays
  mlx->ray->ray_ngl = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
  while (ray < S_W) // loop for the rays
  {
-  mlx->ray->flag = 0; // flag for the wall
+  mlx->ray->is_wall = 0; // flag for the wall
   h_inter = get_h_inter(mlx, nor_angle(mlx->ray->ray_ngl)); // get the horizontal intersection
   v_inter = get_v_inter(mlx, nor_angle(mlx->ray->ray_ngl)); // get the vertical intersection
   if (v_inter <= h_inter) // check the distance
@@ -489,9 +289,9 @@ void cast_rays(t_mlx *mlx) // cast the rays
   else
   {
    mlx->ray->distance = h_inter; // get the distance
-   mlx->ray->flag = 1; // flag for the wall
+   mlx->ray->is_wall = 1; // flag for the wall
   }
-  render_wall(mlx, ray); // render the wall
+  render_line(mlx, ray); // render the wall
   ray++; // next ray
   mlx->ray->ray_ngl += (mlx->ply->fov_rd / S_W); // next angle
  }

@@ -77,7 +77,7 @@ typedef struct s_ray {
     double  vertical_y;
     double  distance;
     int     wall_orientation;
-    int     flag;
+    int     is_wall;
 } t_ray;
 
 
@@ -203,15 +203,15 @@ float nor_angle(float angle);
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
  */
-void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix);
+void render_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix);
 
-/**
- * @brief Function to get the color of the wall based on its orientation.
- * @param mlx Pointer to the t_mlx structure.
- * @param flag Flag indicating wall orientation (0 for vertical, 1 for horizontal).
- * @return Color of the wall.
- */
-int get_color(t_mlx *mlx, int flag);
+// /**
+//  * @brief Function to get the color of the wall based on its orientation.
+//  * @param mlx Pointer to the t_mlx structure.
+//  * @param is_wall Flag indicating wall orientation (0 for vertical, 1 for horizontal).
+//  * @return Color of the wall.
+//  */
+// int get_color(t_mlx *mlx, int is_wall);
 
 /**
  * @brief Function to draw a wall on the screen.
@@ -221,14 +221,14 @@ int get_color(t_mlx *mlx, int flag);
  * @param b_pix Bottom pixel of the wall.
  * @return Color of the wall.
  */
-void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix);
+void render_wall(t_mlx *mlx, int ray, int t_pix, int b_pix, int wall_h);
 
 /**
- * @brief Function to render a wall on the screen.
+ * @brief Function to render a line (ceiling, wall, floor) on the screen.
  * @param mlx Pointer to the t_mlx structure.
  * @param ray Ray representing the current column.
  */
-void render_wall(t_mlx *mlx, int ray);
+void render_line(t_mlx *mlx, int ray);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
@@ -314,5 +314,30 @@ t_map *init_argumet();
  * @return 0 if the program runs successfully.
  */
 int main();
+
+
+
+///      render.c
+/**
+ * @brief Reverses the byte order of a 32-bit integer.
+ *
+ * This function takes a 32-bit integer as input and reverses the byte order,
+ * resulting in a new integer with the byte order reversed.
+ *
+ * @param c The 32-bit integer whose byte order needs to be reversed.
+ * @return The new integer with the reversed byte order.
+ *
+ * @note The input integer is treated as an unsigned integer for byte reversal.
+ * @warning This function assumes a little-endian architecture for the input integer.
+ *          If used on a big-endian system, the result may not be as expected.
+ *
+ * Example:
+ * @code
+ * int original = 0x12345678;
+ * int reversed = reverse_bytes(original);
+ * // reversed will be 0x78563412 on a little-endian system
+ * @endcode
+ */
+int	reverse_bytes(int c);
 
 #endif // CUB3D_H
