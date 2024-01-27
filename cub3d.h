@@ -69,8 +69,7 @@ typedef struct s_player {
  * @param wall_orientation Flag indicating wall orientation (horizontal/vertical).
  */
 typedef struct s_ray {
-    int     column_index;
-    double  ray_ngl;
+    double  angle;
     double  horizontal_x;
     double  horizontal_y;
     double  vertical_x;
@@ -78,6 +77,12 @@ typedef struct s_ray {
     double  distance;
     int     wall_orientation;
     int     is_wall;
+    int     screen_x;
+    mlx_texture_t *current_texture;
+    int     wall_h;
+    int     t_pix;
+    int     b_pix;
+
 } t_ray;
 
 
@@ -187,7 +192,7 @@ void hook(t_mlx *mlx, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+void my_mlx_pixel_put(t_mlx *mlx, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
@@ -203,7 +208,7 @@ float nor_angle(float angle);
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
  */
-void render_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix);
+void render_floor_ceiling(t_mlx *mlx, int t_pix, int b_pix);
 
 // /**
 //  * @brief Function to get the color of the wall based on its orientation.
@@ -221,14 +226,14 @@ void render_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix);
  * @param b_pix Bottom pixel of the wall.
  * @return Color of the wall.
  */
-void render_wall(t_mlx *mlx, int ray, int t_pix, int b_pix, int wall_h);
+void render_wall(t_mlx *mlx, int t_pix);
 
 /**
  * @brief Function to render a line (ceiling, wall, floor) on the screen.
  * @param mlx Pointer to the t_mlx structure.
  * @param ray Ray representing the current column.
  */
-void render_line(t_mlx *mlx, int ray);
+void render_line(t_mlx *mlx);
 
 /**
  * @brief Function to cast rays and render the walls in the game.

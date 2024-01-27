@@ -1,17 +1,13 @@
 
 #include"cub3d.h"
 
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) // put the pixel
+void my_mlx_pixel_put(t_mlx *mlx, int y, int color) // put the pixel
 {
- if (x < 0) // check the x position
-  return ;
- else if (x >= S_W)
-  return ;
  if (y < 0) // check the y position
   return ;
  else if (y >= S_H)
   return ;
- mlx_put_pixel(mlx->img, x, y, color); // put the pixel
+ mlx_put_pixel(mlx->img, mlx->ray->screen_x, y, color); // put the pixel
 }
 
 float nor_angle(float angle) // normalize the angle
@@ -23,7 +19,7 @@ float nor_angle(float angle) // normalize the angle
  return (angle);
 }
 
-void render_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling
+void render_floor_ceiling(t_mlx *mlx, int t_pix, int b_pix) // draw the floor and the ceiling
 {
  int  i;
  int  c;
@@ -32,10 +28,10 @@ void render_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the
 
  i = b_pix;
  while (i < S_H)
-  my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
+  my_mlx_pixel_put(mlx, i++, 0xB99470FF); // floor
  i = 0;
  while (i < t_pix)
-  my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
+  my_mlx_pixel_put(mlx, i++, 0x89CFF3FF); // ceiling
 }
 
 
@@ -72,49 +68,55 @@ int	reverse_bytes(int c)
 	return (b);
 }
 
-static double	get_pixel(mlx_texture_t	*texture, t_mlx *mlx)
-{
-	double pixel;
 
-	if (mlx->ray->is_wall)
-		pixel = (int)fmodf((mlx->ray->horizontal_x * (texture->width / TILE_SIZE)), texture->width);
-	else
-		pixel = (int)fmodf((mlx->ray->vertical_y * (texture->width / TILE_SIZE)), texture->width);
-	return (pixel);
+
+uint32_t	pixel_color(mlx_texture_t *texture, t_mlx *mlx, int t_pix)
+{
+    double x_pixel_coordinate;
+	double y_pixel_coordinate;
+	double factor;
+	uint32_t *pixel_array;
+	uint32_t color;
+
+    if (mlx->ray->is_wall)
+        x_pixel_coordinate = (int)fmodf((mlx->ray->horizontal_x * (texture->width / TILE_SIZE)), texture->width);
+    else
+        x_pixel_coordinate = (int)fmodf((mlx->ray->vertical_y * (texture->width / TILE_SIZE)), texture->width);
+
+	pixel_array = (uint32_t *)texture->pixels;
+
+	factor = (double)texture->height / mlx->ray->wall_h;
+	y_pixel_coordinate = (t_pix - (S_H / 2) + (mlx->ray->wall_h / 2)) * factor;
+	if (y_pixel_coordinate < 0)
+		y_pixel_coordinate = 0;
+
+color = pixel_array[(int)y_pixel_coordinate * texture->width + (int)x_pixel_coordinate];
+color = reverse_bytes(color);
+
+    return (color);
 }
 
 
-void	render_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix, int wall_h)//, double wall_h)
+void	render_wall(t_mlx *mlx, int t_pix)
 {
-	double			pixel;
-	double			y_o;
-	mlx_texture_t	*texture;
-	uint32_t		*arr;
-	double			factor;
+	uint32_t		color;
+	mlx_texture_t *texture = mlx->ray->current_texture;
 
-
-	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
-	arr = (uint32_t *)texture->pixels;
-	factor = texture->height / wall_h;
-	pixel = get_pixel(texture, mlx);
-	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
-	if (y_o < 0)
-		y_o = 0;
-	while (t_pix < b_pix)
+	while (t_pix < mlx->ray->b_pix)
 	{
-		my_mlx_pixel_put(mlx, ray, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)pixel]));
-		y_o += factor;
+		color = pixel_color(texture, mlx, t_pix); 
+		my_mlx_pixel_put(mlx, t_pix, color);
 		t_pix++;
 	}
 }
 
-void render_line(t_mlx *mlx, int ray) // render the wall
+void render_line(t_mlx *mlx) // render the wall
 {
  double wall_h;
  double b_pix;
  double t_pix;
 
- mlx->ray->distance *= cos(nor_angle(mlx->ray->ray_ngl - mlx->ply->angle)); // fix the fisheye
+ mlx->ray->distance *= cos(nor_angle(mlx->ray->angle - mlx->ply->angle)); // fix the fisheye
  wall_h = (TILE_SIZE / mlx->ray->distance) * ((S_W / 2) / tan(mlx->ply->fov_rd / 2)); // get the wall height
  b_pix = (S_H / 2) + (wall_h / 2); // get the bottom pixel
  t_pix = (S_H / 2) - (wall_h / 2); // get the top pixel
@@ -122,6 +124,12 @@ void render_line(t_mlx *mlx, int ray) // render the wall
   b_pix = S_H;
  if (t_pix < 0) // check the top pixel
   t_pix = 0;
- render_wall(mlx, ray, t_pix, b_pix, wall_h); // draw the wall
- render_floor_ceiling(mlx, ray, t_pix, b_pix); // draw the floor and the ceiling
+
+
+mlx->ray->current_texture = mlx->textures->no;
+mlx->ray->wall_h = wall_h;
+mlx->ray->t_pix = t_pix;
+mlx->ray->b_pix = b_pix;
+ render_wall(mlx, t_pix); // draw the wall
+ render_floor_ceiling(mlx, t_pix, b_pix); // draw the floor and the ceiling
 }

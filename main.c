@@ -241,8 +241,8 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
   h_x += x_step;
   h_y += y_step;
  }
- mlx->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
-  mlx->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
+mlx->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
+mlx->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
  return (sqrt(pow(h_x - mlx->ply->plyr_x, 2) + pow(h_y - mlx->ply->plyr_y, 2))); // get the distance
 }
 
@@ -275,15 +275,14 @@ void cast_rays(t_mlx *mlx) // cast the rays
 {
  double h_inter;
  double v_inter;
- int  ray;
 
- ray = 0;
- mlx->ray->ray_ngl = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
- while (ray < S_W) // loop for the rays
+ mlx->ray->screen_x = 0;
+ mlx->ray->angle = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
+ while ( mlx->ray->screen_x < S_W) // loop for the rays
  {
   mlx->ray->is_wall = 0; // flag for the wall
-  h_inter = get_h_inter(mlx, nor_angle(mlx->ray->ray_ngl)); // get the horizontal intersection
-  v_inter = get_v_inter(mlx, nor_angle(mlx->ray->ray_ngl)); // get the vertical intersection
+  h_inter = get_h_inter(mlx, nor_angle(mlx->ray->angle)); // get the horizontal intersection
+  v_inter = get_v_inter(mlx, nor_angle(mlx->ray->angle)); // get the vertical intersection
   if (v_inter <= h_inter) // check the distance
    mlx->ray->distance = v_inter; // get the distance
   else
@@ -291,9 +290,9 @@ void cast_rays(t_mlx *mlx) // cast the rays
    mlx->ray->distance = h_inter; // get the distance
    mlx->ray->is_wall = 1; // flag for the wall
   }
-  render_line(mlx, ray); // render the wall
-  ray++; // next ray
-  mlx->ray->ray_ngl += (mlx->ply->fov_rd / S_W); // next angle
+  render_line(mlx); // render the wall
+   mlx->ray->screen_x++; // next ray
+  mlx->ray->angle += (mlx->ply->fov_rd / S_W); // next angle
  }
 }
 
