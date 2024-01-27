@@ -39,6 +39,19 @@ static char *ft_strstr(char *str, char *to_find)
 	return (0);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 void	parse_map(char *argv, t_map *map )
 {
 	char	*map_str;
@@ -76,20 +89,21 @@ int	load_textures(t_mlx *mlx, char *map_str)
 
 	textures = mlx->textures;
 	char *value = get_identifier_value(map_str, "NO");
+	printf("value = %s\n", value);
 	textures->no = mlx_load_png(value);
-	free(value);
+	// free(value);
 
 	value = get_identifier_value(map_str, "SO");
 	textures->so = mlx_load_png(value);
-	free(value);
+	// free(value);
 
 	value = get_identifier_value(map_str, "WE");
 	textures->we = mlx_load_png(value);
-	free(value);
+	// free(value);
 
 	value = get_identifier_value(map_str, "EA");
 	textures->ea = mlx_load_png(value);
-	free(value);
+	// free(value);
 
 	// value = get_identifier_value(map_str, "F");
 	// textures->c = mlx_load_png(value);
@@ -118,12 +132,16 @@ int	load_textures(t_mlx *mlx, char *map_str)
 char *get_identifier_value(char *map_str, char *identifier)
 {
 	// Find the position of the identifier in the string
+
+// printf("\nmap_str = %s  ---end of map_str\n", map_str);
+// printf("\nidentifier = %s\n\n", identifier);
+
 	char *pos = ft_strstr(map_str, identifier);
+// printf("pos = %s\n", pos);
 
 	// If the identifier is not found, return NULL
-	if (pos == NULL) {
+	if (pos == NULL)
 		return NULL;
-	}
 
 	// Move the pointer to the character after the identifier
 	pos += ft_strlen(identifier);
@@ -142,8 +160,10 @@ char *get_identifier_value(char *map_str, char *identifier)
 	if (value == NULL)
 		return NULL;
 
-	ft_strlcpy(value, pos, value_length);
+	ft_strlcpy(value, pos, value_length + 1);
 	value[value_length] = '\0';
+
+	// printf(" value at end of func = %s\n", value);
 
 	return value;
 }
@@ -155,6 +175,29 @@ char *get_identifier_value(char *map_str, char *identifier)
 	
 
 char	*cub_to_str(char *map)
+{
+	char	*line;
+	char	*map_lines;
+	int		fd;
+
+	fd = open(map, O_RDONLY);
+	map_lines = ft_calloc(1, 1);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line)
+		{
+			map_lines = ft_strjoin(map_lines, line);
+			free(line);
+		}
+		else
+			break ;
+	}
+	close(fd);
+	return (map_lines);
+}
+
+char	*cub_to_str_textures(char *map)
 {
 	char	*line;
 	char	*map_lines;

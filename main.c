@@ -243,26 +243,26 @@ int get_color(t_mlx *mlx, int flag) // get the color of the wall
  * // reversed will be 0x78563412 on a little-endian system
  * @endcode
  */
-// static int	reverse_bytes(int c)
-// {
-// 	unsigned int	b;
-
-// 	b = 0;
-// 	b |= (c & 0xFF) << 24;
-// 	b |= (c & 0xFF00) << 8;
-// 	b |= (c & 0xFF0000) >> 8;
-// 	b |= (c & 0xFF000000) >> 24;
-// 	return (b);
-// }
-
-void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
+static int	reverse_bytes(int c)
 {
- int color;
+	unsigned int	b;
 
- color = get_color(mlx, mlx->ray->flag);
- while (t_pix < b_pix)
-  my_mlx_pixel_put(mlx, ray, t_pix++, color);
+	b = 0;
+	b |= (c & 0xFF) << 24;
+	b |= (c & 0xFF00) << 8;
+	b |= (c & 0xFF0000) >> 8;
+	b |= (c & 0xFF000000) >> 24;
+	return (b);
 }
+
+// void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
+// {
+//  int color;
+
+//  color = get_color(mlx, mlx->ray->flag);
+//  while (t_pix < b_pix)
+//   my_mlx_pixel_put(mlx, ray, t_pix++, color);
+// }
 
 // void	draw_wall(t_mlx *mlx, int t_pix, int b_pix, double wall_h)
 // {
@@ -288,31 +288,31 @@ void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
 // 	}
 // }
 
-// void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
-// {
-// 	double			x_o;
-// 	double			y_o;
-// 	mlx_texture_t	*texture;
-// 	uint32_t		*arr;
-// 	double			factor;
-//   double      wall_h = 100;
+void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
+{
+	double			x_o;
+	double			y_o;
+	mlx_texture_t	*texture;
+	uint32_t		*arr;
+	double			factor;
+  double      wall_h = 100;
 
 
-// 	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
-// 	arr = (uint32_t *)texture->pixels;
-// 	factor = 1;//   (double)texture->height / wall_h;
-// 	x_o = 31.995;//      get_x_o(texture, mlx);
-// 	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
-// 	if (y_o < 0)
-// 		y_o = 0;
-// 	while (t_pix < b_pix)
-// 	{
-// 		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-// 		my_mlx_pixel_put(mlx, ray, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
-// 		y_o += factor;
-// 		t_pix++;
-// 	}
-// }
+	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
+	arr = (uint32_t *)texture->pixels;
+	factor = 1;//   (double)texture->height / wall_h;
+	x_o = 31.995;//      get_x_o(texture, mlx);
+	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
+	if (y_o < 0)
+		y_o = 0;
+	while (t_pix < b_pix)
+	{
+		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+		my_mlx_pixel_put(mlx, ray, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+		y_o += factor;
+		t_pix++;
+	}
+}
 
 
 
@@ -506,7 +506,13 @@ void start_the_game(t_map *dt, char *map_argv) // start the game
   t_mlx mlx;
 
 (void)map_argv;
-load_textures(&mlx, map_argv);
+
+
+char *map_lines;
+map_lines = cub_to_str(map_argv);
+
+load_textures(&mlx, map_lines);
+
 
 printf("after load textures\n");
 
