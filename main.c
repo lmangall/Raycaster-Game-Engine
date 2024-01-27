@@ -221,6 +221,40 @@ int get_color(t_mlx *mlx, int flag) // get the color of the wall
  }
 }
 
+
+
+/**
+ * @brief Reverses the byte order of a 32-bit integer.
+ *
+ * This function takes a 32-bit integer as input and reverses the byte order,
+ * resulting in a new integer with the byte order reversed.
+ *
+ * @param c The 32-bit integer whose byte order needs to be reversed.
+ * @return The new integer with the reversed byte order.
+ *
+ * @note The input integer is treated as an unsigned integer for byte reversal.
+ * @warning This function assumes a little-endian architecture for the input integer.
+ *          If used on a big-endian system, the result may not be as expected.
+ *
+ * Example:
+ * @code
+ * int original = 0x12345678;
+ * int reversed = reverse_bytes(original);
+ * // reversed will be 0x78563412 on a little-endian system
+ * @endcode
+ */
+// static int	reverse_bytes(int c)
+// {
+// 	unsigned int	b;
+
+// 	b = 0;
+// 	b |= (c & 0xFF) << 24;
+// 	b |= (c & 0xFF00) << 8;
+// 	b |= (c & 0xFF0000) >> 8;
+// 	b |= (c & 0xFF000000) >> 24;
+// 	return (b);
+// }
+
 void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
 {
  int color;
@@ -229,6 +263,68 @@ void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
  while (t_pix < b_pix)
   my_mlx_pixel_put(mlx, ray, t_pix++, color);
 }
+
+// void	draw_wall(t_mlx *mlx, int t_pix, int b_pix, double wall_h)
+// {
+// 	double			x_o;
+// 	double			y_o;
+// 	mlx_texture_t	*texture;
+// 	uint32_t		*arr;
+// 	double			factor;
+
+// 	texture = get_texture(mlx, mlx->ray->flag);
+// 	arr = (uint32_t *)texture->pixels;
+// 	factor = (double)texture->height / wall_h;
+// 	x_o = get_x_o(texture, mlx);
+// 	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
+// 	if (y_o < 0)
+// 		y_o = 0;
+// 	while (t_pix < b_pix)
+// 	{
+// 		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+// 		my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+// 		y_o += factor;
+// 		t_pix++;
+// 	}
+// }
+
+// void	draw_wall(t_mlx *mlx,  int ray, int t_pix, int b_pix)//, double wall_h)
+// {
+// 	double			x_o;
+// 	double			y_o;
+// 	mlx_texture_t	*texture;
+// 	uint32_t		*arr;
+// 	double			factor;
+//   double      wall_h = 100;
+
+
+// 	texture = mlx->textures->no;//get_texture(mlx, mlx->ray->flag);
+// 	arr = (uint32_t *)texture->pixels;
+// 	factor = 1;//   (double)texture->height / wall_h;
+// 	x_o = 31.995;//      get_x_o(texture, mlx);
+// 	y_o = (t_pix - (S_H / 2) + (wall_h / 2)) * factor;
+// 	if (y_o < 0)
+// 		y_o = 0;
+// 	while (t_pix < b_pix)
+// 	{
+// 		// my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+// 		my_mlx_pixel_put(mlx, ray, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+// 		y_o += factor;
+// 		t_pix++;
+// 	}
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 void render_wall(t_mlx *mlx, int ray) // render the wall
 {
@@ -410,8 +506,9 @@ void start_the_game(t_map *dt, char *map_argv) // start the game
   t_mlx mlx;
 
 (void)map_argv;
-// load_textures(&mlx, map_argv);
+load_textures(&mlx, map_argv);
 
+printf("after load textures\n");
 
  mlx.dt = dt; // init the mlx structure
  mlx.ply = calloc(1, sizeof(t_player)); // init the player structure i'm using calloc to initialize the variables to zero

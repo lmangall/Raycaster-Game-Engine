@@ -91,15 +91,16 @@ int	load_textures(t_mlx *mlx, char *map_str)
 	textures->ea = mlx_load_png(value);
 	free(value);
 
-	value = get_identifier_value(map_str, "F");
-	textures->c = mlx_load_png(value);
-	free(value);
+	// value = get_identifier_value(map_str, "F");
+	// textures->c = mlx_load_png(value);
+	// free(value);
 
-	value = get_identifier_value(map_str, "C");
-	textures->f = mlx_load_png(value);
+	// value = get_identifier_value(map_str, "C");
+	// textures->f = mlx_load_png(value);
 
-	free(value);
-	return (0);
+    if (value != NULL)
+        free(value);
+    return (0);
 }
 
 
