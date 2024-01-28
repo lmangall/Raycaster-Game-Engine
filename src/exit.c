@@ -18,19 +18,18 @@
 //     }
 // }
 
-void	ft_exit(t_data *data) // exit the game
+void	free_exit(t_data *data)
 {
 	int i = 0;
 	while (data->map->grid[i])
-		free(data->map->grid[i++]); // free the map line by line
-	free(data->map->grid);          // free the map
-	free(data->map);                // free the data structure
-	free(data->player);             // free the player structure
-	free(data->ray);                // free the ray structure
-	//  free_textures(data->textures); // free the textures
-	mlx_delete_image(data->mlx, data->img); // delete the image
-	mlx_close_window(data->mlx);            // close the window
-	mlx_terminate(data->mlx);               // terminate the mlx pointer
-	printf("Game closed\n");                // print the message
-	exit(0);                                // exit the game
+		free(data->map->grid[i++]);
+	free(data->map->grid);
+	free(data->map);
+	free(data->player);
+	free(data->ray);
+	mlx_delete_image(data->mlx, data->img);
+	mlx_close_window(data->mlx);
+	mlx_terminate(data->mlx);
+	ft_putstr_fd("Tschuess\n", 1);
+	exit(0);
 }

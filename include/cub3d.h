@@ -143,7 +143,8 @@ typedef struct s_ray
 	//   int flag;        /**< Flag for the wall. */
 	t_wall_collision	wall_collision_orientation;
 	/**< Orientation of the wall collision. */
-	// below is leonard/texture branch version
+	// below is leonard/texture branch version,
+	//	update name to Stephano's version
 	double				horizontal_x;
 	double				horizontal_y;
 	double				vertical_x;

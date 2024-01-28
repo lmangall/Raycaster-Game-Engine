@@ -51,7 +51,7 @@ void	start_the_game(t_map *map, char *map_argv) // start the game
 	mlx_key_hook(data.mlx, &mlx_key, &data);
 	// key press and release
 	mlx_loop(data.mlx); // mlx loop
-	ft_exit(&data);
+	free_exit(&data);
 	// exit the game
 }
 
