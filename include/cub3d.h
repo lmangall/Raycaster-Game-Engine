@@ -97,12 +97,24 @@ typedef struct s_player {
 } t_player;
 
 /**
+ * @enum e_wall_collision
+ * @brief Enum for the type of wall collision.
+ */
+typedef enum e_wall_collision {
+  HORIZONTAL = 0, /**< Horizontal wall collision. */
+  VERTICAL = 1    /**< Vertical wall collision. */
+} t_wall_collision;
+
+/**
  * @brief Structure to represent a ray in the game.
  */
 typedef struct s_ray {
   double ray_ngl;  /**< Ray angle. */
   double distance; /**< Distance to the wall. */
-  int flag;        /**< Flag for the wall. */
+  //   int flag;        /**< Flag for the wall. */
+  t_wall_collision
+      wall_collision_orientation; /**< Orientation of the wall collision. */
+
 } t_ray;
 
 /**

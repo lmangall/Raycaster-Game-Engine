@@ -208,10 +208,11 @@ void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix,
     my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
 }
 
-int get_color(t_mlx *mlx, int flag) // get the color of the wall
+int get_color(t_mlx *mlx,
+              int collision_orientation) // get the color of the wall
 {
   mlx->ray->ray_ngl = nor_angle(mlx->ray->ray_ngl); // normalize the angle
-  if (flag == 0) {
+  if (collision_orientation == VERTICAL) {
     if (mlx->ray->ray_ngl > M_PI / 2 && mlx->ray->ray_ngl < 3 * (M_PI / 2))
       return (0xB5B5B5FF); // west wall
     else
@@ -228,7 +229,7 @@ void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
 {
   int color;
 
-  color = get_color(mlx, mlx->ray->flag);
+  color = get_color(mlx, mlx->ray->wall_collision_orientation);
   while (t_pix < b_pix)
     my_mlx_pixel_put(mlx, ray, t_pix++, color);
 }
@@ -379,7 +380,7 @@ void cast_rays(t_mlx *mlx) // cast the rays
                       (mlx->ply->fov_rd / 2); // the start angle
   while (ray < WINDOW_WIDTH)                  // loop for the rays
   {
-    mlx->ray->flag = 0; // flag for the wall
+    mlx->ray->wall_collision_orientation = VERTICAL;
     h_inter = get_h_inter(
         mlx, nor_angle(mlx->ray->ray_ngl)); // get the horizontal intersection
     v_inter = get_v_inter(
@@ -388,7 +389,7 @@ void cast_rays(t_mlx *mlx) // cast the rays
       mlx->ray->distance = v_inter;         // get the distance
     else {
       mlx->ray->distance = h_inter; // get the distance
-      mlx->ray->flag = 1;           // flag for the wall
+      mlx->ray->wall_collision_orientation = HORIZONTAL;
     }
     render_wall(mlx, ray);                                  // render the wall
     ray++;                                                  // next ray
