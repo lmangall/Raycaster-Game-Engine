@@ -73,11 +73,11 @@ void ft_reles(mlx_key_data_t keydata, t_data *data) // release the key
     data->player->rotation = R_NONE;
 }
 
-void mlx_key(mlx_key_data_t keydata, void *ml) // key press
+void mlx_key(mlx_key_data_t keydata, void *tmp) // key press
 {
   t_data *data;
 
-  data = ml;
+  data = (t_data *)tmp;
   if (keydata.key == MLX_KEY_ESCAPE &&
       (keydata.action == MLX_PRESS ||
        keydata.action == MLX_REPEAT)) // exit the game
@@ -408,11 +408,11 @@ void cast_rays(t_data *data) // cast the rays
 // ##############################//
 // ##############################################################################################//
 
-void game_loop(void *ml) // game loop
+void game_loop(void *tmp) // game loop
 {
   t_data *data;
 
-  data = ml;                              // cast to the data structure
+  data = (t_data *)tmp;                   // cast to the data structure
   mlx_delete_image(data->mlx, data->img); // delete the image
   data->img = mlx_new_image(data->mlx, WINDOW_WIDTH,
                             WINDOW_HEIGHT); // create new image
