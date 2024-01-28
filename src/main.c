@@ -35,21 +35,21 @@
 //     }
 // }
 
-void ft_exit(t_mlx *mlx) // exit the game
+void ft_exit(t_data *data) // exit the game
 {
   int i = 0;
-  while (mlx->map->grid[i])
-    free(mlx->map->grid[i++]); // free the map line by line
-  free(mlx->map->grid);        // free the map
-  free(mlx->map);              // free the data structure
-  free(mlx->ply);              // free the player structure
-  free(mlx->ray);              // free the ray structure
-  //  free_textures(mlx->textures); // free the textures
-  mlx_delete_image(mlx->mlx_p, mlx->img); // delete the image
-  mlx_close_window(mlx->mlx_p);           // close the window
-  mlx_terminate(mlx->mlx_p);              // terminate the mlx pointer
-  printf("Game closed\n");                // print the message
-  exit(0);                                // exit the game
+  while (data->map->grid[i])
+    free(data->map->grid[i++]); // free the map line by line
+  free(data->map->grid);        // free the map
+  free(data->map);              // free the data structure
+  free(data->ply);              // free the player structure
+  free(data->ray);              // free the ray structure
+  //  free_textures(data->textures); // free the textures
+  mlx_delete_image(data->mlx_p, data->img); // delete the image
+  mlx_close_window(data->mlx_p);            // close the window
+  mlx_terminate(data->mlx_p);               // terminate the mlx pointer
+  printf("Game closed\n");                  // print the message
+  exit(0);                                  // exit the game
 }
 
 // ################################################################################//
@@ -57,112 +57,112 @@ void ft_exit(t_mlx *mlx) // exit the game
 // ##############################//
 // ################################################################################//
 
-void ft_reles(mlx_key_data_t keydata, t_mlx *mlx) // release the key
+void ft_reles(mlx_key_data_t keydata, t_data *data) // release the key
 {
   if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
-    mlx->ply->lateral_move = L_NONE;
+    data->ply->lateral_move = L_NONE;
   else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
-    mlx->ply->lateral_move = L_NONE;
+    data->ply->lateral_move = L_NONE;
   else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
-    mlx->ply->longitudinal_move = NONE;
+    data->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
-    mlx->ply->longitudinal_move = NONE;
+    data->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-    mlx->ply->rotation = R_NONE;
+    data->ply->rotation = R_NONE;
   else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
-    mlx->ply->rotation = R_NONE;
+    data->ply->rotation = R_NONE;
 }
 
 void mlx_key(mlx_key_data_t keydata, void *ml) // key press
 {
-  t_mlx *mlx;
+  t_data *data;
 
-  mlx = ml;
+  data = ml;
   if (keydata.key == MLX_KEY_ESCAPE &&
       (keydata.action == MLX_PRESS ||
        keydata.action == MLX_REPEAT)) // exit the game
-    ft_exit(mlx);
+    ft_exit(data);
   else if (keydata.key == MLX_KEY_A &&
            (keydata.action == MLX_PRESS)) // move left
-    mlx->ply->lateral_move = L_LEFT;
+    data->ply->lateral_move = L_LEFT;
   else if (keydata.key == MLX_KEY_D &&
            (keydata.action == MLX_PRESS)) // move right
-    mlx->ply->lateral_move = L_RIGHT;
+    data->ply->lateral_move = L_RIGHT;
   else if (keydata.key == MLX_KEY_S &&
            (keydata.action == MLX_PRESS)) // move down
-    mlx->ply->longitudinal_move = BACKWARD;
+    data->ply->longitudinal_move = BACKWARD;
   else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS) // move up
-    mlx->ply->longitudinal_move = FORWARD;
+    data->ply->longitudinal_move = FORWARD;
   else if (keydata.key == MLX_KEY_LEFT &&
            keydata.action == MLX_PRESS) // rotate left
-    mlx->ply->rotation = R_LEFT;
+    data->ply->rotation = R_LEFT;
   else if (keydata.key == MLX_KEY_RIGHT &&
            keydata.action == MLX_PRESS) // rotate right
-    mlx->ply->rotation = R_RIGHT;
-  ft_reles(keydata, mlx); // release the key
+    data->ply->rotation = R_RIGHT;
+  ft_reles(keydata, data); // release the key
 }
 
-void rotate_player(t_mlx *mlx, int i) // rotate the player
+void rotate_player(t_data *data, int i) // rotate the player
 {
   if (i == 1) {
-    mlx->ply->orientation_angle_rd += PLAYER_ROTATION_SPEED; // rotate right
-    if (mlx->ply->orientation_angle_rd > 2 * M_PI)
-      mlx->ply->orientation_angle_rd -= 2 * M_PI;
+    data->ply->orientation_angle_rd += PLAYER_ROTATION_SPEED; // rotate right
+    if (data->ply->orientation_angle_rd > 2 * M_PI)
+      data->ply->orientation_angle_rd -= 2 * M_PI;
   } else {
-    mlx->ply->orientation_angle_rd -= PLAYER_ROTATION_SPEED; // rotate left
-    if (mlx->ply->orientation_angle_rd < 0)
-      mlx->ply->orientation_angle_rd += 2 * M_PI;
+    data->ply->orientation_angle_rd -= PLAYER_ROTATION_SPEED; // rotate left
+    if (data->ply->orientation_angle_rd < 0)
+      data->ply->orientation_angle_rd += 2 * M_PI;
   }
 }
 
-void move_player(t_mlx *mlx, double move_x, double move_y) // move the player
+void move_player(t_data *data, double move_x, double move_y) // move the player
 {
   int map_grid_y;
   int map_grid_x;
   int new_x;
   int new_y;
 
-  new_x = roundf(mlx->ply->x_pos_px + move_x); // get the new x position
-  new_y = roundf(mlx->ply->y_pos_px + move_y); // get the new y position
-  map_grid_x = (new_x / TILE_SIZE);            // get the x position in the map
-  map_grid_y = (new_y / TILE_SIZE);            // get the y position in the map
-  if (mlx->map->grid[map_grid_y][map_grid_x] != '1' &&
-      (mlx->map->grid[map_grid_y][mlx->ply->x_pos_px / TILE_SIZE] != '1' &&
-       mlx->map->grid[mlx->ply->y_pos_px / TILE_SIZE][map_grid_x] !=
+  new_x = roundf(data->ply->x_pos_px + move_x); // get the new x position
+  new_y = roundf(data->ply->y_pos_px + move_y); // get the new y position
+  map_grid_x = (new_x / TILE_SIZE);             // get the x position in the map
+  map_grid_y = (new_y / TILE_SIZE);             // get the y position in the map
+  if (data->map->grid[map_grid_y][map_grid_x] != '1' &&
+      (data->map->grid[map_grid_y][data->ply->x_pos_px / TILE_SIZE] != '1' &&
+       data->map->grid[data->ply->y_pos_px / TILE_SIZE][map_grid_x] !=
            '1')) // check the wall hit and the diagonal wall hit
   {
-    mlx->ply->x_pos_px = new_x; // move the player
-    mlx->ply->y_pos_px = new_y; // move the player
+    data->ply->x_pos_px = new_x; // move the player
+    data->ply->y_pos_px = new_y; // move the player
   }
 }
 
-void hook(t_mlx *mlx, double move_x, double move_y) // hook the player
+void hook(t_data *data, double move_x, double move_y) // hook the player
 {
-  if (mlx->ply->rotation == R_RIGHT)
-    rotate_player(mlx, 1);
-  if (mlx->ply->rotation == R_LEFT)
-    rotate_player(mlx, 0);
-  if (mlx->ply->lateral_move == L_RIGHT) // move right
+  if (data->ply->rotation == R_RIGHT)
+    rotate_player(data, 1);
+  if (data->ply->rotation == R_LEFT)
+    rotate_player(data, 0);
+  if (data->ply->lateral_move == L_RIGHT) // move right
   {
-    move_x = -sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
-    move_y = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_x = -sin(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = cos(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->lateral_move == L_LEFT) // move left
+  if (data->ply->lateral_move == L_LEFT) // move left
   {
-    move_x = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
-    move_y = -cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_x = sin(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = -cos(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->longitudinal_move == FORWARD) // move up
+  if (data->ply->longitudinal_move == FORWARD) // move up
   {
-    move_x = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
-    move_y = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_x = cos(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = sin(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->longitudinal_move == BACKWARD) // move down
+  if (data->ply->longitudinal_move == BACKWARD) // move down
   {
-    move_x = -cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
-    move_y = -sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_x = -cos(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+    move_y = -sin(data->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  move_player(mlx, move_x, move_y); // move the player
+  move_player(data, move_x, move_y); // move the player
 }
 
 // #####################################################################################//
@@ -170,7 +170,7 @@ void hook(t_mlx *mlx, double move_x, double move_y) // hook the player
 // ##############################//
 // #####################################################################################//
 
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) // put the pixel
+void my_mlx_pixel_put(t_data *data, int x, int y, int color) // put the pixel
 {
   if (x < 0) // check the x position
     return;
@@ -180,7 +180,7 @@ void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) // put the pixel
     return;
   else if (y >= WINDOW_HEIGHT)
     return;
-  mlx_put_pixel(mlx->img, x, y, color); // put the pixel
+  mlx_put_pixel(data->img, x, y, color); // put the pixel
 }
 
 float nor_angle(float angle) // normalize the angle
@@ -192,7 +192,7 @@ float nor_angle(float angle) // normalize the angle
   return (angle);
 }
 
-void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix,
+void draw_floor_ceiling(t_data *data, int ray, int t_pix,
                         int b_pix) // draw the floor and the ceiling
 {
   int i;
@@ -202,57 +202,58 @@ void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix,
 
   i = b_pix;
   while (i < WINDOW_HEIGHT)
-    my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
+    my_mlx_pixel_put(data, ray, i++, 0xB99470FF); // floor
   i = 0;
   while (i < t_pix)
-    my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
+    my_mlx_pixel_put(data, ray, i++, 0x89CFF3FF); // ceiling
 }
 
-int get_color(t_mlx *mlx,
+int get_color(t_data *data,
               int collision_orientation) // get the color of the wall
 {
-  mlx->ray->angle_rd = nor_angle(mlx->ray->angle_rd); // normalize the angle
+  data->ray->angle_rd = nor_angle(data->ray->angle_rd); // normalize the angle
   if (collision_orientation == VERTICAL) {
-    if (mlx->ray->angle_rd > M_PI / 2 && mlx->ray->angle_rd < 3 * (M_PI / 2))
+    if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI / 2))
       return (0xB5B5B5FF); // west wall
     else
       return (0xB5B5B5FF); // east wall
   } else {
-    if (mlx->ray->angle_rd > 0 && mlx->ray->angle_rd < M_PI)
+    if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
       return (0xF5F5F5FF); // south wall
     else
       return (0xF5F5F5FF); // north wall
   }
 }
 
-void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix) // draw the wall
+void draw_wall(t_data *data, int ray, int t_pix, int b_pix) // draw the wall
 {
   int color;
 
-  color = get_color(mlx, mlx->ray->wall_collision_orientation);
+  color = get_color(data, data->ray->wall_collision_orientation);
   while (t_pix < b_pix)
-    my_mlx_pixel_put(mlx, ray, t_pix++, color);
+    my_mlx_pixel_put(data, ray, t_pix++, color);
 }
 
-void render_wall(t_mlx *mlx, int ray) // render the wall
+void render_wall(t_data *data, int ray) // render the wall
 {
   double wall_h;
   double b_pix;
   double t_pix;
 
-  mlx->ray->length *= cos(nor_angle(
-      mlx->ray->angle_rd - mlx->ply->orientation_angle_rd)); // fix the fisheye
+  data->ray->length *=
+      cos(nor_angle(data->ray->angle_rd -
+                    data->ply->orientation_angle_rd)); // fix the fisheye
   wall_h =
-      (TILE_SIZE / mlx->ray->length) *
-      ((WINDOW_WIDTH / 2) / tan(mlx->ply->fov_rd / 2)); // get the wall height
-  b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);           // get the bottom pixel
-  t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);           // get the top pixel
+      (TILE_SIZE / data->ray->length) *
+      ((WINDOW_WIDTH / 2) / tan(data->ply->fov_rd / 2)); // get the wall height
+  b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);            // get the bottom pixel
+  t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);            // get the top pixel
   if (b_pix > WINDOW_HEIGHT) // check the bottom pixel
     b_pix = WINDOW_HEIGHT;
   if (t_pix < 0) // check the top pixel
     t_pix = 0;
-  draw_wall(mlx, ray, t_pix, b_pix);          // draw the wall
-  draw_floor_ceiling(mlx, ray, t_pix, b_pix); // draw the floor and the ceiling
+  draw_wall(data, ray, t_pix, b_pix);          // draw the wall
+  draw_floor_ceiling(data, ray, t_pix, b_pix); // draw the floor and the ceiling
 }
 
 // #################################################################################//
@@ -295,7 +296,7 @@ int inter_check(float angle, float *inter, float *step,
   return (1);
 }
 
-int wall_hit(float x, float y, t_mlx *mlx) // check the wall hit
+int wall_hit(float x, float y, t_data *data) // check the wall hit
 {
   int x_m;
   int y_m;
@@ -304,15 +305,15 @@ int wall_hit(float x, float y, t_mlx *mlx) // check the wall hit
     return (0);
   x_m = floor(x / TILE_SIZE); // get the x position in the map
   y_m = floor(y / TILE_SIZE); // get the y position in the map
-  if ((y_m >= mlx->map->h_map || x_m >= mlx->map->w_map))
+  if ((y_m >= data->map->h_map || x_m >= data->map->w_map))
     return (0);
-  if (mlx->map->grid[y_m] && x_m <= (int)strlen(mlx->map->grid[y_m]))
-    if (mlx->map->grid[y_m][x_m] == '1')
+  if (data->map->grid[y_m] && x_m <= (int)strlen(data->map->grid[y_m]))
+    if (data->map->grid[y_m][x_m] == '1')
       return (0);
   return (1);
 }
 
-float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
+float get_h_inter(t_data *data, float angl) // get the horizontal intersection
 {
   float h_x;
   float h_y; // y-coordinate of the horizontal intersection point of the ray
@@ -326,23 +327,23 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
   // calculates the y-coordinate of the bottom edge of the grid cell in which
   // the player is currently located, effectively aligning the intersection
   // point with the horizontal grid lines in the game world
-  h_y = floor(mlx->ply->y_pos_px / TILE_SIZE) * TILE_SIZE;
+  h_y = floor(data->ply->y_pos_px / TILE_SIZE) * TILE_SIZE;
   pixel = inter_check(angl, &h_y, &y_step, 1);
-  h_x = mlx->ply->x_pos_px + (h_y - mlx->ply->y_pos_px) / tan(angl);
+  h_x = data->ply->x_pos_px + (h_y - data->ply->y_pos_px) / tan(angl);
   if ((unit_circle(angl, 'y') && x_step > 0) ||
       (!unit_circle(angl, 'y') && x_step < 0)) // check x_step value
     x_step *= -1;
   while (wall_hit(h_x, h_y - pixel,
-                  mlx)) // check the wall hit whit the pixel value
+                  data)) // check the wall hit whit the pixel value
   {
     h_x += x_step;
     h_y += y_step;
   }
-  return (sqrt(pow(h_x - mlx->ply->x_pos_px, 2) +
-               pow(h_y - mlx->ply->y_pos_px, 2))); // get the distance
+  return (sqrt(pow(h_x - data->ply->x_pos_px, 2) +
+               pow(h_y - data->ply->y_pos_px, 2))); // get the distance
 }
 
-float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
+float get_v_inter(t_data *data, float angl) // get the vertical intersection
 {
   float v_x;
   float v_y;
@@ -352,48 +353,49 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
 
   x_step = TILE_SIZE;
   y_step = TILE_SIZE * tan(angl);
-  v_x = floor(mlx->ply->x_pos_px / TILE_SIZE) * TILE_SIZE;
+  v_x = floor(data->ply->x_pos_px / TILE_SIZE) * TILE_SIZE;
   pixel = inter_check(angl, &v_x, &x_step,
                       0); // check the intersection and get the pixel value
-  v_y = mlx->ply->y_pos_px + (v_x - mlx->ply->x_pos_px) * tan(angl);
+  v_y = data->ply->y_pos_px + (v_x - data->ply->x_pos_px) * tan(angl);
   if ((unit_circle(angl, 'x') && y_step < 0) ||
       (!unit_circle(angl, 'x') && y_step > 0)) // check y_step value
     y_step *= -1;
   while (wall_hit(v_x - pixel, v_y,
-                  mlx)) // check the wall hit whit the pixel value
+                  data)) // check the wall hit whit the pixel value
   {
     v_x += x_step;
     v_y += y_step;
   }
-  return (sqrt(pow(v_x - mlx->ply->x_pos_px, 2) +
-               pow(v_y - mlx->ply->y_pos_px, 2))); // get the distance
+  return (sqrt(pow(v_x - data->ply->x_pos_px, 2) +
+               pow(v_y - data->ply->y_pos_px, 2))); // get the distance
 }
 
-void cast_rays(t_mlx *mlx) // cast the rays
+void cast_rays(t_data *data) // cast the rays
 {
   double h_inter;
   double v_inter;
   int ray;
 
   ray = 0;
-  mlx->ray->angle_rd = mlx->ply->orientation_angle_rd -
-                       (mlx->ply->fov_rd / 2); // the start angle
-  while (ray < WINDOW_WIDTH)                   // loop for the rays
+  data->ray->angle_rd = data->ply->orientation_angle_rd -
+                        (data->ply->fov_rd / 2); // the start angle
+  while (ray < WINDOW_WIDTH)                     // loop for the rays
   {
-    mlx->ray->wall_collision_orientation = VERTICAL;
+    data->ray->wall_collision_orientation = VERTICAL;
     h_inter = get_h_inter(
-        mlx, nor_angle(mlx->ray->angle_rd)); // get the horizontal intersection
+        data,
+        nor_angle(data->ray->angle_rd)); // get the horizontal intersection
     v_inter = get_v_inter(
-        mlx, nor_angle(mlx->ray->angle_rd)); // get the vertical intersection
-    if (v_inter <= h_inter)                  // check the distance
-      mlx->ray->length = v_inter;            // get the distance
+        data, nor_angle(data->ray->angle_rd)); // get the vertical intersection
+    if (v_inter <= h_inter)                    // check the distance
+      data->ray->length = v_inter;             // get the distance
     else {
-      mlx->ray->length = h_inter; // get the distance
-      mlx->ray->wall_collision_orientation = HORIZONTAL;
+      data->ray->length = h_inter; // get the distance
+      data->ray->wall_collision_orientation = HORIZONTAL;
     }
-    render_wall(mlx, ray);                                   // render the wall
-    ray++;                                                   // next ray
-    mlx->ray->angle_rd += (mlx->ply->fov_rd / WINDOW_WIDTH); // next angle
+    render_wall(data, ray); // render the wall
+    ray++;                  // next ray
+    data->ray->angle_rd += (data->ply->fov_rd / WINDOW_WIDTH); // next angle
   }
 }
 
@@ -404,50 +406,50 @@ void cast_rays(t_mlx *mlx) // cast the rays
 
 void game_loop(void *ml) // game loop
 {
-  t_mlx *mlx;
+  t_data *data;
 
-  mlx = ml;                               // cast to the mlx structure
-  mlx_delete_image(mlx->mlx_p, mlx->img); // delete the image
-  mlx->img = mlx_new_image(mlx->mlx_p, WINDOW_WIDTH,
-                           WINDOW_HEIGHT); // create new image
-  hook(mlx, 0, 0);                         // hook the player
-  cast_rays(mlx);                          // cast the rays
-  mlx_image_to_window(mlx->mlx_p, mlx->img, 0,
+  data = ml;                                // cast to the data structure
+  mlx_delete_image(data->mlx_p, data->img); // delete the image
+  data->img = mlx_new_image(data->mlx_p, WINDOW_WIDTH,
+                            WINDOW_HEIGHT); // create new image
+  hook(data, 0, 0);                         // hook the player
+  cast_rays(data);                          // cast the rays
+  mlx_image_to_window(data->mlx_p, data->img, 0,
                       0); // put the image to the window
 }
 
-void init_the_player(t_mlx mlx) // init the player structure
+void init_the_player(t_data data) // init the player structure
 {
-  mlx.ply->x_pos_px =
-      mlx.map->p_x * TILE_SIZE +
+  data.ply->x_pos_px =
+      data.map->p_x * TILE_SIZE +
       TILE_SIZE / 2; // player x position in pixels in the center of the tile
-  mlx.ply->y_pos_px =
-      mlx.map->p_y * TILE_SIZE +
+  data.ply->y_pos_px =
+      data.map->p_y * TILE_SIZE +
       TILE_SIZE / 2; // player y position in pixels in the center of the tile
-  mlx.ply->fov_rd = (FOV * M_PI) / 180; // field of view in radians
-  mlx.ply->orientation_angle_rd = M_PI; // player angle
+  data.ply->fov_rd = (FOV * M_PI) / 180; // field of view in radians
+  data.ply->orientation_angle_rd = M_PI; // player angle
   // the rest of the variables are initialized to zero by calloc
 }
 
 void start_the_game(t_map *map, char *map_argv) // start the game
 {
-  t_mlx mlx;
+  t_data data;
 
   (void)map_argv;
-  // load_textures(&mlx, map_argv);
+  // load_textures(&data, map_argv);
 
-  mlx.map = map; // init the mlx structure
-  mlx.ply =
+  data.map = map; // init the data structure
+  data.ply =
       calloc(1, sizeof(t_player)); // init the player structure i'm using calloc
                                    // to initialize the variables to zero
-  mlx.ray = calloc(1, sizeof(t_ray)); // init the ray structure
-  mlx.mlx_p =
-      mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0); // init the mlx pointer
-  init_the_player(mlx);                       // init the player structure
-  mlx_loop_hook(mlx.mlx_p, &game_loop, &mlx); // game loop
-  mlx_key_hook(mlx.mlx_p, &mlx_key, &mlx);    // key press and release
-  mlx_loop(mlx.mlx_p);                        // mlx loop
-  ft_exit(&mlx);                              // exit the game
+  data.ray = calloc(1, sizeof(t_ray)); // init the ray structure
+  data.mlx_p = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D",
+                        0);                     // init the data pointer
+  init_the_player(data);                        // init the player structure
+  mlx_loop_hook(data.mlx_p, &game_loop, &data); // game loop
+  mlx_key_hook(data.mlx_p, &mlx_key, &data);    // key press and release
+  mlx_loop(data.mlx_p);                         // data loop
+  ft_exit(&data);                               // exit the game
 }
 
 // ################################################################################################//
