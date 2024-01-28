@@ -1,6 +1,14 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
+
+
+
+
+//------------------------former.h from leonard/textures branch------------------------//
+
+
+
 /**
  * @file cub3d.h
  * @brief Header file for the Cub3D game.
