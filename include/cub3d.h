@@ -6,8 +6,8 @@
  * @brief Header file for the Cub3D game.
  */
 
-#include "lib/MLX42/include/MLX42/MLX42.h"
-#include "lib/libft/src/libft.h"
+#include "MLX42.h"
+#include "libft.h"
 #include <fcntl.h>
 #include <math.h>
 #include <stdio.h>
@@ -49,9 +49,9 @@ typedef struct s_textures {
  * This enum defines possible states of rotation for the player.
  */
 typedef enum e_rotation {
-  NONE = 0,  /**< No rotation. */
-  RIGHT = 1, /**< Rotate to the right. */
-  LEFT = 2   /**< Rotate to the left. */
+  R_NONE = 0,  /**< No rotation. */
+  R_RIGHT = 1, /**< Rotate to the right. */
+  R_LEFT = 2   /**< Rotate to the left. */
 } t_rotation;
 
 /**
@@ -62,9 +62,9 @@ typedef enum e_rotation {
  * relative to their current orientation.
  */
 typedef enum t_lateral_move {
-  NONE = 0,  /**< No lateral movement. */
-  RIGHT = 1, /**< Move to the right relative to player's orientation. */
-  LEFT = 2   /**< Move to the left relative to player's orientation. */
+  L_NONE = 0,  /**< No lateral movement. */
+  L_RIGHT = 1, /**< Move to the right relative to player's orientation. */
+  L_LEFT = 2   /**< Move to the left relative to player's orientation. */
 } t_lateral_move;
 
 /**
@@ -331,6 +331,5 @@ t_map *init_argumet();
  * @brief Main function to initialize the game and start the main loop.
  * @return 0 if the program runs successfully.
  */
-int main();
 
 #endif // CUB3D_H

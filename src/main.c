@@ -60,17 +60,17 @@ void ft_exit(t_mlx *mlx) // exit the game
 void ft_reles(mlx_key_data_t keydata, t_mlx *mlx) // release the key
 {
   if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
-    mlx->ply->lateral_movement = NONE;
+    mlx->ply->lateral_move = L_NONE;
   else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
-    mlx->ply->lateral_movement = NONE;
+    mlx->ply->lateral_move = L_NONE;
   else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
     mlx->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
     mlx->ply->longitudinal_move = NONE;
   else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-    mlx->ply->rotation = NONE;
+    mlx->ply->rotation = R_NONE;
   else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
-    mlx->ply->rotation = NONE;
+    mlx->ply->rotation = R_NONE;
 }
 
 void mlx_key(mlx_key_data_t keydata, void *ml) // key press
@@ -84,10 +84,10 @@ void mlx_key(mlx_key_data_t keydata, void *ml) // key press
     ft_exit(mlx);
   else if (keydata.key == MLX_KEY_A &&
            (keydata.action == MLX_PRESS)) // move left
-    mlx->ply->lateral_movement = LEFT;
+    mlx->ply->lateral_move = L_LEFT;
   else if (keydata.key == MLX_KEY_D &&
            (keydata.action == MLX_PRESS)) // move right
-    mlx->ply->lateral_movement = RIGHT;
+    mlx->ply->lateral_move = L_RIGHT;
   else if (keydata.key == MLX_KEY_S &&
            (keydata.action == MLX_PRESS)) // move down
     mlx->ply->longitudinal_move = BACKWARD;
@@ -95,10 +95,10 @@ void mlx_key(mlx_key_data_t keydata, void *ml) // key press
     mlx->ply->longitudinal_move = FORWARD;
   else if (keydata.key == MLX_KEY_LEFT &&
            keydata.action == MLX_PRESS) // rotate left
-    mlx->ply->rotation = LEFT;
+    mlx->ply->rotation = R_LEFT;
   else if (keydata.key == MLX_KEY_RIGHT &&
            keydata.action == MLX_PRESS) // rotate right
-    mlx->ply->rotation = RIGHT;
+    mlx->ply->rotation = R_RIGHT;
   ft_reles(keydata, mlx); // release the key
 }
 
@@ -138,21 +138,21 @@ void move_player(t_mlx *mlx, double move_x, double move_y) // move the player
 
 void hook(t_mlx *mlx, double move_x, double move_y) // hook the player
 {
-  if (mlx->ply->rotation == RIGHT)
+  if (mlx->ply->rotation == R_RIGHT)
     rotate_player(mlx, 1);
-  if (mlx->ply->rotation == LEFT)
+  if (mlx->ply->rotation == R_LEFT)
     rotate_player(mlx, 0);
-  if (mlx->ply->lateral_movement == RIGHT) // move right
+  if (mlx->ply->lateral_move == L_RIGHT) // move right
   {
     move_x = -sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
     move_y = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->lateral_movement == LEFT) // move left
+  if (mlx->ply->lateral_move == L_LEFT) // move left
   {
     move_x = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
     move_y = -cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
   }
-  if (mlx->ply->longitudinal_move == FOIRWARD) // move up
+  if (mlx->ply->longitudinal_move == FORWARD) // move up
   {
     move_x = cos(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
     move_y = sin(mlx->ply->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
