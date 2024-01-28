@@ -118,6 +118,8 @@ static mlx_texture_t *texture_selection(t_data *data)
 	}
 }
 
+//I am really sorry for being a rude, self accepting teammate
+
 
 void init_ray(t_data *data)
 {
