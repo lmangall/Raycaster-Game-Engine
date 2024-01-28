@@ -211,7 +211,7 @@ int						load_textures(t_data *data, char *map_str);
  * @brief Function to handle cleanup and exit the game.
  * @param data Pointer to the t_data structure.
  */
-void					ft_exit(t_data *data);
+void					free_exit(t_data *data);
 
 /**
  * @brief Function to handle key release events.
