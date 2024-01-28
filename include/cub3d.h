@@ -47,11 +47,7 @@ typedef struct s_textures {
  * @param R_RIGHT Rotate to the right.
  * @param R_LEFT Rotate to the left.
  */
-typedef enum e_rotation {
-  R_NONE = 0,
-  R_RIGHT = 1,
-  R_LEFT = 2
-} t_rotation;
+typedef enum e_rotation { R_NONE = 0, R_RIGHT = 1, R_LEFT = 2 } t_rotation;
 
 /**
  * @brief Enum for player's lateral movement direction.
@@ -63,13 +59,11 @@ typedef enum e_rotation {
  * @param L_RIGHT Move to the right relative to player's orientation.
  * @param L_LEFT Move to the left relative to player's orientation.
  */
-typedef enum t_lateral_move
-{
+typedef enum t_lateral_move {
   L_NONE = 0,
   L_RIGHT = 1,
   L_LEFT = 2
 } t_lateral_move;
-
 
 /**
  * @enum t_longitudinal_move
@@ -126,7 +120,8 @@ typedef enum e_wall_collision {
  * @param vertical_x X-coordinate of vertical intersection point.
  * @param vertical_y Y-coordinate of vertical intersection point.
  * @param distance Distance to the wall.
- * @param wall_orientation Flag indicating wall orientation (horizontal/vertical).
+ * @param wall_orientation Flag indicating wall orientation
+ * (horizontal/vertical).
  */
 typedef struct s_ray {
   double angle_rd; /**< Ray angle. */
@@ -135,18 +130,18 @@ typedef struct s_ray {
   //   int flag;        /**< Flag for the wall. */
   t_wall_collision
       wall_collision_orientation; /**< Orientation of the wall collision. */
-//below is leonard/texture branch version, update name to Stephano's version
-    double  horizontal_x;
-    double  horizontal_y;
-    double  vertical_x;
-    double  vertical_y;
-    int     wall_orientation;
-    int     is_wall;
-    int     screen_x;
-    mlx_texture_t *current_texture;
-    int     wall_h;
-    int     t_pix;
-    int     b_pix;
+  // below is leonard/texture branch version, update name to Stephano's version
+  double horizontal_x;
+  double horizontal_y;
+  double vertical_x;
+  double vertical_y;
+  int wall_orientation;
+  int is_wall;
+  int screen_x;
+  mlx_texture_t *current_texture;
+  int wall_h;
+  int t_pix;
+  int b_pix;
 
 } t_ray;
 
@@ -200,7 +195,7 @@ int load_textures(t_data *data, char *map_str);
  * @brief Function to handle cleanup and exit the game.
  * @param data Pointer to the t_data structure.
  */
-void ft_exit(t_data *data);
+void free_exit(t_data *data);
 
 /**
  * @brief Function to handle key release events.
@@ -365,7 +360,6 @@ void init_the_player(t_data data);
  */
 void start_the_game(t_map *map, char *map_argv);
 
-
 /**
  * @brief Main function to initialize the game and start the main loop.
  * @return 0 if the program runs successfully.
@@ -376,8 +370,8 @@ void start_the_game(t_map *map, char *map_argv);
  *
  * This function initializes the parameters used in the raycasting process. It
  * calculates the wall height, top and bottom pixels of the wall on the screen,
- * and sets the current texture for rendering. Additionally, it adjusts the ray's
- * distance to correct for fisheye distortion.
+ * and sets the current texture for rendering. Additionally, it adjusts the
+ * ray's distance to correct for fisheye distortion.
  *
  * @param mlx The main data structure.
  */
