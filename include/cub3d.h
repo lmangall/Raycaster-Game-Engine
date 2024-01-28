@@ -136,14 +136,14 @@ typedef struct s_map {
 /**
  * @brief Structure to hold MLX-related elements and game data.
  */
-typedef struct s_mlx {
+typedef struct s_data {
   mlx_image_t *img;     /**< Pointer to the image. */
-  mlx_t *mlx_p;         /**< Pointer to the MLX instance. */
+  mlx_t *mlx;           /**< Pointer to the MLX instance. */
   t_ray *ray;           /**< Pointer to the ray structure. */
   t_map *map;           /**< Pointer to the map structure. */
-  t_player *ply;        /**< Pointer to the player structure. */
+  t_player *player;     /**< Pointer to the player structure. */
   t_textures *textures; /**< Pointer to the textures structure. */
-} t_mlx;
+} t_data;
 
 // PARSER:
 void parse_map(char *argv, t_map *map);
@@ -164,60 +164,61 @@ char *cub_to_str(char *map);
  */
 char *get_identifier_value(char *val, char *identifier);
 
-int load_textures(t_mlx *mlx, char *map_str);
+int load_textures(t_data *data, char *map_str);
 
 /**
  * @brief Function to handle cleanup and exit the game.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  */
-void ft_exit(t_mlx *mlx);
+void ft_exit(t_data *data);
 
 /**
  * @brief Function to handle key release events.
  * @param keydata Key data for the pressed key.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  */
-void ft_reles(mlx_key_data_t keydata, t_mlx *mlx);
+void ft_reles(mlx_key_data_t keydata, t_data *data);
 
 /**
  * @brief Function to handle key press events.
  * @param keydata Key data for the pressed key.
- * @param ml Pointer to the t_mlx structure.
+ * @param tmp Extra param we can pass to the mlx_key hook that will be assigned
+ * to the t_data.
  */
-void mlx_key(mlx_key_data_t keydata, void *ml);
+void mlx_key(mlx_key_data_t keydata, void *tmp);
 
 /**
  * @brief Function to rotate the player based on key input.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void rotate_player(t_mlx *mlx, int i);
+void rotate_player(t_data *data, int i);
 
 /**
  * @brief Function to move the player based on key input.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void move_player(t_mlx *mlx, double move_x, double move_y);
+void move_player(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to handle player movement and rotation based on key input.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void hook(t_mlx *mlx, double move_x, double move_y);
+void hook(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to put a pixel on the screen.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param x X-coordinate of the pixel.
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+void my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
@@ -228,43 +229,42 @@ float nor_angle(float angle);
 
 /**
  * @brief Function to draw the floor and ceiling of the game.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
  */
-void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix);
+void draw_floor_ceiling(t_data *data, int ray, int t_pix, int b_pix);
 
 /**
  * @brief Function to get the color of the wall based on its orientation.
- * @param mlx Pointer to the t_mlx structure.
- * @param flag Flag indicating wall orientation (0 for vertical, 1 for
- * horizontal).
+ * @param data Pointer to the t_data structure.
+ * @param colision_orientation Flag indicating wall orientation).
  * @return Color of the wall.
  */
-int get_color(t_mlx *mlx, int flag);
+int get_color(t_data *data, int collision_orientation);
 
 /**
  * @brief Function to draw a wall on the screen.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
  * @param t_pix Top pixel of the wall.
  * @param b_pix Bottom pixel of the wall.
  */
-void draw_wall(t_mlx *mlx, int ray, int t_pix, int b_pix);
+void draw_wall(t_data *data, int ray, int t_pix, int b_pix);
 
 /**
  * @brief Function to render a wall on the screen.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
  */
-void render_wall(t_mlx *mlx, int ray);
+void render_wall(t_data *data, int ray);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  */
-void cast_rays(t_mlx *mlx);
+void cast_rays(t_data *data);
 
 /**
  * @brief Function to check if a point lies in a specified quadrant of the unit
@@ -292,45 +292,45 @@ int inter_check(float angle, float *inter, float *step, int is_horizon);
  * @brief Function to check if a wall is hit based on coordinates.
  * @param x X-coordinate of the point.
  * @param y Y-coordinate of the point.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @return 1 if the wall is hit, 0 otherwise.
  */
-int wall_hit(float x, float y, t_mlx *mlx);
+int wall_hit(float x, float y, t_data *data);
 
 /**
  * @brief Function to get the horizontal intersection point of a wall.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param angl Angle of the ray.
  * @return Horizontal intersection distance.
  */
-float get_h_inter(t_mlx *mlx, float angl);
+float get_h_inter(t_data *data, float angl);
 
 /**
  * @brief Function to get the vertical intersection point of a wall.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
  */
-float get_v_inter(t_mlx *mlx, float angl);
+float get_v_inter(t_data *data, float angl);
 
 /**
  * @brief Function to cast rays for rendering walls in the game.
- * @param mlx Pointer to the t_mlx structure.
+ * @param data Pointer to the t_data structure.
  */
-void cast_rays(t_mlx *mlx);
+void cast_rays(t_data *data);
 
 /**
  * @brief Game loop function to handle player movement, ray casting, and
  * rendering.
- * @param ml Pointer to the t_mlx structure.
+ * @param tmp Pointer to the t_data structure.
  */
-void game_loop(void *ml);
+void game_loop(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.
- * @param mlx The t_mlx structure.
+ * @param data The t_data structure.
  */
-void init_the_player(t_mlx mlx);
+void init_the_player(t_data data);
 
 /**
  * @brief Function to start the Cub3D game.

@@ -60,10 +60,10 @@ void parse_map(char *argv, t_map *map) {
 
 // 	}
 
-int load_textures(t_mlx *mlx, char *map_str) {
+int load_textures(t_data *data, char *map_str) {
   t_textures *textures;
 
-  textures = mlx->textures;
+  textures = data->textures;
   char *value = get_identifier_value(map_str, "NO");
   textures->north = mlx_load_png(value);
   free(value);
