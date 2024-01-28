@@ -100,6 +100,25 @@ void	render_wall(t_data *data)
 	}
 }
 
+static mlx_texture_t *texture_selection(t_data *data)
+{
+	if (data->ray->is_wall)
+	{
+		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI / 2))
+			return (data->textures->west);
+		else
+			return (data->textures->east);
+	}
+	else
+	{
+		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
+			return (data->textures->south);
+		else
+			return (data->textures->north);
+	}
+}
+
+
 void init_ray(t_data *data)
 {
 	double wall_h;
@@ -114,7 +133,8 @@ void init_ray(t_data *data)
 		b_pix = WINDOW_HEIGHT;
 	if (t_pix < 0)
 		t_pix = 0;
-	data->ray->current_texture = data->textures->north;//change this depending on orientation
+	// data->ray->current_texture = data->textures->north;//change this depending on orientation
+	data->ray->current_texture = texture_selection(data);
 	data->ray->wall_h = wall_h;
 	data->ray->t_pix = t_pix;
 	data->ray->b_pix = b_pix;

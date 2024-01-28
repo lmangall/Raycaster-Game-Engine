@@ -4,14 +4,12 @@ void game_loop(void *tmp) // game loop
 {
   t_data *data;
 
-  data = (t_data *)tmp;                   // cast to the data structure
-  mlx_delete_image(data->mlx, data->img); // delete the image
-  data->img = mlx_new_image(data->mlx, WINDOW_WIDTH,
-                            WINDOW_HEIGHT); // create new image
-  hook(data, 0, 0);                         // hook the player
-  cast_rays(data);                          // cast the rays
-  mlx_image_to_window(data->mlx, data->img, 0,
-                      0); // put the image to the window
+  data = (t_data *)tmp;
+  mlx_delete_image(data->mlx, data->img);
+  data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+  hook(data, 0, 0);
+  raycasting(data);
+  mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
 void init_the_player(t_data data) // init the player structure
@@ -49,8 +47,6 @@ void start_the_game(t_map *map, char *map_argv) // start the game
  mlx_loop(data.mlx); // mlx loop
  ft_exit(&data); // exit the game
 }
-
-void v() { system("leaks mini_cub3D"); }
 
 int main(int argc, char **argv) {
   t_map *data = calloc(1, sizeof(t_map));
