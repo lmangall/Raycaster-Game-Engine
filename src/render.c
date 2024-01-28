@@ -108,13 +108,14 @@ void	render_wall(t_data *data)
 
 static mlx_texture_t	*texture_selection(t_data *data)
 {
+	data->ray->angle_rd = nor_angle(data->ray->angle_rd);
 	if (data->ray->is_wall)
 	{
 		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
 				/ 2))
-			return (data->textures->west);
-		else
 			return (data->textures->east);
+		else
+			return (data->textures->west);
 	}
 	else
 	{
@@ -124,8 +125,6 @@ static mlx_texture_t	*texture_selection(t_data *data)
 			return (data->textures->north);
 	}
 }
-
-// I am really sorry for being a rude, self accepting teammate
 
 void	init_ray(t_data *data)
 {
