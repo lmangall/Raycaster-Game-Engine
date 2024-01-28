@@ -138,10 +138,10 @@ typedef struct s_map {
  */
 typedef struct s_data {
   mlx_image_t *img;     /**< Pointer to the image. */
-  mlx_t *mlx_p;         /**< Pointer to the MLX instance. */
+  mlx_t *mlx;           /**< Pointer to the MLX instance. */
   t_ray *ray;           /**< Pointer to the ray structure. */
   t_map *map;           /**< Pointer to the map structure. */
-  t_player *ply;        /**< Pointer to the player structure. */
+  t_player *player;     /**< Pointer to the player structure. */
   t_textures *textures; /**< Pointer to the textures structure. */
 } t_data;
 
