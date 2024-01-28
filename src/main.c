@@ -39,15 +39,18 @@ void start_the_game(t_map *map, char *map_argv) // start the game
 
   load_textures(&data, map_lines);
 
- data.map = map; // init the data structure
- data.player = calloc(1, sizeof(t_player)); // init the player structure i'm using calloc to initialize the variables to zero
- data.ray = calloc(1, sizeof(t_ray)); // init the ray structure
- data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0); // init the data pointer
- init_the_player(data); // init the player structure
- mlx_loop_hook(data.mlx, &game_loop, &data); // game loop
- mlx_key_hook(data.mlx, &mlx_key, &data); // key press and release
- mlx_loop(data.mlx); // mlx loop
- ft_exit(&data); // exit the game
+  data.map = map; // init the data structure
+  data.player =
+      calloc(1, sizeof(t_player)); // init the player structure i'm using calloc
+                                   // to initialize the variables to zero
+  data.ray = calloc(1, sizeof(t_ray)); // init the ray structure
+  data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D",
+                      0);                     // init the data pointer
+  init_the_player(data);                      // init the player structure
+  mlx_loop_hook(data.mlx, &game_loop, &data); // game loop
+  mlx_key_hook(data.mlx, &mlx_key, &data);    // key press and release
+  mlx_loop(data.mlx);                         // mlx loop
+  free_exit(&data);                           // exit the game
 }
 
 void v() { system("leaks mini_cub3D"); }
