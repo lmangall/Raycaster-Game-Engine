@@ -185,31 +185,6 @@ void move_player(t_mlx *mlx, double move_x, double move_y);
  */
 void hook(t_mlx *mlx, double move_x, double move_y);
 
-/**
- * @brief Function to put a pixel on the screen.
- * @param mlx Pointer to the t_mlx structure.
- * @param x X-coordinate of the pixel.
- * @param y Y-coordinate of the pixel.
- * @param color Color of the pixel.
- */
-void my_mlx_pixel_put(t_mlx *mlx, int y, int color);
-
-/**
- * @brief Function to normalize an angle to be within the range [0, 2 * PI).
- * @param angle Angle to be normalized.
- * @return Normalized angle.
- */
-float nor_angle(float angle);
-
-/**
- * @brief Function to draw the floor and ceiling of the game.
- * @param mlx Pointer to the t_mlx structure.
- * @param ray Ray representing the current column.
- * @param t_pix Top pixel of the wall.
- * @param b_pix Bottom pixel of the wall.
- */
-void render_floor_ceiling(t_mlx *mlx);
-
 // /**
 //  * @brief Function to get the color of the wall based on its orientation.
 //  * @param mlx Pointer to the t_mlx structure.
@@ -218,22 +193,6 @@ void render_floor_ceiling(t_mlx *mlx);
 //  */
 // int get_color(t_mlx *mlx, int is_wall);
 
-/**
- * @brief Function to draw a wall on the screen.
- * @param mlx Pointer to the t_mlx structure.
- * @param ray Ray representing the current column.
- * @param t_pix Top pixel of the wall.
- * @param b_pix Bottom pixel of the wall.
- * @return Color of the wall.
- */
-void render_wall(t_mlx *mlx);
-
-/**
- * @brief Function to render a line (ceiling, wall, floor) on the screen.
- * @param mlx Pointer to the t_mlx structure.
- * @param ray Ray representing the current column.
- */
-void init_ray(t_mlx *mlx);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
@@ -322,27 +281,67 @@ int main();
 
 
 
-///      render.c
+
+
+
+
+
+
+
+
+///----------------  render.c  ----------------///
+
+//        NEEDS TO BE CHANGED
+void my_mlx_pixel_put(t_mlx *mlx, int y, int color);
+
 /**
- * @brief Reverses the byte order of a 32-bit integer.
- *
- * This function takes a 32-bit integer as input and reverses the byte order,
- * resulting in a new integer with the byte order reversed.
- *
- * @param c The 32-bit integer whose byte order needs to be reversed.
- * @return The new integer with the reversed byte order.
- *
- * @note The input integer is treated as an unsigned integer for byte reversal.
- * @warning This function assumes a little-endian architecture for the input integer.
- *          If used on a big-endian system, the result may not be as expected.
- *
- * Example:
- * @code
- * int original = 0x12345678;
- * int reversed = reverse_bytes(original);
- * // reversed will be 0x78563412 on a little-endian system
- * @endcode
+ * @brief Normalizes the given angle to be within the range [0, 2 * M_PI).
  */
-int	reverse_bytes(int c);
+float nor_angle(float angle);
+
+/**
+ * @brief Renders the floor and ceiling of the scene.
+ * @param mlx The main data structure.
+ */
+void render_floor_ceiling(t_mlx *mlx);
+
+/**
+ * @brief Reverses the byte order of an integer.
+ *
+ * This function is used to reverse the byte order of a 32-bit integer. In some
+ * graphics or networking contexts, data is stored in a specific byte order, and
+ * this function is employed to convert data between different byte orders
+ * @param c The integer to reverse.
+ * @return The reversed integer.
+ */
+int reverse_bytes(int c);
+
+/**
+ * @brief Calculates the color of a pixel on a texture.
+ * @param texture The texture.
+ * @param mlx The main data structure.
+ * @param t_pix The pixel position.
+ * @return The color of the pixel.
+ */
+uint32_t pixel_color(mlx_texture_t *texture, t_mlx *mlx, int t_pix);
+
+/**
+ * @brief Renders a wall on the screen.
+ * @param mlx The main data structure.
+ */
+void render_wall(t_mlx *mlx);
+
+/**
+ * @brief Initializes the raycasting parameters.
+ *
+ * This function initializes the parameters used in the raycasting process. It
+ * calculates the wall height, top and bottom pixels of the wall on the screen,
+ * and sets the current texture for rendering. Additionally, it adjusts the ray's
+ * distance to correct for fisheye distortion.
+ *
+ * @param mlx The main data structure.
+ */
+ */
+void init_ray(t_mlx *mlx);
 
 #endif // CUB3D_H
