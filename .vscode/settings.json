@@ -1,12 +1,39 @@
 {
-	"workbench.colorCustomizations": {
-		"activityBar.background": "#332E08",
-		"titleBar.activeBackground": "#48400B",
-		"titleBar.activeForeground": "#FCFBEF"
-	},
-	"files.associations": {
-		"__locale": "c",
-		"__string": "c",
-		"cub3d.h": "c"
-	}
+  "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format",
+    "editor.formatOnSave": true
+    // "editor.formatOnSave": false
+  },
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  "keybindings": [
+    {
+      "key": "ctrl+f",
+      "command": "-editor.action.startFindReplaceAction",
+      "when": "editorFocus"
+    }
+  ],
+  "cSpell.words": ["isregularchar", "isspecialchar", "isvalidvarname", "putendl"],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#203210",
+    "titleBar.activeBackground": "#2D4717",
+    "titleBar.activeForeground": "#F9FCF6"
+  },
+  "files.associations": {
+    ".clang-format-google": "c",
+    "complex": "c",
+    "__bit_reference": "c",
+    "__hash_table": "c",
+    "__split_buffer": "c",
+    "array": "c",
+    "initializer_list": "c",
+    "ios": "c",
+    "string": "c",
+    "string_view": "c",
+    "unordered_map": "c",
+    "vector": "c",
+    "__locale": "c",
+    "__string": "c",
+    "cub3d.h": "c"
+  }
 }
