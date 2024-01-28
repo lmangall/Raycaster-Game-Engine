@@ -6,6 +6,7 @@
 	},
 	"files.associations": {
 		"__locale": "c",
-		"__string": "c"
+		"__string": "c",
+		"cub3d.h": "c"
 	}
 }
