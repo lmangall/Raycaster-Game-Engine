@@ -1,3 +1,0 @@
-print-path:
-	@echo -I$(shell echo $$HOME)/.brew/opt/glfw/include
-

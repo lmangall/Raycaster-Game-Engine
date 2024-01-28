@@ -18,17 +18,18 @@
 //     }
 // }
 
-void free_exit(t_data *data) {
-  int i = 0;
-  while (data->map->grid[i])
-    free(data->map->grid[i++]);
-  free(data->map->grid);
-  free(data->map);
-  free(data->player);
-  free(data->ray);
-  mlx_delete_image(data->mlx, data->img);
-  mlx_close_window(data->mlx);
-  mlx_terminate(data->mlx);
-  ft_putstr_fd("Tschuess\n", 1);
-  exit(0);
+void	free_exit(t_data *data)
+{
+	int i = 0;
+	while (data->map->grid[i])
+		free(data->map->grid[i++]);
+	free(data->map->grid);
+	free(data->map);
+	free(data->player);
+	free(data->ray);
+	mlx_delete_image(data->mlx, data->img);
+	mlx_close_window(data->mlx);
+	mlx_terminate(data->mlx);
+	ft_putstr_fd("Tschuess\n", 1);
+	exit(0);
 }
