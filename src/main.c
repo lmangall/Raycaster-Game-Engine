@@ -11,7 +11,7 @@
 // cc -O3 -ffast-math -framework Cocoa -framework OpenGL -framework IOKit -lglfw
 // (path to libmlx42.a) -L(path to glfw library) cub3d.c -o cub
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 // ##############################################################################//
 // ############################## THE EXITING CODE
@@ -174,43 +174,43 @@ void hook(t_data *data, double move_x, double move_y) // hook the player
 // ##############################//
 // #####################################################################################//
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color) // put the pixel
-{
-  if (x < 0) // check the x position
-    return;
-  else if (x >= WINDOW_WIDTH)
-    return;
-  if (y < 0) // check the y position
-    return;
-  else if (y >= WINDOW_HEIGHT)
-    return;
-  mlx_put_pixel(data->img, x, y, color); // put the pixel
-}
+// void my_mlx_pixel_put(t_data *data, int x, int y, int color) // put the pixel
+// {
+//   if (x < 0) // check the x position
+//     return;
+//   else if (x >= WINDOW_WIDTH)
+//     return;
+//   if (y < 0) // check the y position
+//     return;
+//   else if (y >= WINDOW_HEIGHT)
+//     return;
+//   mlx_put_pixel(data->img, x, y, color); // put the pixel
+// }
 
-float nor_angle(float angle) // normalize the angle
-{
-  if (angle < 0)
-    angle += (2 * M_PI);
-  if (angle > (2 * M_PI))
-    angle -= (2 * M_PI);
-  return (angle);
-}
+// float nor_angle(float angle) // normalize the angle
+// {
+//   if (angle < 0)
+//     angle += (2 * M_PI);
+//   if (angle > (2 * M_PI))
+//     angle -= (2 * M_PI);
+//   return (angle);
+// }
 
-void draw_floor_ceiling(t_data *data, int ray, int t_pix,
-                        int b_pix) // draw the floor and the ceiling
-{
-  int i;
-  int c;
+// void draw_floor_ceiling(t_data *data, int ray, int t_pix,
+//                         int b_pix) // draw the floor and the ceiling
+// {
+//   int i;
+//   int c;
 
-  (void)c;
+//   (void)c;
 
-  i = b_pix;
-  while (i < WINDOW_HEIGHT)
-    my_mlx_pixel_put(data, ray, i++, 0xB99470FF); // floor
-  i = 0;
-  while (i < t_pix)
-    my_mlx_pixel_put(data, ray, i++, 0x89CFF3FF); // ceiling
-}
+//   i = b_pix;
+//   while (i < WINDOW_HEIGHT)
+//     my_mlx_pixel_put(data, ray, i++, 0xB99470FF); // floor
+//   i = 0;
+//   while (i < t_pix)
+//     my_mlx_pixel_put(data, ray, i++, 0x89CFF3FF); // ceiling
+// }
 
 int get_color(t_data *data,
               int collision_orientation) // get the color of the wall
@@ -229,36 +229,36 @@ int get_color(t_data *data,
   }
 }
 
-void draw_wall(t_data *data, int ray, int t_pix, int b_pix) // draw the wall
-{
-  int color;
+// void draw_wall(t_data *data, int ray, int t_pix, int b_pix) // draw the wall
+// {
+//   int color;
 
-  color = get_color(data, data->ray->wall_collision_orientation);
-  while (t_pix < b_pix)
-    my_mlx_pixel_put(data, ray, t_pix++, color);
-}
+//   color = get_color(data, data->ray->wall_collision_orientation);
+//   while (t_pix < b_pix)
+//     my_mlx_pixel_put(data, ray, t_pix++, color);
+// }
 
-void render_wall(t_data *data, int ray) // render the wall
-{
-  double wall_h;
-  double b_pix;
-  double t_pix;
+// void render_wall(t_data *data, int ray) // render the wall
+// {
+//   double wall_h;
+//   double b_pix;
+//   double t_pix;
 
-  data->ray->length *=
-      cos(nor_angle(data->ray->angle_rd -
-                    data->player->orientation_angle_rd)); // fix the fisheye
-  wall_h = (TILE_SIZE / data->ray->length) *
-           ((WINDOW_WIDTH / 2) /
-            tan(data->player->fov_rd / 2));   // get the wall height
-  b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2); // get the bottom pixel
-  t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2); // get the top pixel
-  if (b_pix > WINDOW_HEIGHT)                  // check the bottom pixel
-    b_pix = WINDOW_HEIGHT;
-  if (t_pix < 0) // check the top pixel
-    t_pix = 0;
-  draw_wall(data, ray, t_pix, b_pix);          // draw the wall
-  draw_floor_ceiling(data, ray, t_pix, b_pix); // draw the floor and the ceiling
-}
+//   data->ray->length *=
+//       cos(nor_angle(data->ray->angle_rd -
+//                     data->player->orientation_angle_rd)); // fix the fisheye
+//   wall_h = (TILE_SIZE / data->ray->length) *
+//            ((WINDOW_WIDTH / 2) /
+//             tan(data->player->fov_rd / 2));   // get the wall height
+//   b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2); // get the bottom pixel
+//   t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2); // get the top pixel
+//   if (b_pix > WINDOW_HEIGHT)                  // check the bottom pixel
+//     b_pix = WINDOW_HEIGHT;
+//   if (t_pix < 0) // check the top pixel
+//     t_pix = 0;
+//   draw_wall(data, ray, t_pix, b_pix);          // draw the wall
+//   draw_floor_ceiling(data, ray, t_pix, b_pix); // draw the floor and the ceiling
+// }
 
 // #################################################################################//
 // ############################## THE RAYCASTING CODE
@@ -280,7 +280,8 @@ int unit_circle(float angle, char c) // check the unit circle
 int inter_check(float angle, float *inter, float *step,
                 int is_horizon) // check the intersection
 {
-  if (is_horizon) {
+  if (is_horizon)
+  {
     if (angle > 0 &&
         angle < M_PI) // if we look down on the map (behind the player)
     {
@@ -320,31 +321,27 @@ int wall_hit(float x, float y, t_data *data) // check the wall hit
 float get_h_inter(t_data *data, float angl) // get the horizontal intersection
 {
   float h_x;
-  float h_y; // y-coordinate of the horizontal intersection point of the ray
-             // with a wall.
+  float h_y; //y-coordinate of the horizontal intersection point of the ray with a wall.
   float x_step;
   float y_step;
-  int pixel;
+  int  pixel;
 
   y_step = TILE_SIZE;
   x_step = TILE_SIZE / tan(angl);
-  // calculates the y-coordinate of the bottom edge of the grid cell in which
-  // the player is currently located, effectively aligning the intersection
-  // point with the horizontal grid lines in the game world
+  //calculates the y-coordinate of the bottom edge of the grid cell in which the player is currently located, effectively aligning the intersection point with the horizontal grid lines in the game world
   h_y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
   pixel = inter_check(angl, &h_y, &y_step, 1);
   h_x = data->player->x_pos_px + (h_y - data->player->y_pos_px) / tan(angl);
-  if ((unit_circle(angl, 'y') && x_step > 0) ||
-      (!unit_circle(angl, 'y') && x_step < 0)) // check x_step value
+  if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0)) // check x_step value
     x_step *= -1;
-  while (wall_hit(h_x, h_y - pixel,
-                  data)) // check the wall hit whit the pixel value
+  while (wall_hit(h_x, h_y - pixel, data)) // check the wall hit whit the pixel value
   {
     h_x += x_step;
     h_y += y_step;
   }
-  return (sqrt(pow(h_x - data->player->x_pos_px, 2) +
-               pow(h_y - data->player->y_pos_px, 2))); // get the distance
+  data->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
+  data->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
+  return (sqrt(pow(h_x - data->player->x_pos_px, 2) + pow(h_y - data->player->y_pos_px, 2))); // get the distance
 }
 
 float get_v_inter(t_data *data, float angl) // get the vertical intersection
@@ -353,55 +350,53 @@ float get_v_inter(t_data *data, float angl) // get the vertical intersection
   float v_y;
   float x_step;
   float y_step;
-  int pixel;
+  int  pixel;
 
-  x_step = TILE_SIZE;
+  x_step = TILE_SIZE; 
   y_step = TILE_SIZE * tan(angl);
   v_x = floor(data->player->x_pos_px / TILE_SIZE) * TILE_SIZE;
-  pixel = inter_check(angl, &v_x, &x_step,
-                      0); // check the intersection and get the pixel value
+  pixel = inter_check(angl, &v_x, &x_step, 0); // check the intersection and get the pixel value
   v_y = data->player->y_pos_px + (v_x - data->player->x_pos_px) * tan(angl);
-  if ((unit_circle(angl, 'x') && y_step < 0) ||
-      (!unit_circle(angl, 'x') && y_step > 0)) // check y_step value
+  if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x') && y_step > 0)) // check y_step value
     y_step *= -1;
-  while (wall_hit(v_x - pixel, v_y,
-                  data)) // check the wall hit whit the pixel value
+  while (wall_hit(v_x - pixel, v_y, data)) // check the wall hit whit the pixel value
   {
     v_x += x_step;
     v_y += y_step;
   }
-  return (sqrt(pow(v_x - data->player->x_pos_px, 2) +
-               pow(v_y - data->player->y_pos_px, 2))); // get the distance
+    data->ray->vertical_x = v_x;
+    data->ray->vertical_y = v_y;
+  return (sqrt(pow(v_x - data->player->x_pos_px, 2) + pow(v_y - data->player->y_pos_px, 2))); // get the distance
 }
+
 
 void cast_rays(t_data *data) // cast the rays
 {
   double h_inter;
   double v_inter;
-  int ray;
 
-  ray = 0;
-  data->ray->angle_rd = data->player->orientation_angle_rd -
-                        (data->player->fov_rd / 2); // the start angle
-  while (ray < WINDOW_WIDTH)                        // loop for the rays
+  data->ray->screen_x = 0;
+  data->ray->angle_rd = data->player->orientation_angle_rd - (data->player->fov_rd / 2); // the start angle
+  while (data->ray->screen_x < WINDOW_WIDTH) // loop for the rays
   {
-    data->ray->wall_collision_orientation = VERTICAL;
-    h_inter = get_h_inter(
-        data,
-        nor_angle(data->ray->angle_rd)); // get the horizontal intersection
-    v_inter = get_v_inter(
-        data, nor_angle(data->ray->angle_rd)); // get the vertical intersection
-    if (v_inter <= h_inter)                    // check the distance
-      data->ray->length = v_inter;             // get the distance
-    else {
-      data->ray->length = h_inter; // get the distance
-      data->ray->wall_collision_orientation = HORIZONTAL;
+    data->ray->is_wall = 0; // flag for the wall
+    h_inter = get_h_inter(data, nor_angle(data->ray->angle_rd)); // get the horizontal intersection
+    v_inter = get_v_inter(data, nor_angle(data->ray->angle_rd)); // get the vertical intersection
+    if (v_inter <= h_inter) // check the distance
+    data->ray->length = v_inter; // get the distance
+    else
+    {
+    data->ray->length = h_inter; // get the distance
+    data->ray->is_wall = 1; // flag for the wall
     }
-    render_wall(data, ray); // render the wall
-    ray++;                  // next ray
+    init_ray(data);
+    render_wall(data);
+    render_floor_ceiling(data);
+    data->ray->screen_x++; // next pixel/ray
     data->ray->angle_rd += (data->player->fov_rd / WINDOW_WIDTH); // next angle
-  }
+  } 
 }
+
 
 // ##############################################################################################//
 // ############################## START THE GAME AND THE GAME LOOP
@@ -442,18 +437,21 @@ void start_the_game(t_map *map, char *map_argv) // start the game
   (void)map_argv;
   // load_textures(&data, map_argv);
 
-  data.map = map; // init the data structure
-  data.player =
-      calloc(1, sizeof(t_player)); // init the player structure i'm using calloc
-                                   // to initialize the variables to zero
-  data.ray = calloc(1, sizeof(t_ray)); // init the ray structure
-  data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D",
-                      0);                     // init the data pointer
-  init_the_player(data);                      // init the player structure
-  mlx_loop_hook(data.mlx, &game_loop, &data); // game loop
-  mlx_key_hook(data.mlx, &mlx_key, &data);    // key press and release
-  mlx_loop(data.mlx);                         // data loop
-  ft_exit(&data);                             // exit the game
+  char *map_lines;
+  map_lines = cub_to_str(map_argv);
+
+  load_textures(&data, map_lines);
+
+
+ data.map = map; // init the data structure
+ data.player = calloc(1, sizeof(t_player)); // init the player structure i'm using calloc to initialize the variables to zero
+ data.ray = calloc(1, sizeof(t_ray)); // init the ray structure
+ data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0); // init the data pointer
+ init_the_player(data); // init the player structure
+ mlx_loop_hook(data.mlx, &game_loop, &data); // game loop
+ mlx_key_hook(data.mlx, &mlx_key, &data); // key press and release
+ mlx_loop(data.mlx); // mlx loop
+ ft_exit(&data); // exit the game
 }
 
 // ################################################################################################//

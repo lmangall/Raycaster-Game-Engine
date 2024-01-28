@@ -212,7 +212,7 @@ int wall_hit(float x, float y, t_mlx *mlx) // check the wall hit
  return (1);
 }
 
-float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
+float get_h_inter(t_mlx *data, float angl) // get the horizontal intersection
 {
  float h_x;
  float h_y; //y-coordinate of the horizontal intersection point of the ray with a wall.
@@ -223,22 +223,22 @@ float get_h_inter(t_mlx *mlx, float angl) // get the horizontal intersection
  y_step = TILE_SIZE;
  x_step = TILE_SIZE / tan(angl);
  //calculates the y-coordinate of the bottom edge of the grid cell in which the player is currently located, effectively aligning the intersection point with the horizontal grid lines in the game world
- h_y = floor(mlx->ply->plyr_y / TILE_SIZE) * TILE_SIZE;
+ h_y = floor(data->ply->plyr_y / TILE_SIZE) * TILE_SIZE;
  pixel = inter_check(angl, &h_y, &y_step, 1);
- h_x = mlx->ply->plyr_x + (h_y - mlx->ply->plyr_y) / tan(angl);
+ h_x = data->ply->plyr_x + (h_y - data->ply->plyr_y) / tan(angl);
  if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0)) // check x_step value
   x_step *= -1;
- while (wall_hit(h_x, h_y - pixel, mlx)) // check the wall hit whit the pixel value
+ while (wall_hit(h_x, h_y - pixel, data)) // check the wall hit whit the pixel value
  {
   h_x += x_step;
   h_y += y_step;
  }
-mlx->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
-mlx->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
- return (sqrt(pow(h_x - mlx->ply->plyr_x, 2) + pow(h_y - mlx->ply->plyr_y, 2))); // get the distance
+data->ray->horizontal_x = h_x;//h_x: The x-coordinate of the point where the horizontal ray intersects a wall.
+data->ray->horizontal_y = h_y;//h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
+ return (sqrt(pow(h_x - data->ply->plyr_x, 2) + pow(h_y - data->ply->plyr_y, 2))); // get the distance
 }
 
-float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
+float get_v_inter(t_mlx *data, float angl) // get the vertical intersection
 {
  float v_x;
  float v_y;
@@ -248,45 +248,45 @@ float get_v_inter(t_mlx *mlx, float angl) // get the vertical intersection
 
  x_step = TILE_SIZE; 
  y_step = TILE_SIZE * tan(angl);
- v_x = floor(mlx->ply->plyr_x / TILE_SIZE) * TILE_SIZE;
+ v_x = floor(data->ply->plyr_x / TILE_SIZE) * TILE_SIZE;
  pixel = inter_check(angl, &v_x, &x_step, 0); // check the intersection and get the pixel value
- v_y = mlx->ply->plyr_y + (v_x - mlx->ply->plyr_x) * tan(angl);
+ v_y = data->ply->plyr_y + (v_x - data->ply->plyr_x) * tan(angl);
  if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x') && y_step > 0)) // check y_step value
   y_step *= -1;
- while (wall_hit(v_x - pixel, v_y, mlx)) // check the wall hit whit the pixel value
+ while (wall_hit(v_x - pixel, v_y, data)) // check the wall hit whit the pixel value
  {
   v_x += x_step;
   v_y += y_step;
  }
-  mlx->ray->vertical_x = v_x;
-  mlx->ray->vertical_y = v_y;
- return (sqrt(pow(v_x - mlx->ply->plyr_x, 2) + pow(v_y - mlx->ply->plyr_y, 2))); // get the distance
+  data->ray->vertical_x = v_x;
+  data->ray->vertical_y = v_y;
+ return (sqrt(pow(v_x - data->ply->plyr_x, 2) + pow(v_y - data->ply->plyr_y, 2))); // get the distance
 }
 
-void cast_rays(t_mlx *mlx) // cast the rays
+void cast_rays(t_data *data) // cast the rays
 {
   double h_inter;
   double v_inter;
 
-  mlx->ray->screen_x = 0;
-  mlx->ray->angle = mlx->ply->angle - (mlx->ply->fov_rd / 2); // the start angle
-  while (mlx->ray->screen_x < S_W) // loop for the rays
+  data->ray->screen_x = 0;
+  data->ray->angle_rd = data->ply->angle_rd - (data->ply->fov_rd / 2); // the start angle
+  while (data->ray->screen_x < S_W) // loop for the rays
   {
-    mlx->ray->is_wall = 0; // flag for the wall
-    h_inter = get_h_inter(mlx, nor_angle(mlx->ray->angle)); // get the horizontal intersection
-    v_inter = get_v_inter(mlx, nor_angle(mlx->ray->angle)); // get the vertical intersection
+    data->ray->is_wall = 0; // flag for the wall
+    h_inter = get_h_inter(data, nor_angle(data->ray->angle_rd)); // get the horizontal intersection
+    v_inter = get_v_inter(data, nor_angle(data->ray->angle_rd)); // get the vertical intersection
     if (v_inter <= h_inter) // check the distance
-    mlx->ray->distance = v_inter; // get the distance
+    data->ray->distance = v_inter; // get the distance
     else
     {
-    mlx->ray->distance = h_inter; // get the distance
-    mlx->ray->is_wall = 1; // flag for the wall
+    data->ray->distance = h_inter; // get the distance
+    data->ray->is_wall = 1; // flag for the wall
     }
-    init_ray(mlx);
-    render_wall(mlx);
-    render_floor_ceiling(mlx);
-    mlx->ray->screen_x++; // next pixel/ray
-    mlx->ray->angle += (mlx->ply->fov_rd / S_W); // next angle
+    init_ray(data);
+    render_wall(data);
+    render_floor_ceiling(data);
+    data->ray->screen_x++; // next pixel/ray
+    data->ray->angle_rd += (data->ply->fov_rd / S_W); // next angle
   } 
 }
 

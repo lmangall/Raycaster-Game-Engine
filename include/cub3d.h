@@ -110,7 +110,19 @@ typedef enum e_wall_collision {
 } t_wall_collision;
 
 /**
- * @brief Structure to represent a ray in the game.
+ * @brief Structure representing a ray in the game.
+ *
+ * This structure contains information about a ray, including its column index,
+ * angle, intersection points, distance to the wall, and wall orientation.
+ *
+ * @param column_index Index of the ray's column.
+ * @param ray_angle Angle of the ray.
+ * @param horizontal_x X-coordinate of horizontal intersection point.
+ * @param horizontal_y Y-coordinate of horizontal intersection point.
+ * @param vertical_x X-coordinate of vertical intersection point.
+ * @param vertical_y Y-coordinate of vertical intersection point.
+ * @param distance Distance to the wall.
+ * @param wall_orientation Flag indicating wall orientation (horizontal/vertical).
  */
 typedef struct s_ray {
   double angle_rd; /**< Ray angle. */
@@ -119,6 +131,18 @@ typedef struct s_ray {
   //   int flag;        /**< Flag for the wall. */
   t_wall_collision
       wall_collision_orientation; /**< Orientation of the wall collision. */
+//below is leonard/texture branch version, update name to Stephano's version
+    double  horizontal_x;
+    double  horizontal_y;
+    double  vertical_x;
+    double  vertical_y;
+    int     wall_orientation;
+    int     is_wall;
+    int     screen_x;
+    mlx_texture_t *current_texture;
+    int     wall_h;
+    int     t_pix;
+    int     b_pix;
 
 } t_ray;
 
@@ -151,18 +175,20 @@ char *cub_to_str(char *map);
 
 // TEXTURES:
 /**
- * @brief Get the value after a specified identifier in a string.
+ * @brief Get the value associated with a given identifier in a string.
  *
- * This function extracts the part of the string that comes after the specified
- * identifier. The identifier can be NO, SO, WE, EA, F, or C.
+ * This function finds the position of the identifier in the input string
+ * and retrieves the corresponding value. It skips spaces and returns the
+ * identified value as a dynamically allocated string.
  *
- * @param val The value to search for.
- * @param identifier The identifier to search for in the string.
- * @return A dynamically allocated string containing the value after the
- * identifier. The caller is responsible for freeing the memory using free(). If
- * the identifier is not found or memory allocation fails, it returns NULL.
+ * @param map_str The input string containing the identifier and its value.
+ * @param identifier The identifier whose value needs to be retrieved.
+ *
+ * @return A dynamically allocated string containing the value, or NULL if
+ * the identifier is not found or memory allocation fails. The caller is
+ * responsible for freeing the allocated memory.
  */
-char *get_identifier_value(char *val, char *identifier);
+char *get_identifier_value(char *map_str, char *identifier);
 
 int load_textures(t_data *data, char *map_str);
 
@@ -218,7 +244,7 @@ void hook(t_data *data, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void my_mlx_pixel_put(t_data *data, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
@@ -228,13 +254,10 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color);
 float nor_angle(float angle);
 
 /**
- * @brief Function to draw the floor and ceiling of the game.
- * @param data Pointer to the t_data structure.
- * @param ray Ray representing the current column.
- * @param t_pix Top pixel of the wall.
- * @param b_pix Bottom pixel of the wall.
+ * @brief Renders the floor and ceiling of the scene.
+ * @param mlx The main data structure.
  */
-void draw_floor_ceiling(t_data *data, int ray, int t_pix, int b_pix);
+void render_floor_ceiling(t_data *data);
 
 /**
  * @brief Function to get the color of the wall based on its orientation.
@@ -258,7 +281,7 @@ void draw_wall(t_data *data, int ray, int t_pix, int b_pix);
  * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
  */
-void render_wall(t_data *data, int ray);
+void render_wall(t_data *data);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
@@ -348,5 +371,17 @@ t_map *init_argumet();
  * @brief Main function to initialize the game and start the main loop.
  * @return 0 if the program runs successfully.
  */
+
+/**
+ * @brief Initializes the raycasting parameters.
+ *
+ * This function initializes the parameters used in the raycasting process. It
+ * calculates the wall height, top and bottom pixels of the wall on the screen,
+ * and sets the current texture for rendering. Additionally, it adjusts the ray's
+ * distance to correct for fisheye distortion.
+ *
+ * @param mlx The main data structure.
+ */
+void init_ray(t_data *data);
 
 #endif // CUB3D_H

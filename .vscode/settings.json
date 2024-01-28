@@ -3,5 +3,9 @@
 		"activityBar.background": "#332E08",
 		"titleBar.activeBackground": "#48400B",
 		"titleBar.activeForeground": "#FCFBEF"
+	},
+	"files.associations": {
+		"__locale": "c",
+		"__string": "c"
 	}
 }
