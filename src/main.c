@@ -38,10 +38,10 @@
 void ft_exit(t_mlx *mlx) // exit the game
 {
   int i = 0;
-  while (mlx->dt->map2d[i])
-    free(mlx->dt->map2d[i++]); // free the map line by line
-  free(mlx->dt->map2d);        // free the map
-  free(mlx->dt);               // free the data structure
+  while (mlx->map->grid[i])
+    free(mlx->map->grid[i++]); // free the map line by line
+  free(mlx->map->grid);        // free the map
+  free(mlx->map);              // free the data structure
   free(mlx->ply);              // free the player structure
   free(mlx->ray);              // free the ray structure
   //  free_textures(mlx->textures); // free the textures
@@ -126,9 +126,9 @@ void move_player(t_mlx *mlx, double move_x, double move_y) // move the player
   new_y = roundf(mlx->ply->y_pos_px + move_y); // get the new y position
   map_grid_x = (new_x / TILE_SIZE);            // get the x position in the map
   map_grid_y = (new_y / TILE_SIZE);            // get the y position in the map
-  if (mlx->dt->map2d[map_grid_y][map_grid_x] != '1' &&
-      (mlx->dt->map2d[map_grid_y][mlx->ply->x_pos_px / TILE_SIZE] != '1' &&
-       mlx->dt->map2d[mlx->ply->y_pos_px / TILE_SIZE][map_grid_x] !=
+  if (mlx->map->grid[map_grid_y][map_grid_x] != '1' &&
+      (mlx->map->grid[map_grid_y][mlx->ply->x_pos_px / TILE_SIZE] != '1' &&
+       mlx->map->grid[mlx->ply->y_pos_px / TILE_SIZE][map_grid_x] !=
            '1')) // check the wall hit and the diagonal wall hit
   {
     mlx->ply->x_pos_px = new_x; // move the player
@@ -211,14 +211,14 @@ void draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix,
 int get_color(t_mlx *mlx,
               int collision_orientation) // get the color of the wall
 {
-  mlx->ray->ray_ngl = nor_angle(mlx->ray->ray_ngl); // normalize the angle
+  mlx->ray->angle_rd = nor_angle(mlx->ray->angle_rd); // normalize the angle
   if (collision_orientation == VERTICAL) {
-    if (mlx->ray->ray_ngl > M_PI / 2 && mlx->ray->ray_ngl < 3 * (M_PI / 2))
+    if (mlx->ray->angle_rd > M_PI / 2 && mlx->ray->angle_rd < 3 * (M_PI / 2))
       return (0xB5B5B5FF); // west wall
     else
       return (0xB5B5B5FF); // east wall
   } else {
-    if (mlx->ray->ray_ngl > 0 && mlx->ray->ray_ngl < M_PI)
+    if (mlx->ray->angle_rd > 0 && mlx->ray->angle_rd < M_PI)
       return (0xF5F5F5FF); // south wall
     else
       return (0xF5F5F5FF); // north wall
@@ -240,10 +240,10 @@ void render_wall(t_mlx *mlx, int ray) // render the wall
   double b_pix;
   double t_pix;
 
-  mlx->ray->distance *= cos(nor_angle(
-      mlx->ray->ray_ngl - mlx->ply->orientation_angle_rd)); // fix the fisheye
+  mlx->ray->length *= cos(nor_angle(
+      mlx->ray->angle_rd - mlx->ply->orientation_angle_rd)); // fix the fisheye
   wall_h =
-      (TILE_SIZE / mlx->ray->distance) *
+      (TILE_SIZE / mlx->ray->length) *
       ((WINDOW_WIDTH / 2) / tan(mlx->ply->fov_rd / 2)); // get the wall height
   b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);           // get the bottom pixel
   t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);           // get the top pixel
@@ -304,10 +304,10 @@ int wall_hit(float x, float y, t_mlx *mlx) // check the wall hit
     return (0);
   x_m = floor(x / TILE_SIZE); // get the x position in the map
   y_m = floor(y / TILE_SIZE); // get the y position in the map
-  if ((y_m >= mlx->dt->h_map || x_m >= mlx->dt->w_map))
+  if ((y_m >= mlx->map->h_map || x_m >= mlx->map->w_map))
     return (0);
-  if (mlx->dt->map2d[y_m] && x_m <= (int)strlen(mlx->dt->map2d[y_m]))
-    if (mlx->dt->map2d[y_m][x_m] == '1')
+  if (mlx->map->grid[y_m] && x_m <= (int)strlen(mlx->map->grid[y_m]))
+    if (mlx->map->grid[y_m][x_m] == '1')
       return (0);
   return (1);
 }
@@ -376,24 +376,24 @@ void cast_rays(t_mlx *mlx) // cast the rays
   int ray;
 
   ray = 0;
-  mlx->ray->ray_ngl = mlx->ply->orientation_angle_rd -
-                      (mlx->ply->fov_rd / 2); // the start angle
-  while (ray < WINDOW_WIDTH)                  // loop for the rays
+  mlx->ray->angle_rd = mlx->ply->orientation_angle_rd -
+                       (mlx->ply->fov_rd / 2); // the start angle
+  while (ray < WINDOW_WIDTH)                   // loop for the rays
   {
     mlx->ray->wall_collision_orientation = VERTICAL;
     h_inter = get_h_inter(
-        mlx, nor_angle(mlx->ray->ray_ngl)); // get the horizontal intersection
+        mlx, nor_angle(mlx->ray->angle_rd)); // get the horizontal intersection
     v_inter = get_v_inter(
-        mlx, nor_angle(mlx->ray->ray_ngl)); // get the vertical intersection
-    if (v_inter <= h_inter)                 // check the distance
-      mlx->ray->distance = v_inter;         // get the distance
+        mlx, nor_angle(mlx->ray->angle_rd)); // get the vertical intersection
+    if (v_inter <= h_inter)                  // check the distance
+      mlx->ray->length = v_inter;            // get the distance
     else {
-      mlx->ray->distance = h_inter; // get the distance
+      mlx->ray->length = h_inter; // get the distance
       mlx->ray->wall_collision_orientation = HORIZONTAL;
     }
-    render_wall(mlx, ray);                                  // render the wall
-    ray++;                                                  // next ray
-    mlx->ray->ray_ngl += (mlx->ply->fov_rd / WINDOW_WIDTH); // next angle
+    render_wall(mlx, ray);                                   // render the wall
+    ray++;                                                   // next ray
+    mlx->ray->angle_rd += (mlx->ply->fov_rd / WINDOW_WIDTH); // next angle
   }
 }
 
@@ -419,24 +419,24 @@ void game_loop(void *ml) // game loop
 void init_the_player(t_mlx mlx) // init the player structure
 {
   mlx.ply->x_pos_px =
-      mlx.dt->p_x * TILE_SIZE +
+      mlx.map->p_x * TILE_SIZE +
       TILE_SIZE / 2; // player x position in pixels in the center of the tile
   mlx.ply->y_pos_px =
-      mlx.dt->p_y * TILE_SIZE +
+      mlx.map->p_y * TILE_SIZE +
       TILE_SIZE / 2; // player y position in pixels in the center of the tile
   mlx.ply->fov_rd = (FOV * M_PI) / 180; // field of view in radians
   mlx.ply->orientation_angle_rd = M_PI; // player angle
   // the rest of the variables are initialized to zero by calloc
 }
 
-void start_the_game(t_map *dt, char *map_argv) // start the game
+void start_the_game(t_map *map, char *map_argv) // start the game
 {
   t_mlx mlx;
 
   (void)map_argv;
   // load_textures(&mlx, map_argv);
 
-  mlx.dt = dt; // init the mlx structure
+  mlx.map = map; // init the mlx structure
   mlx.ply =
       calloc(1, sizeof(t_player)); // init the player structure i'm using calloc
                                    // to initialize the variables to zero
@@ -457,23 +457,23 @@ void start_the_game(t_map *dt, char *map_argv) // start the game
 
 t_map *init_argumet() // init the data structure
 {
-  t_map *dt = calloc(1, sizeof(t_map));               // init the data structure
-  dt->map2d = calloc(10, sizeof(char *));             // init the map
-  dt->map2d[0] = strdup("1111111111111111111111111"); // fill the map
-  dt->map2d[1] = strdup("1000000000000000000100001");
-  dt->map2d[2] = strdup("1001000000000P00000000001");
-  dt->map2d[3] = strdup("1001000000000000001000001");
-  dt->map2d[4] = strdup("1001000000000000001000001");
-  dt->map2d[5] = strdup("1001000000100000001000001");
-  dt->map2d[6] = strdup("1001000000000000001000001");
-  dt->map2d[7] = strdup("1001000000001000001000001");
-  dt->map2d[8] = strdup("1111111111111111111111111");
-  dt->map2d[9] = NULL;
-  dt->p_y = 3;    // player y position in the map
-  dt->p_x = 14;   // player x position in the map
-  dt->w_map = 25; // map width
-  dt->h_map = 9;  // map height
-  return (dt);    // return the data structure
+  t_map *map = calloc(1, sizeof(t_map));              // init the data structure
+  map->grid = calloc(10, sizeof(char *));             // init the map
+  map->grid[0] = strdup("1111111111111111111111111"); // fill the map
+  map->grid[1] = strdup("1000000000000000000100001");
+  map->grid[2] = strdup("1001000000000P00000000001");
+  map->grid[3] = strdup("1001000000000000001000001");
+  map->grid[4] = strdup("1001000000000000001000001");
+  map->grid[5] = strdup("1001000000100000001000001");
+  map->grid[6] = strdup("1001000000000000001000001");
+  map->grid[7] = strdup("1001000000001000001000001");
+  map->grid[8] = strdup("1111111111111111111111111");
+  map->grid[9] = NULL;
+  map->p_y = 3;    // player y position in the map
+  map->p_x = 14;   // player x position in the map
+  map->w_map = 25; // map width
+  map->h_map = 9;  // map height
+  return (map);    // return the data structure
 }
 
 void v() { system("leaks mini_cub3D"); }

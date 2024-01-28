@@ -36,13 +36,13 @@ static char *ft_strstr(char *str, char *to_find) {
 
 void parse_map(char *argv, t_map *map) {
   char *map_str;
-  char **map2d;
+  char **tmp_grid;
 
   map_str = cub_to_str(argv);
-  map2d = ft_split(map_str, '\n');
-  map->map2d = map2d;
+  tmp_grid = ft_split(map_str, '\n');
+  map->grid = tmp_grid;
   map->h_map = 9;
-  map->w_map = ft_strlen(map2d[0]);
+  map->w_map = ft_strlen(tmp_grid[0]);
   map->p_x = 14;
   map->p_y = 3;
   // PrintMap(map);

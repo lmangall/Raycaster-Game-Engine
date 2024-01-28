@@ -86,12 +86,16 @@ typedef enum t_longitudinal_move {
  * @brief Structure to represent the player in the game.
  */
 typedef struct s_player {
-  int x_pos_px;                          /**< Player x position in pixels. */
-  int y_pos_px;                          /**< Player y position in pixels. */
-  double orientation_angle_rd;           /**< Player angle. */
-  float fov_rd;                          /**< Field of view in radians. */
-  t_rotation rotation;                   /**< Rotation state. */
-  t_lateral_move lateral_move;           /**< Lateral movement direction. */
+  int x_pos_px;                /**< Player x position in pixels. */
+  int y_pos_px;                /**< Player y position in pixels. */
+  double orientation_angle_rd; /**< Player angle. */
+  float fov_rd;                /**< Field of view in radians. */
+  // TODO: initialize these values in the init_the_player function and use them
+  // instead of the defines
+  int rotation_speed;
+  int translation_speed;
+  t_rotation rotation;         /**< Rotation direction: none, right, left. */
+  t_lateral_move lateral_move; /**< Lateral movement direction. */
   t_longitudinal_move longitudinal_move; /**< Longitudinal (forward/backward)
                                             movement direction. */
 } t_player;
@@ -109,8 +113,9 @@ typedef enum e_wall_collision {
  * @brief Structure to represent a ray in the game.
  */
 typedef struct s_ray {
-  double ray_ngl;  /**< Ray angle. */
-  double distance; /**< Distance to the wall. */
+  double angle_rd; /**< Ray angle. */
+  double length;   /**< Length of the ray: distance player's eye to the to next
+                      wall. */
   //   int flag;        /**< Flag for the wall. */
   t_wall_collision
       wall_collision_orientation; /**< Orientation of the wall collision. */
@@ -121,11 +126,11 @@ typedef struct s_ray {
  * @brief Structure to represent game data, including the map.
  */
 typedef struct s_map {
-  char **map2d; /**< 2D array representing the map. */
-  int p_x;      /**< Player x position in the map. */
-  int p_y;      /**< Player y position in the map. */
-  int w_map;    /**< Map width. */
-  int h_map;    /**< Map height. */
+  char **grid; /**< 2D array representing the map. */
+  int p_x;     /**< Player x position in the map in tiles. */
+  int p_y;     /**< Player y position in the map in tiles. */
+  int w_map;   /**< Map width in tiles. */
+  int h_map;   /**< Map height in tiles. */
 } t_map;
 
 /**
@@ -135,7 +140,7 @@ typedef struct s_mlx {
   mlx_image_t *img;     /**< Pointer to the image. */
   mlx_t *mlx_p;         /**< Pointer to the MLX instance. */
   t_ray *ray;           /**< Pointer to the ray structure. */
-  t_map *dt;            /**< Pointer to the data structure. */
+  t_map *map;           /**< Pointer to the map structure. */
   t_player *ply;        /**< Pointer to the player structure. */
   t_textures *textures; /**< Pointer to the textures structure. */
 } t_mlx;
@@ -329,9 +334,9 @@ void init_the_player(t_mlx mlx);
 
 /**
  * @brief Function to start the Cub3D game.
- * @param dt Pointer to the game data structure.
+ * @param map Pointer to the game data structure.
  */
-void start_the_game(t_map *dt, char *map_argv);
+void start_the_game(t_map *map, char *map_argv);
 
 /**
  * @brief Function to initialize the game data structure with a predefined map.
