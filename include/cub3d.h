@@ -28,11 +28,7 @@
 
 /**
  * @brief Structure to save the path to textures.
-
  */
-
-// I removed the note 'path to the texture', because the mlx_texture_t structs
-// hold the texture itself not the path the @brief is then also wrong
 typedef struct s_textures {
   mlx_texture_t *north;
   mlx_texture_t *south;
@@ -43,29 +39,37 @@ typedef struct s_textures {
 } t_textures;
 
 /**
- * @enum e_rotation
  * @brief Enum for player rotation states.
  *
  * This enum defines possible states of rotation for the player.
+ *
+ * @param R_NONE No rotation.
+ * @param R_RIGHT Rotate to the right.
+ * @param R_LEFT Rotate to the left.
  */
 typedef enum e_rotation {
-  R_NONE = 0,  /**< No rotation. */
-  R_RIGHT = 1, /**< Rotate to the right. */
-  R_LEFT = 2   /**< Rotate to the left. */
+  R_NONE = 0,
+  R_RIGHT = 1,
+  R_LEFT = 2
 } t_rotation;
 
 /**
- * @enum t_horizontal_move
  * @brief Enum for player's lateral movement direction.
  *
  * This enum defines possible lateral movement directions for the player,
  * relative to their current orientation.
+ *
+ * @param L_NONE No lateral movement.
+ * @param L_RIGHT Move to the right relative to player's orientation.
+ * @param L_LEFT Move to the left relative to player's orientation.
  */
-typedef enum t_lateral_move {
-  L_NONE = 0,  /**< No lateral movement. */
-  L_RIGHT = 1, /**< Move to the right relative to player's orientation. */
-  L_LEFT = 2   /**< Move to the left relative to player's orientation. */
+typedef enum t_lateral_move
+{
+  L_NONE = 0,
+  L_RIGHT = 1,
+  L_LEFT = 2
 } t_lateral_move;
+
 
 /**
  * @enum t_longitudinal_move
@@ -361,11 +365,6 @@ void init_the_player(t_data data);
  */
 void start_the_game(t_map *map, char *map_argv);
 
-/**
- * @brief Function to initialize the game data structure with a predefined map.
- * @return Pointer to the initialized game data structure.
- */
-t_map *init_argumet();
 
 /**
  * @brief Main function to initialize the game and start the main loop.

@@ -25,7 +25,7 @@ MLX42_DIR = ./MLX42
 SRC_DIR = src/
 OBJ_DIR = obj/
 
-SRCS	= main.c parser.c render.c
+SRCS	= main.c parser.c render.c exit.c movement.c raycasting.c
 
 SRC	= $(addprefix $(SRC_DIR), $(SRCS))
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
