@@ -30,21 +30,5 @@ void	init(t_map *map, char *map_argv)
 	mlx_loop_hook(data.mlx, &game_loop, &data);
 	mlx_key_hook(data.mlx, &mlx_key, &data);
 	mlx_loop(data.mlx);
-	ft_exit(&data);
+	free_exit(&data);
 }
-
-// void	init(t_data *data, char *map_argv)
-// {
-// 	t_map	*map;
-// 	char	*map_lines;
-
-// 	map = calloc(1, sizeof(t_map));
-// 	parse_map(data->argv, map);
-// 	map_lines = cub_to_str(map_argv);
-// 	load_textures(data, map_lines);
-// 	data->map = map;
-// 	data->ray = calloc(1, sizeof(t_ray));
-// 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
-// 	data->player = calloc(1, sizeof(t_player));
-// 	init_player(data);
-// }
