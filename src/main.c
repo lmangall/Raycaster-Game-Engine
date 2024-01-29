@@ -57,9 +57,11 @@ void	start_the_game(t_map *map, char *map_argv) // start the game
 
 int	main(int argc, char **argv)
 {
-	t_map *data = calloc(1, sizeof(t_map));
+	char **lines_arr;
+	t_map *data = ft_calloc(1, sizeof(t_map));
 
 	(void)argc;
+	(void)data;
 
 	// if (argc != 2)
 	// {
@@ -67,8 +69,10 @@ int	main(int argc, char **argv)
 	//   return (0);
 	// }
 	// atexit(v);
-	parse_map(argv[1], data);
+	lines_arr = parse_file(argv[1]);
+	print_lines_arr(lines_arr);
+	// parse_map(argv[1], data);
 
-	start_the_game(data, argv[2]); // start the game
+	// start_the_game(data, argv[2]); // start the game
 	return (0);
 }
