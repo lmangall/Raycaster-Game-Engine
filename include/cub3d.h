@@ -114,8 +114,9 @@ typedef struct s_player
  */
 typedef enum e_wall_collision
 {
-	HORIZONTAL = 0, /**< Horizontal wall collision. */
-	VERTICAL = 1    /**< Vertical wall collision. */
+	NO_COLLISION = 0, /**< No wall collision. */
+	HORIZONTAL = 1,   /**< Horizontal wall collision. */
+	VERTICAL = 2      /**< Vertical wall collision. */
 }						t_wall_collision;
 
 /**

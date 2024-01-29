@@ -72,7 +72,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
 	uint32_t	*pixel_array;
 	uint32_t	color;
 
-	if (data->ray->is_wall)
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
 		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
 					* (texture->width / TILE_SIZE)), texture->width);
 	else
@@ -109,20 +109,20 @@ void	render_wall(t_data *data)
 static mlx_texture_t	*texture_selection(t_data *data)
 {
 	data->ray->angle_rd = nor_angle(data->ray->angle_rd);
-	if (data->ray->is_wall)
+	if (data->ray->wall_collision_orientation == VERTICAL)
 	{
 		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
 				/ 2))
-			return (data->textures->east);
+			return (data->textures->north);
 		else
-			return (data->textures->west);
+			return (data->textures->south);
 	}
 	else
 	{
 		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
-			return (data->textures->south);
+			return (data->textures->west);
 		else
-			return (data->textures->north);
+			return (data->textures->east);
 	}
 }
 

@@ -132,22 +132,19 @@ void	raycasting(t_data *data)
 	data->ray->angle_rd = data->player->orientation_angle_rd
 		- (data->player->fov_rd / 2); // the start angle
 	while (data->ray->screen_x < WINDOW_WIDTH)
-	// loop for the rays
 	{
-		data->ray->is_wall = 0;
-		// flag for the wall
+		data->ray->wall_collision_orientation = NO_COLLISION;
 		h_inter = get_h_inter(data, nor_angle(data->ray->angle_rd));
-		// get the horizontal intersection
 		v_inter = get_v_inter(data, nor_angle(data->ray->angle_rd));
-		// get the vertical intersection
 		if (v_inter <= h_inter)
-			// check the distance
+		{
 			data->ray->length = v_inter;
-		// get the distance
+			data->ray->wall_collision_orientation = VERTICAL;
+		}
 		else
 		{
 			data->ray->length = h_inter; // get the distance
-			data->ray->is_wall = 1;      // flag for the wall
+			data->ray->wall_collision_orientation = HORIZONTAL;
 		}
 		init_ray(data);
 		render_wall(data);
