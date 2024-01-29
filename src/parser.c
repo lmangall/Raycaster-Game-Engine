@@ -1,42 +1,5 @@
 
-#include "../include/cub3d.h"
-
-// ADD IT TO LIBFT
-/**
- * @file   my_strstr.c
- * @brief  Find the first occurrence of a substring in a string.
- *
- * This function searches for the first occurrence of the substring `to_find`
- * within the string `str`. If the substring is found, a pointer to the
- * beginning of the substring within the original string is returned. If the
- * substring is not found, a null pointer is returned.
- *
- * @param  str      The string to search within.
- * @param  to_find  The substring to search for.
- * @return          A pointer to the first occurrence of the substring in the
- *                  string, or a null pointer if the substring is not found.
- */
-static char	*ft_strstr(char *str, char *to_find)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		j = 0;
-		while (to_find[j] == str[i + j])
-		{
-			if (to_find[j + 1] == '\0')
-			{
-				return (str + i);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
+#include "cub3d.h"
 
 void	parse_map(char *argv, t_map *map)
 {

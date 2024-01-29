@@ -144,7 +144,8 @@ typedef struct s_ray
 	//   int flag;        /**< Flag for the wall. */
 	t_wall_collision	wall_collision_orientation;
 	/**< Orientation of the wall collision. */
-	// below is leonard/texture branch version
+	// below is leonard/texture branch version,
+	//	update name to Stephano's version
 	double				horizontal_x;
 	double				horizontal_y;
 	double				vertical_x;
@@ -215,7 +216,7 @@ int						load_textures(t_data *data, char *map_str);
  * @brief Function to handle cleanup and exit the game.
  * @param data Pointer to the t_data structure.
  */
-void					ft_exit(t_data *data);
+void					free_exit(t_data *data);
 
 /**
  * @brief Function to handle key release events.
