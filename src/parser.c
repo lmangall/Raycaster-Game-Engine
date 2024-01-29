@@ -139,15 +139,15 @@ char	**parse_file(char *file_path)
 	}
 	while ((line = get_next_line(fd)))
 	{
-		printf("line: %s\n", line);
+		// printf("line: %s\n", line);
 		if (lines_nbr == capacity)
 		{
-			printf("Reallocating...\n");
-			printf("capacity: %zu\n", capacity);
-			printf("lines_nbr: %zu\n", lines_nbr);
+			// printf("Reallocating...\n");
+			// printf("capacity: %zu\n", capacity);
+			// printf("lines_nbr: %zu\n", lines_nbr);
 			capacity *= 2;
-			tmp = ft_easy_realloc(lines_arr, capacity / 2, capacity
-				* sizeof(char *));
+			tmp = ft_easy_realloc(lines_arr, (capacity / 2) * sizeof(char *),
+				capacity * sizeof(char *));
 			if (!tmp)
 			{
 				while (i < lines_nbr)
@@ -163,13 +163,14 @@ char	**parse_file(char *file_path)
 			lines_arr = tmp;
 		}
 		lines_arr[lines_nbr++] = line;
-		printf("lines_nbr: %zu\n", lines_nbr);
-		printf("lines_arr[%zu]: %s\n", lines_nbr - 1, lines_arr[lines_nbr - 1]);
+		// printf("lines_nbr: %zu\n", lines_nbr);
+		// printf("lines_arr[%zu]: %s\n", lines_nbr - 1, lines_arr[lines_nbr
+		// - 1]);
 	}
 	close(fd);
-	printf("capacity: %zu\n", capacity);
-	printf("lines_nbr: %zu\n", lines_nbr);
-	tmp = ft_easy_realloc(lines_arr, capacity, (lines_nbr + 1)
+	// printf("capacity: %zu\n", capacity);
+	// printf("lines_nbr: %zu\n", lines_nbr);
+	tmp = ft_easy_realloc(lines_arr, capacity * sizeof(char *), (lines_nbr + 1)
 		* sizeof(char *));
 	if (!tmp)
 	{
@@ -180,26 +181,26 @@ char	**parse_file(char *file_path)
 	}
 	lines_arr = tmp;
 	lines_arr[lines_nbr] = NULL;
-	printf("lines_nbr: %zu\n", lines_nbr);
-	printf("last line before NULL: lines_arr[%zu]: %s\n", lines_nbr,
-		lines_arr[lines_nbr - 1]);
-	printf("Printing lines_arr before exiting...\n");
-	i = 0;
-	printf("printing pointers...\n");
-	while (lines_arr[i] != NULL)
-	{
-		printf("%p\n", lines_arr[i]);
-		i++;
-	}
-	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		if (lines_arr[i][0] == '\0')
-			printf("Empty line\n");
-		else
-			printf("%s\n", lines_arr[i]);
-		i++;
-	}
-	printf("Exiting parse_file...\n");
+	// printf("lines_nbr: %zu\n", lines_nbr);
+	// printf("last line before NULL: lines_arr[%zu]: %s\n", lines_nbr,
+	// 	lines_arr[lines_nbr - 1]);
+	// printf("Printing lines_arr before exiting...\n");
+	// i = 0;
+	// printf("printing pointers...\n");
+	// while (lines_arr[i] != NULL)
+	// {
+	// 	printf("%p\n", lines_arr[i]);
+	// 	i++;
+	// }
+	// i = 0;
+	// while (lines_arr[i] != NULL)
+	// {
+	// 	if (lines_arr[i][0] == '\0')
+	// 		printf("Empty line\n");
+	// 	else
+	// 		printf("%s\n", lines_arr[i]);
+	// 	i++;
+	// }
+	// printf("Exiting parse_file...\n");
 	return (lines_arr);
 }

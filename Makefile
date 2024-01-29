@@ -1,7 +1,7 @@
 
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math #-fsanitize=address -g
+CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math 
 
 
 LIBFT= lib/libft/libft.a
@@ -15,6 +15,10 @@ ARCH = $(shell uname -m)
 ifeq ($(ARCH),arm64)
     FLAGS_MLX = $(shell pkg-config --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib
 	INCLUDES = -I./include -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
+endif
+
+ifeq ($(UNAME_S), Darwin)
+	CFLAGS += -fsanitize=address -g -O1
 endif
 
 GREEN   = \033[32;1m
