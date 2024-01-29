@@ -25,6 +25,19 @@
 // walkind speed
 # define PLAYER_ROTATION_SPEED 0.045
 # define PLAYER_TRANSLATION_SPEED 4
+// To make sense of the return values of the functions
+// above alf for the if statements
+// cause it's easier to read
+# define SUCCESS 0
+# define FAILURE 1
+
+typedef struct s_textures_paths
+{
+	char				*north;
+	char				*south;
+	char				*west;
+	char				*east;
+}						t_textures_paths;
 
 /**
  * @brief Structure to save the path to textures.
@@ -160,6 +173,18 @@ typedef struct s_ray
 }						t_ray;
 
 /**
+ * @brief Structure to represent a color in RGBA format.
+ */
+
+typedef struct s_rgba
+{
+	int r; // Red component, usually in the range [0, 255]
+	int g; // Green component, usually in the range [0, 255]
+	int b; // Blue component, usually in the range [0, 255]
+	int a; // Alpha component for transparency, usually in the range [0, 255]
+}						t_rgba;
+
+/**
  * @brief Structure to represent game data, including the map.
  */
 typedef struct s_map
@@ -169,6 +194,8 @@ typedef struct s_map
 	int p_y;     /**< Player y position in the map in tiles. */
 	int w_map;   /**< Map width in tiles. */
 	int h_map;   /**< Map height in tiles. */
+	t_rgba c;    /**< Ceiling color. */
+	t_rgba f;    /**< Floor color. */
 }						t_map;
 
 /**
@@ -182,6 +209,8 @@ typedef struct s_data
 	t_map *map;           /**< Pointer to the map structure. */
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
+	t_textures_paths	*textures_paths;
+	/**< Pointer to the texture paths structure. */
 }						t_data;
 
 // PARSER:
