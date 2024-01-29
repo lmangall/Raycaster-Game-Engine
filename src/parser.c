@@ -72,9 +72,9 @@ char	*get_identifier_value(char *map_str, char *identifier)
 
 char	*cub_to_str(char *map)
 {
-	char *line;
-	char *map_lines;
-	int fd;
+	char	*line;
+	char	*map_lines;
+	int		fd;
 
 	fd = open(map, O_RDONLY);
 	map_lines = ft_calloc(1, 1);
@@ -91,4 +91,63 @@ char	*cub_to_str(char *map)
 	}
 	close(fd);
 	return (map_lines);
+}
+
+char	**parse_file(char **file_path)
+{
+	int		fd;
+	char	*line;
+	char	**lines_arr;
+	size_t	lines_nbr;
+	size_t	capacity;
+	char	**tmp;
+
+	lines_nbr = 0;
+	capacity = 10;
+	fd = open(*file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		return (NULL);
+	}
+	lines_arr = malloc(capacity * sizeof(char *));
+	if (!lines_arr)
+	{
+		close(fd);
+		return (NULL);
+	}
+	while ((line = get_next_line(fd)))
+	{
+		if (lines_nbr == capacity)
+		{
+			capacity *= 2;
+			tmp = ft_easy_realloc(lines_arr, capacity / 2, capacity
+				* sizeof(char *));
+			if (!tmp)
+			{
+				for (size_t i = 0; i < lines_nbr; i++)
+					free(lines_arr[i]);
+				free(lines_arr);
+				close(fd);
+				// We can exit here.
+				return (NULL);
+			}
+			lines_arr = tmp;
+		}
+		lines_arr[lines_nbr++] = line;
+	}
+	close(fd);
+	if (lines_nbr < capacity)
+	{
+		tmp = ft_easy_realloc(lines_arr, capacity, lines_nbr * sizeof(char *));
+		if (!tmp)
+		{
+			for (size_t i = 0; i < lines_nbr; i++)
+				free(lines_arr[i]);
+			free(lines_arr);
+			return (NULL);
+		}
+		lines_arr = tmp;
+	}
+	return (lines_arr);
 }
