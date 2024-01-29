@@ -59,6 +59,29 @@ int	wall_hit(float x, float y, t_data *data) // check the wall hit
 	return (1);
 }
 
+void	update_ray(t_data *data)
+{
+	double	wall_h;
+	double	b_pix;
+	double	t_pix;
+
+	data->ray->length *= cos(nor_angle(data->ray->angle_rd
+				- data->player->orientation_angle_rd));   // fix the fisheye
+	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
+			/ tan(data->player->fov_rd / 2)); // get the wall height
+	b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);
+	if (b_pix > WINDOW_HEIGHT)
+		b_pix = WINDOW_HEIGHT;
+	if (t_pix < 0)
+		t_pix = 0;
+	// data->ray->current_texture = data->textures->north;//change this depending on orientation
+	data->ray->current_texture = texture_selection(data);
+	data->ray->wall_h = wall_h;
+	data->ray->t_pix = t_pix;
+	data->ray->b_pix = b_pix;
+}
+
 float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 {
 	float h_x;
@@ -146,7 +169,7 @@ void	raycasting(t_data *data)
 			data->ray->length = h_inter; // get the distance
 			data->ray->wall_collision_orientation = HORIZONTAL;
 		}
-		init_ray(data);
+		update_ray(data);
 		render_wall(data);
 		render_floor_ceiling(data);
 		data->ray->screen_x++;
