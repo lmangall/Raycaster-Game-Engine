@@ -14,10 +14,10 @@ void	game_loop(void *tmp) // game loop
 
 int	main(int argc, char **argv)
 {
-	// t_data *data = calloc(1, sizeof(t_map));
-	t_map *map;
-	(void)argc;
+	t_map	*map;
 
+	// t_data *data = calloc(1, sizeof(t_map));
+	(void)argc;
 	map = calloc(1, sizeof(t_map));
 	// implement checks.c for args
 	parse_map(argv[1], map);
@@ -28,3 +28,22 @@ int	main(int argc, char **argv)
 	// ft_exit(data);
 	return (0);
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	// t_data *data = calloc(1, sizeof(t_map));
+// 	t_data *data;
+
+// 	(void)argc;
+// 	// data = calloc(1, sizeof(t_data));
+// 	data = malloc(sizeof(t_data));
+// 	data->argv = argv[1];
+// 	// implement checks.c for args
+
+// 	init(data, argv[2]);
+// 	mlx_loop_hook(data->mlx, &game_loop, data);
+// 	mlx_key_hook(data->mlx, &mlx_key, data);
+// 	mlx_loop(data->mlx);
+// 	ft_exit(data);
+// 	return (0);
+// }

@@ -176,6 +176,7 @@ typedef struct s_map
  */
 typedef struct s_data
 {
+	char *argv;           /**< Pointer to the map file. */
 	mlx_image_t *img;     /**< Pointer to the image. */
 	mlx_t *mlx;           /**< Pointer to the MLX instance. */
 	t_ray *ray;           /**< Pointer to the ray structure. */
