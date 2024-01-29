@@ -187,22 +187,25 @@ typedef struct s_data
 // PARSER:
 void					parse_map(char *argv, t_map *map);
 char					*cub_to_str(char *map);
+char					**parse_file(char *file_path);
+void					print_lines_arr(char **lines_arr);
 
 // TEXTURES:
 /**
- * @brief Get the value associated with a given identifier in a string.
- *
- * This function finds the position of the identifier in the input string
- * and retrieves the corresponding value. It skips spaces and returns the
- * identified value as a dynamically allocated string.
- *
- * @param map_str The input string containing the identifier and its value.
- * @param identifier The identifier whose value needs to be retrieved.
- *
- * @return A dynamically allocated string containing the value, or NULL if
- * the identifier is not found or memory allocation fails. The caller is
- * responsible for freeing the allocated memory.
- */
+	* @brief Get the value associated with a given identifier in a string.
+	*
+	* This function finds the position of the identifier in the input string
+	* and retrieves the corresponding value. It skips spaces and returns the
+	* identified value as a dynamically allocated string.
+	*
+	* @param map_str The input string containing the identifier and its value.
+	* @param identifier The identifier whose value needs to be retrieved.
+	*
+	* @return A dynamically allocated string containing the value,
+		or NULL if
+	* the identifier is not found or memory allocation fails. The caller is
+	* responsible for freeing the allocated memory.
+	*/
 char					*get_identifier_value(char *map_str, char *identifier);
 
 int						load_textures(t_data *data, char *map_str);
