@@ -418,7 +418,8 @@ int					ft_isspace(int c);
  *         'new_size' is zero or if memory allocation fails.
  */
 
-void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void				*ft_easy_realloc(void *ptr, size_t old_size,
+						size_t new_size);
 
 // extra for GNL:
 char				*stored_s_to_str(char *stored_s);
