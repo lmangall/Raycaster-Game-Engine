@@ -1,17 +1,37 @@
 
 #include "../include/cub3d.h"
 
-int	unit_circle(float angle, char c) // check the unit circle
+// # define LOOK_RIGHT 10
+// # define LOOK_UP_AND_DOWN 11
+
+int	update_steps_direction(float angle, float *step, char c)
+// check the unit circle
 {
 	if (c == 'x')
 	{
 		if (angle > 0 && angle < M_PI)
-			return (1);
+		{
+			if (*step < 0)
+				*step *= -1;
+		}
+		else
+		{
+			if (*step > 0)
+				*step *= -1;
+		}
 	}
 	else if (c == 'y')
 	{
 		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
-			return (1);
+		{
+			if (*step > 0)
+				*step *= -1;
+		}
+		else
+		{
+			if (*step < 0)
+				*step *= -1;
+		}
 	}
 	return (0);
 }
@@ -99,10 +119,7 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 	h_y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
 	pixel = inter_check(angl, &h_y, &y_step, 1);
 	h_x = data->player->x_pos_px + (h_y - data->player->y_pos_px) / tan(angl);
-	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y')
-			&& x_step < 0))
-		// check x_step value
-		x_step *= -1;
+	update_steps_direction(angl, &x_step, 'y');
 	while (wall_hit(h_x, h_y - pixel, data))
 	// check the wall hit whit the pixel value
 	{
@@ -114,9 +131,9 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 	data->ray->horizontal_y = h_y;
 	// h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
 	return (sqrt(pow(h_x - data->player->x_pos_px, 2) + pow(h_y
-				- data->player->y_pos_px, 2))); // get the distance
+				- data->player->y_pos_px, 2)));
+	// get the distance
 }
-
 float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 {
 	float v_x;
@@ -131,9 +148,7 @@ float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 	pixel = inter_check(angl, &v_x, &x_step, 0);
 	// check the intersection and get the pixel value
 	v_y = data->player->y_pos_px + (v_x - data->player->x_pos_px) * tan(angl);
-	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x')
-			&& y_step > 0)) // check y_step value
-		y_step *= -1;
+	update_steps_direction(angl, &y_step, 'x');
 	while (wall_hit(v_x - pixel, v_y, data))
 	// check the wall hit whit the pixel value
 	{
