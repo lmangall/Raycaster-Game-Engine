@@ -310,13 +310,27 @@ void					render_wall(t_data *data);
 void					raycasting(t_data *data);
 
 /**
- * @brief Function to check if a point lies in a specified quadrant of the unit
- * circle.
- * @param angle Angle to check.
- * @param c Character indicating the axis ('x' or 'y').
- * @return 1 if the point lies in the specified quadrant, 0 otherwise.
+ * @brief Update the step direction (+/−) based on the given angle and axis.
+ *
+ * if we check x:
+ * we check whether the angle is greater than 0 and less than π (180 degrees).
+ *
+ * if we check y
+ * wechecks if  the ray is looking  up or down
+
+	* if the angle is greater than π/2 (90 degrees) and less than 3π/2 (270 degrees))
+ *
+ * @param angle The angle for which the step direction is updated.
+ * @param step A pointer to the step value that will be updated.
+ * @param c The axis character ('x' or 'y') indicating which axis to check.
+ * @return Always returns 0.
+ *
+ * @note The function modifies the step value through the pointer.
+
+	*       It adjusts the step based on the specified conditions in the unit circle.
  */
-int						unit_circle(float angle, char c);
+static int				update_steps_direction(float angle, float *step,
+							char c);
 
 /**
  * @brief Function to check and update intersection points for horizontal or
