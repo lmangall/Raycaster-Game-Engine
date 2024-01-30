@@ -16,7 +16,16 @@ typedef struct s_map_elements
 	e_status	f;
 }				t_map_elements;
 
-int	process_map_elements(char *line, const char *identifier,
+void	error_exit(char *error_message, t_data *data)
+{
+	(void)data;
+	printf("Error\n");
+	printf("%s\n", error_message);
+	// free whatever was allocated before
+	exit(EXIT_FAILURE);
+}
+
+int	check_identifier(char *line, const char *identifier,
 		e_status *element_status)
 {
 	if (ft_strncmp(line, identifier, ft_strlen(identifier)) == 0)
@@ -220,59 +229,302 @@ void	collect_elements_data(char *line, char *identifier, t_data *data)
 	}
 }
 
-void	process_map(char **lines_arr, t_data *data)
+void	init_elements_status(t_map_elements *elements)
 {
-	t_map_elements	elements;
-	char			*line;
-	int				i;
+	elements->no = NOT_FOUND;
+	elements->so = NOT_FOUND;
+	elements->we = NOT_FOUND;
+	elements->ea = NOT_FOUND;
+	elements->c = NOT_FOUND;
+	elements->f = NOT_FOUND;
+}
 
-	elements.no = NOT_FOUND;
-	elements.so = NOT_FOUND;
-	elements.we = NOT_FOUND;
-	elements.ea = NOT_FOUND;
-	elements.c = NOT_FOUND;
-	elements.f = NOT_FOUND;
+void	process_map_elements(char *line, int *i, t_data *data,
+		t_map_elements *elements)
+{
+	// Skip empty lines
+	if (line[0] == '\0')
+		return ;
+	// Skip initial spaces
+	while (*line == ' ')
+		line++;
+	// Process map elements
+	if (check_identifier(line, "NO", &elements->no))
+		collect_elements_data(line, "NO", data);
+	else if (check_identifier(line, "SO", &elements->so))
+		collect_elements_data(line, "SO", data);
+	else if (check_identifier(line, "WE", &elements->we))
+		collect_elements_data(line, "WE", data);
+	else if (check_identifier(line, "EA", &elements->ea))
+		collect_elements_data(line, "EA", data);
+	else if (check_identifier(line, "C", &elements->c))
+		collect_elements_data(line, "C", data);
+	else if (check_identifier(line, "F", &elements->f))
+		collect_elements_data(line, "F", data);
+	else
+		error_exit("Invalid identifier", data);
+	(*i)++;
+}
+
+int	check_all_elements_found(t_map_elements *elements)
+{
+	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
+		&& elements->ea == FOUND && elements->c == FOUND
+		&& elements->f == FOUND)
+		return (SUCCESS);
+	else
+		return (FAILURE);
+}
+
+int	has_only_valid_chars(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N'
+			&& line[i] != 'S' && line[i] != 'W' && line[i] != 'E')
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	calculate_height(char **lines_arr, int first_line)
+{
+	int	i;
+	int	height;
+
+	i = first_line;
+	height = 0;
+	while (lines_arr[i] != NULL)
+	{
+		if (lines_arr[i][0] != '\0')
+			height++;
+		i++;
+	}
+	return (height);
+}
+
+int	find_max_width(char **lines_arr, int current_max_width)
+{
+	int	i;
+	int	current_width;
+
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
-		line = lines_arr[i];
-		// Skip empty lines
-		if (line[0] == '\0')
+		current_width = ft_strlen(lines_arr[i]);
+		if (current_width > current_max_width)
+			current_max_width = current_width;
+		i++;
+	}
+	return (current_max_width);
+}
+
+int	is_surrounded_by_walls(char **lines_arr, int current_line, int first_line,
+		int last_line)
+{
+	int	i;
+
+	if (current_line == first_line || current_line == last_line)
+	{
+		i = 0;
+		while (lines_arr[current_line][i] != '\0')
 		{
+			if (lines_arr[current_line][i] != '1'
+				&& lines_arr[current_line][i] != ' ')
+				return (FAILURE);
 			i++;
-			continue ;
 		}
-		// Skip initial spaces
-		while (*line == ' ')
-			line++;
-		// Process map elements
-		if (process_map_elements(line, "NO", &elements.no))
-			collect_elements_data(line, "NO", data);
-		else if (process_map_elements(line, "SO", &elements.so))
-			collect_elements_data(line, "SO", data);
-		else if (process_map_elements(line, "WE", &elements.we))
-			collect_elements_data(line, "WE", data);
-		else if (process_map_elements(line, "EA", &elements.ea))
-			collect_elements_data(line, "EA", data);
-		else if (process_map_elements(line, "C", &elements.c))
-			collect_elements_data(line, "C", data);
-		else if (process_map_elements(line, "F", &elements.f))
-			collect_elements_data(line, "F", data);
-		else
+	}
+	else
+	{
+		// check fist and last char
+		// skip spaces
+		i = 0;
+		while (lines_arr[current_line][i] == ' ')
+			i++;
+		if (lines_arr[current_line][i] != '1')
+			return (FAILURE);
+		i = ft_strlen(lines_arr[current_line]) - 1;
+		while (lines_arr[current_line][i] == ' ')
+			i--;
+		if (lines_arr[current_line][i] != '1')
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+int	is_valid_space_sorrounding_char(char c)
+{
+	if (c == ' ' || c == '1')
+		return (SUCCESS);
+	else
+		return (FAILURE);
+}
+
+void	define_start_and_end(int *start, int *end, int idx, int line_len)
+{
+	*start = idx - 1;
+	if (idx - 1 < 0)
+		*start = 0;
+	*end = idx + 1;
+	if (idx + 1 > line_len - 1)
+		*end = line_len - 1;
+}
+
+int	check_same_line(char **lines_arr, int current_line, int idx)
+{
+	int	line_len;
+	int	start;
+	int	end;
+
+	line_len = ft_strlen(lines_arr[current_line]);
+	define_start_and_end(&start, &end, idx, line_len);
+	while (start <= end)
+	{
+		if (!is_valid_space_sorrounding_char(lines_arr[current_line][start]))
+			return (FAILURE);
+		start++;
+	}
+	return (SUCCESS);
+}
+int	check_previous_line(char **lines_arr, int current_line, int first_line,
+		int idx)
+{
+	int	line_len;
+	int	start;
+	int	end;
+
+	if (current_line == first_line)
+		return (SUCCESS);
+	line_len = ft_strlen(lines_arr[current_line - 1]);
+	define_start_and_end(&start, &end, idx, line_len);
+	while (start <= end)
+	{
+		if (!is_valid_space_sorrounding_char(lines_arr[current_line
+				- 1][start]))
+			return (FAILURE);
+		start++;
+	}
+	return (SUCCESS);
+}
+
+int	check_next_line(char **lines_arr, int current_line, int last_line, int idx)
+{
+	int	line_len;
+	int	start;
+	int	end;
+
+	if (current_line == last_line)
+		return (SUCCESS);
+	line_len = ft_strlen(lines_arr[current_line + 1]);
+	define_start_and_end(&start, &end, idx, line_len);
+	while (start <= end)
+	{
+		if (!is_valid_space_sorrounding_char(lines_arr[current_line
+				+ 1][start]))
+			return (FAILURE);
+		start++;
+	}
+	return (SUCCESS);
+}
+
+int	spaces_are_sourrounded_by_walls(char **lines_arr, int current_line,
+		int first_line, int last_line)
+{
+	int	i;
+
+	i = 0;
+	while (lines_arr[current_line][i] != '\0')
+	{
+		if (lines_arr[current_line][i] == ' ')
 		{
-			printf("Error\n");
-			printf("Invalid identifier\n");
-			// free whatever was allocated before
-			exit(EXIT_FAILURE);
+			if (!check_same_line(lines_arr, current_line, i))
+				return (FAILURE);
+			if (!check_previous_line(lines_arr, current_line, first_line, i))
+				return (FAILURE);
+			if (!check_next_line(lines_arr, current_line, last_line, i))
+				return (FAILURE);
 		}
-		// Break if all elements were found
-		if (elements.no == FOUND && elements.so == FOUND && elements.we == FOUND
-			&& elements.ea == FOUND && elements.c == FOUND
-			&& elements.f == FOUND)
+		i++;
+	}
+	return (SUCCESS);
+}
+
+void	process_map_content(char **lines_arr, t_data *data, int first_line)
+{
+	int	i;
+	int	map_width;
+	int	map_height;
+	int	last_line;
+
+	printf("Processing map content...\n");
+	i = first_line;
+	map_width = ft_strlen(lines_arr[first_line]);
+	map_height = calculate_height(lines_arr, first_line);
+	last_line = first_line + map_height - 1;
+	while (lines_arr[i] != NULL)
+	{
+		// Check for empty lines
+		if (lines_arr[i][0] == '\0')
+			perror("Error\nEmpty line in map");
+		// Check for invalid characters
+		if (!has_only_valid_chars(lines_arr[i]))
+			perror("Error\nInvalid character in map");
+		// Check for walls
+		if (!is_surrounded_by_walls(lines_arr, i, first_line, map_height - 1))
+			perror("Error\nMap is not surrounded by walls");
+		// Check for spaces
+		if (!spaces_are_sourrounded_by_walls(lines_arr, i, first_line,
+				last_line))
+			perror("Error\nSpaces are not surrounded by walls");
+		// Find max width
+		map_width = find_max_width(lines_arr, map_width);
+		printf("%s\n", lines_arr[i]);
+		i++;
+	}
+	data->map->w_map = map_width;
+	data->map->h_map = map_height;
+	data->map->grid = malloc(map_height * sizeof(char *));
+	if (!data->map->grid)
+		error_exit("Error\nMalloc failed", data);
+	i = 0;
+	while (i < map_height)
+	{
+		// data->map->grid[i] = malloc(map_width * sizeof(char));
+		data->map->grid[i] = ft_calloc(map_width, sizeof(char));
+		if (!data->map->grid[i])
+			error_exit("Error\nMalloc failed", data);
+		ft_strlcpy(data->map->grid[i], lines_arr[first_line + i], map_width
+			+ 1);
+		i++;
+	}
+	free_str_arr(lines_arr);
+}
+
+void	process_map(char **lines_arr, t_data *data)
+{
+	t_map_elements	elements;
+	int				i;
+
+	// First process map elements ...
+	init_elements_status(&elements);
+	i = 0;
+	while (lines_arr[i] != NULL)
+	{
+		process_map_elements(lines_arr[i], &i, data, &elements);
+		if (check_all_elements_found(&elements))
 			break ;
 		i++;
 	}
-	// Then process map
+	// Skip empty lines
+	while (lines_arr[i] != NULL && lines_arr[i][0] == '\0')
+		i++;
+	// ... then process map content
+	process_map_content(lines_arr, data, i);
 	printf("Processing map content...\n");
 }
 
