@@ -1,28 +1,45 @@
 
 #include "../include/cub3d.h"
 
-// # define LOOK_RIGHT 10
-// # define LOOK_UP_AND_DOWN 11
+#define RIGHT 10
+#define LEFT 9
+#define UP 8
+#define DOWN 7
 
-int	update_steps_direction(float angle, float *step, char c)
-// check the unit circle
+static int	ray_direction(float angle, char plane)
 {
-	if (c == 'x')
+	if (plane == 'x')
 	{
 		if (angle > 0 && angle < M_PI)
+			return (DOWN);
+		else
+			return (UP);
+	}
+	else if (plane == 'y')
+	{
+		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+			return (RIGHT);
+		else
+			return (LEFT);
+	}
+	return (0);
+}
+
+int	update_steps_direction(float angle, float *step, char plane)
+{
+	if (plane == 'x')
+	{
+		if (ray_direction(angle, plane) == DOWN)
 		{
 			if (*step < 0)
 				*step *= -1;
 		}
-		else
-		{
-			if (*step > 0)
-				*step *= -1;
-		}
+		else if (*step > 0)
+			*step *= -1;
 	}
-	else if (c == 'y')
+	else if (plane == 'y')
 	{
-		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+		if (ray_direction(angle, plane) == RIGHT)
 		{
 			if (*step > 0)
 				*step *= -1;
@@ -36,13 +53,11 @@ int	update_steps_direction(float angle, float *step, char c)
 	return (0);
 }
 
-int	inter_check(float angle, float *inter, float *step,
-				int is_horizon) // check the intersection
+int	inter_check(float angle, float *inter, float *step, char plane)
 {
-	if (is_horizon)
+	if (plane == 'y')
 	{
-		if (angle > 0 && angle < M_PI)
-		// if we look down on the map (behind the player)
+		if (ray_direction(angle, 'x') == DOWN)
 		{
 			*inter += TILE_SIZE;
 			return (-1);
@@ -51,8 +66,7 @@ int	inter_check(float angle, float *inter, float *step,
 	}
 	else
 	{
-		if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2))
-		// if we look right on the map
+		if (ray_direction(angle, 'y') == LEFT)
 		{
 			*inter += TILE_SIZE;
 			return (-1);
@@ -117,7 +131,7 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 	// effectively aligning the intersection point
 	// with the horizontal grid lines in the game world
 	h_y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
-	pixel = inter_check(angl, &h_y, &y_step, 1);
+	pixel = inter_check(angl, &h_y, &y_step, 'y');
 	h_x = data->player->x_pos_px + (h_y - data->player->y_pos_px) / tan(angl);
 	update_steps_direction(angl, &x_step, 'y');
 	while (wall_hit(h_x, h_y - pixel, data))
@@ -145,7 +159,7 @@ float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 	x_step = TILE_SIZE;
 	y_step = TILE_SIZE * tan(angl);
 	v_x = floor(data->player->x_pos_px / TILE_SIZE) * TILE_SIZE;
-	pixel = inter_check(angl, &v_x, &x_step, 0);
+	pixel = inter_check(angl, &v_x, &x_step, 'x');
 	// check the intersection and get the pixel value
 	v_y = data->player->y_pos_px + (v_x - data->player->x_pos_px) * tan(angl);
 	update_steps_direction(angl, &y_step, 'x');
