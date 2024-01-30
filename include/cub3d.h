@@ -97,7 +97,7 @@ typedef struct s_player
 	int y_pos_px;                /**< Player y position in pixels. */
 	double orientation_angle_rd; /**< Player angle. */
 	float fov_rd;                /**< Field of view in radians. */
-	// TODO: initialize these values in the init_the_player function and use them
+	// TODO: initialize these values in the init_player function and use them
 	// instead of the defines
 	int					rotation_speed;
 	int					translation_speed;
@@ -114,8 +114,9 @@ typedef struct s_player
  */
 typedef enum e_wall_collision
 {
-	HORIZONTAL = 0, /**< Horizontal wall collision. */
-	VERTICAL = 1    /**< Vertical wall collision. */
+	NO_COLLISION = 0, /**< No wall collision. */
+	HORIZONTAL = 1,   /**< Horizontal wall collision. */
+	VERTICAL = 2      /**< Vertical wall collision. */
 }						t_wall_collision;
 
 /**
@@ -176,6 +177,7 @@ typedef struct s_map
  */
 typedef struct s_data
 {
+	char *argv;           /**< Pointer to the map file. */
 	mlx_image_t *img;     /**< Pointer to the image. */
 	mlx_t *mlx;           /**< Pointer to the MLX instance. */
 	t_ray *ray;           /**< Pointer to the ray structure. */
@@ -183,6 +185,9 @@ typedef struct s_data
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
 }						t_data;
+
+mlx_texture_t			*texture_selection(t_data *data);
+void					init(t_map *map, char *map_argv);
 
 // PARSER:
 void					parse_map(char *argv, t_map *map);
@@ -369,7 +374,7 @@ void					game_loop(void *tmp);
  * @brief Function to initialize the player structure.
  * @param data The t_data structure.
  */
-void					init_the_player(t_data data);
+void					init_player(t_data *data);
 
 /**
  * @brief Function to start the Cub3D game.
@@ -393,6 +398,6 @@ void					start_the_game(t_map *map, char *map_argv);
  *
  * @param mlx The main data structure.
  */
-void					init_ray(t_data *data);
+void					update_ray(t_data *data);
 
 #endif // CUB3D_H
