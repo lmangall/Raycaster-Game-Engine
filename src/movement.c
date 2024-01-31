@@ -24,7 +24,7 @@ void	mlx_key(mlx_key_data_t keydata, void *tmp) // key press
 	data = (t_data *)tmp;
 	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS
 			|| keydata.action == MLX_REPEAT)) // exit the game
-		ft_exit(data);
+		free_exit(data);
 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
 		// move left
 		data->player->lateral_move = L_LEFT;

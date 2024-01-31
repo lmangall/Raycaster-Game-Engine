@@ -1,17 +1,37 @@
 
 #include "../include/cub3d.h"
 
-int	unit_circle(float angle, char c) // check the unit circle
+// # define LOOK_RIGHT 10
+// # define LOOK_UP_AND_DOWN 11
+
+int	update_steps_direction(float angle, float *step, char c)
+// check the unit circle
 {
 	if (c == 'x')
 	{
 		if (angle > 0 && angle < M_PI)
-			return (1);
+		{
+			if (*step < 0)
+				*step *= -1;
+		}
+		else
+		{
+			if (*step > 0)
+				*step *= -1;
+		}
 	}
 	else if (c == 'y')
 	{
 		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
-			return (1);
+		{
+			if (*step > 0)
+				*step *= -1;
+		}
+		else
+		{
+			if (*step < 0)
+				*step *= -1;
+		}
 	}
 	return (0);
 }
@@ -59,6 +79,29 @@ int	wall_hit(float x, float y, t_data *data) // check the wall hit
 	return (1);
 }
 
+void	update_ray(t_data *data)
+{
+	double	wall_h;
+	double	b_pix;
+	double	t_pix;
+
+	data->ray->length *= cos(nor_angle(data->ray->angle_rd
+				- data->player->orientation_angle_rd));   // fix the fisheye
+	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
+			/ tan(data->player->fov_rd / 2)); // get the wall height
+	b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);
+	if (b_pix > WINDOW_HEIGHT)
+		b_pix = WINDOW_HEIGHT;
+	if (t_pix < 0)
+		t_pix = 0;
+	// data->ray->current_texture = data->textures->north;//change this depending on orientation
+	data->ray->current_texture = texture_selection(data);
+	data->ray->wall_h = wall_h;
+	data->ray->t_pix = t_pix;
+	data->ray->b_pix = b_pix;
+}
+
 float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 {
 	float h_x;
@@ -76,10 +119,7 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 	h_y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
 	pixel = inter_check(angl, &h_y, &y_step, 1);
 	h_x = data->player->x_pos_px + (h_y - data->player->y_pos_px) / tan(angl);
-	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y')
-			&& x_step < 0))
-		// check x_step value
-		x_step *= -1;
+	update_steps_direction(angl, &x_step, 'y');
 	while (wall_hit(h_x, h_y - pixel, data))
 	// check the wall hit whit the pixel value
 	{
@@ -91,9 +131,9 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 	data->ray->horizontal_y = h_y;
 	// h_y: The y-coordinate of the point where the horizontal ray intersects a wall.
 	return (sqrt(pow(h_x - data->player->x_pos_px, 2) + pow(h_y
-				- data->player->y_pos_px, 2))); // get the distance
+				- data->player->y_pos_px, 2)));
+	// get the distance
 }
-
 float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 {
 	float v_x;
@@ -108,9 +148,7 @@ float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 	pixel = inter_check(angl, &v_x, &x_step, 0);
 	// check the intersection and get the pixel value
 	v_y = data->player->y_pos_px + (v_x - data->player->x_pos_px) * tan(angl);
-	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x')
-			&& y_step > 0)) // check y_step value
-		y_step *= -1;
+	update_steps_direction(angl, &y_step, 'x');
 	while (wall_hit(v_x - pixel, v_y, data))
 	// check the wall hit whit the pixel value
 	{
@@ -132,24 +170,21 @@ void	raycasting(t_data *data)
 	data->ray->angle_rd = data->player->orientation_angle_rd
 		- (data->player->fov_rd / 2); // the start angle
 	while (data->ray->screen_x < WINDOW_WIDTH)
-	// loop for the rays
 	{
-		data->ray->is_wall = 0;
-		// flag for the wall
+		data->ray->wall_collision_orientation = NO_COLLISION;
 		h_inter = get_h_inter(data, nor_angle(data->ray->angle_rd));
-		// get the horizontal intersection
 		v_inter = get_v_inter(data, nor_angle(data->ray->angle_rd));
-		// get the vertical intersection
 		if (v_inter <= h_inter)
-			// check the distance
+		{
 			data->ray->length = v_inter;
-		// get the distance
+			data->ray->wall_collision_orientation = VERTICAL;
+		}
 		else
 		{
 			data->ray->length = h_inter; // get the distance
-			data->ray->is_wall = 1;      // flag for the wall
+			data->ray->wall_collision_orientation = HORIZONTAL;
 		}
-		init_ray(data);
+		update_ray(data);
 		render_wall(data);
 		render_floor_ceiling(data);
 		data->ray->screen_x++;
