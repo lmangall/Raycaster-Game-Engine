@@ -599,7 +599,7 @@ void	*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 		close(fd);
 		free_lines_arr_and_exit(lines_arr);
 	}
-	new_lines_arr[new_size] = NULL;
+	// new_lines_arr[new_size - 1] = NULL;
 	return (new_lines_arr);
 }
 
@@ -616,10 +616,12 @@ char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 		{
 			*lines_arr_size *= 2;
 			tmp = handle_ft_easy_realloc(lines_arr, *lines_arr_size / 2
-				* sizeof(char *), *lines_arr_size * sizeof(char *) + 1, fd);
+				* sizeof(char *), (*lines_arr_size + 1) * sizeof(char *), fd);
+			tmp[*lines_arr_size] = NULL;
 			lines_arr = tmp;
 		}
-		lines_arr[*lines_nbr++] = line;
+		lines_arr[*lines_nbr] = line;
+		(*lines_nbr)++;
 	}
 	lines_arr[*lines_nbr] = NULL;
 	return (lines_arr);
@@ -632,8 +634,9 @@ char	**final_resize_lines_arr(char **lines_arr, size_t lines_arr_size,
 
 	tmp = ft_easy_realloc(lines_arr, lines_arr_size * sizeof(char *) + 1,
 		(lines_nbr + 1) * sizeof(char *));
-	if (!tmp)
-		free_lines_arr_and_exit(lines_arr);
+	// We aready check in ft_easy_realloc
+	// if (!tmp)
+	// free_lines_arr_and_exit(lines_arr);
 	lines_arr = tmp;
 	lines_arr[lines_nbr] = NULL;
 	return (lines_arr);
