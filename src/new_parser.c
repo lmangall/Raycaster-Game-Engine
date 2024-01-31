@@ -276,12 +276,19 @@ void	process_map_elements(char *line, int *i, t_data *data,
 
 int	check_all_elements_found(t_map_elements *elements)
 {
+	printf("Checking if all elements have been found...\n");
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
 		&& elements->ea == FOUND && elements->c == FOUND
 		&& elements->f == FOUND)
+	{
+		printf("All elements found\n");
 		return (SUCCESS);
+	}
 	else
+	{
+		printf("Not all elements found\n");
 		return (FAILURE);
+	}
 }
 
 int	has_only_valid_chars(char *line)
@@ -571,20 +578,4 @@ void	print_lines_arr(char **lines_arr)
 	}
 }
 
-/* PRELIMINARY FILE CHECKS */
 
-/* Check file extension*/
-void	check_file_extension(char *map_file)
-{
-	char	*extension;
-
-	extension = ft_strrchr(map_file, '.');
-	if (!extension || ft_strncmp(extension, ".cub", 5) != 0)
-		error_exit("Invalid file extension: it should be a .cub extension!",
-			NULL);
-}
-/*Check file*/
-void	check_file(char *map_file)
-{
-	check_file_extension(map_file);
-}

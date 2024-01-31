@@ -229,6 +229,7 @@ void					*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void					*handle_ft_easy_realloc(char **lines_arr,
 							size_t old_size, size_t new_size, int fd);
 void					free_lines_arr_and_exit(char **lines_arr);
+void					check_file(char *map_file);
 
 // TEXTURES:
 /**
