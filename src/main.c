@@ -57,21 +57,14 @@ void	start_the_game(t_map *map, char *map_argv) // start the game
 
 int	main(int argc, char **argv)
 {
-	char **lines_arr;
-	t_map *data = ft_calloc(1, sizeof(t_map));
+	// t_map *data = ft_calloc(1, sizeof(t_map));
+	t_data *data = ft_calloc(1, sizeof(t_data));
 
 	(void)argc;
 	(void)data;
 
-	// if (argc != 2)
-	// {
-	//   printf("Error\nWrong number of arguments\n");
-	//   return (0);
-	// }
-	// atexit(v);
-	check_file(argv[1]);
-	lines_arr = parse_file(argv[1]);
-	print_lines_arr(lines_arr);
+	parser(argc, argv, data);
+
 	// parse_map(argv[1], data);
 
 	// start_the_game(data, argv[2]); // start the game

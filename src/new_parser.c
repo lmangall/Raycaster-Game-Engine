@@ -511,6 +511,7 @@ void	process_map(char **lines_arr, t_data *data)
 	int				i;
 
 	// First process map elements ...
+	ft_putstr_fd("Processing map elements...\n", 1);
 	init_elements_status(&elements);
 	i = 0;
 	while (lines_arr[i] != NULL)
@@ -520,13 +521,27 @@ void	process_map(char **lines_arr, t_data *data)
 			break ;
 		i++;
 	}
+	ft_putstr_fd("Processing map elements done.\n", 1);
+	ft_putstr_fd("The correct number of map elements have been found.\n", 1);
+	ft_putstr_fd("The texture paths have been saved§.\n", 1);
+	ft_putstr_fd("They are:\n", 1);
+	ft_putstr_fd(data->textures_paths->north, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd(data->textures_paths->south, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd(data->textures_paths->west, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd(data->textures_paths->east, 1);
+	ft_putstr_fd("\n", 1);
 	// Skip empty lines
 	while (lines_arr[i] != NULL && lines_arr[i][0] == '\0')
 		i++;
 	// ... then process map content
+	ft_putstr_fd("Processing map content...\n", 1);
 	process_map_content(lines_arr, data, i);
-	printf("Processing map content...\n");
 }
+
+/* DEBUGGING FUNCTION */
 
 void	print_lines_arr(char **lines_arr)
 {

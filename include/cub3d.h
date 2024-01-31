@@ -217,10 +217,13 @@ typedef struct s_data
 
 // PARSER:
 void					check_file(char *map_file);
+void					process_map(char **lines_arr, t_data *data);
 void					parse_map(char *argv, t_map *map);
 char					*cub_to_str(char *map);
 char					**parse_file(char *file_path);
 void					print_lines_arr(char **lines_arr);
+void					parser(int argc, char **argv, t_data *data);
+void					error_exit(char *error_msg, t_data *data);
 
 // TEXTURES:
 /**

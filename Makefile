@@ -30,13 +30,16 @@ RESET	= \033[0m
 
 LIBFT_DIR = lib/libft/
 MLX42_DIR = ./MLX42
-SRC_DIR = src/
-OBJ_DIR = obj/
+SRC_DIR = src
+OBJ_DIR = obj
 
-SRCS	= main.c parser.c new_parser.c render.c exit.c movement.c raycasting.c
+SRCS	= main.c parser.c new_parser.c render.c exit.c movement.c raycasting.c parser/newest_parser.c
 
-SRC	= $(addprefix $(SRC_DIR), $(SRCS))
-OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
+SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
+# OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJ := $(OBJ:/=_)
+
 
 all: check_MLX42  $(NAME)
 
@@ -63,8 +66,8 @@ check_MLX42:
 	git clone https://github.com/codam-coding-college/MLX42.git $(MLX42_DIR); \
 	fi
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c include/cub3d.h
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/cub3d.h
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
