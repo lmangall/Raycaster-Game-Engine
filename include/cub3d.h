@@ -19,6 +19,8 @@
 # define WINDOW_HEIGHT 1000
 # define TILE_SIZE 30
 # define FOV 60
+# define ERROR_OPENING_FILE "File not found or corrupted."
+
 // The previous denomination were PLAYER_SPEED and ROTATION_SPEED.
 // ROTATION_SPEED is also a kind of speed of the player. I'm not sure if
 // translation is clear enough Or if it would be better something else, like
@@ -214,6 +216,7 @@ typedef struct s_data
 }						t_data;
 
 // PARSER:
+void					check_file(char *map_file);
 void					parse_map(char *argv, t_map *map);
 char					*cub_to_str(char *map);
 char					**parse_file(char *file_path);

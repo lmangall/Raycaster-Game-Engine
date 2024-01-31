@@ -546,6 +546,24 @@ void	print_lines_arr(char **lines_arr)
 	}
 }
 
+/* PRELIMINARY FILE CHECKS */
+
+/* Check file extension*/
+void	check_file_extension(char *map_file)
+{
+	char	*extension;
+
+	extension = ft_strrchr(map_file, '.');
+	if (!extension || ft_strncmp(extension, ".cub", 5) != 0)
+		error_exit("Invalid file extension: it should be a .cub extension!",
+			NULL);
+}
+/*Check file*/
+void	check_file(char *map_file)
+{
+	check_file_extension(map_file);
+}
+
 /* PARSE_FILE
 This code takes a file path as an argument and returns an array of strings
 */
@@ -556,7 +574,7 @@ int	open_and_check_file(char *file_path)
 
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
-		error_exit("Error\nFile not found or corrupted", NULL);
+		error_exit("$ERROR_OPENING_FILE", NULL);
 	return (fd);
 }
 

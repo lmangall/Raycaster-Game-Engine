@@ -69,6 +69,7 @@ int	main(int argc, char **argv)
 	//   return (0);
 	// }
 	// atexit(v);
+	check_file(argv[1]);
 	lines_arr = parse_file(argv[1]);
 	print_lines_arr(lines_arr);
 	// parse_map(argv[1], data);
