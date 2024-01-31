@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "parser.h"
 
 void	parser(int argc, char **argv, t_data *data)
 {

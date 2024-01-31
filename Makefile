@@ -10,12 +10,12 @@ LIBFT= lib/libft/libft.a
 LIBMLX42 = MLX42/build/libmlx42.a
 
 FLAGS_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
-INCLUDES = -I./include -I./MLX42/include/MLX42 -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -I./lib/libft/include
+INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -I./lib/libft/include
 LIB = -L/usr/local/Cellar/glfw/3.3.9/lib
 ARCH = $(shell uname -m)
 ifeq ($(ARCH),arm64)
     FLAGS_MLX = $(shell pkg-config --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib
-	INCLUDES = -I./include -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
+	INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
 # $(info ARM architecture detected, FLAGS_MLX changed to $(FLAGS_MLX) and INCLUDES changed to $(INCLUDES))
 endif
 
@@ -33,7 +33,7 @@ MLX42_DIR = ./MLX42
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS	= main.c parser.c new_parser.c render.c exit.c movement.c raycasting.c parser/newest_parser.c parser/parse_file.c parser/parse_file_utils.c parser/check_file.c
+SRCS	= main.c parser.c render.c exit.c movement.c raycasting.c parser/newest_parser.c parser/parse_file.c parser/parse_file_utils.c parser/check_file.c parser/process_map.c parser/process_map_elements.c parser/process_map_content.c parser/utils.c
 
 SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
 # OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))

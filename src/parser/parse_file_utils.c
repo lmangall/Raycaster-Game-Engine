@@ -40,3 +40,21 @@ void	*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 	// new_lines_arr[new_size - 1] = NULL;
 	return (new_lines_arr);
 }
+
+void	print_lines_arr(char **lines_arr)
+{
+	int	i;
+
+	printf("Printing lines_arr...\n");
+	if (lines_arr == NULL)
+	{
+		printf("No lines to print.\n");
+		return ;
+	}
+	i = 0;
+	while (lines_arr[i] != NULL)
+	{
+		printf("%s\n", lines_arr[i]);
+		i++;
+	}
+}
