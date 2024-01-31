@@ -52,6 +52,7 @@ void	collect_elements_data_path(char *line, char *identifier, char *target)
 	char	*start;
 	char	*end;
 
+	printf("collect_elements_data_path START\n");
 	// Skip spaces
 	while (*line == ' ')
 		line++;
@@ -64,7 +65,8 @@ void	collect_elements_data_path(char *line, char *identifier, char *target)
 		line++;
 	// Get data
 	start = line;
-	while (*line != ' ')
+	printf("line: %s\n", line);
+	while (*line != ' ' && *line != '\0')
 		line++;
 	end = line;
 	target = ft_substr(start, 0, end - start);
@@ -80,6 +82,7 @@ void	collect_elements_data_path(char *line, char *identifier, char *target)
 		// free whatever was allocated before
 		exit(EXIT_FAILURE);
 	}
+	printf("collect_elements_data_path END\n");
 }
 
 void	free_str_arr(char **str_arr)
@@ -242,9 +245,13 @@ void	init_elements_status(t_map_elements *elements)
 void	process_map_elements(char *line, int *i, t_data *data,
 		t_map_elements *elements)
 {
+	printf("process_map_elements START\n");
 	// Skip empty lines
 	if (line[0] == '\0')
+	{
+		printf("Empty line skipped in process_map_elements\n");
 		return ;
+	}
 	// Skip initial spaces
 	while (*line == ' ')
 		line++;
@@ -264,6 +271,7 @@ void	process_map_elements(char *line, int *i, t_data *data,
 	else
 		error_exit("Invalid identifier", data);
 	(*i)++;
+	printf("process_map_elements END\n");
 }
 
 int	check_all_elements_found(t_map_elements *elements)
@@ -516,6 +524,8 @@ void	process_map(char **lines_arr, t_data *data)
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
+		printf("while loop n %d\n", i);
+		printf("line: %s\n", lines_arr[i]);
 		process_map_elements(lines_arr[i], &i, data, &elements);
 		if (check_all_elements_found(&elements))
 			break ;
@@ -577,116 +587,4 @@ void	check_file_extension(char *map_file)
 void	check_file(char *map_file)
 {
 	check_file_extension(map_file);
-}
-
-/* PARSE_FILE
-This code takes a file path as an argument and returns an array of strings
-*/
-
-int	open_and_check_file(char *file_path)
-{
-	int	fd;
-
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-		error_exit("$ERROR_OPENING_FILE", NULL);
-	return (fd);
-}
-
-void	free_lines_arr_and_exit(char **lines_arr)
-{
-	int	i;
-
-	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		free(lines_arr[i]);
-		i++;
-	}
-	free(lines_arr);
-	error_exit("Error\nMalloc failed", NULL);
-}
-
-void	*handle_ft_calloc(size_t *lines_arr_size, int fd)
-{
-	char	**lines_arr;
-
-	lines_arr = ft_calloc(*lines_arr_size, sizeof(char *) + 1);
-	if (!lines_arr)
-	{
-		close(fd);
-		error_exit("Error\nMalloc failed", NULL);
-	}
-	lines_arr[*lines_arr_size] = NULL;
-	return (lines_arr);
-}
-
-void	*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
-		size_t new_size, int fd)
-{
-	char	**new_lines_arr;
-
-	new_lines_arr = ft_easy_realloc(lines_arr, old_size, new_size);
-	if (!new_lines_arr)
-	{
-		close(fd);
-		free_lines_arr_and_exit(lines_arr);
-	}
-	// new_lines_arr[new_size - 1] = NULL;
-	return (new_lines_arr);
-}
-
-char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
-{
-	char	*line;
-	char	**lines_arr;
-	char	**tmp;
-
-	lines_arr = handle_ft_calloc(lines_arr_size, fd);
-	while ((line = get_next_line(fd)))
-	{
-		if (*lines_nbr == *lines_arr_size)
-		{
-			*lines_arr_size *= 2;
-			tmp = handle_ft_easy_realloc(lines_arr, *lines_arr_size / 2
-				* sizeof(char *), (*lines_arr_size + 1) * sizeof(char *), fd);
-			tmp[*lines_arr_size] = NULL;
-			lines_arr = tmp;
-		}
-		lines_arr[*lines_nbr] = line;
-		(*lines_nbr)++;
-	}
-	lines_arr[*lines_nbr] = NULL;
-	return (lines_arr);
-}
-
-char	**final_resize_lines_arr(char **lines_arr, size_t lines_arr_size,
-		size_t lines_nbr)
-{
-	char	**tmp;
-
-	tmp = ft_easy_realloc(lines_arr, lines_arr_size * sizeof(char *) + 1,
-		(lines_nbr + 1) * sizeof(char *));
-	// We aready check in ft_easy_realloc
-	// if (!tmp)
-	// free_lines_arr_and_exit(lines_arr);
-	lines_arr = tmp;
-	lines_arr[lines_nbr] = NULL;
-	return (lines_arr);
-}
-
-char	**parse_file(char *file_path)
-{
-	int		fd;
-	size_t	lines_arr_size;
-	size_t	lines_nbr;
-	char	**lines_arr;
-
-	lines_nbr = 0;
-	lines_arr_size = 10;
-	fd = open_and_check_file(file_path);
-	lines_arr = build_lines_arr(fd, &lines_arr_size, &lines_nbr);
-	close(fd);
-	lines_arr = final_resize_lines_arr(lines_arr, lines_arr_size, lines_nbr);
-	return (lines_arr);
 }

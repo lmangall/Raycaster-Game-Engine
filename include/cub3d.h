@@ -223,6 +223,7 @@ char					*cub_to_str(char *map);
 char					**parse_file(char *file_path);
 void					print_lines_arr(char **lines_arr);
 void					parser(int argc, char **argv, t_data *data);
+char					**parse_file(char *file_path);
 void					error_exit(char *error_msg, t_data *data);
 
 // TEXTURES:
