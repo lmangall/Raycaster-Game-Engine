@@ -98,6 +98,7 @@ void	process_map(char **lines_arr, t_data *data)
 		{
 			printf("All elements found\n");
 			printf("We break!\n");
+			i++;
 			break ;
 		}
 		i++;
@@ -133,8 +134,14 @@ void	process_map(char **lines_arr, t_data *data)
 	ft_putnbr_fd(data->map->f.a, 1);
 	ft_putstr_fd("\n", 1);
 	// Skip empty lines
-	while (lines_arr[i] != NULL && lines_arr[i][0] == '\0')
+	printf("lines_arr[%d]: %s before skipping empty lines\n", i, lines_arr[i]);
+	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
+			|| lines_arr[i][0] == '\n'))
+	{
+		printf("lines_arr[%d]: %s\n", i, lines_arr[i]);
+		printf("Skipping empty line\n");
 		i++;
+	}
 	// ... then process map content
 	ft_putstr_fd("Processing map content...\n", 1);
 	process_map_content(lines_arr, data, i);

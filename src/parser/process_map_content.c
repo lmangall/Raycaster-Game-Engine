@@ -18,14 +18,24 @@ int	has_only_valid_chars(char *line)
 {
 	int	i;
 
+	// printf("has_only_valid_chars\n");
 	i = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'W' && line[i] != 'E')
+		{
+			printf("Found invalid character\n");
+			printf("line[%d]: %c\n", i, line[i]);
+			if (line[i] == '\n')
+				printf("line[%d]: \\n\n", i);
+			if (line[i] == '\0')
+				printf("line[%d]: \\0\n", i);
 			return (FAILURE);
+		}
 		i++;
 	}
+	// printf("No invalid characters found\n");
 	return (SUCCESS);
 }
 
@@ -181,15 +191,44 @@ int	spaces_are_sourrounded_by_walls(char **lines_arr, int current_line,
 		if (lines_arr[current_line][i] == ' ')
 		{
 			if (!check_same_line(lines_arr, current_line, i))
+			{
+				printf("check_same_line\n");
 				return (FAILURE);
+			}
 			if (!check_previous_line(lines_arr, current_line, first_line, i))
+			{
+				printf("check_previous_line\n");
 				return (FAILURE);
+			}
 			if (!check_next_line(lines_arr, current_line, last_line, i))
+			{
+				printf("check_next_line\n");
 				return (FAILURE);
+			}
 		}
 		i++;
 	}
+	printf("return (SUCCESS)\n");
 	return (SUCCESS);
+}
+
+void	remove_new_line_char(char **lines_arr, int i)
+{
+	int		j;
+	char	*tmp;
+
+	j = 0;
+	while (lines_arr[i][j] != '\0')
+	{
+		if (lines_arr[i][j] == '\n' && lines_arr[i][j + 1] == '\0')
+		{
+			tmp = ft_substr(lines_arr[i], 0, j);
+			free(lines_arr[i]);
+			lines_arr[i] = tmp;
+			return ;
+		}
+		j++;
+	}
 }
 
 void	process_map_content(char **lines_arr, t_data *data, int first_line)
@@ -199,29 +238,36 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 	int	map_height;
 	int	last_line;
 
-	printf("Processing map content...\n");
+	printf("process_map_content\n");
 	i = first_line;
+	printf("i: %d\n", i);
 	map_width = ft_strlen(lines_arr[first_line]);
 	map_height = calculate_height(lines_arr, first_line);
 	last_line = first_line + map_height - 1;
 	while (lines_arr[i] != NULL)
 	{
+		remove_new_line_char(lines_arr, i);
+		printf("loop #%d\n", i - first_line);
+		printf("lines_arr[%d]: %s\n", i - first_line, lines_arr[i]);
 		// Check for empty lines
 		if (lines_arr[i][0] == '\0')
 			perror("Error\nEmpty line in map");
 		// Check for invalid characters
-		if (!has_only_valid_chars(lines_arr[i]))
+		if (has_only_valid_chars(lines_arr[i]) == FAILURE)
 			perror("Error\nInvalid character in map");
 		// Check for walls
-		if (!is_surrounded_by_walls(lines_arr, i, first_line, map_height - 1))
+		if (is_surrounded_by_walls(lines_arr, i, first_line, map_height
+				- 1) == FAILURE)
 			perror("Error\nMap is not surrounded by walls");
 		// Check for spaces
-		if (!spaces_are_sourrounded_by_walls(lines_arr, i, first_line,
-				last_line))
+		// The readibility of this function is not good
+		// In comparison to the other functions
+		// But if we just negate it it will not work
+		if (spaces_are_sourrounded_by_walls(lines_arr, i, first_line,
+				last_line) == FAILURE)
 			perror("Error\nSpaces are not surrounded by walls");
 		// Find max width
 		map_width = find_max_width(lines_arr, map_width);
-		printf("%s\n", lines_arr[i]);
 		i++;
 	}
 	data->map->w_map = map_width;
