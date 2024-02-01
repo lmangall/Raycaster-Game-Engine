@@ -13,12 +13,10 @@
 #include "cub3d.h"
 #include "parser.h"
 
-/* Process map contant */
 int	has_only_valid_chars(char *line)
 {
 	int	i;
 
-	// printf("has_only_valid_chars\n");
 	i = 0;
 	while (line[i] != '\0')
 	{
@@ -35,40 +33,7 @@ int	has_only_valid_chars(char *line)
 		}
 		i++;
 	}
-	// printf("No invalid characters found\n");
 	return (SUCCESS);
-}
-
-int	calculate_height(char **lines_arr, int first_line)
-{
-	int	i;
-	int	height;
-
-	i = first_line;
-	height = 0;
-	while (lines_arr[i] != NULL)
-	{
-		if (lines_arr[i][0] != '\0')
-			height++;
-		i++;
-	}
-	return (height);
-}
-
-int	find_max_width(char **lines_arr, int current_max_width)
-{
-	int	i;
-	int	current_width;
-
-	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		current_width = ft_strlen(lines_arr[i]);
-		if (current_width > current_max_width)
-			current_max_width = current_width;
-		i++;
-	}
-	return (current_max_width);
 }
 
 int	is_surrounded_by_walls(char **lines_arr, int current_line, int first_line,
@@ -250,6 +215,8 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 		printf("loop #%d\n", i - first_line);
 		printf("lines_arr[%d]: %s\n", i - first_line, lines_arr[i]);
 		// Check for empty lines
+		// What if we have a line with only spaces?
+		// We should check for that too
 		if (lines_arr[i][0] == '\0')
 			perror("Error\nEmpty line in map");
 		// Check for invalid characters

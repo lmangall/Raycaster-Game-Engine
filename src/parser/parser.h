@@ -23,3 +23,6 @@ void			free_str_arr(char **str_arr);
 void			init_elements_status(t_map_elements *elements);
 void			init_map(t_map *map);
 void			init_textures_paths(t_textures_paths *textures_paths);
+
+int				find_max_width(char **lines_arr, int current_max_width);
+int				calculate_height(char **lines_arr, int first_line);
