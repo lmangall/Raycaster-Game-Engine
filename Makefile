@@ -10,12 +10,12 @@ LIBFT= lib/libft/libft.a
 LIBMLX42 = MLX42/build/libmlx42.a
 
 FLAGS_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
-INCLUDES = -I./include -I./MLX42/include/MLX42 -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -I./lib/libft/include
+INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -I./lib/libft/include
 LIB = -L/usr/local/Cellar/glfw/3.3.9/lib
 ARCH = $(shell uname -m)
 ifeq ($(ARCH),arm64)
     FLAGS_MLX = $(shell pkg-config --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib
-	INCLUDES = -I./include -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
+  	INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
 # $(info ARM architecture detected, FLAGS_MLX changed to $(FLAGS_MLX) and INCLUDES changed to $(INCLUDES))
 endif
 
@@ -30,13 +30,15 @@ RESET	= \033[0m
 
 LIBFT_DIR = lib/libft/
 MLX42_DIR = ./MLX42
-SRC_DIR = src/
-OBJ_DIR = obj/
+SRC_DIR = src
+OBJ_DIR = obj
 
-SRCS	= main.c parser.c new_parser.c render.c exit.c movement.c raycasting.c
+SRCS	= main.c parser.c render.c exit.c movement.c raycasting.c parser/newest_parser.c parser/parse_file.c parser/parse_file_utils.c parser/check_file.c parser/process_map.c parser/process_map_elements.c parser/process_map_content.c parser/utils.c parser/init.c parser/process_map_content_height_width.c parser/process_map_content_checks.c parser/process_map_content_check_spaces.c
 
-SRC	= $(addprefix $(SRC_DIR), $(SRCS))
-OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
+SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
+# OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJ := $(OBJ:/=_)
 
 all: check_MLX42  $(NAME)
 
@@ -63,8 +65,8 @@ check_MLX42:
 	git clone https://github.com/codam-coding-college/MLX42.git $(MLX42_DIR); \
 	fi
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c include/cub3d.h
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/cub3d.h
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

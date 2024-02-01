@@ -401,6 +401,26 @@ int					ft_isspace(int c);
 // char	*ft_strchr(char *s, int c);
 // char	*ft_strjoin(char *stored_s, char *buff);
 
+/**
+ * @brief Reallocates a block of memory pointed to by 'ptr' to a new size.
+ *
+ * This function changes the size of the memory block pointed to by 'ptr' to
+ * 'new_size'. It copies the contents of the old block to the new block, up to
+ * the minimum of the old and new sizes. If 'new_size' is zero and 'ptr' is not
+ * NULL, the function behaves like 'free(ptr)' and returns NULL.
+ *
+ * @param ptr      Pointer to the memory block to be reallocated.
+ * @param old_size Current size of the memory block in bytes.
+ * @param new_size New size to which the memory block should be resized.
+ *
+ * @return A pointer to the newly allocated memory block, which may be different
+ *         from the original 'ptr' if reallocation occurred. Returns NULL if
+ *         'new_size' is zero or if memory allocation fails.
+ */
+
+void				*ft_easy_realloc(void *ptr, size_t old_size,
+						size_t new_size);
+
 // extra for GNL:
 char				*stored_s_to_str(char *stored_s);
 char				*new_stored_s(char *stored_s);

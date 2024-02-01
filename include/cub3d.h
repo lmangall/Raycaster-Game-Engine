@@ -19,12 +19,43 @@
 # define WINDOW_HEIGHT 1000
 # define TILE_SIZE 30
 # define FOV 60
+# define ERROR_OPENING_FILE "File not found or corrupted."
+
 // The previous denomination were PLAYER_SPEED and ROTATION_SPEED.
 // ROTATION_SPEED is also a kind of speed of the player. I'm not sure if
 // translation is clear enough Or if it would be better something else, like
 // walkind speed
 # define PLAYER_ROTATION_SPEED 0.045
 # define PLAYER_TRANSLATION_SPEED 4
+// To make sense of the return values of the functions
+// above alf for the if statements
+// cause it's easier to read
+# define SUCCESS 0
+# define FAILURE 1
+
+typedef enum
+{
+	NOT_FOUND,
+	FOUND
+}						e_status;
+
+typedef struct s_map_elements
+{
+	e_status			no;
+	e_status			so;
+	e_status			we;
+	e_status			ea;
+	e_status			c;
+	e_status			f;
+}						t_map_elements;
+
+typedef struct s_textures_paths
+{
+	char				*north;
+	char				*south;
+	char				*west;
+	char				*east;
+}						t_textures_paths;
 
 /**
  * @brief Structure to save the path to textures.
@@ -161,15 +192,33 @@ typedef struct s_ray
 }						t_ray;
 
 /**
+ * @brief Structure to represent a color in RGBA format.
+ */
+
+typedef struct s_rgba
+{
+	int r; // Red component, usually in the range [0, 255]
+	int g; // Green component, usually in the range [0, 255]
+	int b; // Blue component, usually in the range [0, 255]
+	int a; // Alpha component for transparency, usually in the range [0, 255]
+}						t_rgba;
+
+/**
  * @brief Structure to represent game data, including the map.
  */
 typedef struct s_map
 {
-	char **grid; /**< 2D array representing the map. */
-	int p_x;     /**< Player x position in the map in tiles. */
-	int p_y;     /**< Player y position in the map in tiles. */
-	int w_map;   /**< Map width in tiles. */
-	int h_map;   /**< Map height in tiles. */
+	char **grid;             /**< 2D array representing the map. */
+	int p_x;                 /**< Player x position in the map in tiles. */
+	int p_y;                 /**< Player y position in the map in tiles. */
+	char player_orientation; /**< Player orientation. */
+	e_status player_found;   /**< Flag indicating whether the player has been
+								found. */
+	int width;               /**< Map width in tiles. */
+	int height;              /**< Map height in tiles. */
+	t_rgba c;                /**< Ceiling color. */
+	t_rgba f;                /**< Floor color. */
+	t_textures_paths	textures_paths;
 }						t_map;
 
 /**
@@ -184,30 +233,45 @@ typedef struct s_data
 	t_map *map;           /**< Pointer to the map structure. */
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
+							/**< Pointer to the texture paths structure. */
 }						t_data;
 
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
 
 // PARSER:
+void					check_file(char *map_file);
+void					process_map(char **lines_arr, t_data *data);
 void					parse_map(char *argv, t_map *map);
 char					*cub_to_str(char *map);
+char					**parse_file(char *file_path);
+void					print_lines_arr(char **lines_arr);
+void					parser(int argc, char **argv, t_data *data);
+char					**parse_file(char *file_path);
+void					error_exit(char *error_msg, t_data *data);
+void					*handle_ft_calloc(size_t *lines_arr_size, int fd);
+void					*handle_ft_easy_realloc(char **lines_arr,
+							size_t old_size, size_t new_size, int fd);
+void					free_lines_arr_and_exit(char **lines_arr);
+void					check_file(char *map_file);
+void					process_map(char **lines_arr, t_data *data);
 
 // TEXTURES:
 /**
- * @brief Get the value associated with a given identifier in a string.
- *
- * This function finds the position of the identifier in the input string
- * and retrieves the corresponding value. It skips spaces and returns the
- * identified value as a dynamically allocated string.
- *
- * @param map_str The input string containing the identifier and its value.
- * @param identifier The identifier whose value needs to be retrieved.
- *
- * @return A dynamically allocated string containing the value, or NULL if
- * the identifier is not found or memory allocation fails. The caller is
- * responsible for freeing the allocated memory.
- */
+	* @brief Get the value associated with a given identifier in a string.
+	*
+	* This function finds the position of the identifier in the input string
+	* and retrieves the corresponding value. It skips spaces and returns the
+	* identified value as a dynamically allocated string.
+	*
+	* @param map_str The input string containing the identifier and its value.
+	* @param identifier The identifier whose value needs to be retrieved.
+	*
+	* @return A dynamically allocated string containing the value,
+		or NULL if
+	* the identifier is not found or memory allocation fails. The caller is
+	* responsible for freeing the allocated memory.
+	*/
 char					*get_identifier_value(char *map_str, char *identifier);
 
 int						load_textures(t_data *data, char *map_str);

@@ -90,8 +90,8 @@ typedef struct s_map {
   char **map2d; /**< 2D array representing the map. */
   int p_x;      /**< Player x position in the map. */
   int p_y;      /**< Player y position in the map. */
-  int w_map;    /**< Map width. */
-  int h_map;    /**< Map height. */
+  int width;    /**< Map width. */
+  int height;    /**< Map height. */
 } t_map;
 
 /**
