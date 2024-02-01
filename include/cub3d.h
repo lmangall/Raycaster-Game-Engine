@@ -170,13 +170,7 @@ typedef struct s_ray
 {
 	double angle_rd; /**< Ray angle. */
 	double				length;
-	/**< Length of the ray: distance player's eye to the to next
-					wall. */
-	//   int flag;        /**< Flag for the wall. */
 	t_wall_collision	wall_collision_orientation;
-	/**< Orientation of the wall collision. */
-	// below is leonard/texture branch version,
-	//	update name to Stephano's version
 	double				horizontal_x;
 	double				horizontal_y;
 	double				vertical_x;
@@ -256,7 +250,7 @@ void					free_lines_arr_and_exit(char **lines_arr);
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
 
-// TEXTURES:
+// TEXTURES:     UPDATE DOXY
 /**
 	* @brief Get the value associated with a given identifier in a string.
 	*
@@ -274,7 +268,7 @@ void					process_map(char **lines_arr, t_data *data);
 	*/
 char					*get_identifier_value(char *map_str, char *identifier);
 
-int						load_textures(t_data *data, char *map_str);
+int						load_textures(t_data *data);
 
 /**
  * @brief Function to handle cleanup and exit the game.
@@ -377,10 +371,11 @@ void					raycasting(t_data *data);
  * @brief Update the step direction (+/−) based on the given angle and axis.
  *
  * if we check x:
- * we check whether the angle is greater than 0 and less than π (180 degrees).
+ * we check whether the angle is greater than 0 and less than π (180 degrees)
+ * (=looking down).
  *
  * if we check y
- * wechecks if  the ray is looking  up or down
+ * we check if  the ray is looking left
 
 	* if the angle is greater than π/2 (90 degrees) and less than 3π/2 (270 degrees))
  *
@@ -393,7 +388,7 @@ void					raycasting(t_data *data);
 
 	*       It adjusts the step based on the specified conditions in the unit circle.
  */
-static int				update_steps_direction(float angle, float *step,
+int						update_steps_direction(float angle, float *step,
 							char c);
 
 /**
@@ -408,7 +403,7 @@ static int				update_steps_direction(float angle, float *step,
  * @return -1 if there is an intersection, 1 otherwise.
  */
 int						inter_check(float angle, float *inter, float *step,
-							int is_horizon);
+							char plane);
 
 /**
  * @brief Function to check if a wall is hit based on coordinates.

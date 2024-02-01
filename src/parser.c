@@ -16,33 +16,31 @@ void	parse_map(char *argv, t_map *map)
 	free(map_str);
 }
 
-int	load_textures(t_data *data, char *map_str)
+int	load_textures(t_data *data)
 {
 	t_textures	*textures;
-	char		*value;
 
+	textures = NULL;
 	printf("Loading textures...\n");
-	printf("map_str: %s\n", map_str);
-	textures = data->textures;
-	value = get_identifier_value(map_str, "NO");
-	textures->north = mlx_load_png(value);
+	// textures = data->textures;
+	// value = get_identifier_value(map_str, "NO");
+	textures->north = mlx_load_png(data->map->textures_paths.north);
 	// free(value);
-	value = get_identifier_value(map_str, "SO");
-	textures->south = mlx_load_png(value);
+	// value = get_identifier_value(map_str, "SO");
+	textures->south = mlx_load_png(data->map->textures_paths.south);
 	// free(value);
-	value = get_identifier_value(map_str, "WE");
-	textures->west = mlx_load_png(value);
+	// value = get_identifier_value(map_str, "WE");
+	textures->west = mlx_load_png(data->map->textures_paths.west);
 	// free(value);
-	value = get_identifier_value(map_str, "EA");
-	textures->east = mlx_load_png(value);
+	// value = get_identifier_value(map_str, "EA");
+	textures->east = mlx_load_png(data->map->textures_paths.east);
 	// free(value);
 	// value = get_identifier_value(map_str, "F");
 	// textures->ceiling = mlx_load_png(value);
 	// free(value);
 	// value = get_identifier_value(map_str, "C");
 	// textures->floor = mlx_load_png(value);
-	if (value != NULL)
-		free(value);
+	data->textures = textures;
 	return (0);
 }
 
