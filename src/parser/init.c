@@ -12,6 +12,10 @@ void	init_map(t_map *map)
 	map->p_y = 0;
 	map->w_map = 0;
 	map->h_map = 0;
+	// Initialize player_orientation to 0 or another default value as appropriate for your application
+	map->player_orientation = '0';
+	// Initialize the player_found flag to NOT_FOUND
+	map->player_found = NOT_FOUND;
 	// Initialize grid pointer to NULL (assuming it will be dynamically allocated later)
 	map->grid = NULL;
 	// Initialize RGBA components of c and f to 0

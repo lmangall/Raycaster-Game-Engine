@@ -16,6 +16,8 @@
 void	parser(int argc, char **argv, t_data *data)
 {
 	char	**lines_arr;
+	// hier the t_map struct should be initialised
+	// and it should be 'passed' to data
 
 	if (argc != 2)
 		error_exit("Wrong number of arguments.", data);

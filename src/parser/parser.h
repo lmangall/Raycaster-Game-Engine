@@ -1,18 +1,8 @@
-typedef enum
-{
-	NOT_FOUND,
-	FOUND
-}				e_status;
+#ifndef PARSER_H
+# define PARSER_H
 
-typedef struct s_map_elements
-{
-	e_status	no;
-	e_status	so;
-	e_status	we;
-	e_status	ea;
-	e_status	c;
-	e_status	f;
-}				t_map_elements;
+
+
 
 void			process_map_elements(char *line, int *i, t_data *data,
 					t_map_elements *elements);
@@ -26,3 +16,10 @@ void			init_textures_paths(t_textures_paths *textures_paths);
 
 int				find_max_width(char **lines_arr, int current_max_width);
 int				calculate_height(char **lines_arr, int first_line);
+int				has_only_valid_chars(char *line);
+int				is_surrounded_by_walls(char **lines_arr, int current_line,
+					int first_line, int last_line);
+int				spaces_are_sourrounded_by_walls(char **lines_arr,
+					int current_line, int first_line, int last_line);
+
+#endif

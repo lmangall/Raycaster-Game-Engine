@@ -13,170 +13,6 @@
 #include "cub3d.h"
 #include "parser.h"
 
-int	has_only_valid_chars(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N'
-			&& line[i] != 'S' && line[i] != 'W' && line[i] != 'E')
-		{
-			printf("Found invalid character\n");
-			printf("line[%d]: %c\n", i, line[i]);
-			if (line[i] == '\n')
-				printf("line[%d]: \\n\n", i);
-			if (line[i] == '\0')
-				printf("line[%d]: \\0\n", i);
-			return (FAILURE);
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int	is_surrounded_by_walls(char **lines_arr, int current_line, int first_line,
-		int last_line)
-{
-	int	i;
-
-	if (current_line == first_line || current_line == last_line)
-	{
-		i = 0;
-		while (lines_arr[current_line][i] != '\0')
-		{
-			if (lines_arr[current_line][i] != '1'
-				&& lines_arr[current_line][i] != ' ')
-				return (FAILURE);
-			i++;
-		}
-	}
-	else
-	{
-		// check fist and last char
-		// skip spaces
-		i = 0;
-		while (lines_arr[current_line][i] == ' ')
-			i++;
-		if (lines_arr[current_line][i] != '1')
-			return (FAILURE);
-		i = ft_strlen(lines_arr[current_line]) - 1;
-		while (lines_arr[current_line][i] == ' ')
-			i--;
-		if (lines_arr[current_line][i] != '1')
-			return (FAILURE);
-	}
-	return (SUCCESS);
-}
-
-int	is_valid_space_sorrounding_char(char c)
-{
-	if (c == ' ' || c == '1')
-		return (SUCCESS);
-	else
-		return (FAILURE);
-}
-
-void	define_start_and_end(int *start, int *end, int idx, int line_len)
-{
-	*start = idx - 1;
-	if (idx - 1 < 0)
-		*start = 0;
-	*end = idx + 1;
-	if (idx + 1 > line_len - 1)
-		*end = line_len - 1;
-}
-
-int	check_same_line(char **lines_arr, int current_line, int idx)
-{
-	int	line_len;
-	int	start;
-	int	end;
-
-	line_len = ft_strlen(lines_arr[current_line]);
-	define_start_and_end(&start, &end, idx, line_len);
-	while (start <= end)
-	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line][start]))
-			return (FAILURE);
-		start++;
-	}
-	return (SUCCESS);
-}
-int	check_previous_line(char **lines_arr, int current_line, int first_line,
-		int idx)
-{
-	int	line_len;
-	int	start;
-	int	end;
-
-	if (current_line == first_line)
-		return (SUCCESS);
-	line_len = ft_strlen(lines_arr[current_line - 1]);
-	define_start_and_end(&start, &end, idx, line_len);
-	while (start <= end)
-	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line
-				- 1][start]))
-			return (FAILURE);
-		start++;
-	}
-	return (SUCCESS);
-}
-
-int	check_next_line(char **lines_arr, int current_line, int last_line, int idx)
-{
-	int	line_len;
-	int	start;
-	int	end;
-
-	if (current_line == last_line)
-		return (SUCCESS);
-	line_len = ft_strlen(lines_arr[current_line + 1]);
-	define_start_and_end(&start, &end, idx, line_len);
-	while (start <= end)
-	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line
-				+ 1][start]))
-			return (FAILURE);
-		start++;
-	}
-	return (SUCCESS);
-}
-
-int	spaces_are_sourrounded_by_walls(char **lines_arr, int current_line,
-		int first_line, int last_line)
-{
-	int	i;
-
-	i = 0;
-	while (lines_arr[current_line][i] != '\0')
-	{
-		if (lines_arr[current_line][i] == ' ')
-		{
-			if (!check_same_line(lines_arr, current_line, i))
-			{
-				printf("check_same_line\n");
-				return (FAILURE);
-			}
-			if (!check_previous_line(lines_arr, current_line, first_line, i))
-			{
-				printf("check_previous_line\n");
-				return (FAILURE);
-			}
-			if (!check_next_line(lines_arr, current_line, last_line, i))
-			{
-				printf("check_next_line\n");
-				return (FAILURE);
-			}
-		}
-		i++;
-	}
-	printf("return (SUCCESS)\n");
-	return (SUCCESS);
-}
-
 void	remove_new_line_char(char **lines_arr, int i)
 {
 	int		j;
@@ -193,6 +29,34 @@ void	remove_new_line_char(char **lines_arr, int i)
 			return ;
 		}
 		j++;
+	}
+}
+
+void	extract_player_position(char *line, int y, t_data *data)
+{
+	int	x;
+
+	x = 0;
+	while (line[x] != '\0')
+	{
+		if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E'
+			|| line[x] == 'W')
+		{
+			if (data->map->player_found == NOT_FOUND)
+			{
+				data->map->p_x = x;
+				data->map->p_y = y;
+				data->map->player_orientation = line[x];
+				// Assign player orientation
+				data->map->player_found = FOUND;
+				return ;
+			}
+			else
+			{
+				error_exit("Error: Multiple player positions found.", data);
+			}
+		}
+		x++;
 	}
 }
 
@@ -233,10 +97,16 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 		if (spaces_are_sourrounded_by_walls(lines_arr, i, first_line,
 				last_line) == FAILURE)
 			perror("Error\nSpaces are not surrounded by walls");
+		// the function check also if we have more than one player
+		// it could have been put inside has_only_valid_chars
+		// but it would have made it less readable
+		extract_player_position(lines_arr[i], i - first_line, data);
 		// Find max width
 		map_width = find_max_width(lines_arr, map_width);
 		i++;
 	}
+	if (data->map->player_found == NOT_FOUND)
+		perror("Error\nNo player found");
 	data->map->w_map = map_width;
 	data->map->h_map = map_height;
 	data->map->grid = malloc(map_height * sizeof(char *));
