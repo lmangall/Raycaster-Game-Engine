@@ -40,11 +40,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 /*
 int main (void)
 {
-    char const		s[] = "start after X this is the second part";
-	unsigned int	start = 13;
-	size_t			len = 25;
+	unsigned int	start;
+	size_t			len;
 
-    printf("%s\n", ft_substr(s, start, len));
+	char const		s[] = "start after X this is the second part";
+	start = 13;
+	len = 25;
+	printf("%s\n", ft_substr(s, start, len));
 	return (0);
 }
 */
