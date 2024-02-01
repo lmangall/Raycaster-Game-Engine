@@ -15,7 +15,7 @@ LIB = -L/usr/local/Cellar/glfw/3.3.9/lib
 ARCH = $(shell uname -m)
 ifeq ($(ARCH),arm64)
     FLAGS_MLX = $(shell pkg-config --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib
-	INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
+  	INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I./lib/libft/include -I$(shell echo $$HOME)/.brew/opt/glfw/include
 # $(info ARM architecture detected, FLAGS_MLX changed to $(FLAGS_MLX) and INCLUDES changed to $(INCLUDES))
 endif
 
@@ -39,7 +39,6 @@ SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
 # OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 OBJ := $(OBJ:/=_)
-
 
 all: check_MLX42  $(NAME)
 

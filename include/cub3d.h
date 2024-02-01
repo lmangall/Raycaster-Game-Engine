@@ -128,7 +128,7 @@ typedef struct s_player
 	int y_pos_px;                /**< Player y position in pixels. */
 	double orientation_angle_rd; /**< Player angle. */
 	float fov_rd;                /**< Field of view in radians. */
-	// TODO: initialize these values in the init_the_player function and use them
+	// TODO: initialize these values in the init_player function and use them
 	// instead of the defines
 	int					rotation_speed;
 	int					translation_speed;
@@ -145,8 +145,9 @@ typedef struct s_player
  */
 typedef enum e_wall_collision
 {
-	HORIZONTAL = 0, /**< Horizontal wall collision. */
-	VERTICAL = 1    /**< Vertical wall collision. */
+	NO_COLLISION = 0, /**< No wall collision. */
+	HORIZONTAL = 1,   /**< Horizontal wall collision. */
+	VERTICAL = 2      /**< Vertical wall collision. */
 }						t_wall_collision;
 
 /**
@@ -225,6 +226,7 @@ typedef struct s_map
  */
 typedef struct s_data
 {
+	char *argv;           /**< Pointer to the map file. */
 	mlx_image_t *img;     /**< Pointer to the image. */
 	mlx_t *mlx;           /**< Pointer to the MLX instance. */
 	t_ray *ray;           /**< Pointer to the ray structure. */
@@ -233,6 +235,9 @@ typedef struct s_data
 	t_textures *textures; /**< Pointer to the textures structure. */
 							/**< Pointer to the texture paths structure. */
 }						t_data;
+
+mlx_texture_t			*texture_selection(t_data *data);
+void					init(t_map *map, char *map_argv);
 
 // PARSER:
 void					check_file(char *map_file);
@@ -369,13 +374,27 @@ void					render_wall(t_data *data);
 void					raycasting(t_data *data);
 
 /**
- * @brief Function to check if a point lies in a specified quadrant of the unit
- * circle.
- * @param angle Angle to check.
- * @param c Character indicating the axis ('x' or 'y').
- * @return 1 if the point lies in the specified quadrant, 0 otherwise.
+ * @brief Update the step direction (+/−) based on the given angle and axis.
+ *
+ * if we check x:
+ * we check whether the angle is greater than 0 and less than π (180 degrees).
+ *
+ * if we check y
+ * wechecks if  the ray is looking  up or down
+
+	* if the angle is greater than π/2 (90 degrees) and less than 3π/2 (270 degrees))
+ *
+ * @param angle The angle for which the step direction is updated.
+ * @param step A pointer to the step value that will be updated.
+ * @param c The axis character ('x' or 'y') indicating which axis to check.
+ * @return Always returns 0.
+ *
+ * @note The function modifies the step value through the pointer.
+
+	*       It adjusts the step based on the specified conditions in the unit circle.
  */
-int						unit_circle(float angle, char c);
+static int				update_steps_direction(float angle, float *step,
+							char c);
 
 /**
  * @brief Function to check and update intersection points for horizontal or
@@ -433,7 +452,7 @@ void					game_loop(void *tmp);
  * @brief Function to initialize the player structure.
  * @param data The t_data structure.
  */
-void					init_the_player(t_data data);
+void					init_player(t_data *data);
 
 /**
  * @brief Function to start the Cub3D game.
@@ -457,6 +476,6 @@ void					start_the_game(t_map *map, char *map_argv);
  *
  * @param mlx The main data structure.
  */
-void					init_ray(t_data *data);
+void					update_ray(t_data *data);
 
 #endif // CUB3D_H
