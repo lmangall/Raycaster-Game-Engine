@@ -22,23 +22,25 @@ int	get_color(t_data *data,
 	}
 }
 
-void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
-{
-	*(pixel++) = (uint8_t)(color >> 24);
-	*(pixel++) = (uint8_t)(color >> 16);
-	*(pixel++) = (uint8_t)(color >> 8);
-	*(pixel++) = (uint8_t)(color & 0xFF);
-}
+// void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
+// {
+// 	*(pixel++) = (uint8_t)(color >> 24);
+// 	*(pixel++) = (uint8_t)(color >> 16);
+// 	*(pixel++) = (uint8_t)(color >> 8);
+// 	*(pixel++) = (uint8_t)(color & 0xFF);
+// }
 
 void	my_mlx_pixel_put(t_data *data, int y, int color)
 {
-	uint8_t	*pixelstart;
-
+	// uint8_t	*pixelstart;
 	if (y < 0)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	// mlx_put_pixel(data->img, data->ray->screen_x, y, color);
+	// pixelstart = &data->img->pixels[(y * WINDOW_WIDTH
+	// 		+ data->ray->screen_x)];
+	mlx_put_pixel(data->img, data->ray->screen_x, y, color);
+	// mlx_draw_pixel(pixelstart, color);
 }
 
 float	nor_angle(float angle)
@@ -82,7 +84,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
 	uint32_t	*pixel_array;
 	uint32_t	color;
 
-	if (data->ray->is_wall)
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
 		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
 					* (texture->width / TILE_SIZE)), texture->width);
 	else
@@ -116,7 +118,7 @@ void	render_wall(t_data *data)
 	}
 }
 
-static mlx_texture_t	*texture_selection(t_data *data)
+mlx_texture_t	*texture_selection(t_data *data)
 {
 	if (data->ray->is_wall)
 	{
