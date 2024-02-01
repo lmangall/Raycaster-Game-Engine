@@ -3,15 +3,19 @@
 
 void	init_map(t_map *map)
 {
+	t_textures_paths	textures_paths;
+
 	if (map == NULL)
 	{
 		return ; // Handle null pointer if necessary
 	}
+	init_textures_paths(&textures_paths);
+	map->textures_paths = textures_paths;
 	// Initialize integer members to 0
 	map->p_x = 0;
 	map->p_y = 0;
-	map->w_map = 0;
-	map->h_map = 0;
+	map->width = 0;
+	map->height = 0;
 	// Initialize player_orientation to 0 or another default value as appropriate for your application
 	map->player_orientation = '0';
 	// Initialize the player_found flag to NOT_FOUND

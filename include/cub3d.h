@@ -213,10 +213,11 @@ typedef struct s_map
 	char player_orientation; /**< Player orientation. */
 	e_status player_found;   /**< Flag indicating whether the player has been
 								found. */
-	int w_map;               /**< Map width in tiles. */
-	int h_map;               /**< Map height in tiles. */
+	int width;               /**< Map width in tiles. */
+	int height;              /**< Map height in tiles. */
 	t_rgba c;                /**< Ceiling color. */
 	t_rgba f;                /**< Floor color. */
+	t_textures_paths	textures_paths;
 }						t_map;
 
 /**
@@ -230,8 +231,7 @@ typedef struct s_data
 	t_map *map;           /**< Pointer to the map structure. */
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
-	t_textures_paths	*textures_paths;
-	/**< Pointer to the texture paths structure. */
+							/**< Pointer to the texture paths structure. */
 }						t_data;
 
 // PARSER:

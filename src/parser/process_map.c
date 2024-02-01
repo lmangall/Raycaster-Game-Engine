@@ -71,77 +71,68 @@ void	print_elements_status(t_map_elements *elements)
 		printf("F: FOUND\n");
 }
 
+void	final_print(t_data *data)
+{
+	printf("Parsing is complete!\n");
+	printf("The position of the player is: %d, %d\n", data->map->p_x,
+		data->map->p_y);
+	printf("The orientation of the player is: %c\n",
+		data->map->player_orientation);
+	printf("The map width is: %d\n", data->map->width);
+	printf("The map height is: %d\n", data->map->height);
+}
+
+void	print_texture_paths(t_textures_paths *textures_paths)
+{
+	printf("The saved texture paths are:\n");
+	printf("textures_paths->north: %s\n", textures_paths->north);
+	printf("textures_paths->south: %s\n", textures_paths->south);
+	printf("textures_paths->west: %s\n", textures_paths->west);
+	printf("textures_paths->east: %s\n", textures_paths->east);
+}
+
+void	print_ceiling_and_floor(t_rgba *c, t_rgba *f)
+{
+	printf("The saved ceiling and floor colors are:\n");
+	printf("C: %d, %d, %d, %d\n", c->r, c->g, c->b, c->a);
+	printf("F: %d, %d, %d, %d\n", f->r, f->g, f->b, f->a);
+}
+
+void	print_map_elements(t_data *data)
+{
+	printf("Processing map elements done.\n");
+	printf("The correct number of map elements have been found.\n");
+	print_texture_paths(&data->map->textures_paths);
+	print_ceiling_and_floor(&data->map->c, &data->map->f);
+}
+
 void	process_map(char **lines_arr, t_data *data)
 {
-	t_map_elements		elements;
-	t_map				map;
-	t_textures_paths	textures_paths;
-	int					i;
+	t_map_elements	elements;
+	t_map			map;
+	int				i;
 
-	// First process map elements ...
-	ft_putstr_fd("Processing map elements...\n", 1);
+	printf("Processing map elements...\n");
 	init_elements_status(&elements);
-	init_textures_paths(&textures_paths);
-	data->textures_paths = &textures_paths;
-	// init_texture_paths(data->textures_paths);
 	init_map(&map);
 	data->map = &map;
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
-		printf("\n\n\n");
-		printf("while loop #%d\n", i + 1);
-		printf("line: %s\n", lines_arr[i]);
 		process_map_elements(lines_arr[i], &i, data, &elements);
 		print_elements_status(&elements);
 		if (all_elements_found(&elements) == SUCCESS)
 		{
-			printf("All elements found\n");
-			printf("We break!\n");
 			i++;
 			break ;
 		}
 		i++;
 	}
-	ft_putstr_fd("Processing map elements done.\n", 1);
-	ft_putstr_fd("The correct number of map elements have been found.\n", 1);
-	ft_putstr_fd("The texture paths have been saved§.\n", 1);
-	ft_putstr_fd("They are:\n", 1);
-	ft_putstr_fd(data->textures_paths->north, 1);
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd(data->textures_paths->south, 1);
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd(data->textures_paths->west, 1);
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd(data->textures_paths->east, 1);
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd("C: ", 1);
-	ft_putnbr_fd(data->map->c.r, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->c.g, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->c.b, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->c.a, 1);
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd("F: ", 1);
-	ft_putnbr_fd(data->map->f.r, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->f.g, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->f.b, 1);
-	ft_putstr_fd(", ", 1);
-	ft_putnbr_fd(data->map->f.a, 1);
-	ft_putstr_fd("\n", 1);
+	print_map_elements(data);
 	// Skip empty lines
-	printf("lines_arr[%d]: %s before skipping empty lines\n", i, lines_arr[i]);
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
 			|| lines_arr[i][0] == '\n'))
-	{
-		printf("lines_arr[%d]: %s\n", i, lines_arr[i]);
-		printf("Skipping empty line\n");
 		i++;
-	}
 	// ... then process map content
 	ft_putstr_fd("Processing map content...\n", 1);
 	process_map_content(lines_arr, data, i);

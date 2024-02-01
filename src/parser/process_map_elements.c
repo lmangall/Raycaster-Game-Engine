@@ -221,16 +221,16 @@ void	collect_elements_data(char *line, char *identifier, t_data *data)
 {
 	if (ft_strncmp(identifier, "NO", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->textures_paths->north);
+			&data->map->textures_paths.north);
 	else if (ft_strncmp(identifier, "SO", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->textures_paths->south);
+			&data->map->textures_paths.south);
 	else if (ft_strncmp(identifier, "WE", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->textures_paths->west);
+			&data->map->textures_paths.west);
 	else if (ft_strncmp(identifier, "EA", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->textures_paths->east);
+			&data->map->textures_paths.east);
 	else if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)
 		collect_elements_data_rgba(line, identifier, data);
 	else if (ft_strncmp(identifier, "F", ft_strlen(identifier)) == 0)

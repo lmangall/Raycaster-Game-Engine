@@ -9,8 +9,8 @@ void	parse_map(char *argv, t_map *map)
 	map_str = cub_to_str(argv);
 	map2d = ft_split(map_str, '\n');
 	map->grid = map2d;
-	map->h_map = 9;
-	map->w_map = ft_strlen(map2d[0]);
+	map->height = 9;
+	map->width = ft_strlen(map2d[0]);
 	map->p_x = 14;
 	map->p_y = 3;
 	free(map_str);
