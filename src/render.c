@@ -22,6 +22,14 @@ int	get_color(t_data *data,
 	}
 }
 
+void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
+{
+	*(pixel++) = (uint8_t)(color >> 24);
+	*(pixel++) = (uint8_t)(color >> 16);
+	*(pixel++) = (uint8_t)(color >> 8);
+	*(pixel++) = (uint8_t)(color & 0xFF);
+}
+
 void	my_mlx_pixel_put(t_data *data, int y, int color)
 {
 	uint8_t	*pixelstart;
@@ -30,9 +38,7 @@ void	my_mlx_pixel_put(t_data *data, int y, int color)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	pixelstart = &data->img->pixels[(y * data->img->width + data->ray->screen_x)
-		* sizeof(int32_t)];
-	mlx_draw_pixel(pixelstart, color);
+	// mlx_put_pixel(data->img, data->ray->screen_x, y, color);
 }
 
 float	nor_angle(float angle)
