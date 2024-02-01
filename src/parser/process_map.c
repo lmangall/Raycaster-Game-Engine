@@ -71,15 +71,16 @@ void	print_elements_status(t_map_elements *elements)
 		printf("F: FOUND\n");
 }
 
-void	final_print(t_data *data)
+void	print_str_arr(char **str_arri, int map_height)
 {
-	printf("Parsing is complete!\n");
-	printf("The position of the player is: %d, %d\n", data->map->p_x,
-		data->map->p_y);
-	printf("The orientation of the player is: %c\n",
-		data->map->player_orientation);
-	printf("The map width is: %d\n", data->map->width);
-	printf("The map height is: %d\n", data->map->height);
+	int	i;
+
+	i = 0;
+	while (i < map_height)
+	{
+		printf("%s\n", str_arri[i]);
+		i++;
+	}
 }
 
 void	print_texture_paths(t_textures_paths *textures_paths)
@@ -104,6 +105,23 @@ void	print_map_elements(t_data *data)
 	printf("The correct number of map elements have been found.\n");
 	print_texture_paths(&data->map->textures_paths);
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
+}
+
+void	final_print(t_data *data)
+{
+	print_texture_paths(&data->map->textures_paths);
+	print_ceiling_and_floor(&data->map->c, &data->map->f);
+	printf("Parsing is complete!\n");
+	if (data->map->player_found == FOUND)
+		printf("We have only one player\n");
+	printf("The position of the player is: %d, %d\n", data->map->p_x,
+		data->map->p_y);
+	printf("The orientation of the player is: %c\n",
+		data->map->player_orientation);
+	printf("The map width is: %d\n", data->map->width);
+	printf("The map height is: %d\n", data->map->height);
+	printf("The map grid is:\n");
+	print_str_arr(data->map->grid, data->map->height);
 }
 
 void	process_map(char **lines_arr, t_data *data)
@@ -136,4 +154,5 @@ void	process_map(char **lines_arr, t_data *data)
 	// ... then process map content
 	ft_putstr_fd("Processing map content...\n", 1);
 	process_map_content(lines_arr, data, i);
+	final_print(data);
 }
