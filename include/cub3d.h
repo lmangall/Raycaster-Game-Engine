@@ -472,5 +472,6 @@ void					start_the_game(t_map *map, char *map_argv);
  * @param mlx The main data structure.
  */
 void					update_ray(t_data *data);
+int						load_textures(t_data *data);
 
 #endif // CUB3D_H

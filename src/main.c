@@ -23,6 +23,10 @@ int	main(int argc, char **argv)
 	// (void)argc;
 	// (void)data;
 	parser(argc, argv, data);
+	printf("data->map->textures_paths.north: %s\n",
+		data->map->textures_paths.north);
+	printf("Exiting...\n");
+	exit(0);
 	// parse_map(argv[1], data);
 	// start_the_game(data, argv[2]); // start the game
 	// map = calloc(1, sizeof(t_map));
