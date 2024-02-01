@@ -93,6 +93,35 @@ int	wall_hit(float x, float y, t_data *data) // check the wall hit
 	return (1);
 }
 
+// static int	move_untill_collision(t_data *data, float x, float y,
+// t_data *data, float x_step,
+// 				float y_step)
+// {
+// 	int x_m;
+// 	int y_m;
+// 	int no_collision;
+
+// 	if (x < 0 || y < 0)
+// 		return (0);
+// 	x_m = floor(x / TILE_SIZE); // get the x position in the map
+// 	y_m = floor(y / TILE_SIZE); // get the y position in the map
+// 	while (no_collision)
+// 	{
+// 		if ((y_m >= data->map->h_map || x_m >= data->map->w_map))
+// 			no_collision = 0;
+// 		if (data->map->grid[y_m]
+// && x_m <= (int)strlen(data->map->grid[y_m]))
+// 			if (data->map->grid[y_m][x_m] == '1')
+// 				no_collision = 0;
+// 		v_x += x_step;
+// 		v_y += y_step;
+// 	}
+
+// 	data->ray->vertical_x = v_x;
+// 	data->ray->vertical_y = v_y;
+// 	return (1);
+// }
+
 void	update_ray(t_data *data)
 {
 	double	wall_h;
@@ -100,9 +129,11 @@ void	update_ray(t_data *data)
 	double	t_pix;
 
 	data->ray->length *= cos(nor_angle(data->ray->angle_rd
-				- data->player->orientation_angle_rd));   // fix the fisheye
+				- data->player->orientation_angle_rd));
+	// fix the fisheye
 	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
-			/ tan(data->player->fov_rd / 2)); // get the wall height
+			/ tan(data->player->fov_rd / 2));
+	// get the wall height
 	b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);
 	t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);
 	if (b_pix > WINDOW_HEIGHT)
@@ -116,7 +147,8 @@ void	update_ray(t_data *data)
 	data->ray->b_pix = b_pix;
 }
 
-float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
+float	get_h_inter(t_data *data, float angl)
+// get the horizontal intersection
 {
 	float h_x;
 	float h_y;
@@ -148,7 +180,9 @@ float	get_h_inter(t_data *data, float angl) // get the horizontal intersection
 				- data->player->y_pos_px, 2)));
 	// get the distance
 }
-float	get_v_inter(t_data *data, float angl) // get the vertical intersection
+
+float	get_v_inter(t_data *data, float angl)
+// get the vertical intersection
 {
 	float v_x;
 	float v_y;
@@ -169,10 +203,12 @@ float	get_v_inter(t_data *data, float angl) // get the vertical intersection
 		v_x += x_step;
 		v_y += y_step;
 	}
+
 	data->ray->vertical_x = v_x;
 	data->ray->vertical_y = v_y;
 	return (sqrt(pow(v_x - data->player->x_pos_px, 2) + pow(v_y
-				- data->player->y_pos_px, 2))); // get the distance
+				- data->player->y_pos_px, 2)));
+	// get the distance
 }
 
 void	raycasting(t_data *data)
