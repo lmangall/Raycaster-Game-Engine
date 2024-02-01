@@ -43,24 +43,49 @@ int	all_elements_found(t_map_elements *elements)
 	}
 }
 
-void	init_elements_status(t_map_elements *elements)
+void	print_elements_status(t_map_elements *elements)
 {
-	elements->no = NOT_FOUND;
-	elements->so = NOT_FOUND;
-	elements->we = NOT_FOUND;
-	elements->ea = NOT_FOUND;
-	elements->c = NOT_FOUND;
-	elements->f = NOT_FOUND;
+	if (elements->no == NOT_FOUND)
+		printf("NO : NOT_FOUND\n");
+	else
+		printf("NO : FOUND\n");
+	if (elements->so == NOT_FOUND)
+		printf("SO : NOT_FOUND\n");
+	else
+		printf("SO : FOUND\n");
+	if (elements->we == NOT_FOUND)
+		printf("WE: NOT FOUND\n");
+	else
+		printf("WE: FOUND\n");
+	if (elements->ea == NOT_FOUND)
+		printf("EA: NOT FOUND\n");
+	else
+		printf("EA: FOUND\n");
+	if (elements->c == NOT_FOUND)
+		printf("C: NOT FOUND\n");
+	else
+		printf("C: FOUND\n");
+	if (elements->f == NOT_FOUND)
+		printf("F: NOT FOUND\n");
+	else
+		printf("F: FOUND\n");
 }
 
 void	process_map(char **lines_arr, t_data *data)
 {
-	t_map_elements	elements;
-	int				i;
+	t_map_elements		elements;
+	t_map				map;
+	t_textures_paths	textures_paths;
+	int					i;
 
 	// First process map elements ...
 	ft_putstr_fd("Processing map elements...\n", 1);
 	init_elements_status(&elements);
+	init_textures_paths(&textures_paths);
+	data->textures_paths = &textures_paths;
+	// init_texture_paths(data->textures_paths);
+	init_map(&map);
+	data->map = &map;
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
@@ -68,6 +93,7 @@ void	process_map(char **lines_arr, t_data *data)
 		printf("while loop #%d\n", i + 1);
 		printf("line: %s\n", lines_arr[i]);
 		process_map_elements(lines_arr[i], &i, data, &elements);
+		print_elements_status(&elements);
 		if (all_elements_found(&elements) == SUCCESS)
 		{
 			printf("All elements found\n");
@@ -87,6 +113,24 @@ void	process_map(char **lines_arr, t_data *data)
 	ft_putstr_fd(data->textures_paths->west, 1);
 	ft_putstr_fd("\n", 1);
 	ft_putstr_fd(data->textures_paths->east, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("C: ", 1);
+	ft_putnbr_fd(data->map->c.r, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->c.g, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->c.b, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->c.a, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("F: ", 1);
+	ft_putnbr_fd(data->map->f.r, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->f.g, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->f.b, 1);
+	ft_putstr_fd(", ", 1);
+	ft_putnbr_fd(data->map->f.a, 1);
 	ft_putstr_fd("\n", 1);
 	// Skip empty lines
 	while (lines_arr[i] != NULL && lines_arr[i][0] == '\0')

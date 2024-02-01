@@ -20,3 +20,6 @@ void			process_map_content(char **lines_arr, t_data *data,
 					int first_line);
 void			process_map(char **lines_arr, t_data *data);
 void			free_str_arr(char **str_arr);
+void			init_elements_status(t_map_elements *elements);
+void			init_map(t_map *map);
+void			init_textures_paths(t_textures_paths *textures_paths);
