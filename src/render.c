@@ -24,11 +24,15 @@ int	get_color(t_data *data,
 
 void	my_mlx_pixel_put(t_data *data, int y, int color)
 {
+	uint8_t	*pixelstart;
+
 	if (y < 0)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	mlx_put_pixel(data->img, data->ray->screen_x, y, color);
+	pixelstart = &data->img->pixels[(y * data->img->width + data->ray->screen_x)
+		* sizeof(int32_t)];
+	mlx_draw_pixel(pixelstart, color);
 }
 
 float	nor_angle(float angle)
@@ -72,7 +76,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
 	uint32_t	*pixel_array;
 	uint32_t	color;
 
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
+	if (data->ray->is_wall)
 		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
 					* (texture->width / TILE_SIZE)), texture->width);
 	else
@@ -106,22 +110,44 @@ void	render_wall(t_data *data)
 	}
 }
 
-mlx_texture_t	*texture_selection(t_data *data)
+static mlx_texture_t	*texture_selection(t_data *data)
 {
-	data->ray->angle_rd = nor_angle(data->ray->angle_rd);
-	if (data->ray->wall_collision_orientation == VERTICAL)
+	if (data->ray->is_wall)
 	{
 		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
 				/ 2))
-			return (data->textures->north);
-		else
-			return (data->textures->south);
-	}
-	else
-	{
-		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
 			return (data->textures->west);
 		else
 			return (data->textures->east);
 	}
+	else
+	{
+		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
+			return (data->textures->south);
+		else
+			return (data->textures->north);
+	}
+}
+
+void	init_ray(t_data *data)
+{
+	double	wall_h;
+	double	b_pix;
+	double	t_pix;
+
+	data->ray->length *= cos(nor_angle(data->ray->angle_rd
+				- data->player->orientation_angle_rd));   // fix the fisheye
+	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
+			/ tan(data->player->fov_rd / 2)); // get the wall height
+	b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);
+	if (b_pix > WINDOW_HEIGHT)
+		b_pix = WINDOW_HEIGHT;
+	if (t_pix < 0)
+		t_pix = 0;
+	// data->ray->current_texture = data->textures->north;//change this depending on orientation
+	data->ray->current_texture = texture_selection(data);
+	data->ray->wall_h = wall_h;
+	data->ray->t_pix = t_pix;
+	data->ray->b_pix = b_pix;
 }
