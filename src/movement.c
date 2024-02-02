@@ -2,12 +2,51 @@
 #include "../include/cub3d.h"
 #include <math.h>
 
+#define M_PI 3.14159265358979323846
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void	key_pressed(t_data *data)
 {
+	printf("    inside key_pressed\n");
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+	{
+		// mlx_destroy_window(data->mlx);//            check this
+		printf("inside    ESC    key_pressed\n");
 		free_exit(data);
+
+	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-		data->player->longitudinal_move = FORWARD;
+	{
+		printf("\033[1;31m" "inside    W    key_pressed\n" "\033[0m");		data->player->longitudinal_move = FORWARD;
+
+	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 		data->player->longitudinal_move = BACKWARD;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
@@ -20,25 +59,25 @@ void	key_pressed(t_data *data)
 		data->player->rotation = R_RIGHT;
 }
 
-void key_released(t_data *data)
-{
-	if (!mlx_is_key_down(data->mlx, MLX_KEY_W) && !mlx_is_key_down(data->mlx, MLX_KEY_S))
-		data->player->longitudinal_move = NONE;
-	if (!mlx_is_key_down(data->mlx, MLX_KEY_A) && !mlx_is_key_down(data->mlx, MLX_KEY_D))
-		data->player->lateral_move = L_NONE;
-	if (!mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
-		&& !mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		data->player->rotation = R_NONE;
-}
+// void key_released(t_data *data)
+// {
+// 	if (!mlx_is_key_down(data->mlx, MLX_KEY_W) && !mlx_is_key_down(data->mlx, MLX_KEY_S))
+// 		data->player->longitudinal_move = NONE;
+// 	if (!mlx_is_key_down(data->mlx, MLX_KEY_A) && !mlx_is_key_down(data->mlx, MLX_KEY_D))
+// 		data->player->lateral_move = L_NONE;
+// 	if (!mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
+// 		&& !mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+// 		data->player->rotation = R_NONE;
+// }
 
-void	key_hook(void *tmp) // key press
+void	key_hook(void *tmp)
 {
 	t_data *data;
 
 	data = (t_data *)tmp;
 
 	key_pressed(data);
-	key_released(data);
+	// key_released(data);
 }
 
 
@@ -62,12 +101,13 @@ void	rotate_player(t_data *data, int i) // rotate the player
 }
 
 void	move_player(t_data *data, double move_x, double move_y)
-// move the player
 {
 	int map_grid_y;
 	int map_grid_x;
 	int new_x;
 	int new_y;
+
+	printf("/n         inside move_player\n");
 
 	new_x = roundf(data->player->x_pos_px + move_x);
 	// get the new x position
@@ -88,10 +128,14 @@ void	move_player(t_data *data, double move_x, double move_y)
 	}
 }
 
+
+
 void	movement_hook(t_data *data, double move_x, double move_y)
 {
 	if (data->player->rotation == R_RIGHT)
+	{
 		rotate_player(data, 1);
+	}
 	if (data->player->rotation == R_LEFT)
 		rotate_player(data, 0);
 	if (data->player->lateral_move == L_RIGHT) // move right

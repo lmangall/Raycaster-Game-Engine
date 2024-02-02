@@ -128,8 +128,6 @@ typedef struct s_player
 	int y_pos_px;                /**< Player y position in pixels. */
 	double orientation_angle_rd; /**< Player angle. */
 	float fov_rd;                /**< Field of view in radians. */
-	// TODO: initialize these values in the init_player function and use them
-	// instead of the defines
 	int					rotation_speed;
 	int					translation_speed;
 	t_rotation rotation;                   /**< Rotation direction: none, right,
@@ -234,7 +232,7 @@ mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
 
 
-// void	init_data(t_data *data);
+void	init_data(t_data *data);
 
 // PARSER:
 void					check_file(char *map_file);
@@ -287,17 +285,18 @@ void					free_exit(t_data *data);
 void					ft_reles(mlx_key_data_t keydata, t_data *data);
 
 
-
 void	key_pressed(t_data *data);
-void key_released(t_data *data);
+// void	key_released(t_data *data);
+void	key_hook(void *tmp);
+void	movement_hook(t_data *data, double move_x, double move_y);
+
 /**
  * @brief Function to handle key press events.
  * @param keydata Key data for the pressed key.
  * @param tmp Extra param we can pass to the mlx_key hook that will be assigned
  * to the t_data.
  */
-// void					mlx_key(mlx_key_data_t keydata, void *tmp);
-void					key_hook(void *tmp);
+void					mlx_key(mlx_key_data_t keydata, void *tmp);
 
 /**
  * @brief Function to rotate the player based on key input.
@@ -321,7 +320,7 @@ void					move_player(t_data *data, double move_x, double move_y);
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void					movement_hook(t_data *data, double move_x, double move_y);
+void					hook(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to put a pixel on the screen.

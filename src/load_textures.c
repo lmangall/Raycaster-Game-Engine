@@ -54,6 +54,10 @@ int	load_textures(t_data *data)
 	south = remove_new_line_char_new(data->map->textures_paths->south);
 	west = remove_new_line_char_new(data->map->textures_paths->west);
 	east = remove_new_line_char_new(data->map->textures_paths->east);
+	//free(data->map->textures_paths->north);
+    // free(data->map->textures_paths->south);
+    // free(data->map->textures_paths->west);
+    // free(data->map->textures_paths->east);
 	printf("north: %s\n", north);
 	textures->north = mlx_load_png(north);
 	printf("textures->north: %p\n", textures->north);
