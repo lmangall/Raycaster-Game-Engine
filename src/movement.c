@@ -1,5 +1,9 @@
 
 #include "../include/cub3d.h"
+#include <math.h>
+
+//get rid of this line, should be from math lib
+#define M_PI 3.14159265358979323846
 
 void	ft_reles(mlx_key_data_t keydata, t_data *data) // release the key
 {

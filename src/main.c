@@ -69,15 +69,12 @@ int	main(int argc, char **argv)
 	// parse_map(argv[1], map);
 	// init(map, argv[2]);
 	load_textures(data);
-	printf("mark -1\n");
 	data->ray = calloc(1, sizeof(t_ray));
 	data->player = calloc(1, sizeof(t_player));
 	init_player(data);
 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
-	printf("mark\n");
 	int mlx_loop_return = mlx_loop_hook(data->mlx, &game_loop, data);
 	printf("mlx_loop_return (boolean): %d\n", mlx_loop_return);
-	printf("mark 0\n");
 	mlx_key_hook(data->mlx, &mlx_key, &data);
 	mlx_loop(data->mlx);
 	free_exit(data);
