@@ -13,35 +13,31 @@ t_textures_paths	*init_textures_paths(void)
 	return (textures_paths);
 }
 
-void	init_map(t_map *map)
+t_map	*init_map(void)
 {
+	t_map				*map;
 	t_textures_paths	*textures_paths;
 
+	map = ft_calloc(1, sizeof(t_map));
+	map->grid = NULL;
+	map->p_x = 0;
+	map->p_y = 0;
+	map->player_orientation = '0';
+	map->player_found = NOT_FOUND;
+	map->width = 0;
+	map->height = 0;
 	textures_paths = NULL;
 	textures_paths = init_textures_paths();
 	map->textures_paths = textures_paths;
-	// Initialize integer members to 0
-	map->p_x = 0;
-	map->p_y = 0;
-	map->width = 0;
-	map->height = 0;
-	// Initialize player_orientation to 0 or another default value as appropriate for your application
-	map->player_orientation = '0';
-	// Initialize the player_found flag to NOT_FOUND
-	map->player_found = NOT_FOUND;
-	// Initialize grid pointer to NULL (assuming it will be dynamically allocated later)
-	map->grid = NULL;
-	// Initialize RGBA components of c and f to 0
 	map->c.r = 0;
 	map->c.g = 0;
 	map->c.b = 0;
 	map->c.a = 0;
-	// Set alpha to 0 or another default value as appropriate for your application
 	map->f.r = 0;
 	map->f.g = 0;
 	map->f.b = 0;
 	map->f.a = 0;
-	// Set alpha to 0 or another default value as appropriate for your application
+	return (map);
 }
 
 void	init_elements_status(t_map_elements *elements)

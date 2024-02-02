@@ -6,7 +6,7 @@
 /*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:49:28 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/02 01:09:23 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/02 02:32:57 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,13 @@ void	final_print(t_data *data)
 void	process_map(char **lines_arr, t_data *data)
 {
 	t_map_elements	elements;
-	t_map			map;
+	t_map			*map;
 	int				i;
 
 	printf("Processing map elements...\n");
 	init_elements_status(&elements);
-	init_map(&map);
-	data->map = &map;
+	map = init_map();
+	data->map = map;
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
