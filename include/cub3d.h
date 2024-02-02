@@ -286,13 +286,18 @@ void					free_exit(t_data *data);
  */
 void					ft_reles(mlx_key_data_t keydata, t_data *data);
 
+
+
+void	key_pressed(t_data *data);
+void key_released(t_data *data);
 /**
  * @brief Function to handle key press events.
  * @param keydata Key data for the pressed key.
  * @param tmp Extra param we can pass to the mlx_key hook that will be assigned
  * to the t_data.
  */
-void					mlx_key(mlx_key_data_t keydata, void *tmp);
+// void					mlx_key(mlx_key_data_t keydata, void *tmp);
+void					key_hook(void *tmp);
 
 /**
  * @brief Function to rotate the player based on key input.
@@ -316,7 +321,7 @@ void					move_player(t_data *data, double move_x, double move_y);
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void					hook(t_data *data, double move_x, double move_y);
+void					movement_hook(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to put a pixel on the screen.

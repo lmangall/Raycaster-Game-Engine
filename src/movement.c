@@ -2,47 +2,46 @@
 #include "../include/cub3d.h"
 #include <math.h>
 
-//get rid of this line, should be from math lib
-#define M_PI 3.14159265358979323846
-
-void	ft_reles(mlx_key_data_t keydata, t_data *data) // release the key
+void	key_pressed(t_data *data)
 {
-	if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
-		data->player->lateral_move = L_NONE;
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
-		data->player->lateral_move = L_NONE;
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		free_exit(data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+		data->player->longitudinal_move = FORWARD;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+		data->player->longitudinal_move = BACKWARD;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+		data->player->lateral_move = L_LEFT;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+		data->player->lateral_move = L_RIGHT;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+		data->player->rotation = R_LEFT;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+		data->player->rotation = R_RIGHT;
+}
+
+void key_released(t_data *data)
+{
+	if (!mlx_is_key_down(data->mlx, MLX_KEY_W) && !mlx_is_key_down(data->mlx, MLX_KEY_S))
 		data->player->longitudinal_move = NONE;
-	else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
-		data->player->longitudinal_move = NONE;
-	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-		data->player->rotation = R_NONE;
-	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
+	if (!mlx_is_key_down(data->mlx, MLX_KEY_A) && !mlx_is_key_down(data->mlx, MLX_KEY_D))
+		data->player->lateral_move = L_NONE;
+	if (!mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
+		&& !mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		data->player->rotation = R_NONE;
 }
 
-void	mlx_key(mlx_key_data_t keydata, void *tmp) // key press
+void	key_hook(void *tmp) // key press
 {
 	t_data *data;
 
 	data = (t_data *)tmp;
-	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS
-			|| keydata.action == MLX_REPEAT))
-		free_exit(data);
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
-		data->player->lateral_move = L_LEFT;
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS))
-		data->player->lateral_move = L_RIGHT;
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
-		data->player->longitudinal_move = BACKWARD;
-	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		data->player->longitudinal_move = FORWARD;
-	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-		data->player->rotation = R_LEFT;
-	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-		data->player->rotation = R_RIGHT;
-	ft_reles(keydata, data); // release the key
+
+	key_pressed(data);
+	key_released(data);
 }
+
+
 
 void	rotate_player(t_data *data, int i) // rotate the player
 {
@@ -89,7 +88,7 @@ void	move_player(t_data *data, double move_x, double move_y)
 	}
 }
 
-void	hook(t_data *data, double move_x, double move_y) // hook the player
+void	movement_hook(t_data *data, double move_x, double move_y)
 {
 	if (data->player->rotation == R_RIGHT)
 		rotate_player(data, 1);
@@ -125,3 +124,30 @@ void	hook(t_data *data, double move_x, double move_y) // hook the player
 	}
 	move_player(data, move_x, move_y); // move the player
 }
+// void	key_loop(void *data_pointer)
+// {
+// 	t_data *data;
+
+// 	data = (t_data *)data_pointer;
+// 	key_pressed(data);
+// 	key_released(data);
+// }
+
+// //get rid of this line, should be from math lib
+// #define M_PI 3.14159265358979323846
+
+// void	ft_reles(mlx_key_data_t keydata, t_data *data) // release the key
+// {
+// 	if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
+// 		data->player->lateral_move = L_NONE;
+// 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
+// 		data->player->lateral_move = L_NONE;
+// 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
+// 		data->player->longitudinal_move = NONE;
+// 	else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
+// 		data->player->longitudinal_move = NONE;
+// 	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
+// 		data->player->rotation = R_NONE;
+// 	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
+// 		data->player->rotation = R_NONE;
+// }

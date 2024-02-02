@@ -37,13 +37,13 @@
 // 	data = NULL;
 // }
 
-static void move_player_forward_slowly(t_data *data) 
-{
-    double move_x = cos(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
-    double move_y = sin(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
-//    (void)data;
-    move_player(data, move_x, move_y);
-}
+// static void move_player_forward_slowly(t_data *data) 
+// {
+//     double move_x = cos(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
+//     double move_y = sin(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
+// //    (void)data;
+//     move_player(data, move_x, move_y);
+// }
 
 void	game_loop(void *tmp) // game loop
 {
@@ -53,10 +53,11 @@ void	game_loop(void *tmp) // game loop
 	mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	//                 ARTIFICIAL MOVEMENT
-	move_player_forward_slowly(data);
-	rotate_player(data, 2);
+	// move_player_forward_slowly(data);
+	// rotate_player(data, 2);
 	//				 END
-	hook(data, 0, 0);
+
+	movement_hook(data, 0, 0);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
@@ -69,9 +70,7 @@ void	init_data(t_data *data)
 	data->player = calloc(1, sizeof(t_player));
 	init_player(data);
 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
-	// free_exit_parser(data);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -83,19 +82,11 @@ int	main(int argc, char **argv)
 	// (void)argc;
 	// (void)data;
 	parser(argc, argv, data);
-	printf("data->map->textures_paths.north: %s\n",
-		data->map->textures_paths->north);
-	printf("Exiting...\n");
-	// free_exit_parser(data);
-	// parse_map(argv[1], data);
-	// start_the_game(data, argv[2]); // start the game
-	// map = calloc(1, sizeof(t_map));
-	// parse_map(argv[1], map);
-	// init(map, argv[2]);
 	init_data(data);
-	/*int mlx_loop_return = */mlx_loop_hook(data->mlx, &game_loop, data);
 	// printf("mlx_loop_return (boolean): %d\n", mlx_loop_return);
-	mlx_key_hook(data->mlx, &mlx_key, &data);
+	// mlx_key_hook(data->mlx, &key_hook, &data);
+	mlx_loop_hook(data->mlx, key_hook, &data);
+	mlx_loop_hook(data->mlx, game_loop, data);
 	mlx_loop(data->mlx);
 	free_exit(data);
 	return (0);
