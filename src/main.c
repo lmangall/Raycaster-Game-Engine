@@ -49,6 +49,18 @@ void	free_exit_parser(t_data *data)
 	data = NULL;
 }
 
+void	init_data(t_data *data)
+{
+	load_textures(data);
+	data->ray = calloc(1, sizeof(t_ray));
+	// data->map = calloc(1, sizeof(t_map));
+	data->player = calloc(1, sizeof(t_player));
+	init_player(data);
+	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
+	// free_exit_parser(data);
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -68,11 +80,7 @@ int	main(int argc, char **argv)
 	// map = calloc(1, sizeof(t_map));
 	// parse_map(argv[1], map);
 	// init(map, argv[2]);
-	load_textures(data);
-	data->ray = calloc(1, sizeof(t_ray));
-	data->player = calloc(1, sizeof(t_player));
-	init_player(data);
-	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
+	init_data(data);
 	int mlx_loop_return = mlx_loop_hook(data->mlx, &game_loop, data);
 	printf("mlx_loop_return (boolean): %d\n", mlx_loop_return);
 	mlx_key_hook(data->mlx, &mlx_key, &data);

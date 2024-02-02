@@ -233,6 +233,9 @@ typedef struct s_data
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
 
+
+// void	init_data(t_data *data);
+
 // PARSER:
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);

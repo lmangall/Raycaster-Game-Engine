@@ -1,6 +1,8 @@
 
 #include "../include/cub3d.h"
 
+#define M_PI 3.14159265358979323846
+
 void	init_player(t_data *data) // init the player structure
 {
 	data->player->x_pos_px = data->map->p_x * TILE_SIZE + TILE_SIZE / 2;
