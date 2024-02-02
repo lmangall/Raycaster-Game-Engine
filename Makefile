@@ -1,14 +1,14 @@
 
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math #-fsanitize=address -g
+CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math -g
 
 
 LIBFT= lib/libft/libft.a
 
 LIBMLX42 = MLX42/build/libmlx42.a
 
-FLAGS_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
+FLAGS_MLX = -ldl -lglfw -pthread -lm
 INCLUDES = -I./include -I./src/parser -I./MLX42/include/MLX42 -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -I./lib/libft/include
 LIB = -L/usr/local/Cellar/glfw/3.3.9/lib
 ARCH = $(shell uname -m)
