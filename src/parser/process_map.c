@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:49:28 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/31 19:49:31 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/02 01:09:23 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ void	print_map_elements(t_data *data)
 {
 	printf("Processing map elements done.\n");
 	printf("The correct number of map elements have been found.\n");
-	print_texture_paths(&data->map->textures_paths);
+	print_texture_paths(data->map->textures_paths);
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
 }
 
 void	final_print(t_data *data)
 {
-	print_texture_paths(&data->map->textures_paths);
+	print_texture_paths(data->map->textures_paths);
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
 	printf("Parsing is complete!\n");
 	if (data->map->player_found == FOUND)

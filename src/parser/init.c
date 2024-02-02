@@ -3,13 +3,10 @@
 
 void	init_map(t_map *map)
 {
-	t_textures_paths	textures_paths;
+	t_textures_paths	*textures_paths;
 
-	if (map == NULL)
-	{
-		return ; // Handle null pointer if necessary
-	}
-	init_textures_paths(&textures_paths);
+	textures_paths = NULL;
+	init_textures_paths(textures_paths);
 	map->textures_paths = textures_paths;
 	// Initialize integer members to 0
 	map->p_x = 0;
@@ -47,10 +44,7 @@ void	init_elements_status(t_map_elements *elements)
 
 void	init_textures_paths(t_textures_paths *textures_paths)
 {
-	if (textures_paths == NULL)
-	{
-		return ; // Handle null pointer if necessary
-	}
+	textures_paths = ft_calloc(1, sizeof(t_textures_paths));
 
 	// Initialize texture path pointers to NULL
 	textures_paths->north = NULL;

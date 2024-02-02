@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:04:49 by lmangall          #+#    #+#             */
-/*   Updated: 2023/05/09 13:39:34 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/02 02:02:59 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 /*
-int main(void)
+int	main(void)
 {
-    char			src[] = "Pleaseletmebe";
-    unsigned char	dest[] = "I will get you";
-    size_t			n = 10;
+	char			src[] = "Pleaseletmebe";
+	unsigned char	dest[] = "I will get you";
+	size_t			n;
+	char			*s1;
+	char			*s2;
 
-	char	*s1 = memcpy(dest, src, n);
-	char	*s2 = ft_memcpy(dest, src, n);
+	n = 10;
+	s1 = memcpy(dest, src, n);
+	s2 = ft_memcpy(dest, src, n);
 	printf ("memcpy: %s\nft_memcpy: %s\n", s1, s2);
 }
 */

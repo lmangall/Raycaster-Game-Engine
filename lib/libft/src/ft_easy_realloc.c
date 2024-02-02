@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_easy_realloc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:49 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/29 12:03:53 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/02 02:02:41 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@
  * If `new_size` is 0,
 	it frees the memory block and returns NULL. If `ptr` is NULL,
 	it behaves like malloc.
+	* We had to perform a small fix cause in the case of a new size smaller that the old size with ft_memcpy,
+		we tried to copy over the allocated size.
  */
 
 void	*ft_easy_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
+	size_t	copy_size;
 
 	if (new_size == 0)
 	{
@@ -44,7 +47,11 @@ void	*ft_easy_realloc(void *ptr, size_t old_size, size_t new_size)
 	new_ptr = malloc(new_size);
 	if (new_ptr == NULL)
 		return (NULL);
-	ft_memcpy(new_ptr, ptr, old_size);
+	if (old_size < new_size)
+		copy_size = old_size;
+	else
+		copy_size = new_size;
+	ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
 	return (new_ptr);
 }

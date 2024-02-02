@@ -212,7 +212,7 @@ typedef struct s_map
 	int height;              /**< Map height in tiles. */
 	t_rgba c;                /**< Ceiling color. */
 	t_rgba f;                /**< Floor color. */
-	t_textures_paths	textures_paths;
+	t_textures_paths	*textures_paths;
 }						t_map;
 
 /**

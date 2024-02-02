@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	// (void)data;
 	parser(argc, argv, data);
 	printf("data->map->textures_paths.north: %s\n",
-		data->map->textures_paths.north);
+		data->map->textures_paths->north);
 	printf("Exiting...\n");
 	exit(0);
 	// parse_map(argv[1], data);
