@@ -1,12 +1,24 @@
 #include "cub3d.h"
 #include "parser.h"
 
+t_textures_paths	*init_textures_paths(void)
+{
+	t_textures_paths	*textures_paths;
+
+	textures_paths = ft_calloc(1, sizeof(t_textures_paths));
+	textures_paths->north = NULL;
+	textures_paths->south = NULL;
+	textures_paths->west = NULL;
+	textures_paths->east = NULL;
+	return (textures_paths);
+}
+
 void	init_map(t_map *map)
 {
 	t_textures_paths	*textures_paths;
 
 	textures_paths = NULL;
-	init_textures_paths(textures_paths);
+	textures_paths = init_textures_paths();
 	map->textures_paths = textures_paths;
 	// Initialize integer members to 0
 	map->p_x = 0;
@@ -40,21 +52,4 @@ void	init_elements_status(t_map_elements *elements)
 	elements->ea = NOT_FOUND;
 	elements->c = NOT_FOUND;
 	elements->f = NOT_FOUND;
-}
-
-void	init_textures_paths(t_textures_paths *textures_paths)
-{
-	textures_paths = ft_calloc(1, sizeof(t_textures_paths));
-
-	// Initialize texture path pointers to NULL
-	textures_paths->north = NULL;
-	textures_paths->south = NULL;
-	textures_paths->west = NULL;
-	textures_paths->east = NULL;
-
-	// If you have defaultk texture paths, you can initialize them here
-	// For example:
-	// textures_paths->north = strdup("default_north_texture_path");
-	// ... and so on for south, west, east
-	// Make sure to free these strings later if they are dynamically allocated
 }
