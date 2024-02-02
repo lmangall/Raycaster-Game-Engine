@@ -91,10 +91,10 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 				- 1) == FAILURE)
 			perror("Error\nMap is not surrounded by walls");
 		// Check for spaces
-		// The readibility of this function is not good
+		// The readability of this function is not good
 		// In comparison to the other functions
 		// But if we just negate it it will not work
-		if (spaces_are_sourrounded_by_walls(lines_arr, i, first_line,
+		if (spaces_are_surrounded_by_walls(lines_arr, i, first_line,
 				last_line) == FAILURE)
 			perror("Error\nSpaces are not surrounded by walls");
 		// the function check also if we have more than one player
