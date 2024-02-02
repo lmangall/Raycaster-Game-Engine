@@ -109,10 +109,15 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 		perror("Error\nNo player found");
 	data->map->width = map_width;
 	data->map->height = map_height;
-	data->map->grid = malloc(map_height * sizeof(char *));
+	printf("map_height before: %d\n", map_height);
+	// data->map->grid = malloc(map_height * sizeof(char *));
+	data->map->grid = ft_calloc(map_height + 1, sizeof(char *));
 	if (!data->map->grid)
 		error_exit("Error\nMalloc failed", data);
+	data->map->grid[map_height] = NULL;
 	i = 0;
+	printf("i: %d\n", i);
+	printf("map_height: %d\n", map_height);
 	while (i < map_height)
 	{
 		// data->map->grid[i] = malloc(map_width * sizeof(char));
@@ -121,6 +126,7 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 			error_exit("Error\nMalloc failed", data);
 		ft_strlcpy(data->map->grid[i], lines_arr[first_line + i], map_width
 			+ 1);
+		printf("data->map->grid[%d]: %s\n", i, data->map->grid[i] );
 		i++;
 	}
 	free_str_arr(lines_arr);
