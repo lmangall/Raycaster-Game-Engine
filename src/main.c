@@ -79,7 +79,7 @@ int	main(int argc, char **argv)
 	printf("mlx_loop_return (boolean): %d\n", mlx_loop_return);
 	printf("mark 0\n");
 	mlx_key_hook(data->mlx, &mlx_key, &data);
-	// mlx_loop(data->mlx);
+	mlx_loop(data->mlx);
 	free_exit(data);
 	return (0);
 }
