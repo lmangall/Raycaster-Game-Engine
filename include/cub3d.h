@@ -285,6 +285,12 @@ void					free_exit(t_data *data);
 void					ft_reles(mlx_key_data_t keydata, t_data *data);
 
 
+void	mlx_key(mlx_key_data_t keydata, void *tmp);
+void	rotate_player(t_data *data, int i);
+void	move_player(t_data *data, double move_x, double move_y);
+void	hook(t_data *data, double move_x, double move_y);
+
+
 void	key_pressed(t_data *data);
 // void	key_released(t_data *data);
 void	key_hook(void *tmp);

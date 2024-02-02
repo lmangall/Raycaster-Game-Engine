@@ -1,7 +1,7 @@
 
 #include "../include/cub3d.h"
 
-// #define M_PI 3.14159265358979323846
+ #define M_PI 3.14159265358979323846
 
 void	init_player(t_data *data) // init the player structure
 {
@@ -12,8 +12,8 @@ void	init_player(t_data *data) // init the player structure
 	data->player->fov_rd = (FOV * M_PI) / 180;
 	// field of view in radians
 	data->player->orientation_angle_rd = M_PI;
-	data->player->lateral_move = 0;
-	data->player->rotation = 0;
-	data->player->longitudinal_move = 0;
+	data->player->lateral_move = L_NONE;
+	data->player->rotation = R_NONE;
+	data->player->longitudinal_move = NONE;
 
 }
