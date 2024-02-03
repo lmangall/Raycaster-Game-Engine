@@ -244,7 +244,7 @@ void	collect_elements_data(char *line, char *identifier, t_data *data)
 	}
 }
 
-void	process_map_elements(char *line, int *i, t_data *data,
+void	process_map_elements_line(char *line, int *i, t_data *data,
 		t_map_elements_check *elements)
 {
 	(void)i;

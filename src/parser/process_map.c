@@ -124,27 +124,42 @@ void	print_map_final(t_data *data)
 	print_str_arr(data->map->grid, data->map->height);
 }
 
+void	process_map_elements(char **lines_arr, int *i, t_map *map, t_data *data)
+{
+	while (lines_arr[*i] != NULL)
+	{
+		process_map_elements_line(lines_arr[*i], i, data, &map->elements);
+		print_elements_status(&map->elements);
+		if (all_elements_found(&map->elements) == SUCCESS)
+		{
+			(*i)++;
+			break ;
+		}
+		(*i)++;
+	}
+}
+
 void	process_map(char **lines_arr, t_data *data)
 {
 	t_map	*map;
 	int		i;
 
-	// t_map_elements_check	elements;
-	printf("Processing map elements...\n");
+	map = ft_calloc(1, sizeof(t_map));
 	map = init_map(map);
 	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		init_elements_status(&map->elements);
-		process_map_elements(lines_arr[i], &i, data, &map->elements);
-		print_elements_status(&map->elements);
-		if (all_elements_found(&map->elements) == SUCCESS)
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
+	process_map_elements(lines_arr, &i, map, data);
+	// while (lines_arr[i] != NULL)
+	// {
+	// 	init_elements_status(&map->elements);
+	// 	process_map_elements(lines_arr[i], &i, data, &map->elements);
+	// 	print_elements_status(&map->elements);
+	// 	if (all_elements_found(&map->elements) == SUCCESS)
+	// 	{
+	// 		i++;
+	// 		break ;
+	// 	}
+	// 	i++;
+	// }
 	print_map_elements_check(data);
 	// Skip empty lines
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
