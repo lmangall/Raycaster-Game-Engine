@@ -23,7 +23,13 @@
 # define PLAYER_TRANSLATION_SPEED 4
 # define ERROR_OPENING_FILE "File not found or corrupted."
 # define SUCCESS 0
-# define FAILURE
+# define FAILURE 1
+
+typedef enum e_mode
+{
+	PARSE_ONLY,
+	FULL_EXPERIENCE
+}						t_mode;
 
 /**
 

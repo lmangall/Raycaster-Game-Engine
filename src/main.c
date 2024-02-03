@@ -15,10 +15,14 @@ void	game_loop(void *tmp)
 int	main(int argc, char **argv)
 {
 	t_data *data;
+	t_mode mode;
+
+	mode = FULL_EXPERIENCE;
 
 	data = ft_calloc(1, sizeof(t_data));
 	parser(argc, argv, data);
-	free_exit_parser(data);
+	if (mode == PARSE_ONLY)
+		free_exit_parser(data);
 	load_textures(data);
 	data->ray = calloc(1, sizeof(t_ray));
 	data->player = calloc(1, sizeof(t_player));
