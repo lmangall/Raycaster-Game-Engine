@@ -1,19 +1,19 @@
 
 #include "../include/cub3d.h"
 
-void	rotate_player(t_data *data, int i)
+void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 {
-	if (i == 1)
+	if (direction == R_RIGHT)
 	{
-		data->player->orientation_angle_rd += PLAYER_ROTATION_SPEED;
-		if (data->player->orientation_angle_rd > 2 * M_PI)
-			data->player->orientation_angle_rd -= 2 * M_PI;
+		*orientation_angle_rd += PLAYER_ROTATION_SPEED;
+		if (*orientation_angle_rd > 2 * M_PI)
+			*orientation_angle_rd -= 2 * M_PI;
 	}
-	else
+	else if (direction == R_LEFT)
 	{
-		data->player->orientation_angle_rd -= PLAYER_ROTATION_SPEED;
-		if (data->player->orientation_angle_rd < 0)
-			data->player->orientation_angle_rd += 2 * M_PI;
+		*orientation_angle_rd -= PLAYER_ROTATION_SPEED;
+		if (*orientation_angle_rd < 0)
+			*orientation_angle_rd += 2 * M_PI;
 	}
 }
 
@@ -49,11 +49,9 @@ void	move_player(t_data *data, double move_x, double move_y)
 void	apply_movement(t_data *data, double move_x, double move_y)
 {
 	if (data->player->rotation == R_RIGHT)
-	{
-		rotate_player(data, 1);
-	}
+		rotate_player(&data->player->orientation_angle_rd, R_RIGHT);
 	if (data->player->rotation == R_LEFT)
-		rotate_player(data, 0);
+		rotate_player(&data->player->orientation_angle_rd, R_LEFT);
 	if (data->player->lateral_move == L_RIGHT)
 	{
 		move_x = -sin(data->player->orientation_angle_rd)

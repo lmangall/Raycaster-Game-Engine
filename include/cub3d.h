@@ -317,7 +317,7 @@ void					mlx_key(mlx_key_data_t keydata, void *tmp);
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void					rotate_player(t_data *data, int i);
+void					rotate_player(double *orientation_angle_rd, enum e_rotation direction);
 
 /**
  * @brief Function to move the player based on key input.
