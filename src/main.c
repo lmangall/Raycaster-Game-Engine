@@ -50,15 +50,14 @@ void	init_data(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 
-	data = ft_calloc(1, sizeof(t_data));
-	parser(argc, argv, data);
-	init_data(data);
-	// mlx_key_hook(data->mlx, &key_hook, &data);
-	mlx_loop_hook(data->mlx, game_loop, data);
-	mlx_loop_hook(data->mlx, key_hook, &data);
-	mlx_loop(data->mlx);
-	free_exit(data);
+	// data = ft_calloc(1, sizeof(t_data));
+	parser(argc, argv, &data);
+	init_data(&data);
+	mlx_loop_hook(data.mlx, &game_loop, &data);
+	mlx_loop_hook(data.mlx, &key_hook, &data);
+	mlx_loop(data.mlx);
+	free_exit(&data);
 	return (0);
 }
