@@ -17,12 +17,16 @@ int	main(int argc, char **argv)
 	t_data *data;
 	t_mode mode;
 
-	mode = FULL_EXPERIENCE;
+	// mode = FULL_EXPERIENCE;
+	mode = PARSE_ONLY;
 
 	data = ft_calloc(1, sizeof(t_data));
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)
+	{
+		printf("Mode PARSE ONLY ON!\n");
 		free_exit_parser(data);
+	}
 	load_textures(data);
 	data->ray = calloc(1, sizeof(t_ray));
 	data->player = calloc(1, sizeof(t_player));
