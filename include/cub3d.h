@@ -31,6 +31,12 @@ typedef enum e_mode
 	FULL_EXPERIENCE
 }						t_mode;
 
+typedef enum e_debug
+{
+	OFF,
+	ALL
+}						t_debug;
+
 /**
 
 	* @brief enum to represent the two possible values of the elements in the t_map_eements struct and of the player.
@@ -96,6 +102,7 @@ typedef struct s_map
 	t_rgba c;                /**< Ceiling color. */
 	t_rgba f;                /**< Floor color. */
 	t_textures_paths	*textures_paths;
+
 }						t_map;
 
 /**
@@ -228,7 +235,14 @@ typedef struct s_ray
 
 /**
  * @brief Structure to hold MLX-related elements and game data.
+ *
+ *
+ *
+ *
+ *
+ *
  */
+
 typedef struct s_data
 {
 	char *argv;           /**< Pointer to the map file. */
@@ -238,7 +252,7 @@ typedef struct s_data
 	t_map *map;           /**< Pointer to the map structure. */
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
-							/**< Pointer to the texture paths structure. */
+	t_debug debug;        /**< Debug mode. */
 }						t_data;
 
 mlx_texture_t			*texture_selection(t_data *data);
