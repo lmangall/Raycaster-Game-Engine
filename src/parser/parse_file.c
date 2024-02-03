@@ -18,7 +18,7 @@ int	open_and_check_file(char *file_path)
 
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
-		error_exit("$ERROR_OPENING_FILE", NULL);
+		error_exit(ERROR_OPENING_FILE, NULL);
 	return (fd);
 }
 
