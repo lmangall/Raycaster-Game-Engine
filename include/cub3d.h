@@ -230,7 +230,7 @@ typedef struct s_data
 
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
-
+int						is_wall(t_data *data, int x, int y);
 void					init_data(t_data *data);
 
 // PARSER:
@@ -286,7 +286,7 @@ void					ft_reles(mlx_key_data_t keydata, t_data *data);
 void					key_pressed(t_data *data);
 // void	key_released(t_data *data);
 void					key_hook(void *tmp);
-void					movement_hook(t_data *data, double move_x,
+void					apply_movement(t_data *data, double move_x,
 							double move_y);
 
 /**
@@ -447,7 +447,7 @@ void					cast_rays(t_data *data);
  * rendering.
  * @param tmp Pointer to the t_data structure.
  */
-void					game_loop(void *tmp);
+void					game_hook(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.

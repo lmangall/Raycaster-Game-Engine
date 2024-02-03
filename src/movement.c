@@ -1,6 +1,5 @@
 
 #include "../include/cub3d.h"
-#include <math.h>
 
 void	key_pressed(t_data *data)
 {
@@ -58,28 +57,36 @@ void	rotate_player(t_data *data, int i)
 	}
 }
 
-void	move_player(t_data *data, double move_x, double move_y)
+int	is_wall(t_data *data, int x, int y)
 {
 	int	map_grid_y;
 	int	map_grid_x;
-	int	new_x;
-	int	new_y;
 
-	new_x = roundf(data->player->x_pos_px + move_x);
-	new_y = roundf(data->player->y_pos_px + move_y);
-	map_grid_x = (new_x / TILE_SIZE);
-	map_grid_y = (new_y / TILE_SIZE);
-	if (data->map->grid[map_grid_y][map_grid_x] != '1'
-		&& (data->map->grid[map_grid_y][data->player->x_pos_px
-			/ TILE_SIZE] != '1' && data->map->grid[data->player->y_pos_px
-			/ TILE_SIZE][map_grid_x] != '1'))
+	map_grid_x = (x / TILE_SIZE);
+	map_grid_y = (y / TILE_SIZE);
+	if (data->map->grid[map_grid_y][map_grid_x] == '1'
+		|| (data->map->grid[map_grid_y][data->player->x_pos_px
+			/ TILE_SIZE] == '1' || data->map->grid[data->player->y_pos_px
+			/ TILE_SIZE][map_grid_x] == '1'))
+		return (1);
+	return (0);
+}
+
+void	move_player(t_data *data, double move_x, double move_y)
+{
+	int	new_x_position;
+	int	new_y_position;
+
+	new_x_position = roundf(data->player->x_pos_px + move_x);
+	new_y_position = roundf(data->player->y_pos_px + move_y);
+	if (!is_wall(data, new_x_position, new_y_position))
 	{
-		data->player->x_pos_px = new_x;
-		data->player->y_pos_px = new_y;
+		data->player->x_pos_px = new_x_position;
+		data->player->y_pos_px = new_y_position;
 	}
 }
 
-void	movement_hook(t_data *data, double move_x, double move_y)
+void	apply_movement(t_data *data, double move_x, double move_y)
 {
 	if (data->player->rotation == R_RIGHT)
 	{
