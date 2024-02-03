@@ -16,20 +16,19 @@ void	game_hook(void *tmp)
 
 int	main(int argc, char **argv)
 {
-	t_data *data;
+	t_data data;
 	t_mode mode;
 
-	// mode = FULL_EXPERIENCE;
-	mode = PARSE_ONLY;
+	mode = FULL_EXPERIENCE;
+	//mode = PARSE_ONLY;
 
-	data = ft_calloc(1, sizeof(t_data));
-	parser(argc, argv, data);
+	parser(argc, argv, &data);
 	if (mode == PARSE_ONLY)
 	{
 		printf("Mode PARSE ONLY ON!\n");
-		free_exit_parser(data);
+		free_exit_parser(&data);
 	}
-	load_textures(data);
+	load_textures(&data);
 	init_data(&data);
 	mlx_loop_hook(data.mlx, &game_hook, &data);
 	mlx_loop_hook(data.mlx, &key_hook, &data);
