@@ -1,22 +1,48 @@
-// #include "../include/cub3d.h"
 #include "cub3d.h"
 
-void	game_loop(void *tmp) // game loop
-{
-	t_data *data;
+// void	free_exit_parser(t_data *data)
+// {
+// 	int	i;
 
-	data = (t_data *)tmp;
-	mlx_delete_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	hook(data, 0, 0);
-	raycasting(data);
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
+// 	// free t_map struct
+// 	// free char **grid
+// 	if (data->map->grid != NULL)
+// 	{
+// 		i = 0;
+// 		while (data->map->grid[i] && data->map->height > 0)
+// 		{
+// 			printf("data->map->grid[%d]'s ptr: %p\n", i, &data->map->grid[i]);
+// 			printf("data->map->grid[%d]: %s\n", i, data->map->grid[i]);
+// 			free(data->map->grid[i]);
+// 			data->map->grid[i] = NULL;
+// 			i++;
+// 		}
+// 		free(data->map->grid);
+// 		data->map->grid = NULL;
+// 	}
+// 	/* int p_x, int p_y, char player_orientation, e_status player_found,
+// 		int width, int height, t_rgba c and t_rgba f don't need to be freed.
+// 		free the char
+// 			* of the members of t_textures_paths and then texture_paths itself  */
+// 	free(data->map->textures_paths->north);
+// 	free(data->map->textures_paths->south);
+// 	free(data->map->textures_paths->west);
+// 	free(data->map->textures_paths->east);
+// 	free(data->map->textures_paths);
+// 	// free map
+// 	free(data->map);
+// 	data->map = NULL;
+// 	free(data);
+// 	data = NULL;
+// }
+
+static void move_player_forward_slowly(t_data *data) 
+{
+    double move_x = cos(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
+    double move_y = sin(data->player->orientation_angle_rd) * (PLAYER_TRANSLATION_SPEED / 2);
+//    (void)data;
+    move_player(data, move_x, move_y);
 }
-
-void	free_exit_parser(t_data *data)
-{
-	int	i;
-
 	// free t_map struct
 	// free char **grid
 	if (data->map->grid != NULL)
