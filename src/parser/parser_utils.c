@@ -1,6 +1,14 @@
 #include "cub3d.h"
 
-void	free_exit_parser(t_data *data)
+void	error_exit(char *error_message, t_data *data)
+{
+	(void)data;
+	printf("Error\n");
+	printf("%s\n", error_message);
+	exit(EXIT_FAILURE);
+}
+
+void	free_exit_parser(t_data *data, char *error_message)
 {
 	int	i;
 
@@ -24,15 +32,5 @@ void	free_exit_parser(t_data *data)
 	data->map = NULL;
 	free(data);
 	data = NULL;
-	printf("Exiting...\n");
-	exit(0);
-}
-
-void	error_exit(char *error_message, t_data *data)
-{
-	(void)data;
-	printf("Error\n");
-	printf("%s\n", error_message);
-	// free whatever was allocated before
-	exit(EXIT_FAILURE);
+	error_exit(error_message, NULL);
 }

@@ -259,7 +259,7 @@ void					*handle_ft_easy_realloc(char **lines_arr,
 void					free_lines_arr_and_exit(char **lines_arr);
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
-void					free_exit_parser(t_data *data);
+void					free_exit_parser(t_data *data, char *error_message);
 
 // OLD PARSER:
 char					*cub_to_str(char *map);

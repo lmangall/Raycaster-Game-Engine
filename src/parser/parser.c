@@ -16,11 +16,12 @@
 void	parser(int argc, char **argv, t_data *data)
 {
 	char	**lines_arr;
+
 	// hier the t_map struct should be initialised
 	// and it should be 'passed' to data
-
 	if (argc != 2)
-		error_exit("Wrong number of arguments.", data);
+		error_exit("Wrong number of arguments. The proper usage is ./cub3D <map.cub>",
+			data);
 	check_file(argv[1]);
 	lines_arr = parse_file(argv[1]);
 	print_lines_arr(lines_arr);

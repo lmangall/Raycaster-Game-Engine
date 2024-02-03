@@ -37,7 +37,6 @@ void	*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 		close(fd);
 		free_lines_arr_and_exit(lines_arr);
 	}
-	// new_lines_arr[new_size - 1] = NULL;
 	return (new_lines_arr);
 }
 
