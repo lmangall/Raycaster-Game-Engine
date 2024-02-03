@@ -245,12 +245,10 @@ mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
 
 // PARSER:
-void					open_and_check_file(char *file_path, int *fd);
-void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
 void					parse_map(char *argv, t_map *map);
 
-void					parse_file(int fd, char ***lines_arr);
+void					parse_file(char *file_path, char ***lines_arr);
 void					print_lines_arr(char **lines_arr);
 void					parser(int argc, char **argv, t_data *data);
 void					error_exit(char *error_msg, t_data *data);

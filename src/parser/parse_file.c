@@ -13,6 +13,23 @@
 #include "cub3d.h"
 #include "parser.h"
 
+void	check_file_extension(char *map_file)
+{
+	char	*extension;
+
+	extension = ft_strrchr(map_file, '.');
+	if (!extension || ft_strncmp(extension, ".cub", 5) != 0)
+		error_exit("Invalid file extension: it should be a .cub extension!",
+			NULL);
+}
+void	open_and_check_file(char *file_path, int *fd)
+{
+	*fd = open(file_path, O_RDONLY);
+	if (*fd == -1)
+		error_exit(ERROR_OPENING_FILE, NULL);
+	check_file_extension(file_path);
+}
+
 char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 {
 	char	*line;
@@ -54,11 +71,13 @@ char	**resize_lines_arr(char **lines_arr, size_t lines_arr_size,
 	return (lines_arr);
 }
 
-void	parse_file(int fd, char ***lines_arr)
+void	parse_file(char *file_path, char ***lines_arr)
 {
+	int		fd;
 	size_t	lines_arr_size;
 	size_t	lines_nbr;
 
+	open_and_check_file(file_path, &fd);
 	lines_nbr = 0;
 	lines_arr_size = 10;
 	*lines_arr = build_lines_arr(fd, &lines_arr_size, &lines_nbr);
