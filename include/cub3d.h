@@ -169,8 +169,6 @@ typedef struct s_player
 	int y_pos_px;                /**< Player y position in pixels. */
 	double orientation_angle_rd; /**< Player angle. */
 	float fov_rd;                /**< Field of view in radians. */
-	// TODO: initialize these values in the init_player function and use them
-	// instead of the defines
 	int					rotation_speed;
 	int					translation_speed;
 	t_rotation rotation;                   /**< Rotation direction: none, right,
@@ -243,6 +241,8 @@ typedef struct s_data
 
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
+int						is_wall(t_data *data, int x, int y);
+void					init_data(t_data *data);
 
 // PARSER:
 void					check_file(char *map_file);
@@ -296,6 +296,12 @@ void					free_exit(t_data *data);
  * @param data Pointer to the t_data structure.
  */
 void					ft_reles(mlx_key_data_t keydata, t_data *data);
+
+void					key_pressed(t_data *data);
+// void	key_released(t_data *data);
+void					key_hook(void *tmp);
+void					apply_movement(t_data *data, double move_x,
+							double move_y);
 
 /**
  * @brief Function to handle key press events.
@@ -455,7 +461,7 @@ void					cast_rays(t_data *data);
  * rendering.
  * @param tmp Pointer to the t_data structure.
  */
-void					game_loop(void *tmp);
+void					game_hook(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.
