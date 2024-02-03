@@ -54,5 +54,6 @@ int	load_textures(t_data *data)
 	textures->west = mlx_load_png(west);
 	textures->east = mlx_load_png(east);
 	data->textures = textures;
+
 	return (0);
 }
