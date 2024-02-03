@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:46:30 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/31 18:46:33 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/02 02:04:00 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 		{
 			*lines_arr_size *= 2;
 			tmp = handle_ft_easy_realloc(lines_arr, *lines_arr_size / 2
-				* sizeof(char *), (*lines_arr_size + 1) * sizeof(char *), fd);
+					* sizeof(char *), (*lines_arr_size + 1) * sizeof(char *),
+					fd);
 			tmp[*lines_arr_size] = NULL;
 			lines_arr = tmp;
 		}
@@ -65,8 +66,8 @@ char	**final_resize_lines_arr(char **lines_arr, size_t lines_arr_size,
 {
 	char	**tmp;
 
-	tmp = ft_easy_realloc(lines_arr, lines_arr_size * sizeof(char *) + 1,
-		(lines_nbr + 1) * sizeof(char *));
+	tmp = ft_easy_realloc(lines_arr, lines_arr_size * sizeof(char *), (lines_nbr
+				+ 1) * sizeof(char *));
 	// We aready check in ft_easy_realloc
 	// if (!tmp)
 	// free_lines_arr_and_exit(lines_arr);

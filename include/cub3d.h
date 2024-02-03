@@ -19,35 +19,59 @@
 # define WINDOW_HEIGHT 1000
 # define TILE_SIZE 30
 # define FOV 60
-# define ERROR_OPENING_FILE "File not found or corrupted."
-
-// The previous denomination were PLAYER_SPEED and ROTATION_SPEED.
-// ROTATION_SPEED is also a kind of speed of the player. I'm not sure if
-// translation is clear enough Or if it would be better something else, like
-// walkind speed
 # define PLAYER_ROTATION_SPEED 0.045
 # define PLAYER_TRANSLATION_SPEED 4
-// To make sense of the return values of the functions
-// above alf for the if statements
-// cause it's easier to read
+# define ERROR_OPENING_FILE "File not found or corrupted."
 # define SUCCESS 0
 # define FAILURE 1
 
-typedef enum
+typedef enum e_mode
+{
+	PARSE_ONLY,
+	FULL_EXPERIENCE
+}						t_mode;
+
+/**
+
+	* @brief enum to represent the two possible values of the elements in the t_map_eements struct and of the player.
+ */
+
+typedef enum e_status
 {
 	NOT_FOUND,
 	FOUND
-}						e_status;
+}						t_status;
+
+/**
+
+	* @brief Structure to  keep track if the elements of the map have been found or not.
+ */
 
 typedef struct s_map_elements
 {
-	e_status			no;
-	e_status			so;
-	e_status			we;
-	e_status			ea;
-	e_status			c;
-	e_status			f;
+	t_status			no;
+	t_status			so;
+	t_status			we;
+	t_status			ea;
+	t_status			c;
+	t_status			f;
 }						t_map_elements;
+
+/**
+ * @brief Structure to represent a color in RGBA format.
+ */
+
+typedef struct s_rgba
+{
+	int r; // Red component, usually in the range [0, 255]
+	int g; // Green component, usually in the range [0, 255]
+	int b; // Blue component, usually in the range [0, 255]
+	int a; // Alpha component for transparency, usually in the range [0, 255]
+}						t_rgba;
+
+/**
+ * @brief Structure to hold the paths to the textures.
+ */
 
 typedef struct s_textures_paths
 {
@@ -56,6 +80,23 @@ typedef struct s_textures_paths
 	char				*west;
 	char				*east;
 }						t_textures_paths;
+
+/**
+ * @brief Struct to represent all the information we got from the map file.
+ */
+typedef struct s_map
+{
+	char **grid;             /**< 2D array representing the map. */
+	int p_x;                 /**< Player x position in the map in tiles. */
+	int p_y;                 /**< Player y position in the map in tiles. */
+	char player_orientation; /**< Player orientation. */
+	t_status player_found;   /**< Flag if the player has been found. */
+	int width;               /**< Map width in tiles. */
+	int height;              /**< Map height in tiles. */
+	t_rgba c;                /**< Ceiling color. */
+	t_rgba f;                /**< Floor color. */
+	t_textures_paths	*textures_paths;
+}						t_map;
 
 /**
  * @brief Structure to save the path to textures.
@@ -186,36 +227,6 @@ typedef struct s_ray
 }						t_ray;
 
 /**
- * @brief Structure to represent a color in RGBA format.
- */
-
-typedef struct s_rgba
-{
-	int r; // Red component, usually in the range [0, 255]
-	int g; // Green component, usually in the range [0, 255]
-	int b; // Blue component, usually in the range [0, 255]
-	int a; // Alpha component for transparency, usually in the range [0, 255]
-}						t_rgba;
-
-/**
- * @brief Structure to represent game data, including the map.
- */
-typedef struct s_map
-{
-	char **grid;             /**< 2D array representing the map. */
-	int p_x;                 /**< Player x position in the map in tiles. */
-	int p_y;                 /**< Player y position in the map in tiles. */
-	char player_orientation; /**< Player orientation. */
-	e_status player_found;   /**< Flag indicating whether the player has been
-								found. */
-	int width;               /**< Map width in tiles. */
-	int height;              /**< Map height in tiles. */
-	t_rgba c;                /**< Ceiling color. */
-	t_rgba f;                /**< Floor color. */
-	t_textures_paths	textures_paths;
-}						t_map;
-
-/**
  * @brief Structure to hold MLX-related elements and game data.
  */
 typedef struct s_data
@@ -237,7 +248,6 @@ void					init(t_map *map, char *map_argv);
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
 void					parse_map(char *argv, t_map *map);
-char					*cub_to_str(char *map);
 char					**parse_file(char *file_path);
 void					print_lines_arr(char **lines_arr);
 void					parser(int argc, char **argv, t_data *data);
@@ -249,6 +259,10 @@ void					*handle_ft_easy_realloc(char **lines_arr,
 void					free_lines_arr_and_exit(char **lines_arr);
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
+void					free_exit_parser(t_data *data);
+
+// OLD PARSER:
+char					*cub_to_str(char *map);
 
 // TEXTURES:     UPDATE DOXY
 /**
@@ -472,5 +486,6 @@ void					start_the_game(t_map *map, char *map_argv);
  * @param mlx The main data structure.
  */
 void					update_ray(t_data *data);
+int						load_textures(t_data *data);
 
 #endif // CUB3D_H

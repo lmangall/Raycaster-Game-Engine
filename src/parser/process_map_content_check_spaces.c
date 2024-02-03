@@ -89,7 +89,7 @@ int	check_next_line(char **lines_arr, int current_line, int last_line, int idx)
 	return (SUCCESS);
 }
 
-int	spaces_are_sourrounded_by_walls(char **lines_arr, int current_line,
+int	spaces_are_surrounded_by_walls(char **lines_arr, int current_line,
 		int first_line, int last_line)
 {
 	int i;
