@@ -241,7 +241,7 @@ typedef struct s_data
 
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
-int						is_wall(t_data *data, int x, int y);
+int						is_wall(t_data *data, double x, double y);
 void					init_data(t_data *data);
 
 // PARSER:
