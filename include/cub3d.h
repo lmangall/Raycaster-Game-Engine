@@ -261,6 +261,8 @@ void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
 void					free_exit_parser(t_data *data);
 
+void	render_background(mlx_t *mlx); //, t_rgb color)
+
 // OLD PARSER:
 char					*cub_to_str(char *map);
 
@@ -317,7 +319,8 @@ void					mlx_key(mlx_key_data_t keydata, void *tmp);
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void					rotate_player(double *orientation_angle_rd, enum e_rotation direction);
+void					rotate_player(double *orientation_angle_rd,
+							enum e_rotation direction);
 
 /**
  * @brief Function to move the player based on key input.

@@ -1,46 +1,25 @@
 
 #include "../include/cub3d.h"
 
-int	get_color(t_data *data,
-				int collision_orientation) // get the color of the wall
+static void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
 {
-	data->ray->angle_rd = nor_angle(data->ray->angle_rd); // normalize the angle
-	if (collision_orientation == VERTICAL)
-	{
-		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
-				/ 2))
-			return (0xB5B5B5FF); // west wall
-		else
-			return (0xB5B5B5FF); // east wall
-	}
-	else
-	{
-		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
-			return (0xF5F5F5FF); // south wall
-		else
-			return (0xF5F5F5FF); // north wall
-	}
+	*(pixel++) = (uint8_t)(color >> 24);
+	*(pixel++) = (uint8_t)(color >> 16);
+	*(pixel++) = (uint8_t)(color >> 8);
+	*(pixel++) = (uint8_t)(color & 0xFF);
 }
-
-// void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
-// {
-// 	*(pixel++) = (uint8_t)(color >> 24);
-// 	*(pixel++) = (uint8_t)(color >> 16);
-// 	*(pixel++) = (uint8_t)(color >> 8);
-// 	*(pixel++) = (uint8_t)(color & 0xFF);
-// }
 
 void	my_mlx_pixel_put(t_data *data, int y, int color)
 {
-	// uint8_t	*pixelstart;
+	uint8_t	*pixelstart;
+
 	if (y < 0)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	// pixelstart = &data->img->pixels[(y * WINDOW_WIDTH
-	// 		+ data->ray->screen_x)];
-	mlx_put_pixel(data->img, data->ray->screen_x, y, color);
-	// mlx_draw_pixel(pixelstart, color);
+	pixelstart = &data->img->pixels[(y * WINDOW_WIDTH + data->ray->screen_x)
+		* 4];
+	mlx_draw_pixel(pixelstart, color);
 }
 
 float	nor_angle(float angle)
@@ -50,18 +29,6 @@ float	nor_angle(float angle)
 	if (angle > (2 * M_PI))
 		angle -= (2 * M_PI);
 	return (angle);
-}
-
-void	render_floor_ceiling(t_data *data)
-{
-	int	i;
-
-	i = data->ray->b_pix;
-	while (i < WINDOW_HEIGHT)
-		my_mlx_pixel_put(data, i++, 0xB99470FF); // floor
-	i = 0;
-	while (i < data->ray->t_pix)
-		my_mlx_pixel_put(data, i++, 0x89CFF3FF); // ceiling
 }
 
 int	reverse_bytes(int c)

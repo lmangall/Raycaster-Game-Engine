@@ -219,6 +219,7 @@ void	raycasting(t_data *data)
 	data->ray->screen_x = 0;
 	data->ray->angle_rd = data->player->orientation_angle_rd
 		- (data->player->fov_rd / 2); // the start angle
+
 	while (data->ray->screen_x < WINDOW_WIDTH)
 	{
 		data->ray->wall_collision_orientation = NO_COLLISION;
@@ -236,7 +237,7 @@ void	raycasting(t_data *data)
 		}
 		update_ray(data);
 		render_wall(data);
-		render_floor_ceiling(data);
+		// render_floor_ceiling(data);
 		data->ray->screen_x++;
 		// next pixel/ray
 		data->ray->angle_rd += (data->player->fov_rd / WINDOW_WIDTH);
