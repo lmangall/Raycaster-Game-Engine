@@ -1,5 +1,6 @@
 
 #include "../include/cub3d.h"
+#include "MLX42.h"
 
 static void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
 {
@@ -33,15 +34,55 @@ float	nor_angle(float angle)
 
 int	reverse_bytes(int c)
 {
-	unsigned int	b;
+	int	byte0;
+	int	byte1;
+	int	byte2;
+	int	byte3;
 
-	b = 0;
-	b |= (c & 0xFF) << 24;
-	b |= (c & 0xFF00) << 8;
-	b |= (c & 0xFF0000) >> 8;
-	b |= (c & 0xFF000000) >> 24;
-	return (b);
+	byte0 = (c & 0xFF) << 24;
+	byte1 = (c & 0xFF00) << 8;
+	byte2 = (c >> 8) & 0xFF00;
+	byte3 = (c >> 24) & 0xFF;
+	return (byte0 + byte1 + byte2 + byte3);
 }
+
+//       pixel color and render_wall are combined into one function
+// void	render_wall(t_data *data)
+// {
+// 	int				t_pix;
+// 	uint32_t		color;
+// 	mlx_texture_t	*texture;
+// 	double			factor;
+// 	double			y_pixel_coordinate;
+// 	double			x_pixel_coordinate;
+// 	uint32_t		*pixel_array;
+// 	int				texel_color;
+
+// 	t_pix = data->ray->t_pix;
+// 	texture = data->ray->current_texture;
+// 	factor = (double)texture->height / data->ray->wall_h;
+// 	y_pixel_coordinate = (t_pix - (WINDOW_HEIGHT / 2) + (data->ray->wall_h / 2))
+// 		* factor;
+// 	if (data->ray->wall_collision_orientation == HORIZONTAL)
+// 		x_pixel_coordinate = fmod((data->ray->horizontal_x * (texture->width
+// 						/ TILE_SIZE)), texture->width);
+// 	else
+// 		x_pixel_coordinate = fmod((data->ray->vertical_y * (texture->width
+// 						/ TILE_SIZE)), texture->width);
+// 	pixel_array = (uint32_t *)texture->pixels;
+// 	while (t_pix < data->ray->b_pix)
+// 	{
+// 		if (y_pixel_coordinate >= 0 && y_pixel_coordinate < texture->height)
+// 		{
+// 			texel_color = pixel_array[(int)y_pixel_coordinate * texture->width
+// 				+ (int)x_pixel_coordinate];
+// 			color = reverse_bytes(texel_color);
+// 			my_mlx_pixel_put(data, t_pix, color);
+// 		}
+// 		y_pixel_coordinate += factor;
+// 		t_pix++;
+// 	}
+// }
 
 uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
 {
@@ -120,7 +161,6 @@ void	init_ray(t_data *data)
 		b_pix = WINDOW_HEIGHT;
 	if (t_pix < 0)
 		t_pix = 0;
-	// data->ray->current_texture = data->textures->north;//change this depending on orientation
 	data->ray->current_texture = texture_selection(data);
 	data->ray->wall_h = wall_h;
 	data->ray->t_pix = t_pix;
