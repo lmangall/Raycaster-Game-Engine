@@ -231,8 +231,7 @@ typedef struct s_data
 mlx_texture_t			*texture_selection(t_data *data);
 void					init(t_map *map, char *map_argv);
 
-
-void	init_data(t_data *data);
+void					init_data(t_data *data);
 
 // PARSER:
 void					check_file(char *map_file);
@@ -284,11 +283,11 @@ void					free_exit(t_data *data);
  */
 void					ft_reles(mlx_key_data_t keydata, t_data *data);
 
-
-void	key_pressed(t_data *data);
+void					key_pressed(t_data *data);
 // void	key_released(t_data *data);
-void	key_hook(void *tmp);
-void	movement_hook(t_data *data, double move_x, double move_y);
+void					key_hook(void *tmp);
+void					movement_hook(t_data *data, double move_x,
+							double move_y);
 
 /**
  * @brief Function to handle key press events.
