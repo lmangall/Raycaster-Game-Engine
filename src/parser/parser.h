@@ -16,5 +16,7 @@ int		is_surrounded_by_walls(char **lines_arr, int current_line,
 			int first_line, int last_line);
 int		spaces_are_surrounded_by_walls(char **lines_arr, int current_line,
 			int first_line, int last_line);
+void	print_lines_arr(char **lines_arr);
+void	free_lines_arr_and_exit(char **lines_arr, char *error_message);
 
 #endif
