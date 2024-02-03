@@ -1,9 +1,8 @@
-// #include "../include/cub3d.h"
 #include "cub3d.h"
 
-void	game_loop(void *tmp) // game loop
+void	game_loop(void *tmp)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = (t_data *)tmp;
 	mlx_delete_image(data->mlx, data->img);
@@ -13,19 +12,18 @@ void	game_loop(void *tmp) // game loop
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
-void free_exit_parser(t_data *data)
+void	free_exit_parser(t_data *data)
 {
-	int i;
-	// free t_map struct
-	// free char **grid
-	if (data->map->grid != NULL)	
+	int	i;
+
+	if (data->map->grid != NULL)
 	{
 		i = 0;
-
-		while(data->map->grid[i] && data->map->height > 0)
+		while (data->map->grid[i] && data->map->height > 0)
 		{
-			printf("data->map->grid[%d]'s ptr: %p\n", i, &data->map->grid[i]);
-			printf("data->map->grid[%d]: %s\n", i, data->map->grid[i]);
+			// printf("data->map->grid[%d]'s ptr: %p\n", i,
+			// &data->map->grid[i]);
+			// printf("data->map->grid[%d]: %s\n", i, data->map->grid[i]);
 			free(data->map->grid[i]);
 			data->map->grid[i] = NULL;
 			i++;
@@ -33,41 +31,25 @@ void free_exit_parser(t_data *data)
 		free(data->map->grid);
 		data->map->grid = NULL;
 	}
-	// int p_x, int p_y, char player_orientation, e_status player_found, int width, int height, t_rgba c and t_rgba f don't need to be freed.
-	// free the char * of the members of t_textures_paths and then texture_paths itself
-	free(data->map->textures_paths->north);
 	free(data->map->textures_paths->south);
 	free(data->map->textures_paths->west);
 	free(data->map->textures_paths->east);
 	free(data->map->textures_paths);
-	// free map
 	free(data->map);
 	data->map = NULL;
 	free(data);
 	data = NULL;
-
+	printf("Exiting...\n");
+	exit(0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data *data;
 
-	// t_map *data = ft_calloc(1, sizeof(t_map));
 	data = ft_calloc(1, sizeof(t_data));
-	// data = calloc(1, sizeof(t_map));
-	// (void)argc;
-	// (void)data;
 	parser(argc, argv, data);
-	printf("data->map->textures_paths.north: %s\n",
-		data->map->textures_paths->north);
-	printf("Exiting...\n");
 	free_exit_parser(data);
-	exit(0);
-	// parse_map(argv[1], data);
-	// start_the_game(data, argv[2]); // start the game
-	// map = calloc(1, sizeof(t_map));
-	// parse_map(argv[1], map);
-	// init(map, argv[2]);
 	load_textures(data);
 	data->ray = calloc(1, sizeof(t_ray));
 	data->player = calloc(1, sizeof(t_player));
@@ -79,22 +61,3 @@ int	main(int argc, char **argv)
 	free_exit(data);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	// t_data *data = calloc(1, sizeof(t_map));
-// 	t_data *data;
-
-// 	(void)argc;
-// 	// data = calloc(1, sizeof(t_data));
-// 	data = malloc(sizeof(t_data));
-// 	data->argv = argv[1];
-// 	// implement checks.c for args
-
-// 	init(data, argv[2]);
-// 	mlx_loop_hook(data->mlx, &game_loop, data);
-// 	mlx_key_hook(data->mlx, &mlx_key, data);
-// 	mlx_loop(data->mlx);
-// 	ft_exit(data);
-// 	return (0);
-// }

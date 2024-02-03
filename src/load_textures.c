@@ -62,6 +62,5 @@ int	load_textures(t_data *data)
 	textures->east = mlx_load_png(east);
 	data->textures = textures;
 	printf("Textures loaded.\n");
-	exit(0);
 	return (0);
 }
