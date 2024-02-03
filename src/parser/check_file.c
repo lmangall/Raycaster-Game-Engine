@@ -1,5 +1,15 @@
 #include "cub3d.h"
 
+int	open_file(char *file_path)
+{
+	int	fd;
+
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+		error_exit(ERROR_OPENING_FILE, NULL);
+	return (fd);
+}
+
 void	check_file_extension(char *map_file)
 {
 	char	*extension;
@@ -9,7 +19,8 @@ void	check_file_extension(char *map_file)
 		error_exit("Invalid file extension: it should be a .cub extension!",
 			NULL);
 }
-void	check_file(char *map_file)
+void	open_and_check_file(char *file_path, int *fd)
 {
-	check_file_extension(map_file);
+	*fd = open_file(file_path);
+	check_file_extension(file_path);
 }

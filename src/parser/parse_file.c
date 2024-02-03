@@ -11,30 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	open_and_check_file(char *file_path)
-{
-	int	fd;
-
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-		error_exit(ERROR_OPENING_FILE, NULL);
-	return (fd);
-}
-
-void	free_lines_arr_and_exit(char **lines_arr)
-{
-	int	i;
-
-	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		free(lines_arr[i]);
-		i++;
-	}
-	free(lines_arr);
-	error_exit("Error\nMalloc failed", NULL);
-}
+#include "parser.h"
 
 char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 {
@@ -57,36 +34,34 @@ char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 		(*lines_nbr)++;
 	}
 	lines_arr[*lines_nbr] = NULL;
+	close(fd);
 	return (lines_arr);
 }
 
-char	**final_resize_lines_arr(char **lines_arr, size_t lines_arr_size,
+// We are using directly the ft_easy_realloc function
+// cause we don't need to close the file descriptor in case of failure
+char	**resize_lines_arr(char **lines_arr, size_t lines_arr_size,
 		size_t lines_nbr)
 {
 	char	**tmp;
 
 	tmp = ft_easy_realloc(lines_arr, lines_arr_size * sizeof(char *), (lines_nbr
 			+ 1) * sizeof(char *));
-	// We aready check in ft_easy_realloc
-	// if (!tmp)
-	// free_lines_arr_and_exit(lines_arr);
+	if (!tmp)
+		free_lines_arr_and_exit(lines_arr, "Malloc failed");
 	lines_arr = tmp;
 	lines_arr[lines_nbr] = NULL;
 	return (lines_arr);
 }
 
-char	**parse_file(char *file_path)
+void	parse_file(int fd, char ***lines_arr)
 {
-	int		fd;
 	size_t	lines_arr_size;
 	size_t	lines_nbr;
-	char	**lines_arr;
 
 	lines_nbr = 0;
 	lines_arr_size = 10;
-	fd = open_and_check_file(file_path);
-	lines_arr = build_lines_arr(fd, &lines_arr_size, &lines_nbr);
+	*lines_arr = build_lines_arr(fd, &lines_arr_size, &lines_nbr);
 	close(fd);
-	lines_arr = final_resize_lines_arr(lines_arr, lines_arr_size, lines_nbr);
-	return (lines_arr);
+	*lines_arr = resize_lines_arr(*lines_arr, lines_arr_size, lines_nbr);
 }
