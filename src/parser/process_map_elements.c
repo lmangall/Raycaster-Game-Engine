@@ -14,7 +14,7 @@
 #include "parser.h"
 
 int	check_identifier(char *line, const char *identifier,
-		e_status *element_status)
+		t_status *element_status)
 {
 	if (ft_strncmp(line, identifier, ft_strlen(identifier)) == 0)
 	{

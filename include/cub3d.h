@@ -33,20 +33,20 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-typedef enum
+typedef enum e_status
 {
 	NOT_FOUND,
 	FOUND
-}						e_status;
+}						t_status;
 
 typedef struct s_map_elements
 {
-	e_status			no;
-	e_status			so;
-	e_status			we;
-	e_status			ea;
-	e_status			c;
-	e_status			f;
+	t_status			no;
+	t_status			so;
+	t_status			we;
+	t_status			ea;
+	t_status			c;
+	t_status			f;
 }						t_map_elements;
 
 typedef struct s_textures_paths
@@ -204,7 +204,7 @@ typedef struct s_map
 	int p_x;                 /**< Player x position in the map in tiles. */
 	int p_y;                 /**< Player y position in the map in tiles. */
 	char player_orientation; /**< Player orientation. */
-	e_status player_found;   /**< Flag indicating whether the player has been
+	t_status player_found;   /**< Flag indicating whether the player has been
 								found. */
 	int width;               /**< Map width in tiles. */
 	int height;              /**< Map height in tiles. */
