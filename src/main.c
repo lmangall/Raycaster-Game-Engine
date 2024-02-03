@@ -12,37 +12,6 @@ void	game_loop(void *tmp)
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
-void	free_exit_parser(t_data *data)
-{
-	int	i;
-
-	if (data->map->grid != NULL)
-	{
-		i = 0;
-		while (data->map->grid[i] && data->map->height > 0)
-		{
-			// printf("data->map->grid[%d]'s ptr: %p\n", i,
-			// &data->map->grid[i]);
-			// printf("data->map->grid[%d]: %s\n", i, data->map->grid[i]);
-			free(data->map->grid[i]);
-			data->map->grid[i] = NULL;
-			i++;
-		}
-		free(data->map->grid);
-		data->map->grid = NULL;
-	}
-	free(data->map->textures_paths->south);
-	free(data->map->textures_paths->west);
-	free(data->map->textures_paths->east);
-	free(data->map->textures_paths);
-	free(data->map);
-	data->map = NULL;
-	free(data);
-	data = NULL;
-	printf("Exiting...\n");
-	exit(0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data *data;
