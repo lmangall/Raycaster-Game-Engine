@@ -1,24 +1,14 @@
 #include "cub3d.h"
 #include "parser.h"
 
-t_textures_paths	*init_textures_paths(void)
+t_map	*init_map(t_map *map)
 {
-	t_textures_paths	*textures_paths;
-
-	textures_paths = ft_calloc(1, sizeof(t_textures_paths));
-	textures_paths->north = NULL;
-	textures_paths->south = NULL;
-	textures_paths->west = NULL;
-	textures_paths->east = NULL;
-	return (textures_paths);
-}
-
-t_map	*init_map(void)
-{
-	t_map				*map;
 	t_textures_paths	*textures_paths;
 
 	map = ft_calloc(1, sizeof(t_map));
+	textures_paths = NULL;
+	init_map_helper(&map->elements, &textures_paths);
+	map->textures_paths = textures_paths;
 	map->grid = NULL;
 	map->p_x = 0;
 	map->p_y = 0;
@@ -26,9 +16,6 @@ t_map	*init_map(void)
 	map->player_found = NOT_FOUND;
 	map->width = 0;
 	map->height = 0;
-	textures_paths = NULL;
-	textures_paths = init_textures_paths();
-	map->textures_paths = textures_paths;
 	map->c.r = 0;
 	map->c.g = 0;
 	map->c.b = 0;
@@ -40,8 +27,14 @@ t_map	*init_map(void)
 	return (map);
 }
 
-void	init_elements_status(t_map_elements *elements)
+void	init_map_helper(t_map_elements_check *elements,
+		t_textures_paths **textures_paths_ptr)
 {
+	*textures_paths_ptr = ft_calloc(1, sizeof(t_textures_paths));
+	(*textures_paths_ptr)->north = NULL;
+	(*textures_paths_ptr)->south = NULL;
+	(*textures_paths_ptr)->west = NULL;
+	(*textures_paths_ptr)->east = NULL;
 	elements->no = NOT_FOUND;
 	elements->so = NOT_FOUND;
 	elements->we = NOT_FOUND;

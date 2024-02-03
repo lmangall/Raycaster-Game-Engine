@@ -26,7 +26,7 @@ void	free_str_arr(char **str_arr)
 	free(str_arr);
 }
 
-int	all_elements_found(t_map_elements *elements)
+int	all_elements_found(t_map_elements_check *elements)
 {
 	printf("Checking if all elements have been found...\n");
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
@@ -43,7 +43,7 @@ int	all_elements_found(t_map_elements *elements)
 	}
 }
 
-void	print_elements_status(t_map_elements *elements)
+void	print_elements_status(t_map_elements_check *elements)
 {
 	if (elements->no == NOT_FOUND)
 		printf("NO : NOT_FOUND\n");
@@ -99,7 +99,7 @@ void	print_ceiling_and_floor(t_rgba *c, t_rgba *f)
 	printf("F: %d, %d, %d, %d\n", f->r, f->g, f->b, f->a);
 }
 
-void	print_map_elements(t_data *data)
+void	print_map_elements_check(t_data *data)
 {
 	printf("Processing map elements done.\n");
 	printf("The correct number of map elements have been found.\n");
@@ -107,7 +107,7 @@ void	print_map_elements(t_data *data)
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
 }
 
-void	final_print(t_data *data)
+void	print_map_final(t_data *data)
 {
 	print_texture_paths(data->map->textures_paths);
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
@@ -126,33 +126,32 @@ void	final_print(t_data *data)
 
 void	process_map(char **lines_arr, t_data *data)
 {
-	t_map_elements	elements;
-	t_map			*map;
-	int				i;
+	t_map	*map;
+	int		i;
 
+	// t_map_elements_check	elements;
 	printf("Processing map elements...\n");
-	init_elements_status(&elements);
-	map = init_map();
-	data->map = map;
+	map = init_map(map);
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
-		process_map_elements(lines_arr[i], &i, data, &elements);
-		print_elements_status(&elements);
-		if (all_elements_found(&elements) == SUCCESS)
+		init_elements_status(&map->elements);
+		process_map_elements(lines_arr[i], &i, data, &map->elements);
+		print_elements_status(&map->elements);
+		if (all_elements_found(&map->elements) == SUCCESS)
 		{
 			i++;
 			break ;
 		}
 		i++;
 	}
-	print_map_elements(data);
+	print_map_elements_check(data);
 	// Skip empty lines
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
 			|| lines_arr[i][0] == '\n'))
 		i++;
 	// ... then process map content
-	ft_putstr_fd("Processing map content...\n", 1);
+	ft_printf("Processing map content...\n");
 	process_map_content(lines_arr, data, i);
-	final_print(data);
+	print_map_final(data);
 }
