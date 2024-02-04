@@ -46,3 +46,9 @@ This project is not just about the end product; it's also a journey of learning 
 
 https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
 
+as a gif:
+
+https://github.com/lmangall/cub3D/assets/107299611/420ed7a6-31b0-4f58-b0f2-8ed0c2d96483
+
+
+
