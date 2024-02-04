@@ -219,8 +219,8 @@ typedef struct s_ray
 	int					screen_x;
 	mlx_texture_t		*current_texture;
 	int					wall_h;
-	int					t_pix;
-	int					b_pix;
+	int					higher_pixel;
+	int					lower_pixel;
 
 }						t_ray;
 
@@ -244,6 +244,12 @@ void					init(t_map *map, char *map_argv);
 int						is_wall(t_data *data, double x, double y);
 void					init_data(t_data *data);
 
+// render
+uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
+							int higher_pixel);
+void					render_wall(t_data *data);
+int						reverse_bytes(int c);
+
 // PARSER:
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
@@ -261,7 +267,7 @@ void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);
 void					free_exit_parser(t_data *data);
 
-void	render_background(mlx_t *mlx); //, t_rgb color)
+void	render_background(mlx_t *mlx, t_rgba c, t_rgba f); //, t_rgb color)
 
 // OLD PARSER:
 char					*cub_to_str(char *map);
@@ -345,14 +351,14 @@ void					hook(t_data *data, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void					my_mlx_pixel_put(t_data *data, int y, int color);
+void					render_pixel(t_data *data, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
  * @param angle Angle to be normalized.
  * @return Normalized angle.
  */
-float					nor_angle(float angle);
+float					normalize_angle(float angle);
 
 /**
  * @brief Renders the floor and ceiling of the scene.
@@ -372,17 +378,11 @@ int						get_color(t_data *data, int collision_orientation);
  * @brief Function to draw a wall on the screen.
  * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
- * @param t_pix Top pixel of the wall.
- * @param b_pix Bottom pixel of the wall.
+ * @param higher_pixel Top pixel of the wall.
+ * @param lower_pixel Bottom pixel of the wall.
  */
-void					draw_wall(t_data *data, int ray, int t_pix, int b_pix);
-
-/**
- * @brief Function to render a wall on the screen.
- * @param data Pointer to the t_data structure.
- * @param ray Ray representing the current column.
- */
-void					render_wall(t_data *data);
+void					draw_wall(t_data *data, int ray, int higher_pixel,
+							int lower_pixel);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
@@ -425,8 +425,8 @@ int						update_steps_direction(float angle, float *step,
  * horizontal (1) or vertical (0) direction.
  * @return -1 if there is an intersection, 1 otherwise.
  */
-int						inter_check(float angle, float *inter, float *step,
-							char plane);
+int						check_collision_adjust_step(float angle, float *inter,
+							float *step, char plane);
 
 /**
  * @brief Function to check if a wall is hit based on coordinates.
@@ -443,7 +443,7 @@ int						wall_hit(float x, float y, t_data *data);
  * @param angl Angle of the ray.
  * @return Horizontal intersection distance.
  */
-float					get_h_inter(t_data *data, float angl);
+float					find_x_collision(t_data *data, float angl);
 
 /**
  * @brief Function to get the vertical intersection point of a wall.
@@ -451,7 +451,7 @@ float					get_h_inter(t_data *data, float angl);
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
  */
-float					get_v_inter(t_data *data, float angl);
+float					find_y_collision(t_data *data, float angl);
 
 /**
  * @brief Function to cast rays for rendering walls in the game.

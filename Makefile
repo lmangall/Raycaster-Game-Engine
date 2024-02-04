@@ -32,7 +32,31 @@ MLX42_DIR = ./MLX42
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS	= main.c init.c render.c render_background.c exit.c movement_utils.c movement_apply.c movement_key.c raycasting.c load_textures.c parser/newest_parser.c parser/parse_file.c parser/parse_file_utils.c parser/check_file.c parser/process_map.c parser/process_map_elements.c parser/process_map_content.c parser/utils.c parser/init.c parser/process_map_content_height_width.c parser/process_map_content_checks.c parser/process_map_content_check_spaces.c
+SRCS = \
+	main.c \
+	init.c \
+	render.c \
+	render_background.c \
+	render_utils.c \
+	exit.c \
+	movement_utils.c \
+	movement_apply.c \
+	movement_key.c \
+	raycasting.c \
+	raycasting_utils.c \
+	load_textures.c \
+	parser/newest_parser.c \
+	parser/parse_file.c \
+	parser/parse_file_utils.c \
+	parser/check_file.c \
+	parser/process_map.c \
+	parser/process_map_elements.c \
+	parser/process_map_content.c \
+	parser/utils.c \
+	parser/init.c \
+	parser/process_map_content_height_width.c \
+	parser/process_map_content_checks.c \
+	parser/process_map_content_check_spaces.c
 
 SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
 # OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
