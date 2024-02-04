@@ -17,13 +17,20 @@
 
 # define WINDOW_WIDTH 1900
 # define WINDOW_HEIGHT 1000
+//
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_ROTATION_SPEED 0.045
 # define PLAYER_TRANSLATION_SPEED 4
 # define ERROR_OPENING_FILE "File not found or corrupted."
+//
 # define SUCCESS 0
 # define FAILURE 1
+//
+# define RIGHT 10
+# define LEFT 9
+# define UP 8
+# define DOWN 7
 
 typedef enum e_mode
 {
@@ -249,8 +256,30 @@ uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
 							int higher_pixel);
 void					render_wall(t_data *data);
 int						reverse_bytes(int c);
+
+/**
+ * @brief Adjusts a coordinate for mirroring based on specified conditions.
+ *
+
+	* This function adjusts the given coordinate 'x' for mirroring effects based on the
+ * specified mirroring plane ('x' or 'y'), the mirroring angle,
+	and the direction
+
+	* determined by the 'ray_direction' function. The adjustment ensures proper mirroring
+ * behavior for rendering in a 2D space.
+ *
+ * @param x Original coordinate to be adjusted.
+ * @param width Width of the mirroring region or surface.
+ * @param angle Angle associated with the mirroring.
+ * @param plane Mirroring plane ('x' or 'y') along which adjustment is applied.
+ *
+ * @return Adjusted coordinate after considering mirroring conditions.
+ */
 double					adjust_mirroring(double x, double width, double angle,
-							int orientation);
+							char plane);
+
+// raycasting utils
+int						ray_direction(float angle, char plane);
 
 // init:
 void					init_player_original_orientation(t_data *data);

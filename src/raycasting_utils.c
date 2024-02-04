@@ -1,12 +1,7 @@
 
 #include "../include/cub3d.h"
 
-#define RIGHT 10
-#define LEFT 9
-#define UP 8
-#define DOWN 7
-
-static int	ray_direction(float angle, char plane)
+int	ray_direction(float angle, char plane)
 {
 	if (plane == 'x')
 	{

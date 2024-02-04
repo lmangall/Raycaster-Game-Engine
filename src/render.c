@@ -2,40 +2,37 @@
 #include "../include/cub3d.h"
 #include "MLX42.h"
 
-double	adjust_mirroring(double x, double width, double angle, int orientation)
+double	adjust_mirroring(double x, double width, double angle, char plane)
 {
-	if (orientation == VERTICAL && angle > M_PI_2 && angle < (3 * M_PI_2))
-		return (width - 1 - x);
-	else if (orientation == HORIZONTAL && angle >= 0 && angle < M_PI)
-		return (width - 1 - x);
+	int		direction;
+	double	adjusted_coordinate;
+
+	direction = ray_direction(angle, plane);
+	if ((plane == 'x' && direction == UP) || (plane == 'y'
+			&& direction == LEFT))
+		adjusted_coordinate = x;
 	else
-		return (x);
+		adjusted_coordinate = width - 1 - x;
+	return (adjusted_coordinate);
 }
 
 uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 {
-	double		x_pixel_coordinate;
-	double		y_pixel_coordinate;
-	double		factor;
 	uint32_t	*pixel_array;
 	uint32_t	color;
+	char		plane;
 
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		x_pixel_coordinate = adjust_mirroring(fmod((data->ray->horizontal_x
-						* (texture->width / TILE_SIZE)), texture->width),
-				texture->width, data->ray->angle_rd, HORIZONTAL);
-	else
-		x_pixel_coordinate = adjust_mirroring(fmod((data->ray->vertical_y
-						* (texture->width / TILE_SIZE)), texture->width),
-				texture->width, data->ray->angle_rd, VERTICAL);
+	double x_pixel_coordinate, y_pixel_coordinate, factor;
+	plane = (data->ray->wall_collision_orientation == HORIZONTAL) ? 'x' : 'y';
+	x_pixel_coordinate = adjust_mirroring(fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y)
+				* (texture->width / TILE_SIZE), texture->width), texture->width,
+			data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / data->ray->wall_h;
 	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
 			+ (data->ray->wall_h / 2)) * factor;
 	if (y_pixel_coordinate < 0 || y_pixel_coordinate >= texture->height)
-	{
-		return (0); // Skip rendering if outside texture bounds
-	}
+		return (0);
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
 				- 1));
 	color = pixel_array[(int)y_pixel_coordinate * texture->width
