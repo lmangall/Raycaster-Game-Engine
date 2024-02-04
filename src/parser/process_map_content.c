@@ -71,6 +71,25 @@ int	line_has_not_only_spaces(char *line, int *i)
 	return (FAILURE);
 }
 
+int	has_only_one_player(char *line)
+{
+	int	i;
+	int	player_count;
+
+	i = 0;
+	player_count = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
+			|| line[i] == 'W')
+			player_count++;
+		i++;
+	}
+	if (player_count > 1)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 		int last_line)
 {
@@ -81,6 +100,8 @@ void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 		free_exit_parser(data, "Empty (only space) line in map");
 	if (has_only_valid_chars(lines_arr[*i]) == FAILURE)
 		free_exit_parser(data, "Invalid character in map");
+	if (has_only_one_player(lines_arr[*i]) == FAILURE)
+		free_exit_parser(data, "Multiple players on the same line");
 	if (is_surrounded_by_walls(lines_arr, *i, first_line, data->map->height
 			- 1) == FAILURE)
 		free_exit_parser(data, "Map is not surrounded by walls");
