@@ -66,7 +66,7 @@ typedef struct s_rgba
 	int r; // Red component, usually in the range [0, 255]
 	int g; // Green component, usually in the range [0, 255]
 	int b; // Blue component, usually in the range [0, 255]
-	int a; // Alpha component for transparency, usually in the range [0, 255]
+	// int a; // Alpha component for transparency, usually in the range [0, 255]
 }						t_rgba;
 
 /**

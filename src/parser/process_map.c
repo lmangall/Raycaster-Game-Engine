@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:49:28 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/02 02:32:57 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/04 11:59:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	print_texture_paths(t_textures_paths *textures_paths)
 void	print_ceiling_and_floor(t_rgba *c, t_rgba *f)
 {
 	printf("The saved ceiling and floor colors are:\n");
-	printf("C: %d, %d, %d, %d\n", c->r, c->g, c->b, c->a);
-	printf("F: %d, %d, %d, %d\n", f->r, f->g, f->b, f->a);
+	printf("C: %d, %d, %d\n", c->r, c->g, c->b);
+	printf("F: %d, %d, %d\n", f->r, f->g, f->b);
 }
 
 void	print_map_elements(t_data *data)
