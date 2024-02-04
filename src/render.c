@@ -85,20 +85,22 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 
 mlx_texture_t	*texture_selection(t_data *data)
 {
-	if (data->ray->is_wall)
+	double	angle;
+
+	angle = data->ray->angle_rd;
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
 	{
-		if (data->ray->angle_rd >= M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
-				/ 2))
-			return (data->textures->west);
-		else
-			return (data->textures->east);
-	}
-	else
-	{
-		if (data->ray->angle_rd >= 0 && data->ray->angle_rd < M_PI)
+		if (angle > 0 && angle < M_PI)
 			return (data->textures->south);
 		else
 			return (data->textures->north);
+	}
+	else
+	{
+		if (angle > M_PI_2 && angle < (3 * M_PI_2))
+			return (data->textures->west);
+		else
+			return (data->textures->east);
 	}
 }
 
