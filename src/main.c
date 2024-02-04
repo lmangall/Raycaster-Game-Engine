@@ -1,6 +1,5 @@
 #include "cub3d.h"
 
-
 void	game_hook(void *tmp)
 {
 	t_data	*data;
@@ -16,12 +15,11 @@ void	game_hook(void *tmp)
 
 int	main(int argc, char **argv)
 {
-	t_data data;
-	t_mode mode;
+	t_data	data;
+	t_mode	mode;
 
 	mode = FULL_EXPERIENCE;
-	//mode = PARSE_ONLY;
-
+	// mode = PARSE_ONLY;
 	parser(argc, argv, &data);
 	if (mode == PARSE_ONLY)
 	{
@@ -30,6 +28,8 @@ int	main(int argc, char **argv)
 	}
 	load_textures(&data);
 	init_data(&data);
+	// to be placed somewhere else
+	render_background(data.mlx, data.map->c, data.map->f);
 	mlx_loop_hook(data.mlx, &game_hook, &data);
 	mlx_loop_hook(data.mlx, &key_hook, &data);
 	mlx_loop(data.mlx);

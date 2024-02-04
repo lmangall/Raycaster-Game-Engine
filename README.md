@@ -21,3 +21,11 @@ MLX 42 - https://github.com/codam-coding-college/MLX42
 https://github.com/codam-coding-college/MLX42/wiki
 
 .vscode/
+
+
+categories for the future readme:
+- maths and algo
+- learning others than directly related to the project (makefile, issue trackin...g)
+- 
+
+
