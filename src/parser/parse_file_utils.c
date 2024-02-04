@@ -20,9 +20,11 @@ void	free_lines_arr_and_exit(char **lines_arr, char *error_message)
 	while (lines_arr[i] != NULL)
 	{
 		free(lines_arr[i]);
+		lines_arr[i] = NULL;
 		i++;
 	}
 	free(lines_arr);
+	lines_arr = NULL;
 	error_exit(error_message);
 }
 

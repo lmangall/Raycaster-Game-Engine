@@ -5,12 +5,16 @@ void	free_str_arr(char **str_arr)
 	int	i;
 
 	i = 0;
+	if (str_arr == NULL)
+		return ;
 	while (str_arr[i] != NULL)
 	{
 		free(str_arr[i]);
+		str_arr[i] = NULL;
 		i++;
 	}
 	free(str_arr);
+	str_arr = NULL;
 }
 
 void	error_exit(char *error_message)

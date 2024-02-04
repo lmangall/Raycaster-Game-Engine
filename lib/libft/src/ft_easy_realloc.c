@@ -40,6 +40,7 @@ void	*ft_easy_realloc(void *ptr, size_t old_size, size_t new_size)
 	if (new_size == 0)
 	{
 		free(ptr);
+		ptr = NULL;
 		return (NULL);
 	}
 	if (ptr == NULL)
@@ -53,5 +54,6 @@ void	*ft_easy_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = new_size;
 	ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
+	ptr = NULL;
 	return (new_ptr);
 }
