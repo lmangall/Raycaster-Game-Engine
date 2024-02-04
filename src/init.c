@@ -20,3 +20,15 @@ void	init_player(t_data *data)
 	data->player->rotation = 0;
 	data->player->longitudinal_move = 0;
 }
+
+// void	init_player_original_orientation(t_data *data)
+// {
+// 	if (data->map->player_orientation == 'N')
+// 		data->ray->angle_rd = 3 * M_PI_2;
+// 	else if (data->map->player_orientation == 'S')
+// 		data->ray->angle_rd = M_PI_2;
+// 	else if (data->map->player_orientation == 'E')
+// 		data->ray->angle_rd = 0;
+// 	else if (data->map->player_orientation == 'W')
+// 		data->ray->angle_rd = M_PI;
+// }
