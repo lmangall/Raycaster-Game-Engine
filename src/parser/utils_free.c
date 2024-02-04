@@ -51,6 +51,8 @@ void	free_exit_parser(t_data *data, char *error_message)
 {
 	int	i;
 
+	if (data->map->lines_arr != NULL)
+		free_str_arr(data->map->lines_arr);
 	if (data->map->grid != NULL)
 	{
 		i = 0;

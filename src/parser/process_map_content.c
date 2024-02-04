@@ -13,7 +13,7 @@
 #include "cub3d.h"
 #include "parser.h"
 
-void	remove_new_line_char(char **lines_arr, int i)
+void	remove_new_line_char(char **lines_arr, int i, t_data *data)
 {
 	int		j;
 	char	*tmp;
@@ -24,6 +24,8 @@ void	remove_new_line_char(char **lines_arr, int i)
 		if (lines_arr[i][j] == '\n' && lines_arr[i][j + 1] == '\0')
 		{
 			tmp = ft_substr(lines_arr[i], 0, j);
+			if (!tmp)
+				free_exit_parser(data, "Malloc failed");
 			free(lines_arr[i]);
 			lines_arr[i] = tmp;
 			return ;

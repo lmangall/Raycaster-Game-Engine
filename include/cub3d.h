@@ -96,6 +96,7 @@ typedef struct s_textures_paths
  * @brief Struct to represent all the information we got from the map file.
  *
  * @details
+ * - lines_arr: Array of strings with the content of the map file.
  * - grid: 2D array representing the map.
  * - p_x: Player x position in the map in tiles.
  * - p_y: Player y position in the map in tiles.
@@ -109,6 +110,7 @@ typedef struct s_textures_paths
  */
 typedef struct s_map
 {
+	char					**lines_arr;
 	char					**grid;
 	int						p_x;
 	int						p_y;

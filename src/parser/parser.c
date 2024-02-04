@@ -42,6 +42,7 @@ void	parser(int argc, char **argv, t_data *data)
 	if (argc != 2)
 		error_exit("Wrong number of arguments. The proper usage is ./cub3D <map.cub>");
 	parse_file(argv[1], &lines_arr);
+	data->map->lines_arr = lines_arr;
 	if (data->debug == ALL)
 		print_lines_arr(lines_arr);
 	process_map(lines_arr, data);
