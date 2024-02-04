@@ -110,7 +110,6 @@ float	find_y_collision(t_data *data, float angl)
 	y = data->player->y_pos_px + (x - data->player->x_pos_px) * tan(angl);
 	update_steps_direction(angl, &y_step, 'x');
 	while (wall_hit(x - pixel, y, data))
-	// check the wall hit whit the pixel value
 	{
 		x += x_step;
 		y += y_step;
@@ -119,7 +118,6 @@ float	find_y_collision(t_data *data, float angl)
 	data->ray->vertical_y = y;
 	return (sqrt(pow(x - data->player->x_pos_px, 2) + pow(y
 				- data->player->y_pos_px, 2)));
-	// get the distance
 }
 
 void	raycasting(t_data *data)
@@ -129,7 +127,7 @@ void	raycasting(t_data *data)
 
 	data->ray->screen_x = 0;
 	data->ray->angle_rd = data->player->orientation_angle_rd
-		- (data->player->fov_rd / 2); // the start angle
+		- (data->player->fov_rd / 2);
 	while (data->ray->screen_x < WINDOW_WIDTH)
 	{
 		data->ray->wall_collision_orientation = NO_COLLISION;

@@ -3,85 +3,90 @@
 #include "MLX42.h"
 
 //       pixel color and render_wall are combined into one function
-// void	render_wall(t_data *data)
-// {
-// 	int				higher_pixel;
-// 	uint32_t		color;
-// 	mlx_texture_t	*texture;
-// 	double			factor;
-// 	double			y_pixel_coordinate;
-// 	double			x_pixel_coordinate;
-// 	uint32_t		*pixel_array;
-// 	int				texel_color;
-
-// 	higher_pixel= data->ray->higher_pixel;
-// 	texture = data->ray->current_texture;
-// 	factor = (double)texture->height / data->ray->wall_h;
-// 	y_pixel_coordinate = (higher_pixel- (WINDOW_HEIGHT / 2) + (data->ray->wall_h
-//			/ 2))
-// 		* factor;
-// 	if (data->ray->wall_collision_orientation == HORIZONTAL)
-// 		x_pixel_coordinate = fmod((data->ray->horizontal_x * (texture->width
-// 						/ TILE_SIZE)), texture->width);
-// 	else
-// 		x_pixel_coordinate = fmod((data->ray->vertical_y * (texture->width
-// 						/ TILE_SIZE)), texture->width);
-// 	pixel_array = (uint32_t *)texture->pixels;
-// 	while (higher_pixel< data->ray->lower_pixel)
-// 	{
-// 		if (y_pixel_coordinate >= 0 && y_pixel_coordinate < texture->height)
-// 		{
-// 			texel_color = pixel_array[(int)y_pixel_coordinate * texture->width
-// 				+ (int)x_pixel_coordinate];
-// 			color = reverse_bytes(texel_color);
-// 			render_pixel(data, higher_pixel, color);
-// 		}
-// 		y_pixel_coordinate += factor;
-// 		higher_pixel++;
-// 	}
-// }
-
 void	render_wall(t_data *data)
 {
 	int				higher_pixel;
 	uint32_t		color;
 	mlx_texture_t	*texture;
+	double			factor;
+	double			y_pixel_coordinate;
+	double			x_pixel_coordinate;
+	uint32_t		*pixel_array;
+	int				texel_color;
 
-	texture = data->ray->current_texture;
 	higher_pixel = data->ray->higher_pixel;
+	texture = data->ray->current_texture;
+	factor = (double)texture->height / data->ray->wall_h;
+	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
+			+ (data->ray->wall_h / 2)) * factor;
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
+		x_pixel_coordinate = fmod((data->ray->horizontal_x * (texture->width
+						/ TILE_SIZE)), texture->width);
+	else
+		x_pixel_coordinate = fmod((data->ray->vertical_y * (texture->width
+						/ TILE_SIZE)), texture->width);
+	pixel_array = (uint32_t *)texture->pixels;
 	while (higher_pixel < data->ray->lower_pixel)
 	{
-		color = pixel_color(texture, data, higher_pixel);
-		render_pixel(data, higher_pixel, color);
+		if (y_pixel_coordinate >= 0 && y_pixel_coordinate < texture->height)
+		{
+			// Ensure x_pixel_coordinate is within the valid range (texture width)
+			x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate,
+						texture->width - 1));
+			// Ensure y_pixel_coordinate is within the valid range (texture height)
+			y_pixel_coordinate = fmax(0.0, fmin(y_pixel_coordinate,
+						texture->height - 1));
+			texel_color = pixel_array[(int)y_pixel_coordinate * texture->width
+				+ (int)x_pixel_coordinate];
+			color = reverse_bytes(texel_color);
+			render_pixel(data, higher_pixel, color);
+		}
+		y_pixel_coordinate += factor;
 		higher_pixel++;
 	}
 }
 
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
-{
-	double		x_pixel_coordinate;
-	double		y_pixel_coordinate;
-	double		factor;
-	uint32_t	*pixel_array;
-	uint32_t	color;
+// void	render_wall(t_data *data)
+// {
+// 	int				higher_pixel;
+// 	uint32_t		color;
+// 	mlx_texture_t	*texture;
 
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
-					* (texture->width / TILE_SIZE)), texture->width);
-	else
-		x_pixel_coordinate = (int)fmodf((data->ray->vertical_y * (texture->width
-						/ TILE_SIZE)), texture->width);
-	pixel_array = (uint32_t *)texture->pixels;
-	factor = (double)texture->height / data->ray->wall_h;
-	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
-			+ (data->ray->wall_h / 2)) * factor;
-	if (y_pixel_coordinate < 0)
-		y_pixel_coordinate = 0;
-	color = pixel_array[(int)y_pixel_coordinate * texture->width
-		+ (int)x_pixel_coordinate];
-	color = reverse_bytes(color);
-	return (color);
-}
+// 	texture = data->ray->current_texture;
+// 	higher_pixel = data->ray->higher_pixel;
+// 	while (higher_pixel < data->ray->lower_pixel)
+// 	{
+// 		color = pixel_color(texture, data, higher_pixel);
+// 		render_pixel(data, higher_pixel, color);
+// 		higher_pixel++;
+// 	}
+// }
+
+// uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
+// {
+// 	double		x_pixel_coordinate;
+// 	double		y_pixel_coordinate;
+// 	double		factor;
+// 	uint32_t	*pixel_array;
+// 	uint32_t	color;
+
+// 	if (data->ray->wall_collision_orientation == HORIZONTAL)
+// 		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
+// 					* (texture->width / TILE_SIZE)), texture->width);
+// 	else
+// 		x_pixel_coordinate = (int)fmodf((data->ray->vertical_y * (texture->width
+// 						/ TILE_SIZE)), texture->width);
+// 	pixel_array = (uint32_t *)texture->pixels;
+// 	factor = (double)texture->height / data->ray->wall_h;
+// 	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
+// 			+ (data->ray->wall_h / 2)) * factor;
+// 	if (y_pixel_coordinate < 0)
+// 		y_pixel_coordinate = 0;
+// 	color = pixel_array[(int)y_pixel_coordinate * texture->width
+// 		+ (int)x_pixel_coordinate];
+// 	color = reverse_bytes(color);
+// 	return (color);
+// }
 
 mlx_texture_t	*texture_selection(t_data *data)
 {

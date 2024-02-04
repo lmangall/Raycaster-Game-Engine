@@ -12,6 +12,18 @@ void	game_hook(void *tmp)
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
+static void	print_textures(t_textures *textures)
+{
+	printf("north width: %u\n", textures->north->width);
+	printf("north height: %u\n", textures->north->height);
+	printf("south width: %u\n", textures->south->width);
+	printf("south height: %u\n", textures->south->height);
+	printf("west width: %u\n", textures->west->width);
+	printf("west height: %u\n", textures->west->height);
+	printf("east width: %u\n", textures->east->width);
+	printf("east height: %u\n", textures->east->height);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -22,10 +34,11 @@ int	main(int argc, char **argv)
 	parser(argc, argv, &data);
 	if (mode == PARSE_ONLY)
 	{
-		printf("Mode PARSE ONLY ON!\n");
+		printf("\nMode PARSE ONLY ON!\n");
 		free_exit_parser(&data);
 	}
 	load_textures(&data);
+	print_textures(data.textures);
 	init_data(&data);
 	// to be placed somewhere else
 	render_background(data.mlx, data.map->c, data.map->f);
