@@ -17,9 +17,6 @@ void	parser(int argc, char **argv, t_data *data)
 {
 	char	**lines_arr;
 
-	ft_printf("%s", "123 PROVA!\n");
-	// hier the t_map struct should be initialised
-	// and it should be 'passed' to data
 	if (argc != 2)
 		error_exit("Wrong number of arguments. The proper usage is ./cub3D <map.cub>",
 			data);

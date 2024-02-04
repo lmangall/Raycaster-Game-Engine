@@ -10,6 +10,7 @@ void	init_map_helper(t_map_elements_check *elements,
 	(*textures_paths_ptr)->west = NULL;
 	(*textures_paths_ptr)->east = NULL;
 	elements->no = NOT_FOUND;
+	elements->no = NOT_FOUND;
 	elements->so = NOT_FOUND;
 	elements->we = NOT_FOUND;
 	elements->ea = NOT_FOUND;

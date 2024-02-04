@@ -24,6 +24,7 @@ void	free_exit_parser(t_data *data, char *error_message)
 		free(data->map->grid);
 		data->map->grid = NULL;
 	}
+	free(data->map->textures_paths->north);
 	free(data->map->textures_paths->south);
 	free(data->map->textures_paths->west);
 	free(data->map->textures_paths->east);

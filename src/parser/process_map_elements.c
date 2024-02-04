@@ -219,6 +219,10 @@ void	collect_elements_data_rgba(char *line, char *identifier, t_data *data)
 
 void	collect_elements_data(char *line, char *identifier, t_data *data)
 {
+	printf("data->map->textures_paths->north: %s\n", data->map->textures_paths->north);
+	printf("identifier: %s\n", identifier );
+	printf("line: %s\n", line);
+
 	if (ft_strncmp(identifier, "NO", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
 			&data->map->textures_paths->north);

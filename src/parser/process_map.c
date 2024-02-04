@@ -146,26 +146,13 @@ void	process_map(char **lines_arr, t_data *data)
 
 	map = ft_calloc(1, sizeof(t_map));
 	map = init_map(map);
+	data->map = map;
 	i = 0;
 	process_map_elements(lines_arr, &i, map, data);
-	// while (lines_arr[i] != NULL)
-	// {
-	// 	init_elements_status(&map->elements);
-	// 	process_map_elements(lines_arr[i], &i, data, &map->elements);
-	// 	print_elements_status(&map->elements);
-	// 	if (all_elements_found(&map->elements) == SUCCESS)
-	// 	{
-	// 		i++;
-	// 		break ;
-	// 	}
-	// 	i++;
-	// }
 	print_map_elements_check(data);
-	// Skip empty lines
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
 			|| lines_arr[i][0] == '\n'))
 		i++;
-	// ... then process map content
 	ft_printf("Processing map content...\n");
 	process_map_content(lines_arr, data, i);
 	print_map_final(data);
