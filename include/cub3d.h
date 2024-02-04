@@ -249,6 +249,8 @@ uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
 							int higher_pixel);
 void					render_wall(t_data *data);
 int						reverse_bytes(int c);
+double					adjust_mirroring(double x, double width, double angle,
+							int orientation);
 
 // init:
 void					init_player_original_orientation(t_data *data);

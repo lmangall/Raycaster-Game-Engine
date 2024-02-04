@@ -2,6 +2,16 @@
 #include "../include/cub3d.h"
 #include "MLX42.h"
 
+double	adjust_mirroring(double x, double width, double angle, int orientation)
+{
+	if (orientation == VERTICAL && angle > M_PI_2 && angle < (3 * M_PI_2))
+		return (width - 1 - x);
+	else if (orientation == HORIZONTAL && angle >= 0 && angle < M_PI)
+		return (width - 1 - x);
+	else
+		return (x);
+}
+
 uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 {
 	double		x_pixel_coordinate;
@@ -11,21 +21,13 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 	uint32_t	color;
 
 	if (data->ray->wall_collision_orientation == HORIZONTAL)
-	{
-		x_pixel_coordinate = fmod((data->ray->horizontal_x * (texture->width
-						/ TILE_SIZE)), texture->width);
-		if ((data->ray->angle_rd >= 0 && data->ray->angle_rd < M_PI))
-			x_pixel_coordinate = texture->width - 1 - x_pixel_coordinate;
-	}
+		x_pixel_coordinate = adjust_mirroring(fmod((data->ray->horizontal_x
+						* (texture->width / TILE_SIZE)), texture->width),
+				texture->width, data->ray->angle_rd, HORIZONTAL);
 	else
-	{
-		x_pixel_coordinate = fmod((data->ray->vertical_y * (texture->width
-						/ TILE_SIZE)), texture->width);
-		if (data->ray->angle_rd > M_PI_2 && data->ray->angle_rd < (3 * M_PI_2))
-		{
-			x_pixel_coordinate = texture->width - 1 - x_pixel_coordinate;
-		}
-	}
+		x_pixel_coordinate = adjust_mirroring(fmod((data->ray->vertical_y
+						* (texture->width / TILE_SIZE)), texture->width),
+				texture->width, data->ray->angle_rd, VERTICAL);
 	pixel_array = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / data->ray->wall_h;
 	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
