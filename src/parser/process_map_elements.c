@@ -14,68 +14,49 @@
 #include "parser.h"
 
 int	check_identifier(char *line, const char *identifier,
-		t_status *element_status)
+		t_status *element_status, t_data *data)
 {
 	if (ft_strncmp(line, identifier, ft_strlen(identifier)) == 0)
 	{
 		if (*element_status == FOUND)
 		{
-			printf("Error\n");
-			printf("Duplicate %s identifier\n", identifier);
-			// free whatever was allocated before
-			exit(EXIT_FAILURE);
+			free_exit_parser(data, "Error: Duplicate identifier");
+			return (FAILURE);
 		}
 		else
 		{
-			printf("%s identifier found\n", identifier);
+			// ft_printf("%s identifier found\n", identifier);
 			*element_status = FOUND;
 			return (SUCCESS);
 		}
 	}
 	else
 	{
-		printf("%s identifier not found\n", identifier);
+		// ft_printf("%s identifier not found\n", identifier);
 		return (FAILURE);
 	}
 }
 
-void	collect_elements_data_path(char *line, char *identifier, char **target)
+void	collect_elements_data_path(char *line, char *identifier, char **target,
+		t_data *data)
 {
 	char	*start;
 	char	*end;
 
-	printf("collect_elements_data_path START\n");
-	// Skip spaces
 	while (*line == ' ')
 		line++;
-	// Skip identifier
-	// Between identifier and data there can be spaces
-	// but it's not mandatory
 	line += ft_strlen(identifier);
-	// Skip spaces
 	while (*line == ' ')
 		line++;
-	// Get data
 	start = line;
-	printf("line: %s\n", line);
 	while (*line != ' ' && *line != '\0')
 		line++;
 	end = line;
 	*target = ft_substr(start, 0, end - start);
-	printf("target: %s\n", *target);
-	// Skip spaces
 	while (*line == ' ')
 		line++;
-	// Check for extra data
 	if (*line != '\0')
-	{
-		printf("Error\n");
-		printf("Extra data after %s identifier\n", identifier);
-		free(target);
-		// free whatever was allocated before
-		exit(EXIT_FAILURE);
-	}
-	printf("collect_elements_data_path END\n");
+		free_exit_parser(data, "Error: Extra data after identifier");
 }
 
 int	char_isdigit(char c)
@@ -93,12 +74,8 @@ int	str_isdigit(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		printf("str[i]: %c\n", str[i]);
 		if (!char_isdigit(str[i]))
-		{
-			printf("if (!ft_isdigit(str[i]))\n");
 			return (FAILURE);
-		}
 		i++;
 	}
 	return (SUCCESS);
@@ -219,22 +196,18 @@ void	collect_elements_data_rgba(char *line, char *identifier, t_data *data)
 
 void	collect_elements_data(char *line, char *identifier, t_data *data)
 {
-	printf("data->map->textures_paths->north: %s\n", data->map->textures_paths->north);
-	printf("identifier: %s\n", identifier );
-	printf("line: %s\n", line);
-
 	if (ft_strncmp(identifier, "NO", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->map->textures_paths->north);
+			&data->map->textures_paths->north, data);
 	else if (ft_strncmp(identifier, "SO", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->map->textures_paths->south);
+			&data->map->textures_paths->south, data);
 	else if (ft_strncmp(identifier, "WE", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->map->textures_paths->west);
+			&data->map->textures_paths->west, data);
 	else if (ft_strncmp(identifier, "EA", ft_strlen(identifier)) == 0)
 		collect_elements_data_path(line, identifier,
-			&data->map->textures_paths->east);
+			&data->map->textures_paths->east, data);
 	else if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)
 		collect_elements_data_rgba(line, identifier, data);
 	else if (ft_strncmp(identifier, "F", ft_strlen(identifier)) == 0)
@@ -248,10 +221,9 @@ void	collect_elements_data(char *line, char *identifier, t_data *data)
 	}
 }
 
-void	process_map_elements_line(char *line, int *i, t_data *data,
+void	process_map_elements_line(char *line, t_data *data,
 		t_map_elements_check *elements)
 {
-	(void)i;
 	printf("process_map_elements START\n");
 	if (line[0] == '\0' || line[0] == '\n')
 	{
@@ -260,19 +232,19 @@ void	process_map_elements_line(char *line, int *i, t_data *data,
 	}
 	while (*line == ' ')
 		line++;
-	if (check_identifier(line, "NO", &elements->no) == SUCCESS)
+	if (check_identifier(line, "NO", &elements->no, data) == SUCCESS)
 		collect_elements_data(line, "NO", data);
-	else if (check_identifier(line, "SO", &elements->so) == SUCCESS)
+	else if (check_identifier(line, "SO", &elements->so, data) == SUCCESS)
 		collect_elements_data(line, "SO", data);
-	else if (check_identifier(line, "WE", &elements->we) == SUCCESS)
+	else if (check_identifier(line, "WE", &elements->we, data) == SUCCESS)
 		collect_elements_data(line, "WE", data);
-	else if (check_identifier(line, "EA", &elements->ea) == SUCCESS)
+	else if (check_identifier(line, "EA", &elements->ea, data) == SUCCESS)
 		collect_elements_data(line, "EA", data);
-	else if (check_identifier(line, "C", &elements->c) == SUCCESS)
+	else if (check_identifier(line, "C", &elements->c, data) == SUCCESS)
 		collect_elements_data(line, "C", data);
-	else if (check_identifier(line, "F", &elements->f) == SUCCESS)
+	else if (check_identifier(line, "F", &elements->f, data) == SUCCESS)
 		collect_elements_data(line, "F", data);
 	else
-		error_exit("Invalid identifier", data);
+		error_exit("Invalid identifier");
 	printf("process_map_elements END\n");
 }

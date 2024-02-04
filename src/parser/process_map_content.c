@@ -47,14 +47,12 @@ void	extract_player_position(char *line, int y, t_data *data)
 				data->map->p_x = x;
 				data->map->p_y = y;
 				data->map->player_orientation = line[x];
-				// Assign player orientation
 				data->map->player_found = FOUND;
 				return ;
 			}
 			else
-			{
-				error_exit("Error: Multiple player positions found.", data);
-			}
+				free_exit_parser(data,
+					"Error: Multiple player positions found.");
 		}
 		x++;
 	}
@@ -113,7 +111,7 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 	// data->map->grid = malloc(map_height * sizeof(char *));
 	data->map->grid = ft_calloc(map_height + 1, sizeof(char *));
 	if (!data->map->grid)
-		error_exit("Error\nMalloc failed", data);
+		free_exit_parser(data, "Malloc failed");
 	data->map->grid[map_height] = NULL;
 	i = 0;
 	printf("i: %d\n", i);
@@ -123,10 +121,10 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 		// data->map->grid[i] = malloc(map_width * sizeof(char));
 		data->map->grid[i] = ft_calloc(map_width, sizeof(char));
 		if (!data->map->grid[i])
-			error_exit("Error\nMalloc failed", data);
+			free_exit_parser(data, "Malloc failed");
 		ft_strlcpy(data->map->grid[i], lines_arr[first_line + i], map_width
 			+ 1);
-		printf("data->map->grid[%d]: %s\n", i, data->map->grid[i] );
+		printf("data->map->grid[%d]: %s\n", i, data->map->grid[i]);
 		i++;
 	}
 	free_str_arr(lines_arr);

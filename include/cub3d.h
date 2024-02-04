@@ -282,7 +282,7 @@ void						parse_map(char *argv, t_map *map);
 void						parse_file(char *file_path, char ***lines_arr);
 void						print_lines_arr(char **lines_arr);
 void						parser(int argc, char **argv, t_data *data);
-void						error_exit(char *error_msg, t_data *data);
+void						error_exit(char *error_msg);
 void						*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void						*handle_ft_easy_realloc(char **lines_arr,
 								size_t old_size, size_t new_size, int fd);

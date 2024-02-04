@@ -23,7 +23,7 @@ void	free_lines_arr_and_exit(char **lines_arr, char *error_message)
 		i++;
 	}
 	free(lines_arr);
-	error_exit(error_message, NULL);
+	error_exit(error_message);
 }
 
 void	*handle_ft_calloc(size_t *lines_arr_size, int fd)
@@ -34,7 +34,7 @@ void	*handle_ft_calloc(size_t *lines_arr_size, int fd)
 	if (!lines_arr)
 	{
 		close(fd);
-		error_exit("Malloc failed", NULL);
+		error_exit("Malloc failed");
 	}
 	lines_arr[*lines_arr_size] = NULL;
 	return (lines_arr);

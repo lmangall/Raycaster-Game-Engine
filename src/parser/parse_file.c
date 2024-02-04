@@ -19,14 +19,13 @@ void	check_file_extension(char *map_file)
 
 	extension = ft_strrchr(map_file, '.');
 	if (!extension || ft_strncmp(extension, ".cub", 5) != 0)
-		error_exit("Invalid file extension: it should be a .cub extension!",
-			NULL);
+		error_exit("Invalid file extension: it should be a .cub extension!");
 }
 void	open_and_check_file(char *file_path, int *fd)
 {
 	*fd = open(file_path, O_RDONLY);
 	if (*fd == -1)
-		error_exit(ERROR_OPENING_FILE, NULL);
+		error_exit(ERROR_OPENING_FILE);
 	check_file_extension(file_path);
 }
 
