@@ -38,28 +38,6 @@ void	collect_elements_data_path(char *line, char *identifier, char **target,
 		free_exit_parser(data, "Extra data after Path identifier");
 }
 
-// void	collect_elements_data(char *line, char *identifier, t_data *data)
-// {
-// 	if (ft_strncmp(identifier, "NO", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_path(line, identifier,
-// 			&data->map->textures_paths->north, data);
-// 	else if (ft_strncmp(identifier, "SO", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_path(line, identifier,
-// 			&data->map->textures_paths->south, data);
-// 	else if (ft_strncmp(identifier, "WE", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_path(line, identifier,
-// 			&data->map->textures_paths->west, data);
-// 	else if (ft_strncmp(identifier, "EA", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_path(line, identifier,
-// 			&data->map->textures_paths->east, data);
-// 	else if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_rgba(line, identifier, data);
-// 	else if (ft_strncmp(identifier, "F", ft_strlen(identifier)) == 0)
-// 		collect_elements_data_rgba(line, identifier, data);
-// 	else
-// 		free_exit_parser(data, "Invalid identifier");
-// }
-
 int	check_identifier(char *line, const char *identifier,
 		t_status *element_status, t_data *data)
 {
