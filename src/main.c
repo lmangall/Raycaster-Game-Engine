@@ -8,7 +8,6 @@ void	game_hook(void *tmp)
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	apply_movement(data, 0, 0);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
@@ -30,8 +29,8 @@ int	main(int argc, char **argv)
 	init_data(&data);
 	// to be placed somewhere else
 	render_background(data.mlx, data.map->c, data.map->f);
-	mlx_loop_hook(data.mlx, &game_hook, &data);
 	mlx_loop_hook(data.mlx, &key_hook, &data);
+	mlx_loop_hook(data.mlx, &game_hook, &data);
 	mlx_loop(data.mlx);
 	free_exit(&data);
 	return (0);

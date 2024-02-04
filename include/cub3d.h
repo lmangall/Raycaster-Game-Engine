@@ -250,6 +250,9 @@ uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
 void					render_wall(t_data *data);
 int						reverse_bytes(int c);
 
+// init:
+void					init_player_original_orientation(t_data *data);
+
 // PARSER:
 void					check_file(char *map_file);
 void					process_map(char **lines_arr, t_data *data);

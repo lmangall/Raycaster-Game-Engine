@@ -39,4 +39,5 @@ void	key_hook(void *tmp)
 	data = (t_data *)tmp;
 	key_pressed(data);
 	key_released(data);
+	apply_movement(data, 0, 0);
 }
