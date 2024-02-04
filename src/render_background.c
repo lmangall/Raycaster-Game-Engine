@@ -30,10 +30,10 @@ static void	render_background_pixel(mlx_image_t *img, int top_color,
 	}
 }
 
-static int	rgba_to_int(t_rgba c)
-{
-	return ((c.r << 16) + (c.g << 8) + c.b);
-}
+// static int	rgba_to_int(t_rgba c)
+// {
+// 	return ((c.r << 16) + (c.g << 8) + c.b);
+// }
 
 void	render_background(mlx_t *mlx, t_rgba c, t_rgba f)
 {
@@ -41,10 +41,16 @@ void	render_background(mlx_t *mlx, t_rgba c, t_rgba f)
 	int			top_color;
 	int			bottom_color;
 
-	top_color = rgba_to_int(c);
+	(void)c;
+	(void)f;
+	top_color = 0x336699FF;    // Top color
+	bottom_color = 0xB99470FF; // Bottom color
+								//
+	// top_color = rgba_to_int(c);
 	// top_color = reverse_bytes(top_color);
-	bottom_color = rgba_to_int(f);
+	// bottom_color = rgba_to_int(f);
 	// bottom_color = reverse_bytes(bottom_color);
+	//
 	image = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	render_background_pixel(image, top_color, bottom_color);
 	mlx_image_to_window(mlx, image, 0, 0);
