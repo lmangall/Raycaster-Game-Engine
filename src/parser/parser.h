@@ -22,5 +22,8 @@ void	free_lines_arr_and_exit(char **lines_arr, char *error_message);
 void	print_map_elements(t_data *data);
 void	print_map_final(t_data *data);
 void	print_elements_status(t_map_elements_check *elements);
+void	collect_elements_data_rgba(char *line, char *identifier, t_data *data);
+int		char_isdigit(char c);
+int		str_isdigit(char *str);
 
 #endif
