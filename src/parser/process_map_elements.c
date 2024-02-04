@@ -32,7 +32,7 @@ void	collect_elements_data_path(char *line, char *identifier, char **target,
 	while (*line == ' ')
 		line++;
 	start = line;
-	while (*line != ' ' && *line != '\0')
+	while (*line != ' ' && *line != '\0' && *line != '\n')
 		line++;
 	end = line;
 	*target = ft_substr(start, 0, end - start);
