@@ -1,5 +1,20 @@
 #include "cub3d.h"
 
+static void	init_ray(t_data *data)
+{
+	// data->ray->angle = data->player->orientation_angle_rd
+	// 	- (data->player->fov_rd / 2);
+
+	if (data->map->player_orientation == 'N')
+		data->player->orientation_angle_rd = 3 * M_PI_2;
+	else if (data->map->player_orientation == 'S')
+		data->player->orientation_angle_rd = M_PI_2;
+	else if (data->map->player_orientation == 'E')
+		data->player->orientation_angle_rd = 0;
+	else if (data->map->player_orientation == 'W')
+		data->player->orientation_angle_rd = M_PI;
+}
+
 void	game_hook(void *tmp)
 {
 	t_data	*data;
@@ -9,6 +24,7 @@ void	game_hook(void *tmp)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	apply_movement(data, 0, 0);
+	init_ray(data);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
