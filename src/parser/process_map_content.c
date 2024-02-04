@@ -120,5 +120,9 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 			+ 1);
 		i++;
 	}
-	free_str_arr(lines_arr);
+	if (lines_arr[i] != NULL)
+	{
+		free_str_arr(lines_arr);
+		lines_arr = NULL;
+	}
 }
