@@ -38,26 +38,12 @@ static uint32_t rgba_to_int(t_rgba color)
 void	render_background(mlx_t *mlx, t_rgba c, t_rgba f)
 {
 	mlx_image_t	*image;
-	uint32_t			int_top_color;
-	uint32_t			int_bottom_color;
+	uint32_t			top_color;
+	uint32_t			bottom_color;
 
-
-	(void)c;
-	(void)f;
-	// top_color = 0x336699FF;    // Top color
-	// bottom_color = 0xB99470FF; // Bottom color
-    t_rgba top_color = {0, 0, 150};    // Subtle Blue
-    t_rgba bottom_color = {0, 100, 0}; // Subtle Green
-
-	int_top_color = rgba_to_int(top_color);
-	int_bottom_color = rgba_to_int(bottom_color);
-	//
-	// top_color = rgba_to_int(c);
-	// top_color = reverse_bytes(top_color);
-	// bottom_color = rgba_to_int(f);
-	// bottom_color = reverse_bytes(bottom_color);
-	//
+	top_color = rgba_to_int(c);
+	bottom_color = rgba_to_int(f);
 	image = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	render_background_pixel(image, int_top_color, int_bottom_color);
+	render_background_pixel(image, top_color, bottom_color);
 	mlx_image_to_window(mlx, image, 0, 0);
 }
