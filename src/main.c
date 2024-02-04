@@ -1,31 +1,5 @@
 #include "cub3d.h"
 
-void	init_player_original_orientation(t_data *data)
-{
-	if (data->map->player_orientation == 'N')
-		data->player->orientation_angle_rd = 3 * M_PI_2;
-	else if (data->map->player_orientation == 'S')
-		data->player->orientation_angle_rd = M_PI_2;
-	else if (data->map->player_orientation == 'E')
-		data->player->orientation_angle_rd = 0;
-	else if (data->map->player_orientation == 'W')
-		data->player->orientation_angle_rd = M_PI;
-	data->ray->angle_rd = data->player->orientation_angle_rd
-		- (data->player->fov_rd / 2);
-}
-
-// void	init_player_original_orientation(t_data *data)
-// {
-// 	if (data->map->player_orientation == 'N')
-// 		data->ray->angle_rd = 3 * M_PI_2;
-// 	else if (data->map->player_orientation == 'S')
-// 		data->ray->angle_rd = M_PI_2;
-// 	else if (data->map->player_orientation == 'E')
-// 		data->ray->angle_rd = 0;
-// 	else if (data->map->player_orientation == 'W')
-// 		data->ray->angle_rd = M_PI;
-// }
-
 void	game_hook(void *tmp)
 {
 	t_data	*data;
@@ -34,7 +8,6 @@ void	game_hook(void *tmp)
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	apply_movement(data, 0, 0);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
@@ -56,7 +29,6 @@ int	main(int argc, char **argv)
 	init_data(&data);
 	// to be placed somewhere else
 	render_background(data.mlx, data.map->c, data.map->f);
-	init_player_original_orientation(&data);
 	mlx_loop_hook(data.mlx, &key_hook, &data);
 	mlx_loop_hook(data.mlx, &game_hook, &data);
 	mlx_loop(data.mlx);
