@@ -17,7 +17,7 @@ void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 	}
 }
 
-int	is_wall(t_data *data, int x, int y)
+int	is_wall(t_data *data, double x, double y)
 {
 	int	map_grid_y;
 	int	map_grid_x;
@@ -44,41 +44,4 @@ void	move_player(t_data *data, double move_x, double move_y)
 		data->player->x_pos_px = new_x_position;
 		data->player->y_pos_px = new_y_position;
 	}
-}
-
-void	apply_movement(t_data *data, double move_x, double move_y)
-{
-	if (data->player->rotation == R_RIGHT)
-		rotate_player(&data->player->orientation_angle_rd, R_RIGHT);
-	if (data->player->rotation == R_LEFT)
-		rotate_player(&data->player->orientation_angle_rd, R_LEFT);
-	if (data->player->lateral_move == L_RIGHT)
-	{
-		move_x = -sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-	}
-	if (data->player->lateral_move == L_LEFT)
-	{
-		move_x = sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = -cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-	}
-	if (data->player->longitudinal_move == FORWARD)
-	{
-		move_x = cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-	}
-	if (data->player->longitudinal_move == BACKWARD)
-	{
-		move_x = -cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = -sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-	}
-	move_player(data, move_x, move_y);
 }
