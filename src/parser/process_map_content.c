@@ -84,7 +84,7 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 	last_line = first_line + map_height - 1;
 	while (lines_arr[i] != NULL)
 	{
-		remove_new_line_char(lines_arr, i);
+		remove_new_line_char(lines_arr, i, data);
 		if (lines_arr[i][0] == '\0')
 			free_exit_parser(data, "Empty line in map");
 		if (line_has_not_only_spaces(lines_arr[i], &i) == FAILURE)

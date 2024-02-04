@@ -6,7 +6,7 @@ void	process_map_elements(char **lines_arr, int *i, t_map *map,
 void	process_map_content(char **lines_arr, t_data *data, int first_line);
 void	process_map_elements_line(char *line, t_data *data,
 			t_map_elements_check *elements);
-void	process_map(char **lines_arr, t_data *data);
+void	process_map(char **lines_arr, t_map *map, t_data *data);
 void	free_str_arr(char **str_arr);
 t_map	*init_map(t_map *map);
 
