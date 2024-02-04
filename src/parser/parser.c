@@ -23,13 +23,16 @@ void	process_map(char **lines_arr, t_data *data)
 	data->map = map;
 	i = 0;
 	process_map_elements(lines_arr, &i, map, data);
-	print_map_elements(data);
+	if (data->debug == ALL)
+		print_map_elements(data);
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
 			|| lines_arr[i][0] == '\n'))
 		i++;
-	ft_printf("Processing map content...\n");
+	if (data->debug == ALL)
+		ft_printf("Processing map content...\n");
 	process_map_content(lines_arr, data, i);
-	print_map_final(data);
+	if (data->debug == ALL || data->debug == ONLY_FINAL)
+		print_map_final(data);
 }
 
 void	parser(int argc, char **argv, t_data *data)

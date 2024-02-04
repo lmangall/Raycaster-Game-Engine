@@ -34,7 +34,8 @@ typedef enum e_mode
 typedef enum e_debug
 {
 	OFF,
-	ALL
+	ALL,
+	ONLY_FINAL
 }							t_debug;
 
 /**
