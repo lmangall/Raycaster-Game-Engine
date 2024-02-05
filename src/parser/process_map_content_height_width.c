@@ -13,17 +13,6 @@
 #include "cub3d.h"
 #include "parser.h"
 
-// int	line_has_not_only_spaces(char *line, int *i)
-// {
-// 	while (line[*i] != '\0')
-// 	{
-// 		if (line[*i] != ' ')
-// 			return (SUCCESS);
-// 		(*i)++;
-// 	}
-// 	return (FAILURE);
-// }
-
 int	line_has_not_only_spaces(char *line)
 {
 	int	i;
