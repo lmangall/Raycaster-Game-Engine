@@ -41,10 +41,8 @@ int	wall_hit(float x, float y, t_data *data)
 	y_position = floor(y / TILE_SIZE);
 	if ((y_position >= data->map->height || x_position >= data->map->width))
 		return (0);
-	if (data->map->grid[y_position]
-		&& x_position <= (int)strlen(data->map->grid[y_position]))
-		if (data->map->grid[y_position][x_position] == '1')
-			return (0);
+	if (data->map->grid[y_position][x_position] == '1')
+		return (0);
 	return (1);
 }
 
