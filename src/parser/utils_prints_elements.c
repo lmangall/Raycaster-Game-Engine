@@ -22,7 +22,7 @@ void	print_texture_paths(t_textures_paths *textures_paths)
 	ft_printf("textures_paths->east: %s\n", textures_paths->east);
 }
 
-void	print_elements_status(t_map_elements_check *elements)
+void	print_elements_status(t_map_elements *elements)
 {
 	if (elements->no == NOT_FOUND)
 		ft_printf("NO : NOT_FOUND\n");

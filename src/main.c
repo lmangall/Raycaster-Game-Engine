@@ -37,10 +37,8 @@ int	main(int argc, char **argv)
 	data = ft_calloc(1, sizeof(t_data));
 	data->debug = debug;
 	parser(argc, argv, data);
-	if (mode == FULL_EXPERIENCE)
-	{
+	if (mode == PARSE_ONLY)
 		free_exit_parser(data, "Chill! Parsing only mode is on!");
-	}
 	load_textures(data);
 	print_textures(data->textures);
 	init_data(data);
