@@ -13,27 +13,6 @@
 #include "cub3d.h"
 #include "parser.h"
 
-void	remove_new_line_char(char **lines_arr, int i, t_data *data)
-{
-	int		j;
-	char	*tmp;
-
-	j = 0;
-	while (lines_arr[i][j] != '\0')
-	{
-		if (lines_arr[i][j] == '\n' && lines_arr[i][j + 1] == '\0')
-		{
-			tmp = ft_substr(lines_arr[i], 0, j);
-			if (!tmp)
-				free_exit_parser(data, "Malloc failed");
-			free(lines_arr[i]);
-			lines_arr[i] = tmp;
-			return ;
-		}
-		j++;
-	}
-}
-
 void	extract_player_position(char *line, int y, t_data *data)
 {
 	int	x;
@@ -60,44 +39,11 @@ void	extract_player_position(char *line, int y, t_data *data)
 	}
 }
 
-int	line_has_not_only_spaces(char *line, int *i)
-{
-	while (line[*i] != '\0')
-	{
-		if (line[*i] != ' ')
-			return (SUCCESS);
-		(*i)++;
-	}
-	return (FAILURE);
-}
-
-int	has_only_one_player(char *line)
-{
-	int	i;
-	int	player_count;
-
-	i = 0;
-	player_count = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
-			|| line[i] == 'W')
-			player_count++;
-		i++;
-	}
-	if (player_count > 1)
-		return (FAILURE);
-	return (SUCCESS);
-}
-
 void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 		int last_line)
 {
-	remove_new_line_char(lines_arr, *i, data);
 	if (lines_arr[*i][0] == '\0')
 		free_exit_parser(data, "Empty line in map");
-	if (line_has_not_only_spaces(lines_arr[*i], i) == FAILURE)
-		free_exit_parser(data, "Empty (only space) line in map");
 	if (has_only_valid_chars(lines_arr[*i]) == FAILURE)
 		free_exit_parser(data, "Invalid character in map");
 	if (has_only_one_player(lines_arr[*i]) == FAILURE)
@@ -112,7 +58,8 @@ void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 
 void	build_grid(t_data *data, char **lines_arr, int first_line)
 {
-	int	i;
+	int		i;
+	size_t	line_len;
 
 	i = 0;
 	data->map->grid = ft_calloc(data->map->height + 1, sizeof(char *));
@@ -124,23 +71,27 @@ void	build_grid(t_data *data, char **lines_arr, int first_line)
 		data->map->grid[i] = ft_calloc(data->map->width, sizeof(char));
 		if (!data->map->grid[i])
 			free_exit_parser(data, "Malloc failed");
-		ft_strlcpy(data->map->grid[i], lines_arr[first_line + i],
-			data->map->width + 1);
+		line_len = ft_strlen(lines_arr[first_line + i]);
+		if (line_len > 0 && lines_arr[first_line + i][line_len - 1] == '\n')
+			line_len--;
+		ft_memcpy(data->map->grid[i], lines_arr[first_line + i], line_len);
 		i++;
 	}
 }
 
-void	process_map_content(char **lines_arr, t_data *data, int first_line)
+void	process_map_content(char **lines_arr, int first_line, t_data *data)
 {
 	int	i;
 	int	last_line;
 
 	i = first_line;
 	data->map->width = ft_strlen(lines_arr[first_line]);
-	data->map->height = calculate_height(lines_arr, first_line);
+	data->map->height = calculate_height(lines_arr, first_line, data);
 	last_line = first_line + data->map->height - 1;
-	while (lines_arr[i] != NULL)
+	while (lines_arr[i] != NULL && i < last_line)
 	{
+		printf("i: %d\n", i);
+		printf("line: %s\n", lines_arr[i]);
 		check_lines(lines_arr, &i, data, first_line, last_line);
 		extract_player_position(lines_arr[i], i - first_line, data);
 		data->map->width = find_max_width(lines_arr, data->map->width);

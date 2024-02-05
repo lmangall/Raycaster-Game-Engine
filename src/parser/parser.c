@@ -37,7 +37,7 @@ void	process_map(char **lines_arr, t_map *map, t_data *data)
 	}
 	if (data->debug == ALL)
 		ft_printf("Processing map content...\n");
-	process_map_content(lines_arr, data, i);
+	process_map_content(lines_arr, i, data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
 }
