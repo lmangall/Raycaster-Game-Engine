@@ -2,44 +2,44 @@
 #include "../include/cub3d.h"
 #include "MLX42.h"
 
-//       pixel color and render_wall are combined into one function
-// void	render_wall(t_data *data)
-// {
-// 	int				higher_pixel;
-// 	uint32_t		color;
-// 	mlx_texture_t	*texture;
-// 	double			factor;
-// 	double			y_pixel_coordinate;
-// 	double			x_pixel_coordinate;
-// 	uint32_t		*pixel_array;
-// 	int				texel_color;
+double	adjust_mirroring(double x, double width, double angle, char plane)
+{
+	int		direction;
+	double	adjusted_coordinate;
 
-// 	higher_pixel= data->ray->higher_pixel;
-// 	texture = data->ray->current_texture;
-// 	factor = (double)texture->height / data->ray->wall_h;
-// 	y_pixel_coordinate = (higher_pixel- (WINDOW_HEIGHT / 2) + (data->ray->wall_h
-//			/ 2))
-// 		* factor;
-// 	if (data->ray->wall_collision_orientation == HORIZONTAL)
-// 		x_pixel_coordinate = fmod((data->ray->horizontal_x * (texture->width
-// 						/ TILE_SIZE)), texture->width);
-// 	else
-// 		x_pixel_coordinate = fmod((data->ray->vertical_y * (texture->width
-// 						/ TILE_SIZE)), texture->width);
-// 	pixel_array = (uint32_t *)texture->pixels;
-// 	while (higher_pixel< data->ray->lower_pixel)
-// 	{
-// 		if (y_pixel_coordinate >= 0 && y_pixel_coordinate < texture->height)
-// 		{
-// 			texel_color = pixel_array[(int)y_pixel_coordinate * texture->width
-// 				+ (int)x_pixel_coordinate];
-// 			color = reverse_bytes(texel_color);
-// 			render_pixel(data, higher_pixel, color);
-// 		}
-// 		y_pixel_coordinate += factor;
-// 		higher_pixel++;
-// 	}
-// }
+	direction = ray_direction(angle, plane);
+	if ((plane == 'x' && direction == UP) || (plane == 'y'
+			&& direction == LEFT))
+		adjusted_coordinate = x;
+	else
+		adjusted_coordinate = width - 1 - x;
+	return (adjusted_coordinate);
+}
+
+uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
+{
+	uint32_t	*pixel_array;
+	uint32_t	color;
+	char		plane;
+
+	double x_pixel_coordinate, y_pixel_coordinate, factor;
+	plane = (data->ray->wall_collision_orientation == HORIZONTAL) ? 'x' : 'y';
+	x_pixel_coordinate = adjust_mirroring(fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y)
+				* (texture->width / TILE_SIZE), texture->width), texture->width,
+			data->ray->angle_rd, plane);
+	pixel_array = (uint32_t *)texture->pixels;
+	factor = (double)texture->height / data->ray->wall_h;
+	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
+			+ (data->ray->wall_h / 2)) * factor;
+	if (y_pixel_coordinate < 0 || y_pixel_coordinate >= texture->height)
+		return (0);
+	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
+				- 1));
+	color = pixel_array[(int)y_pixel_coordinate * texture->width
+		+ (int)x_pixel_coordinate];
+	color = reverse_bytes(color);
+	return (color);
+}
 
 void	render_wall(t_data *data)
 {
@@ -52,35 +52,13 @@ void	render_wall(t_data *data)
 	while (higher_pixel < data->ray->lower_pixel)
 	{
 		color = pixel_color(texture, data, higher_pixel);
-		render_pixel(data, higher_pixel, color);
+		if (color != 0)
+		// Only render if color is not 0 (outside texture bounds)
+		{
+			render_pixel(data, higher_pixel, color);
+		}
 		higher_pixel++;
 	}
-}
-
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
-{
-	double		x_pixel_coordinate;
-	double		y_pixel_coordinate;
-	double		factor;
-	uint32_t	*pixel_array;
-	uint32_t	color;
-
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
-					* (texture->width / TILE_SIZE)), texture->width);
-	else
-		x_pixel_coordinate = (int)fmodf((data->ray->vertical_y * (texture->width
-						/ TILE_SIZE)), texture->width);
-	pixel_array = (uint32_t *)texture->pixels;
-	factor = (double)texture->height / data->ray->wall_h;
-	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
-			+ (data->ray->wall_h / 2)) * factor;
-	if (y_pixel_coordinate < 0)
-		y_pixel_coordinate = 0;
-	color = pixel_array[(int)y_pixel_coordinate * texture->width
-		+ (int)x_pixel_coordinate];
-	color = reverse_bytes(color);
-	return (color);
 }
 
 mlx_texture_t	*texture_selection(t_data *data)
