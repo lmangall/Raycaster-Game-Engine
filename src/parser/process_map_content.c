@@ -42,8 +42,6 @@ void	extract_player_position(char *line, int y, t_data *data)
 void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 		int last_line)
 {
-	if (lines_arr[*i][0] == '\0')
-		free_exit_parser(data, "Empty line in map");
 	if (has_only_valid_chars(lines_arr[*i]) == FAILURE)
 		free_exit_parser(data, "Invalid character in map");
 	if (has_only_one_player(lines_arr[*i]) == FAILURE)
