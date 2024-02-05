@@ -55,33 +55,64 @@ int	has_only_valid_chars(char *line)
 	return (SUCCESS);
 }
 
+int	check_middle_lines(char **lines_arr, int current_line, int first_line,
+		int last_line, int i)
+{
+	if (lines_arr[current_line][i] != '1')
+		return (FAILURE);
+	while (lines_arr[current_line][i] != '\0')
+	{
+		if (lines_arr[current_line][i] != '1'
+			&& !ft_isspace(lines_arr[current_line][i]))
+		{
+			if ((current_line > first_line))
+			{
+				if (!lines_arr[current_line - 1][i])
+					return (FAILURE);
+				if (ft_isspace(lines_arr[current_line - 1][i]))
+					return (FAILURE);
+			}
+			if (current_line < last_line)
+			{
+				if (!lines_arr[current_line + 1][i])
+					return (FAILURE);
+				if (ft_isspace(lines_arr[current_line + 1][i]))
+					return (FAILURE);
+			}
+		}
+		i++;
+	}
+	i = ft_strlen(lines_arr[current_line]) - 1;
+	while (lines_arr[current_line][i] == ' ')
+		i--;
+	if (lines_arr[current_line][i] != '1')
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 int	is_surrounded_by_walls(char **lines_arr, int current_line, int first_line,
 		int last_line)
 {
 	int	i;
 
+	i = 0;
+	while (lines_arr[current_line][i] != '\0'
+		&& ft_isspace(lines_arr[current_line][i]))
+		i++;
 	if (current_line == first_line || current_line == last_line)
 	{
-		i = 0;
 		while (lines_arr[current_line][i] != '\0')
 		{
 			if (lines_arr[current_line][i] != '1'
-				&& lines_arr[current_line][i] != ' ')
+				&& !ft_isspace(lines_arr[current_line][i]))
 				return (FAILURE);
 			i++;
 		}
 	}
 	else
 	{
-		i = 0;
-		while (lines_arr[current_line][i] == ' ')
-			i++;
-		if (lines_arr[current_line][i] != '1')
-			return (FAILURE);
-		i = ft_strlen(lines_arr[current_line]) - 1;
-		while (lines_arr[current_line][i] == ' ')
-			i--;
-		if (lines_arr[current_line][i] != '1')
+		if (check_middle_lines(lines_arr, current_line, first_line, last_line,
+				i) == FAILURE)
 			return (FAILURE);
 	}
 	return (SUCCESS);
