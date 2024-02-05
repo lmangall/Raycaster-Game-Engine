@@ -21,12 +21,14 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 	uint32_t	*pixel_array;
 	uint32_t	color;
 	char		plane;
+	double		wall_hit_position;
 
 	double x_pixel_coordinate, y_pixel_coordinate, factor;
 	plane = (data->ray->wall_collision_orientation == HORIZONTAL) ? 'x' : 'y';
-	x_pixel_coordinate = adjust_mirroring(fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y)
-				* (texture->width / TILE_SIZE), texture->width), texture->width,
-			data->ray->angle_rd, plane);
+	wall_hit_position = fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y),
+			TILE_SIZE);
+	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
+			* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / data->ray->wall_h;
 	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
