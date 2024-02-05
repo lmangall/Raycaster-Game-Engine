@@ -40,27 +40,20 @@ int	load_textures(t_data *data)
 	char *east;
 
 	textures = ft_calloc(1, sizeof(t_textures));
-	// Print all textures paths
-	printf("Loading textures...\n");
-	printf("data->map->textures_paths.north: %s\n",
-		data->map->textures_paths->north);
-	printf("data->map->textures_paths.south: %s\n",
-		data->map->textures_paths->south);
-	printf("data->map->textures_paths.west: %s\n",
-		data->map->textures_paths->west);
-	printf("data->map->textures_paths.east: %s\n",
-		data->map->textures_paths->east);
+	// init_t_texture(textures);
 	north = remove_new_line_char_new(data->map->textures_paths->north);
 	south = remove_new_line_char_new(data->map->textures_paths->south);
 	west = remove_new_line_char_new(data->map->textures_paths->west);
 	east = remove_new_line_char_new(data->map->textures_paths->east);
-	printf("north: %s\n", north);
+	// free(data->map->textures_paths->north);
+	// free(data->map->textures_paths->south);
+	// free(data->map->textures_paths->west);
+	// free(data->map->textures_paths->east);
 	textures->north = mlx_load_png(north);
-	printf("textures->north: %p\n", textures->north);
 	textures->south = mlx_load_png(south);
 	textures->west = mlx_load_png(west);
 	textures->east = mlx_load_png(east);
 	data->textures = textures;
-	printf("Textures loaded.\n");
+
 	return (0);
 }

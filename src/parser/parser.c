@@ -47,6 +47,7 @@ void	parser(int argc, char **argv, t_data *data)
 	char	**lines_arr;
 	t_map	*map;
 
+	lines_arr = ft_calloc(1, sizeof(char *));
 	if (argc != 2)
 		error_exit("Wrong number of arguments. The proper usage is ./cub3D <map.cub>");
 	parse_file(argv[1], &lines_arr);

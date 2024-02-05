@@ -1,101 +1,40 @@
 
 #include "../include/cub3d.h"
+#include "MLX42.h"
 
-int	get_color(t_data *data,
-				int collision_orientation) // get the color of the wall
+double	adjust_mirroring(double x, double width, double angle, char plane)
 {
-	data->ray->angle_rd = nor_angle(data->ray->angle_rd); // normalize the angle
-	if (collision_orientation == VERTICAL)
-	{
-		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
-				/ 2))
-			return (0xB5B5B5FF); // west wall
-		else
-			return (0xB5B5B5FF); // east wall
-	}
+	int		direction;
+	double	adjusted_coordinate;
+
+	direction = ray_direction(angle, plane);
+	if ((plane == 'x' && direction == UP) || (plane == 'y'
+			&& direction == LEFT))
+		adjusted_coordinate = x;
 	else
-	{
-		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
-			return (0xF5F5F5FF); // south wall
-		else
-			return (0xF5F5F5FF); // north wall
-	}
+		adjusted_coordinate = width - 1 - x;
+	return (adjusted_coordinate);
 }
 
-// void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
-// {
-// 	*(pixel++) = (uint8_t)(color >> 24);
-// 	*(pixel++) = (uint8_t)(color >> 16);
-// 	*(pixel++) = (uint8_t)(color >> 8);
-// 	*(pixel++) = (uint8_t)(color & 0xFF);
-// }
-
-void	my_mlx_pixel_put(t_data *data, int y, int color)
+uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 {
-	// uint8_t	*pixelstart;
-	if (y < 0)
-		return ;
-	else if (y >= WINDOW_HEIGHT)
-		return ;
-	// pixelstart = &data->img->pixels[(y * WINDOW_WIDTH
-	// 		+ data->ray->screen_x)];
-	mlx_put_pixel(data->img, data->ray->screen_x, y, color);
-	// mlx_draw_pixel(pixelstart, color);
-}
-
-float	nor_angle(float angle)
-{
-	if (angle < 0)
-		angle += (2 * M_PI);
-	if (angle > (2 * M_PI))
-		angle -= (2 * M_PI);
-	return (angle);
-}
-
-void	render_floor_ceiling(t_data *data)
-{
-	int	i;
-
-	i = data->ray->b_pix;
-	while (i < WINDOW_HEIGHT)
-		my_mlx_pixel_put(data, i++, 0xB99470FF); // floor
-	i = 0;
-	while (i < data->ray->t_pix)
-		my_mlx_pixel_put(data, i++, 0x89CFF3FF); // ceiling
-}
-
-int	reverse_bytes(int c)
-{
-	unsigned int	b;
-
-	b = 0;
-	b |= (c & 0xFF) << 24;
-	b |= (c & 0xFF00) << 8;
-	b |= (c & 0xFF0000) >> 8;
-	b |= (c & 0xFF000000) >> 24;
-	return (b);
-}
-
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
-{
-	double		x_pixel_coordinate;
-	double		y_pixel_coordinate;
-	double		factor;
 	uint32_t	*pixel_array;
 	uint32_t	color;
+	char		plane;
 
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		x_pixel_coordinate = (int)fmodf((data->ray->horizontal_x
-					* (texture->width / TILE_SIZE)), texture->width);
-	else
-		x_pixel_coordinate = (int)fmodf((data->ray->vertical_y * (texture->width
-						/ TILE_SIZE)), texture->width);
+	double x_pixel_coordinate, y_pixel_coordinate, factor;
+	plane = (data->ray->wall_collision_orientation == HORIZONTAL) ? 'x' : 'y';
+	x_pixel_coordinate = adjust_mirroring(fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y)
+				* (texture->width / TILE_SIZE), texture->width), texture->width,
+			data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / data->ray->wall_h;
-	y_pixel_coordinate = (t_pix - (WINDOW_HEIGHT / 2) + (data->ray->wall_h / 2))
-		* factor;
-	if (y_pixel_coordinate < 0)
-		y_pixel_coordinate = 0;
+	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
+			+ (data->ray->wall_h / 2)) * factor;
+	if (y_pixel_coordinate < 0 || y_pixel_coordinate >= texture->height)
+		return (0);
+	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
+				- 1));
 	color = pixel_array[(int)y_pixel_coordinate * texture->width
 		+ (int)x_pixel_coordinate];
 	color = reverse_bytes(color);
@@ -104,58 +43,63 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int t_pix)
 
 void	render_wall(t_data *data)
 {
-	int				t_pix;
+	int				higher_pixel;
 	uint32_t		color;
 	mlx_texture_t	*texture;
 
 	texture = data->ray->current_texture;
-	t_pix = data->ray->t_pix;
-	while (t_pix < data->ray->b_pix)
+	higher_pixel = data->ray->higher_pixel;
+	while (higher_pixel < data->ray->lower_pixel)
 	{
-		color = pixel_color(texture, data, t_pix);
-		my_mlx_pixel_put(data, t_pix, color);
-		t_pix++;
+		color = pixel_color(texture, data, higher_pixel);
+		if (color != 0)
+		// Only render if color is not 0 (outside texture bounds)
+		{
+			render_pixel(data, higher_pixel, color);
+		}
+		higher_pixel++;
 	}
 }
 
 mlx_texture_t	*texture_selection(t_data *data)
 {
-	if (data->ray->is_wall)
+	double	angle;
+
+	angle = data->ray->angle_rd;
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
 	{
-		if (data->ray->angle_rd > M_PI / 2 && data->ray->angle_rd < 3 * (M_PI
-				/ 2))
-			return (data->textures->west);
-		else
-			return (data->textures->east);
-	}
-	else
-	{
-		if (data->ray->angle_rd > 0 && data->ray->angle_rd < M_PI)
+		if (angle > 0 && angle < M_PI)
 			return (data->textures->south);
 		else
 			return (data->textures->north);
+	}
+	else
+	{
+		if (angle > M_PI_2 && angle < (3 * M_PI_2))
+			return (data->textures->west);
+		else
+			return (data->textures->east);
 	}
 }
 
 void	init_ray(t_data *data)
 {
 	double	wall_h;
-	double	b_pix;
-	double	t_pix;
+	double	lower_pixel;
+	double	higher_pixel;
 
-	data->ray->length *= cos(nor_angle(data->ray->angle_rd
-				- data->player->orientation_angle_rd));   // fix the fisheye
+	data->ray->length *= cos(normalize_angle(data->ray->angle_rd
+				- data->player->orientation_angle_rd));
 	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
-			/ tan(data->player->fov_rd / 2)); // get the wall height
-	b_pix = (WINDOW_HEIGHT / 2) + (wall_h / 2);
-	t_pix = (WINDOW_HEIGHT / 2) - (wall_h / 2);
-	if (b_pix > WINDOW_HEIGHT)
-		b_pix = WINDOW_HEIGHT;
-	if (t_pix < 0)
-		t_pix = 0;
-	// data->ray->current_texture = data->textures->north;//change this depending on orientation
+			/ tan(data->player->fov_rd / 2));
+	lower_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	higher_pixel = (WINDOW_HEIGHT / 2) - (wall_h / 2);
+	if (lower_pixel > WINDOW_HEIGHT)
+		lower_pixel = WINDOW_HEIGHT;
+	if (higher_pixel < 0)
+		higher_pixel = 0;
 	data->ray->current_texture = texture_selection(data);
 	data->ray->wall_h = wall_h;
-	data->ray->t_pix = t_pix;
-	data->ray->b_pix = b_pix;
+	data->ray->higher_pixel = higher_pixel;
+	data->ray->lower_pixel = lower_pixel;
 }

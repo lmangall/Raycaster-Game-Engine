@@ -17,13 +17,20 @@
 
 # define WINDOW_WIDTH 1900
 # define WINDOW_HEIGHT 1000
+//
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_ROTATION_SPEED 0.045
 # define PLAYER_TRANSLATION_SPEED 4
 # define ERROR_OPENING_FILE "File not found or corrupted."
+//
 # define SUCCESS 0
 # define FAILURE 1
+//
+# define RIGHT 10
+# define LEFT 9
+# define UP 8
+# define DOWN 7
 
 typedef enum e_mode
 {
@@ -248,8 +255,8 @@ typedef struct s_ray
 	int						screen_x;
 	mlx_texture_t			*current_texture;
 	int						wall_h;
-	int						t_pix;
-	int						b_pix;
+	int						higher_pixel;
+	int						lower_pixel;
 
 }							t_ray;
 
@@ -277,13 +284,47 @@ typedef struct s_data
 
 mlx_texture_t				*texture_selection(t_data *data);
 void						init(t_map *map, char *map_argv);
+int							is_wall(t_data *data, double x, double y);
+void						init_data(t_data *data);
+
+// render
+uint32_t					pixel_color(mlx_texture_t *texture, t_data *data,
+								int higher_pixel);
+void						render_wall(t_data *data);
+int							reverse_bytes(int c);
+
+/**
+ * @brief Adjusts a coordinate for mirroring based on specified conditions.
+ *
+
+	* This function adjusts the given coordinate 'x' for mirroring effects based on the
+ * specified mirroring plane ('x' or 'y'), the mirroring angle,
+	and the direction
+
+	* determined by the 'ray_direction' function. The adjustment ensures proper mirroring
+ * behavior for rendering in a 2D space.
+ *
+ * @param x Original coordinate to be adjusted.
+ * @param width Width of the mirroring region or surface.
+ * @param angle Angle associated with the mirroring.
+ * @param plane Mirroring plane ('x' or 'y') along which adjustment is applied.
+ *
+ * @return Adjusted coordinate after considering mirroring conditions.
+ */
+double						adjust_mirroring(double x, double width,
+								double angle, char plane);
+
+// raycasting utils
+int							ray_direction(float angle, char plane);
+
+// init:
+void						init_player_original_orientation(t_data *data);
 
 // PARSER:
 void						parse_map(char *argv, t_map *map);
-
-void						parse_file(char *file_path, char ***lines_arr);
 void						print_lines_arr(char **lines_arr);
 void						parser(int argc, char **argv, t_data *data);
+void						parse_file(char *file_path, char ***lines_arr);
 void						error_exit(char *error_msg);
 void						*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void						*handle_ft_easy_realloc(char **lines_arr,
@@ -293,6 +334,8 @@ void						free_exit_parser(t_data *data, char *error_message);
 
 // OLD PARSER:
 char						*cub_to_str(char *map);
+
+void						render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 
 // TEXTURES:     UPDATE DOXY
 /**
@@ -328,6 +371,18 @@ void						free_exit(t_data *data);
  */
 void						ft_reles(mlx_key_data_t keydata, t_data *data);
 
+void						key_pressed(t_data *data);
+// void	key_released(t_data *data);
+void						key_hook(void *tmp);
+void						apply_movement(t_data *data, double move_x,
+								double move_y);
+
+void						key_pressed(t_data *data);
+// void	key_released(t_data *data);
+void						key_hook(void *tmp);
+void						apply_movement(t_data *data, double move_x,
+								double move_y);
+
 /**
  * @brief Function to handle key press events.
  * @param keydata Key data for the pressed key.
@@ -342,7 +397,8 @@ void						mlx_key(mlx_key_data_t keydata, void *tmp);
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void						rotate_player(t_data *data, int i);
+void						rotate_player(double *orientation_angle_rd,
+								enum e_rotation direction);
 
 /**
  * @brief Function to move the player based on key input.
@@ -368,14 +424,14 @@ void						hook(t_data *data, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void						my_mlx_pixel_put(t_data *data, int y, int color);
+void						render_pixel(t_data *data, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
  * @param angle Angle to be normalized.
  * @return Normalized angle.
  */
-float						nor_angle(float angle);
+float						normalize_angle(float angle);
 
 /**
  * @brief Renders the floor and ceiling of the scene.
@@ -395,18 +451,11 @@ int							get_color(t_data *data, int collision_orientation);
  * @brief Function to draw a wall on the screen.
  * @param data Pointer to the t_data structure.
  * @param ray Ray representing the current column.
- * @param t_pix Top pixel of the wall.
- * @param b_pix Bottom pixel of the wall.
+ * @param higher_pixel Top pixel of the wall.
+ * @param lower_pixel Bottom pixel of the wall.
  */
-void						draw_wall(t_data *data, int ray, int t_pix,
-								int b_pix);
-
-/**
- * @brief Function to render a wall on the screen.
- * @param data Pointer to the t_data structure.
- * @param ray Ray representing the current column.
- */
-void						render_wall(t_data *data);
+void						draw_wall(t_data *data, int ray, int higher_pixel,
+								int lower_pixel);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
@@ -449,8 +498,8 @@ int							update_steps_direction(float angle, float *step,
  * horizontal (1) or vertical (0) direction.
  * @return -1 if there is an intersection, 1 otherwise.
  */
-int							inter_check(float angle, float *inter, float *step,
-								char plane);
+int							check_collision_adjust_step(float angle,
+								float *inter, float *step, char plane);
 
 /**
  * @brief Function to check if a wall is hit based on coordinates.
@@ -467,7 +516,7 @@ int							wall_hit(float x, float y, t_data *data);
  * @param angl Angle of the ray.
  * @return Horizontal intersection distance.
  */
-float						get_h_inter(t_data *data, float angl);
+float						find_x_collision(t_data *data, float angl);
 
 /**
  * @brief Function to get the vertical intersection point of a wall.
@@ -475,7 +524,7 @@ float						get_h_inter(t_data *data, float angl);
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
  */
-float						get_v_inter(t_data *data, float angl);
+float						find_y_collision(t_data *data, float angl);
 
 /**
  * @brief Function to cast rays for rendering walls in the game.
@@ -488,7 +537,7 @@ void						cast_rays(t_data *data);
  * rendering.
  * @param tmp Pointer to the t_data structure.
  */
-void						game_loop(void *tmp);
+void						game_hook(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.
