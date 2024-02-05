@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/05 15:45:02 by slombard          #+#    #+#             */
+/*   Updated: 2024/02/05 15:45:04 by slombard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include "parser.h"
 
-void	init_map_helper(t_map_elements_check *elements,
+void	init_map_helper(t_map_elements *elements,
 		t_textures_paths **textures_paths_ptr)
 {
 	*textures_paths_ptr = ft_calloc(1, sizeof(t_textures_paths));

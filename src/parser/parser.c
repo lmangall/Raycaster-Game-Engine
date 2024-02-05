@@ -16,17 +16,28 @@
 void	process_map(char **lines_arr, t_map *map, t_data *data)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	process_map_elements(lines_arr, &i, map, data);
 	if (data->debug == ALL)
 		print_map_elements(data);
-	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
-			|| lines_arr[i][0] == '\n'))
+	while (lines_arr[i] != NULL)
+	{
+		j = 0;
+		while (lines_arr[i][j] != '\0')
+		{
+			if (!ft_isspace(lines_arr[i][j]))
+				break ;
+			j++;
+		}
+		if (lines_arr[i][j] != '\0')
+			break ;
 		i++;
+	}
 	if (data->debug == ALL)
 		ft_printf("Processing map content...\n");
-	process_map_content(lines_arr, data, i);
+	process_map_content(lines_arr, i, data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
 }

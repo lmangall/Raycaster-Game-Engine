@@ -36,14 +36,14 @@ typedef enum e_mode
 {
 	PARSE_ONLY,
 	FULL_EXPERIENCE
-}							t_mode;
+}						t_mode;
 
 typedef enum e_debug
 {
 	OFF,
 	ALL,
 	ONLY_FINAL
-}							t_debug;
+}						t_debug;
 
 /**
 
@@ -54,7 +54,7 @@ typedef enum e_status
 {
 	NOT_FOUND,
 	FOUND
-}							t_status;
+}						t_status;
 
 /**
 
@@ -63,13 +63,13 @@ typedef enum e_status
 
 typedef struct s_map_elements
 {
-	t_status				no;
-	t_status				so;
-	t_status				we;
-	t_status				ea;
-	t_status				c;
-	t_status				f;
-}							t_map_elements_check;
+	t_status			no;
+	t_status			so;
+	t_status			we;
+	t_status			ea;
+	t_status			c;
+	t_status			f;
+}						t_map_elements;
 
 /**
  * @brief Structure to represent a color in RGBA format.
@@ -81,11 +81,11 @@ typedef struct s_map_elements
  */
 typedef struct s_rgba
 {
-	int						r;
-	int						g;
-	int						b;
-	int						a;
-}							t_rgba;
+	int					r;
+	int					g;
+	int					b;
+	int					a;
+}						t_rgba;
 
 /**
  * @brief Structure to hold the paths to the textures.
@@ -93,11 +93,11 @@ typedef struct s_rgba
 
 typedef struct s_textures_paths
 {
-	char					*north;
-	char					*south;
-	char					*west;
-	char					*east;
-}							t_textures_paths;
+	char				*north;
+	char				*south;
+	char				*west;
+	char				*east;
+}						t_textures_paths;
 
 /**
  * @brief Struct to represent all the information we got from the map file.
@@ -117,33 +117,33 @@ typedef struct s_textures_paths
  */
 typedef struct s_map
 {
-	char					**lines_arr;
-	char					**grid;
-	int						p_x;
-	int						p_y;
-	char					player_orientation;
-	t_status				player_found;
-	int						width;
-	int						height;
-	t_rgba					c;
-	t_rgba					f;
-	t_textures_paths		*textures_paths;
-	t_map_elements_check	elements;
+	char				**lines_arr;
+	char				**grid;
+	int					p_x;
+	int					p_y;
+	char				player_orientation;
+	t_status			player_found;
+	int					width;
+	int					height;
+	t_rgba				c;
+	t_rgba				f;
+	t_textures_paths	*textures_paths;
+	t_map_elements		elements;
 
-}							t_map;
+}						t_map;
 
 /**
  * @brief Structure to save the path to textures.
  */
 typedef struct s_textures
 {
-	mlx_texture_t			*north;
-	mlx_texture_t			*south;
-	mlx_texture_t			*west;
-	mlx_texture_t			*east;
-	mlx_texture_t			*floor;
-	mlx_texture_t			*ceiling;
-}							t_textures;
+	mlx_texture_t		*north;
+	mlx_texture_t		*south;
+	mlx_texture_t		*west;
+	mlx_texture_t		*east;
+	mlx_texture_t		*floor;
+	mlx_texture_t		*ceiling;
+}						t_textures;
 
 /**
  * @brief Enum for player rotation states.
@@ -159,7 +159,7 @@ typedef enum e_rotation
 	R_NONE = 0,
 	R_RIGHT = 1,
 	R_LEFT = 2
-}							t_rotation;
+}						t_rotation;
 
 /**
  * @brief Enum for player's lateral movement direction.
@@ -176,7 +176,7 @@ typedef enum t_lateral_move
 	L_NONE = 0,
 	L_RIGHT = 1,
 	L_LEFT = 2
-}							t_lateral_move;
+}						t_lateral_move;
 
 /**
  * @enum t_longitudinal_move
@@ -192,7 +192,7 @@ typedef enum t_longitudinal_move
 	NONE = 0,    /**< No longitudinal (forward/backward) movement. */
 	FORWARD = 1, /**< Move forward. */
 	BACKWARD = 2 /**< Move backward. */
-}							t_longitudinal_move;
+}						t_longitudinal_move;
 
 /**
  * @brief Structure to represent the player in the game.
@@ -205,14 +205,14 @@ typedef struct s_player
 	float fov_rd;                /**< Field of view in radians. */
 	// TODO: initialize these values in the init_player function and use them
 	// instead of the defines
-	int						rotation_speed;
-	int						translation_speed;
+	int					rotation_speed;
+	int					translation_speed;
 	t_rotation rotation;                   /**< Rotation direction: none, right,
         left. */
 	t_lateral_move lateral_move;           /**< Lateral movement direction. */
 	t_longitudinal_move longitudinal_move; /**< Longitudinal (forward/backward)
 												movement direction. */
-}							t_player;
+}						t_player;
 
 /**
  * @enum e_wall_collision
@@ -223,7 +223,7 @@ typedef enum e_wall_collision
 	NO_COLLISION = 0, /**< No wall collision. */
 	HORIZONTAL = 1,   /**< Horizontal wall collision. */
 	VERTICAL = 2      /**< Vertical wall collision. */
-}							t_wall_collision;
+}						t_wall_collision;
 
 /**
  * @brief Structure representing a ray in the game.
@@ -244,21 +244,21 @@ typedef enum e_wall_collision
 typedef struct s_ray
 {
 	double angle_rd; /**< Ray angle. */
-	double					length;
-	t_wall_collision		wall_collision_orientation;
-	double					horizontal_x;
-	double					horizontal_y;
-	double					vertical_x;
-	double					vertical_y;
-	int						wall_orientation;
-	int						is_wall;
-	int						screen_x;
-	mlx_texture_t			*current_texture;
-	int						wall_h;
-	int						higher_pixel;
-	int						lower_pixel;
+	double				length;
+	t_wall_collision	wall_collision_orientation;
+	double				horizontal_x;
+	double				horizontal_y;
+	double				vertical_x;
+	double				vertical_y;
+	int					wall_orientation;
+	int					is_wall;
+	int					screen_x;
+	mlx_texture_t		*current_texture;
+	int					wall_h;
+	int					higher_pixel;
+	int					lower_pixel;
 
-}							t_ray;
+}						t_ray;
 
 /**
  * @brief Structure to hold MLX-related elements and game data.
@@ -280,18 +280,18 @@ typedef struct s_data
 	t_player *player;     /**< Pointer to the player structure. */
 	t_textures *textures; /**< Pointer to the textures structure. */
 	t_debug debug;        /**< Debug mode. */
-}							t_data;
+}						t_data;
 
-mlx_texture_t				*texture_selection(t_data *data);
-void						init(t_map *map, char *map_argv);
-int							is_wall(t_data *data, double x, double y);
-void						init_data(t_data *data);
+mlx_texture_t			*texture_selection(t_data *data);
+void					init(t_map *map, char *map_argv);
+int						is_wall(t_data *data, double x, double y);
+void					init_data(t_data *data);
 
 // render
-uint32_t					pixel_color(mlx_texture_t *texture, t_data *data,
-								int higher_pixel);
-void						render_wall(t_data *data);
-int							reverse_bytes(int c);
+uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
+							int higher_pixel);
+void					render_wall(t_data *data);
+int						reverse_bytes(int c);
 
 /**
  * @brief Adjusts a coordinate for mirroring based on specified conditions.
@@ -311,31 +311,31 @@ int							reverse_bytes(int c);
  *
  * @return Adjusted coordinate after considering mirroring conditions.
  */
-double						adjust_mirroring(double x, double width,
-								double angle, char plane);
+double					adjust_mirroring(double x, double width, double angle,
+							char plane);
 
 // raycasting utils
-int							ray_direction(float angle, char plane);
+int						ray_direction(float angle, char plane);
 
 // init:
-void						init_player_original_orientation(t_data *data);
+void					init_player_original_orientation(t_data *data);
 
 // PARSER:
-void						parse_map(char *argv, t_map *map);
-void						print_lines_arr(char **lines_arr);
-void						parser(int argc, char **argv, t_data *data);
-void						parse_file(char *file_path, char ***lines_arr);
-void						error_exit(char *error_msg);
-void						*handle_ft_calloc(size_t *lines_arr_size, int fd);
-void						*handle_ft_easy_realloc(char **lines_arr,
-								size_t old_size, size_t new_size, int fd);
-void						check_file(char *map_file);
-void						free_exit_parser(t_data *data, char *error_message);
+void					parse_map(char *argv, t_map *map);
+void					print_lines_arr(char **lines_arr);
+void					parser(int argc, char **argv, t_data *data);
+void					parse_file(char *file_path, char ***lines_arr);
+void					error_exit(char *error_msg);
+void					*handle_ft_calloc(size_t *lines_arr_size, int fd);
+void					*handle_ft_easy_realloc(char **lines_arr,
+							size_t old_size, size_t new_size, int fd);
+void					check_file(char *map_file);
+void					free_exit_parser(t_data *data, char *error_message);
 
 // OLD PARSER:
-char						*cub_to_str(char *map);
+char					*cub_to_str(char *map);
 
-void						render_background(mlx_t *mlx, t_rgba c, t_rgba f);
+void					render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 
 // TEXTURES:     UPDATE DOXY
 /**
@@ -353,35 +353,34 @@ void						render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 	* the identifier is not found or memory allocation fails. The caller is
 	* responsible for freeing the allocated memory.
 	*/
-char						*get_identifier_value(char *map_str,
-								char *identifier);
+char					*get_identifier_value(char *map_str, char *identifier);
 
-int							load_textures(t_data *data);
+int						load_textures(t_data *data);
 
 /**
  * @brief Function to handle cleanup and exit the game.
  * @param data Pointer to the t_data structure.
  */
-void						free_exit(t_data *data);
+void					free_exit(t_data *data);
 
 /**
  * @brief Function to handle key release events.
  * @param keydata Key data for the pressed key.
  * @param data Pointer to the t_data structure.
  */
-void						ft_reles(mlx_key_data_t keydata, t_data *data);
+void					ft_reles(mlx_key_data_t keydata, t_data *data);
 
-void						key_pressed(t_data *data);
+void					key_pressed(t_data *data);
 // void	key_released(t_data *data);
-void						key_hook(void *tmp);
-void						apply_movement(t_data *data, double move_x,
-								double move_y);
+void					key_hook(void *tmp);
+void					apply_movement(t_data *data, double move_x,
+							double move_y);
 
-void						key_pressed(t_data *data);
+void					key_pressed(t_data *data);
 // void	key_released(t_data *data);
-void						key_hook(void *tmp);
-void						apply_movement(t_data *data, double move_x,
-								double move_y);
+void					key_hook(void *tmp);
+void					apply_movement(t_data *data, double move_x,
+							double move_y);
 
 /**
  * @brief Function to handle key press events.
@@ -389,7 +388,7 @@ void						apply_movement(t_data *data, double move_x,
  * @param tmp Extra param we can pass to the mlx_key hook that will be assigned
  * to the t_data.
  */
-void						mlx_key(mlx_key_data_t keydata, void *tmp);
+void					mlx_key(mlx_key_data_t keydata, void *tmp);
 
 /**
  * @brief Function to rotate the player based on key input.
@@ -397,8 +396,8 @@ void						mlx_key(mlx_key_data_t keydata, void *tmp);
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void						rotate_player(double *orientation_angle_rd,
-								enum e_rotation direction);
+void					rotate_player(double *orientation_angle_rd,
+							enum e_rotation direction);
 
 /**
  * @brief Function to move the player based on key input.
@@ -406,8 +405,7 @@ void						rotate_player(double *orientation_angle_rd,
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void						move_player(t_data *data, double move_x,
-								double move_y);
+void					move_player(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to handle player movement and rotation based on key input.
@@ -415,7 +413,7 @@ void						move_player(t_data *data, double move_x,
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void						hook(t_data *data, double move_x, double move_y);
+void					hook(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to put a pixel on the screen.
@@ -424,20 +422,20 @@ void						hook(t_data *data, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void						render_pixel(t_data *data, int y, int color);
+void					render_pixel(t_data *data, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
  * @param angle Angle to be normalized.
  * @return Normalized angle.
  */
-float						normalize_angle(float angle);
+float					normalize_angle(float angle);
 
 /**
  * @brief Renders the floor and ceiling of the scene.
  * @param mlx The main data structure.
  */
-void						render_floor_ceiling(t_data *data);
+void					render_floor_ceiling(t_data *data);
 
 /**
  * @brief Function to get the color of the wall based on its orientation.
@@ -445,7 +443,7 @@ void						render_floor_ceiling(t_data *data);
  * @param colision_orientation Flag indicating wall orientation).
  * @return Color of the wall.
  */
-int							get_color(t_data *data, int collision_orientation);
+int						get_color(t_data *data, int collision_orientation);
 
 /**
  * @brief Function to draw a wall on the screen.
@@ -454,14 +452,14 @@ int							get_color(t_data *data, int collision_orientation);
  * @param higher_pixel Top pixel of the wall.
  * @param lower_pixel Bottom pixel of the wall.
  */
-void						draw_wall(t_data *data, int ray, int higher_pixel,
-								int lower_pixel);
+void					draw_wall(t_data *data, int ray, int higher_pixel,
+							int lower_pixel);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
  * @param data Pointer to the t_data structure.
  */
-void						raycasting(t_data *data);
+void					raycasting(t_data *data);
 
 /**
  * @brief Update the step direction (+/−) based on the given angle and axis.
@@ -484,8 +482,8 @@ void						raycasting(t_data *data);
 
 	*       It adjusts the step based on the specified conditions in the unit circle.
  */
-int							update_steps_direction(float angle, float *step,
-								char c);
+int						update_steps_direction(float angle, float *step,
+							char c);
 
 /**
  * @brief Function to check and update intersection points for horizontal or
@@ -498,8 +496,8 @@ int							update_steps_direction(float angle, float *step,
  * horizontal (1) or vertical (0) direction.
  * @return -1 if there is an intersection, 1 otherwise.
  */
-int							check_collision_adjust_step(float angle,
-								float *inter, float *step, char plane);
+int						check_collision_adjust_step(float angle, float *inter,
+							float *step, char plane);
 
 /**
  * @brief Function to check if a wall is hit based on coordinates.
@@ -508,7 +506,7 @@ int							check_collision_adjust_step(float angle,
  * @param data Pointer to the t_data structure.
  * @return 1 if the wall is hit, 0 otherwise.
  */
-int							wall_hit(float x, float y, t_data *data);
+int						wall_hit(float x, float y, t_data *data);
 
 /**
  * @brief Function to get the horizontal intersection point of a wall.
@@ -516,7 +514,7 @@ int							wall_hit(float x, float y, t_data *data);
  * @param angl Angle of the ray.
  * @return Horizontal intersection distance.
  */
-float						find_x_collision(t_data *data, float angl);
+float					find_x_collision(t_data *data, float angl);
 
 /**
  * @brief Function to get the vertical intersection point of a wall.
@@ -524,32 +522,32 @@ float						find_x_collision(t_data *data, float angl);
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
  */
-float						find_y_collision(t_data *data, float angl);
+float					find_y_collision(t_data *data, float angl);
 
 /**
  * @brief Function to cast rays for rendering walls in the game.
  * @param data Pointer to the t_data structure.
  */
-void						cast_rays(t_data *data);
+void					cast_rays(t_data *data);
 
 /**
  * @brief Game loop function to handle player movement, ray casting, and
  * rendering.
  * @param tmp Pointer to the t_data structure.
  */
-void						game_hook(void *tmp);
+void					game_hook(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.
  * @param data The t_data structure.
  */
-void						init_player(t_data *data);
+void					init_player(t_data *data);
 
 /**
  * @brief Function to start the Cub3D game.
  * @param map Pointer to the game data structure.
  */
-void						start_the_game(t_map *map, char *map_argv);
+void					start_the_game(t_map *map, char *map_argv);
 
 /**
  * @brief Main function to initialize the game and start the main loop.
@@ -567,7 +565,7 @@ void						start_the_game(t_map *map, char *map_argv);
  *
  * @param mlx The main data structure.
  */
-void						update_ray(t_data *data);
-int							load_textures(t_data *data);
+void					update_ray(t_data *data);
+int						load_textures(t_data *data);
 
 #endif // CUB3D_H

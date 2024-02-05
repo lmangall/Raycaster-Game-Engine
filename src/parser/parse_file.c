@@ -34,10 +34,14 @@ char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 	char	*line;
 	char	**lines_arr;
 	char	**tmp;
+	size_t	line_len;
 
 	lines_arr = handle_ft_calloc(lines_arr_size, fd);
 	while ((line = get_next_line(fd)))
 	{
+		line_len = ft_strlen(line);
+		if (line_len > 0 && line[line_len - 1] == '\n')
+			line[line_len - 1] = '\0';
 		if (*lines_nbr == *lines_arr_size)
 		{
 			*lines_arr_size *= 2;

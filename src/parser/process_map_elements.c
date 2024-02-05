@@ -1,21 +1,28 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_map_elements.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/05 15:52:38 by slombard          #+#    #+#             */
+/*   Updated: 2024/02/05 15:52:40 by slombard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub3d.h"
 #include "parser.h"
 
-int	all_elements_found(t_map_elements_check *elements)
+int	all_elements_found(t_map_elements *elements)
 {
-	ft_printf("Checking if all elements have been found...\n");
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
 		&& elements->ea == FOUND && elements->c == FOUND
 		&& elements->f == FOUND)
 	{
-		ft_printf("All elements found\n");
 		return (SUCCESS);
 	}
 	else
 	{
-		ft_printf("Not all elements found\n");
 		return (FAILURE);
 	}
 }
@@ -36,12 +43,13 @@ void	collect_elements_data_path(char *line, char *identifier, char **target,
 		line++;
 	end = line;
 	*target = ft_substr(start, 0, end - start);
+	if (!*target)
+		free_exit_parser(data, "Malloc failed");
 	while (*line == ' ')
 		line++;
-	if (line != NULL)
-		while (*line == ' ' && *line != '\0')
-			line++;
-	if (*line != '\0')
+	if (*line == '\0')
+		return ;
+	else
 		free_exit_parser(data, "Extra data after Path identifier");
 }
 
@@ -66,9 +74,9 @@ int	check_identifier(char *line, const char *identifier,
 }
 
 void	process_map_elements_line(char *line, t_data *data,
-		t_map_elements_check *elements)
+		t_map_elements *elements)
 {
-	if (line[0] == '\0' || line[0] == '\n')
+	if (line[0] == '\0')
 		return ;
 	while (*line == ' ')
 		line++;

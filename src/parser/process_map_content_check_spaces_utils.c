@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_map_elements_rgb_utils.c                   :+:      :+:    :+:   */
+/*   process_map_content_check_spaces_utils.c           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:52:11 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:52:12 by slombard         ###   ########.fr       */
+/*   Created: 2024/02/05 15:48:33 by slombard          #+#    #+#             */
+/*   Updated: 2024/02/05 15:48:37 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "parser.h"
 
-int	char_isdigit(char c)
+int	is_valid_space_sorrounding_char(char c)
 {
-	if (c >= '0' && c <= '9')
+	if (c == ' ' || c == '1')
 		return (SUCCESS);
 	else
 		return (FAILURE);
 }
 
-int	str_isdigit(char *str)
+void	define_start_and_end(int *start, int *end, int idx, int line_len)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (!char_isdigit(str[i]))
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
+	*start = idx - 1;
+	if (idx - 1 < 0)
+		*start = 0;
+	*end = idx + 1;
+	if (idx + 1 > line_len - 1)
+		*end = line_len - 1;
 }

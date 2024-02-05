@@ -13,19 +13,44 @@
 #include "cub3d.h"
 #include "parser.h"
 
-int	calculate_height(char **lines_arr, int first_line)
+int	line_has_not_only_spaces(char *line)
 {
 	int	i;
-	int	height;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (!ft_isspace(line[i]))
+			return (SUCCESS);
+		i++;
+	}
+	return (FAILURE);
+}
+
+int	calculate_height(char **lines_arr, int first_line, t_data *data)
+{
+	int			i;
+	int			height;
+	t_status	empty_line_found;
 
 	i = first_line;
+	empty_line_found = NOT_FOUND;
 	height = 0;
 	while (lines_arr[i] != NULL)
 	{
-		if (lines_arr[i][0] != '\0')
+		if (line_has_not_only_spaces(lines_arr[i]) == SUCCESS
+			&& empty_line_found == NOT_FOUND)
 			height++;
+		else if (line_has_not_only_spaces(lines_arr[i]) == FAILURE
+			&& empty_line_found == NOT_FOUND)
+			empty_line_found = FOUND;
+		else if (line_has_not_only_spaces(lines_arr[i]) == SUCCESS
+			&& empty_line_found == FOUND)
+			free_exit_parser(data,
+				"Content after empty line in map or empty line in a map");
 		i++;
 	}
+	printf("height: %d\n", height);
 	return (height);
 }
 
