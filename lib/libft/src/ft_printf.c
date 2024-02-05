@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:27:34 by slombard          #+#    #+#             */
-/*   Updated: 2023/02/13 18:27:45 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:51:01 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
+#include "../include/libft.h"
 
 int	ft_printf(const char *format, ...)
 {
-	va_list			args;
-	int				count;
+	va_list	args;
+	int		count;
 
 	va_start(args, format);
 	count = 0;
@@ -60,43 +61,41 @@ void	ft_parse_specifier(va_list *args, int *count, char c)
 }
 
 /*
-int main(void)
+int	main(void)
 {
-	int *ptr;
-	int i;
-	i = 42;
+	int	*ptr;
+	int	i;
 
+	i = 42;
 	ptr = &i;
 	ft_printf("Hello Pointer to %d\t%p\n", i, ptr);
 	printf   ("Hello Pointer to %d\t%p\n", i, ptr);
-	printf 		 ("Hello %c!\n", 'c');
+	printf 			("Hello %c!\n", 'c');
 	ft_printf  ("Hello %c!\n", 'c');
-	printf  	 ("Hello %s!\n", "string");
+	printf  		("Hello %s!\n", "string");
 	ft_printf  ("Hello %s!\n", "string");
-	printf  	 ("Hello %d!\n", 42);
+	printf  		("Hello %d!\n", 42);
 	ft_printf  ("Hello %d!\n", 42);
-	printf  	 ("Hello %c!\n", '0');
+	printf  		("Hello %c!\n", '0');
 	ft_printf  ("Hello %c!\n", '0');
-	printf  	 ("Hello %c!\n", '1');
+	printf  		("Hello %c!\n", '1');
 	ft_printf  ("Hello %c!\n", '1');
-	printf  	 ("Hello %u!\n", -42);
+	printf  		("Hello %u!\n", -42);
 	ft_printf  ("Hello %u!\n", -42);
-	printf  	 ("Hello %u!\n", -1);
+	printf  		("Hello %u!\n", -1);
 	ft_printf  ("Hello %u!\n", -1);
-	printf  	 ("Hello %x!\n", -42);
+	printf  		("Hello %x!\n", -42);
 	ft_printf  ("Hello %x!\n", -42);
-	printf  	 ("Hello %X!\n", -4242);
+	printf  		("Hello %X!\n", -4242);
 	ft_printf  ("Hello %X!\n", -4242);
-	printf  	 ("Hello %x!\n", 42);
+	printf  		("Hello %x!\n", 42);
 	ft_printf  ("Hello %x!\n", 42);
-	printf  	 ("Hello %X!\n", 4242);
+	printf  		("Hello %X!\n", 4242);
 	ft_printf  ("Hello %x!\n", 4242);
-	printf  	 ("Hello %%!\n");
+	printf  		("Hello %%!\n");
 	ft_printf  ("Hello %%!\n");
- 	printf		("NULL: %s!\n", (char *) NULL);
- 	ft_printf	("NULL: %s!\n", NULL);
-
-
+	printf		("NULL: %s!\n", (char *) NULL);
+	ft_printf	("NULL: %s!\n", NULL);
 	return (0);
 }
 */
