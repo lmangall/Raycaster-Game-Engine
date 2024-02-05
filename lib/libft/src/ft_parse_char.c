@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_parse_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/31 17:18:31 by slombard         ###   ########.fr       */
+/*   Created: 2023/02/12 20:40:42 by slombard          #+#    #+#             */
+/*   Updated: 2023/02/12 20:52:23 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "parser.h"
+#include "ft_printf.h"
 
-void	parser(int argc, char **argv, t_data *data)
+void	ft_parse_char(char c, int *count)
 {
-	char	**lines_arr;
-	// hier the t_map struct should be initialised
-	// and it should be 'passed' to data
-
-	if (argc != 2)
-		error_exit("Wrong number of arguments.", data);
-	check_file(argv[1]);
-	lines_arr = parse_file(argv[1]);
-	print_lines_arr(lines_arr);
-	process_map(lines_arr, data);
+	ft_putchar(c, count);
 }

@@ -13,7 +13,7 @@
 #include "cub3d.h"
 #include "parser.h"
 
-void	remove_new_line_char(char **lines_arr, int i)
+void	remove_new_line_char(char **lines_arr, int i, t_data *data)
 {
 	int		j;
 	char	*tmp;
@@ -24,6 +24,8 @@ void	remove_new_line_char(char **lines_arr, int i)
 		if (lines_arr[i][j] == '\n' && lines_arr[i][j + 1] == '\0')
 		{
 			tmp = ft_substr(lines_arr[i], 0, j);
+			if (!tmp)
+				free_exit_parser(data, "Malloc failed");
 			free(lines_arr[i]);
 			lines_arr[i] = tmp;
 			return ;
@@ -47,17 +49,26 @@ void	extract_player_position(char *line, int y, t_data *data)
 				data->map->p_x = x;
 				data->map->p_y = y;
 				data->map->player_orientation = line[x];
-				// Assign player orientation
 				data->map->player_found = FOUND;
 				return ;
 			}
 			else
-			{
-				error_exit("Error: Multiple player positions found.", data);
-			}
+				free_exit_parser(data,
+					"Error: Multiple player positions found.");
 		}
 		x++;
 	}
+}
+
+int	line_has_not_only_spaces(char *line, int *i)
+{
+	while (line[*i] != '\0')
+	{
+		if (line[*i] != ' ')
+			return (SUCCESS);
+		(*i)++;
+	}
+	return (FAILURE);
 }
 
 void	process_map_content(char **lines_arr, t_data *data, int first_line)
@@ -67,67 +78,46 @@ void	process_map_content(char **lines_arr, t_data *data, int first_line)
 	int	map_height;
 	int	last_line;
 
-	printf("process_map_content\n");
 	i = first_line;
-	printf("i: %d\n", i);
 	map_width = ft_strlen(lines_arr[first_line]);
 	map_height = calculate_height(lines_arr, first_line);
 	last_line = first_line + map_height - 1;
 	while (lines_arr[i] != NULL)
 	{
-		remove_new_line_char(lines_arr, i);
-		printf("loop #%d\n", i - first_line);
-		printf("lines_arr[%d]: %s\n", i - first_line, lines_arr[i]);
-		// Check for empty lines
-		// What if we have a line with only spaces?
-		// We should check for that too
+		remove_new_line_char(lines_arr, i, data);
 		if (lines_arr[i][0] == '\0')
-			perror("Error\nEmpty line in map");
-		// Check for invalid characters
+			free_exit_parser(data, "Empty line in map");
+		if (line_has_not_only_spaces(lines_arr[i], &i) == FAILURE)
+			free_exit_parser(data, "Empty (only space) line in map");
 		if (has_only_valid_chars(lines_arr[i]) == FAILURE)
-			perror("Error\nInvalid character in map");
-		// Check for walls
+			free_exit_parser(data, "Invalid character in map");
 		if (is_surrounded_by_walls(lines_arr, i, first_line, map_height
 				- 1) == FAILURE)
-			perror("Error\nMap is not surrounded by walls");
-		// Check for spaces
-		// The readibility of this function is not good
-		// In comparison to the other functions
-		// But if we just negate it it will not work
+			free_exit_parser(data, "Map is not surrounded by walls");
 		if (spaces_are_surrounded_by_walls(lines_arr, i, first_line,
 				last_line) == FAILURE)
-			perror("Error\nSpaces are not surrounded by walls");
-		// the function check also if we have more than one player
-		// it could have been put inside has_only_valid_chars
-		// but it would have made it less readable
+			free_exit_parser(data, "Spaces are not surrounded by walls");
 		extract_player_position(lines_arr[i], i - first_line, data);
-		// Find max width
 		map_width = find_max_width(lines_arr, map_width);
 		i++;
 	}
 	if (data->map->player_found == NOT_FOUND)
-		perror("Error\nNo player found");
+		free_exit_parser(data, "No player found");
 	data->map->width = map_width;
 	data->map->height = map_height;
 	printf("map_height before: %d\n", map_height);
-	// data->map->grid = malloc(map_height * sizeof(char *));
 	data->map->grid = ft_calloc(map_height + 1, sizeof(char *));
 	if (!data->map->grid)
-		error_exit("Error\nMalloc failed", data);
+		free_exit_parser(data, "Malloc failed");
 	data->map->grid[map_height] = NULL;
 	i = 0;
-	printf("i: %d\n", i);
-	printf("map_height: %d\n", map_height);
 	while (i < map_height)
 	{
-		// data->map->grid[i] = malloc(map_width * sizeof(char));
 		data->map->grid[i] = ft_calloc(map_width, sizeof(char));
 		if (!data->map->grid[i])
-			error_exit("Error\nMalloc failed", data);
+			free_exit_parser(data, "Malloc failed");
 		ft_strlcpy(data->map->grid[i], lines_arr[first_line + i], map_width
 			+ 1);
-		printf("data->map->grid[%d]: %s\n", i, data->map->grid[i] );
 		i++;
 	}
-	free_str_arr(lines_arr);
 }

@@ -26,25 +26,29 @@ static void	print_textures(t_textures *textures)
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_data	*data;
 	t_mode	mode;
+	t_debug	debug;
 
-	mode = FULL_EXPERIENCE;
-	// mode = PARSE_ONLY;
-	parser(argc, argv, &data);
-	if (mode == PARSE_ONLY)
+	// mode = FULL_EXPERIENCE;
+	mode = PARSE_ONLY;
+	// debug = OFF;
+	debug = ALL;
+	data = ft_calloc(1, sizeof(t_data));
+	data->debug = debug;
+	parser(argc, argv, data);
+	if (mode == FULL_EXPERIENCE)
 	{
-		printf("\nMode PARSE ONLY ON!\n");
-		free_exit_parser(&data);
+		free_exit_parser(data, "Chill! Parsing only mode is on!");
 	}
-	load_textures(&data);
-	print_textures(data.textures);
-	init_data(&data);
+	load_textures(data);
+	print_textures(data->textures);
+	init_data(data);
 	// to be placed somewhere else
-	render_background(data.mlx, data.map->c, data.map->f);
-	mlx_loop_hook(data.mlx, &key_hook, &data);
-	mlx_loop_hook(data.mlx, &game_hook, &data);
-	mlx_loop(data.mlx);
-	free_exit(&data);
+	render_background(data->mlx, data->map->c, data->map->f);
+	mlx_loop_hook(data->mlx, &key_hook, data);
+	mlx_loop_hook(data->mlx, &game_hook, data);
+	mlx_loop(data->mlx);
+	free_exit(data);
 	return (0);
 }
