@@ -38,28 +38,25 @@ int	line_has_not_only_spaces(char *line)
 	return (FAILURE);
 }
 
-// Enhance calculate height so that it doesn't count empty lines
-// empty lines are lines that contain only spaces
-// Eventually change the flag empty_line_found with a macro
 int	calculate_height(char **lines_arr, int first_line, t_data *data)
 {
-	int	i;
-	int	height;
-	int	empty_line_found;
+	int			i;
+	int			height;
+	t_status	empty_line_found;
 
 	i = first_line;
-	empty_line_found = 0;
+	empty_line_found = NOT_FOUND;
 	height = 0;
 	while (lines_arr[i] != NULL)
 	{
 		if (line_has_not_only_spaces(lines_arr[i]) == SUCCESS
-			&& empty_line_found == 0)
+			&& empty_line_found == NOT_FOUND)
 			height++;
 		else if (line_has_not_only_spaces(lines_arr[i]) == FAILURE
-			&& empty_line_found == 0)
-			empty_line_found = 1;
+			&& empty_line_found == NOT_FOUND)
+			empty_line_found = FOUND;
 		else if (line_has_not_only_spaces(lines_arr[i]) == SUCCESS
-			&& empty_line_found == 1)
+			&& empty_line_found == FOUND)
 			free_exit_parser(data,
 				"Content after empty line in map or empty line in a map");
 		i++;
