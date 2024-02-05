@@ -13,6 +13,47 @@
 #include "cub3d.h"
 #include "parser.h"
 
+// int	line_has_not_only_spaces(char *line, int *i)
+// {
+// 	while (line[*i] != '\0')
+// 	{
+// 		if (line[*i] != ' ')
+// 			return (SUCCESS);
+// 		(*i)++;
+// 	}
+// 	return (FAILURE);
+// }
+
+int	line_has_not_only_spaces(char *line, int *i)
+{
+	while (line[*i] != '\0')
+	{
+		if (!ft_isspace(line[*i]))
+			return (SUCCESS);
+		(*i)++;
+	}
+	return (FAILURE);
+}
+
+int	has_only_one_player(char *line)
+{
+	int	i;
+	int	player_count;
+
+	i = 0;
+	player_count = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
+			|| line[i] == 'W')
+			player_count++;
+		i++;
+	}
+	if (player_count > 1)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 int	has_only_valid_chars(char *line)
 {
 	int	i;
@@ -23,12 +64,12 @@ int	has_only_valid_chars(char *line)
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'W' && line[i] != 'E')
 		{
-			// printf("Found invalid character\n");
-			// printf("line[%d]: %c\n", i, line[i]);
-			// if (line[i] == '\n')
-			// 	printf("line[%d]: \\n\n", i);
-			// if (line[i] == '\0')
-			// 	printf("line[%d]: \\0\n", i);
+			printf("Found invalid character\n");
+			printf("line[%d]: %c\n", i, line[i]);
+			if (line[i] == '\n')
+				printf("line[%d]: \\n\n", i);
+			if (line[i] == '\0')
+				printf("line[%d]: \\0\n", i);
 			return (FAILURE);
 		}
 		i++;
@@ -67,5 +108,3 @@ int	is_surrounded_by_walls(char **lines_arr, int current_line, int first_line,
 	}
 	return (SUCCESS);
 }
-
-
