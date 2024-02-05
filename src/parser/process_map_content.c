@@ -46,8 +46,8 @@ void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
 		free_exit_parser(data, "Invalid character in map");
 	if (has_only_one_player(lines_arr[*i]) == FAILURE)
 		free_exit_parser(data, "Multiple players on the same line");
-	if (is_surrounded_by_walls(lines_arr, *i, first_line, data->map->height
-			- 1) == FAILURE)
+	if (is_surrounded_by_walls(lines_arr, *i, first_line, first_line
+			+ data->map->height) == FAILURE)
 		free_exit_parser(data, "Map is not surrounded by walls");
 	if (spaces_are_surrounded_by_walls(lines_arr, *i, first_line,
 			last_line) == FAILURE)
