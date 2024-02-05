@@ -66,7 +66,7 @@ void	build_grid(t_data *data, char **lines_arr, int first_line)
 	data->map->grid[data->map->height] = NULL;
 	while (i < data->map->height)
 	{
-		data->map->grid[i] = ft_calloc(data->map->width, sizeof(char));
+		data->map->grid[i] = ft_calloc(data->map->width + 1, sizeof(char));
 		if (!data->map->grid[i])
 			free_exit_parser(data, "Malloc failed");
 		line_len = ft_strlen(lines_arr[first_line + i]);
