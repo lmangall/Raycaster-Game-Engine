@@ -35,10 +35,10 @@ t_map	*init_map(t_map *map)
 	map->c.r = 0;
 	map->c.g = 0;
 	map->c.b = 0;
-	map->c.a = 0;
+	// map->c.a = 0;
 	map->f.r = 0;
 	map->f.g = 0;
 	map->f.b = 0;
-	map->f.a = 0;
+	// map->f.a = 0;
 	return (map);
 }
