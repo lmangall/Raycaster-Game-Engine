@@ -90,8 +90,6 @@ void	process_map_content(char **lines_arr, int first_line, t_data *data)
 	last_line = first_line + data->map->height - 1;
 	while (lines_arr[i] != NULL && i < last_line)
 	{
-		printf("i: %d\n", i);
-		printf("line: %s\n", lines_arr[i]);
 		check_lines(lines_arr, &i, data, first_line, last_line);
 		extract_player_position(lines_arr[i], i - first_line, data);
 		data->map->width = find_max_width(lines_arr, data->map->width);
