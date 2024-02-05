@@ -24,6 +24,8 @@ int		char_isdigit(char c);
 int		str_isdigit(char *str);
 int		line_has_not_only_spaces(char *line);
 int		has_only_one_player(char *line);
+int		is_valid_space_sorrounding_char(char c);
+void	define_start_and_end(int *start, int *end, int idx, int line_len);
 void	print_map_elements(t_data *data);
 void	print_map_final(t_data *data);
 void	print_elements_status(t_map_elements_check *elements);
