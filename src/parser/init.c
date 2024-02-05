@@ -13,7 +13,7 @@
 #include "cub3d.h"
 #include "parser.h"
 
-void	init_map_helper(t_map_elements_check *elements,
+void	init_map_helper(t_map_elements *elements,
 		t_textures_paths **textures_paths_ptr)
 {
 	*textures_paths_ptr = ft_calloc(1, sizeof(t_textures_paths));

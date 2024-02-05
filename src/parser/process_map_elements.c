@@ -10,12 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "cub3d.h"
 #include "parser.h"
 
-int	all_elements_found(t_map_elements_check *elements)
+int	all_elements_found(t_map_elements *elements)
 {
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
 		&& elements->ea == FOUND && elements->c == FOUND
@@ -76,7 +74,7 @@ int	check_identifier(char *line, const char *identifier,
 }
 
 void	process_map_elements_line(char *line, t_data *data,
-		t_map_elements_check *elements)
+		t_map_elements *elements)
 {
 	if (line[0] == '\0')
 		return ;

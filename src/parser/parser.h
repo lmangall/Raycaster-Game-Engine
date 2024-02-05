@@ -5,7 +5,7 @@ void	process_map_elements(char **lines_arr, int *i, t_map *map,
 			t_data *data);
 void	process_map_content(char **lines_arr, int first_line, t_data *data);
 void	process_map_elements_line(char *line, t_data *data,
-			t_map_elements_check *elements);
+			t_map_elements *elements);
 void	process_map(char **lines_arr, t_map *map, t_data *data);
 void	free_str_arr(char **str_arr);
 t_map	*init_map(t_map *map);
@@ -28,7 +28,7 @@ int		is_valid_space_sorrounding_char(char c);
 void	define_start_and_end(int *start, int *end, int idx, int line_len);
 void	print_map_elements(t_data *data);
 void	print_map_final(t_data *data);
-void	print_elements_status(t_map_elements_check *elements);
+void	print_elements_status(t_map_elements *elements);
 void	print_texture_paths(t_textures_paths *texture_paths);
 void	print_ceiling_and_floor(t_rgba *c, t_rgba *f);
 
