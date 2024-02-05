@@ -5,17 +5,14 @@
 
 int	all_elements_found(t_map_elements_check *elements)
 {
-	ft_printf("Checking if all elements have been found...\n");
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
 		&& elements->ea == FOUND && elements->c == FOUND
 		&& elements->f == FOUND)
 	{
-		ft_printf("All elements found\n");
 		return (SUCCESS);
 	}
 	else
 	{
-		ft_printf("Not all elements found\n");
 		return (FAILURE);
 	}
 }
@@ -32,16 +29,17 @@ void	collect_elements_data_path(char *line, char *identifier, char **target,
 	while (*line == ' ')
 		line++;
 	start = line;
-	while (*line != ' ' && *line != '\0' && *line != '\n')
+	while (*line != ' ' && *line != '\0')
 		line++;
 	end = line;
 	*target = ft_substr(start, 0, end - start);
+	if (!*target)
+		free_exit_parser(data, "Malloc failed");
 	while (*line == ' ')
 		line++;
-	if (line != NULL)
-		while (*line == ' ' && *line != '\0')
-			line++;
-	if (*line != '\0')
+	if (*line == '\0')
+		return ;
+	else
 		free_exit_parser(data, "Extra data after Path identifier");
 }
 
@@ -68,7 +66,7 @@ int	check_identifier(char *line, const char *identifier,
 void	process_map_elements_line(char *line, t_data *data,
 		t_map_elements_check *elements)
 {
-	if (line[0] == '\0' || line[0] == '\n')
+	if (line[0] == '\0')
 		return ;
 	while (*line == ' ')
 		line++;
