@@ -78,7 +78,8 @@ void	process_map_elements_line(char *line, t_data *data,
 {
 	if (line[0] == '\0')
 		return ;
-	while (*line == ' ')
+	// while (*line == ' ')
+	while (ft_isspace(*line))
 		line++;
 	if (check_identifier(line, "NO", &elements->no, data) == SUCCESS)
 		collect_elements_data_path(line, "NO",
@@ -105,7 +106,6 @@ void	process_map_elements(char **lines_arr, int *i, t_map *map, t_data *data)
 	while (lines_arr[*i] != NULL)
 	{
 		process_map_elements_line(lines_arr[*i], data, &map->elements);
-		print_elements_status(&map->elements);
 		if (all_elements_found(&map->elements) == SUCCESS)
 		{
 			(*i)++;
@@ -113,4 +113,6 @@ void	process_map_elements(char **lines_arr, int *i, t_map *map, t_data *data)
 		}
 		(*i)++;
 	}
+	if (all_elements_found(&map->elements) == FAILURE)
+		free_exit_parser(data, "Map incomplete, maybe empty? Maybe not.");
 }

@@ -132,13 +132,12 @@ void	process_map(char **lines_arr, t_data *data)
 
 	printf("Processing map elements...\n");
 	init_elements_status(&elements);
-	map = init_map();
+	map = init_map(map);
 	data->map = map;
 	i = 0;
 	while (lines_arr[i] != NULL)
 	{
 		process_map_elements(lines_arr[i], &i, data, &elements);
-		print_elements_status(&elements);
 		if (all_elements_found(&elements) == SUCCESS)
 		{
 			i++;
@@ -146,13 +145,9 @@ void	process_map(char **lines_arr, t_data *data)
 		}
 		i++;
 	}
-	print_map_elements(data);
-	// Skip empty lines
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
 			|| lines_arr[i][0] == '\n'))
 		i++;
-	// ... then process map content
-	ft_putstr_fd("Processing map content...\n", 1);
 	process_map_content(lines_arr, data, i);
 	final_print(data);
 }

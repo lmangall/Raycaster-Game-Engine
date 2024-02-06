@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 	t_mode	mode;
 	t_debug	debug;
 
-	mode = FULL_EXPERIENCE;
-	// mode = PARSE_ONLY;
+	// mode = FULL_EXPERIENCE;
+	mode = PARSE_ONLY;
 	// debug = OFF;
 	debug = ALL;
 	data = ft_calloc(1, sizeof(t_data));

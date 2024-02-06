@@ -13,12 +13,33 @@
 #include "cub3d.h"
 #include "parser.h"
 
+void	skip_empty_lines(char **lines_arr, int *i)
+{
+	int	j;
+
+	while (lines_arr[*i] != NULL)
+	{
+		j = 0;
+		while (ft_isspace(lines_arr[*i][j]))
+			j++;
+		if (lines_arr[*i][j] != '\0')
+			break ;
+		(*i)++;
+	}
+	if (lines_arr[*i] == NULL)
+	{
+		free_str_arr(lines_arr);
+		error_exit("The map seems to be empty");
+	}
+}
+
 void	process_map(char **lines_arr, t_map *map, t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	skip_empty_lines(lines_arr, &i);
 	process_map_elements(lines_arr, &i, map, data);
 	if (data->debug == ALL)
 		print_map_elements(data);

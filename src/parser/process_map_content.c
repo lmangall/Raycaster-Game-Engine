@@ -86,7 +86,7 @@ void	process_map_content(char **lines_arr, int first_line, t_data *data)
 	data->map->width = ft_strlen(lines_arr[first_line]);
 	data->map->height = calculate_height(lines_arr, first_line, data);
 	last_line = first_line + data->map->height - 1;
-	while (lines_arr[i] != NULL && i < last_line)
+	while (lines_arr[i] != NULL && i <= last_line)
 	{
 		check_lines(lines_arr, &i, data, first_line, last_line);
 		extract_player_position(lines_arr[i], i - first_line, data);
