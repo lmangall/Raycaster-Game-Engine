@@ -6,16 +6,44 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 18:26:40 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:47:13 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_STRUCTS_H
 # define CUB3D_STRUCTS_H
 
+# include "functions.h"
 # include "MLX42.h"
-# include <stdint.h>
+# include "libft.h"
+# include <fcntl.h>
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/stat.h>
 
+//For clarity in the code
+# define SUCCESS 0
+# define FAILURE 1
+//A window to our world
+# define WINDOW_WIDTH 1900
+# define WINDOW_HEIGHT 1000
+//Our world
+# define TILE_SIZE 30
+# define FOV 60
+# define PLAYER_ROTATION_SPEED 0.045
+# define PLAYER_TRANSLATION_SPEED 4
+# define ERROR_OPENING_FILE "File not found or corrupted."
+//Ray directions
+# define RIGHT 10
+# define LEFT 9
+# define UP 8
+# define DOWN 7
+
+
+
+//Parser enums for clear code:
 typedef enum e_mode
 {
     PARSE_ONLY,
@@ -35,15 +63,6 @@ typedef enum e_status
     FOUND
 } t_status;
 
-typedef struct s_map_elements
-{
-    t_status    no;
-    t_status    so;
-    t_status    we;
-    t_status    ea;
-    t_status    c;
-    t_status    f;
-} t_map_elements;
 
 typedef struct s_rgba
 {
@@ -61,6 +80,26 @@ typedef struct s_textures_paths
     char* east;
 } t_textures_paths;
 
+typedef struct s_textures
+{
+    mlx_texture_t* north;
+    mlx_texture_t* south;
+    mlx_texture_t* west;
+    mlx_texture_t* east;
+    mlx_texture_t* floor;
+    mlx_texture_t* ceiling;
+} t_textures;
+
+typedef struct s_map_elements
+{
+    t_status    no;
+    t_status    so;
+    t_status    we;
+    t_status    ea;
+    t_status    c;
+    t_status    f;
+} t_map_elements;
+
 typedef struct s_map
 {
     char** lines_arr;
@@ -77,16 +116,6 @@ typedef struct s_map
     t_map_elements elements;
 
 } t_map;
-
-typedef struct s_textures
-{
-    mlx_texture_t* north;
-    mlx_texture_t* south;
-    mlx_texture_t* west;
-    mlx_texture_t* east;
-    mlx_texture_t* floor;
-    mlx_texture_t* ceiling;
-} t_textures;
 
 typedef enum e_rotation
 {
@@ -148,6 +177,7 @@ typedef struct s_ray
     int lower_pixel;
 } t_ray;
 
+//The "main" struct
 typedef struct s_data
 {
     char* argv;
