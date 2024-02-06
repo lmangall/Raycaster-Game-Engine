@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 11:15:52 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/06 11:16:01 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -12,7 +23,6 @@
 //         mlx_delete_texture(textures->east);
 //         mlx_delete_texture(textures->floor);
 //         mlx_delete_texture(textures->ceiling);
-
 //         // Free the t_textures structure
 //         free(textures);
 //     }
@@ -20,7 +30,9 @@
 
 void	free_exit(t_data *data)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (data->map->grid[i])
 		free(data->map->grid[i++]);
 	free(data->map->grid);

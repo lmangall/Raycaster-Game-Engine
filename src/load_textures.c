@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_textures.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 11:16:17 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/06 11:16:21 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 char	*remove_new_line_char_new(char *str)
@@ -33,11 +45,11 @@ void	init_t_texture(t_textures *textures)
 
 int	load_textures(t_data *data)
 {
-	t_textures *textures;
-	char *north;
-	char *south;
-	char *west;
-	char *east;
+	t_textures	*textures;
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
 
 	textures = ft_calloc(1, sizeof(t_textures));
 	// init_t_texture(textures);
@@ -54,6 +66,5 @@ int	load_textures(t_data *data)
 	textures->west = mlx_load_png(west);
 	textures->east = mlx_load_png(east);
 	data->textures = textures;
-
 	return (0);
 }

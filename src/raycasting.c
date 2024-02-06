@@ -1,34 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/06 11:18:15 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-// static int	move_untill_collision(t_data *data, float x, float y,
-// t_data *data, float x_step,
-// 				float y_step)
-// {
-// 	int x_position;
-// 	int y_position;
-// 	int no_collision;
-
-// 	if (x < 0 || y < 0)
-// 		return (0);
-// 	x_position = floor(x / TILE_SIZE); // get the x position in the map
-// 	y_position = floor(y / TILE_SIZE); // get the y position in the map
-// 	while (no_collision)
-// 	{
-// 		if ((y_position >= data->map->h_map || x_position >= data->map->w_map))
-// 			no_collision = 0;
-// 		if (data->map->grid[y_position]
-// && x_position <= (int)strlen(data->map->grid[y_position]))
-// 			if (data->map->grid[y_position][x_position] == '1')
-// 				no_collision = 0;
-// 		x += x_step;
-// 		y += y_step;
-// 	}
-
-// 	data->ray->vertical_x = x;
-// 	data->ray->vertical_y = y;
-// 	return (1);
-// }
 
 int	wall_hit(float x, float y, t_data *data)
 {
