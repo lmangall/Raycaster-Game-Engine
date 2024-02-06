@@ -123,31 +123,3 @@ void	final_print(t_data *data)
 	printf("The map grid is:\n");
 	print_str_arr(data->map->grid, data->map->height);
 }
-
-void	process_map(char **lines_arr, t_data *data)
-{
-	t_map_elements	elements;
-	t_map			*map;
-	int				i;
-
-	printf("Processing map elements...\n");
-	init_elements_status(&elements);
-	map = init_map(map);
-	data->map = map;
-	i = 0;
-	while (lines_arr[i] != NULL)
-	{
-		process_map_elements(lines_arr[i], &i, data, &elements);
-		if (all_elements_found(&elements) == SUCCESS)
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
-	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
-			|| lines_arr[i][0] == '\n'))
-		i++;
-	process_map_content(lines_arr, data, i);
-	final_print(data);
-}
