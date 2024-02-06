@@ -6,11 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:20 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:18:24 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 static void	render_background_pixel(mlx_image_t *img, uint32_t top_color,
 		uint32_t bottom_color)

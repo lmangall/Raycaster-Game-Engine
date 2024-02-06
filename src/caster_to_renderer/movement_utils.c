@@ -6,11 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:58 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:17:00 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 int	is_wall(t_data *data, double x, double y)
 {

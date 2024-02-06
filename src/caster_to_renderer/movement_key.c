@@ -6,11 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:51 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:16:55 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 void	key_pressed(t_data *data)
 {

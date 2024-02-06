@@ -6,11 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:05 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:17:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 {
