@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:17 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:25:55 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 22:32:12 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	load_textures(t_data *data)
 {
 	t_textures	*textures;
 
+	ft_printf("\n\nLoading textures\n\n");
 	textures = ft_calloc(1, sizeof(t_textures));
 	textures->north = mlx_load_png(data->map->textures_paths->north);
 	textures->south = mlx_load_png(data->map->textures_paths->south);

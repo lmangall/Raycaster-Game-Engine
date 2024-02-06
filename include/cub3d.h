@@ -20,8 +20,8 @@
 //
 # define TILE_SIZE 30
 # define FOV 60
-# define PLAYER_ROTATION_SPEED 0.045
-# define PLAYER_TRANSLATION_SPEED 4
+# define PLAYER_ROTATION_SPEED 0.025
+# define PLAYER_TRANSLATION_SPEED 2
 # define ERROR_OPENING_FILE "File not found or corrupted."
 //
 # define SUCCESS 0
@@ -293,6 +293,8 @@ uint32_t				pixel_color(mlx_texture_t *texture, t_data *data,
 							int higher_pixel);
 void					render_wall(t_data *data);
 int						reverse_bytes(int c);
+
+void					free_textures(t_textures *textures);
 
 /**
  * @brief Adjusts a coordinate for mirroring based on specified conditions.

@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 22:00:05 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 22:30:11 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)
 		free_exit_parser(data, "Chill! Parsing only mode is on!");
-	load_textures(data);
 	init_data(data);
 	render_background(data->mlx, data->map->c, data->map->f);
 	mlx_loop_hook(data->mlx, &key_hook, data);
