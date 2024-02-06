@@ -42,6 +42,8 @@
 		"locale": "cpp",
 		"new": "cpp",
 		"typeinfo": "cpp",
-		"algorithm": "cpp"
+		"algorithm": "cpp",
+		"structs.h": "c",
+		"t_map": "c"
 	}
 }
