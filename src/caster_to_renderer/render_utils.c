@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 11:18:27 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../include/cub3d.h"
-#include "MLX42.h"
+#include "cub3d.h"
 
 // this is from the mlx42 library but the compiler is not finding it
 static void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)

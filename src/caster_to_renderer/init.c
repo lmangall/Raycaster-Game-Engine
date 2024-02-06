@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 11:16:04 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 void	init_data(t_data *data)
 {
@@ -8,7 +19,6 @@ void	init_data(t_data *data)
 	data->player = calloc(1, sizeof(t_player));
 	init_player(data);
 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
-	// render_background(data->mlx, data->map->c, data->map->f);
 }
 
 void	init_player(t_data *data)
