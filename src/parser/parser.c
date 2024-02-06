@@ -69,6 +69,19 @@ void	process_map(char **lines_arr, t_map *map, t_data *data)
 	process_map_content(lines_arr, i, data);
 }
 
+// Todo: refactor following DRY
+void	check_texture_paths(t_data *data)
+{
+	if (open(data->map->textures_paths->north, O_RDONLY) == -1)
+		free_exit_parser(data, "Wrong texture path");
+	if (open(data->map->textures_paths->south, O_RDONLY) == -1)
+		free_exit_parser(data, "Wrong texture path");
+	if (open(data->map->textures_paths->west, O_RDONLY) == -1)
+		free_exit_parser(data, "Wrong texture path");
+	if (open(data->map->textures_paths->east, O_RDONLY) == -1)
+		free_exit_parser(data, "Wrong texture path");
+}
+
 void	parser(int argc, char **argv, t_data *data)
 {
 	char	**lines_arr;
@@ -85,6 +98,7 @@ void	parser(int argc, char **argv, t_data *data)
 	if (data->debug == ALL)
 		print_lines_arr(lines_arr);
 	process_map(lines_arr, map, data);
+	check_texture_paths(data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
 }
