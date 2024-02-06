@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:05 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:30:06 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 		if (*orientation_angle_rd < 0)
 			*orientation_angle_rd += 2 * M_PI;
 	}
-}
-
-int	is_wall(t_data *data, double x, double y)
-{
-	int	map_grid_y;
-	int	map_grid_x;
-
-	map_grid_x = (x / TILE_SIZE);
-	map_grid_y = (y / TILE_SIZE);
-	if (data->map->grid[map_grid_y][map_grid_x] == '1'
-		|| (data->map->grid[map_grid_y][data->player->x_pos_px
-			/ TILE_SIZE] == '1' || data->map->grid[data->player->y_pos_px
-			/ TILE_SIZE][map_grid_x] == '1'))
-		return (1);
-	return (0);
 }
 
 void	move_player(t_data *data, double move_x, double move_y)

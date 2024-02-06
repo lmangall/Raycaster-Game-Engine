@@ -32,6 +32,7 @@
 		"vector": "c",
 		"__locale": "c",
 		"__string": "c",
-		"cub3d.h": "c"
+		"cub3d.h": "c",
+		"stat.h": "c"
 	}
 }
