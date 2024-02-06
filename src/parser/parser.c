@@ -65,15 +65,8 @@ void	process_map(char **lines_arr, t_map *map, t_data *data)
 			break ;
 		i++;
 	}
-	if (data->debug == ALL)
-		ft_printf("Processing map content...\n");
-	// while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
-	// 		|| lines_arr[i][0] == '\n'))
-	// 	i++;
 	skip_empty_lines(lines_arr, &i);
 	process_map_content(lines_arr, i, data);
-	if (data->debug == ALL || data->debug == ONLY_FINAL)
-		print_map_final(data);
 }
 
 void	parser(int argc, char **argv, t_data *data)
@@ -83,7 +76,7 @@ void	parser(int argc, char **argv, t_data *data)
 
 	lines_arr = ft_calloc(1, sizeof(char *));
 	if (argc != 2)
-		error_exit("Wrong number of arguments. The proper usage is ./cub3D <map.cub>");
+		error_exit("Wrong number of arguments. Usage is ./cub3D <map.cub>");
 	parse_file(argv[1], &lines_arr);
 	map = ft_calloc(1, sizeof(t_map));
 	map = init_map(map);
@@ -92,4 +85,6 @@ void	parser(int argc, char **argv, t_data *data)
 	if (data->debug == ALL)
 		print_lines_arr(lines_arr);
 	process_map(lines_arr, map, data);
+	if (data->debug == ALL || data->debug == ONLY_FINAL)
+		print_map_final(data);
 }
