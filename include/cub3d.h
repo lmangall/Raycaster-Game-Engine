@@ -245,6 +245,7 @@ typedef struct s_ray
 {
 	double angle_rd; /**< Ray angle. */
 	double				length;
+	double				middle_ray_length;
 	t_wall_collision	wall_collision_orientation;
 	double				horizontal_x;
 	double				horizontal_y;
