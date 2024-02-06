@@ -23,7 +23,7 @@ int	check_same_line(char **lines_arr, int current_line, int idx)
 	define_start_and_end(&start, &end, idx, line_len);
 	while (start <= end)
 	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line][start]))
+		if (!is_valid_char(lines_arr[current_line][start]))
 			return (FAILURE);
 		start++;
 	}
@@ -43,8 +43,7 @@ int	check_previous_line(char **lines_arr, int current_line, int first_line,
 	define_start_and_end(&start, &end, idx, line_len);
 	while (start <= end)
 	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line
-				- 1][start]))
+		if (!is_valid_char(lines_arr[current_line - 1][start]))
 			return (FAILURE);
 		start++;
 	}
@@ -63,8 +62,7 @@ int	check_next_line(char **lines_arr, int current_line, int last_line, int idx)
 	define_start_and_end(&start, &end, idx, line_len);
 	while (start <= end)
 	{
-		if (!is_valid_space_sorrounding_char(lines_arr[current_line
-				+ 1][start]))
+		if (!is_valid_char(lines_arr[current_line + 1][start]))
 			return (FAILURE);
 		start++;
 	}
