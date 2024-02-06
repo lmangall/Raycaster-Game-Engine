@@ -39,9 +39,13 @@ void	extract_player_position(char *line, int y, t_data *data)
 	}
 }
 
-void	check_lines(char **lines_arr, int *i, t_data *data, int first_line,
-		int last_line)
+void	check_lines(char **lines_arr, int *i, t_data *data, int first_last[2])
 {
+	int	first_line;
+	int	last_line;
+
+	first_line = first_last[0];
+	last_line = first_last[1];
 	if (has_only_valid_chars(lines_arr[*i]) == FAILURE)
 		free_exit_parser(data, "Invalid character in map");
 	if (has_only_one_player(lines_arr[*i]) == FAILURE)
@@ -81,6 +85,7 @@ void	process_map_content(char **lines_arr, int first_line, t_data *data)
 {
 	int	i;
 	int	last_line;
+	int	first_last[2];
 
 	i = first_line;
 	data->map->width = ft_strlen(lines_arr[first_line]);
@@ -88,7 +93,9 @@ void	process_map_content(char **lines_arr, int first_line, t_data *data)
 	last_line = first_line + data->map->height - 1;
 	while (lines_arr[i] != NULL && i <= last_line)
 	{
-		check_lines(lines_arr, &i, data, first_line, last_line);
+		first_last[0] = first_line;
+		first_last[1] = last_line;
+		check_lines(lines_arr, &i, data, first_last);
 		extract_player_position(lines_arr[i], i - first_line, data);
 		data->map->width = find_max_width(lines_arr, data->map->width);
 		i++;
