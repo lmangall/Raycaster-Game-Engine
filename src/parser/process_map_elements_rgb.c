@@ -86,7 +86,7 @@ void	convert_and_check_range_rgb_values(t_collect_elements_data_rgba *vars,
 
 void	collect_elements_data_rgba(char *line, char *identifier, t_data *data)
 {
-	t_collect_elements_data_rgba vars;
+	t_collect_elements_data_rgba	vars;
 
 	vars.target = NULL;
 	if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)

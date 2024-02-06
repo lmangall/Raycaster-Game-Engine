@@ -1,6 +1,6 @@
 .DS_Store
 *.o
-.vscode/
+.vscode/*
 libft.a
 libmlx42.a
 MLX42/

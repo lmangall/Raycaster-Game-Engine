@@ -38,7 +38,7 @@ SRCS	= main.c \
     	caster_to_renderer/render_background.c \
     	caster_to_renderer/render_utils.c \
     	caster_to_renderer/exit.c \
-    	caster_to_renderer/movement_utils.c \
+    	caster_to_renderer/movement_is_wall.c \
     	caster_to_renderer/movement_apply.c \
     	caster_to_renderer/movement_key.c \
     	caster_to_renderer/raycasting.c \

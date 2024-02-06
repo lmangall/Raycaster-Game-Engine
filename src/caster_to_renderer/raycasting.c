@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:07:35 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:03:40 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	raycasting(t_data *data)
 		data->ray->wall_collision_orientation = NO_COLLISION;
 		update_length_and_collision_orientation(data);
 		update_ray(data);
+		if (data->ray->screen_x == WINDOW_WIDTH / 2)
+			data->ray->middle_ray_length = data->ray->length;
 		render_wall(data);
 		data->ray->screen_x++;
 		data->ray->angle_rd += (data->player->fov_rd / WINDOW_WIDTH);

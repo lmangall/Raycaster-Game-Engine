@@ -33,17 +33,6 @@
 		"__locale": "c",
 		"__string": "c",
 		"cub3d.h": "c",
-		"type_traits": "cpp",
-		"__availability": "cpp",
-		"__bits": "cpp",
-		"__config": "cpp",
-		"__errc": "cpp",
-		"__threading_support": "cpp",
-		"locale": "cpp",
-		"new": "cpp",
-		"typeinfo": "cpp",
-		"algorithm": "cpp",
-		"structs.h": "c",
-		"t_map": "c"
+		"stat.h": "c"
 	}
 }

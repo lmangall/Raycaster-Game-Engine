@@ -56,8 +56,8 @@ int	calculate_height(char **lines_arr, int first_line, t_data *data)
 
 int	find_max_width(char **lines_arr, int current_max_width)
 {
-	int i;
-	int current_width;
+	int	i;
+	int	current_width;
 
 	i = 0;
 	while (lines_arr[i] != NULL)
