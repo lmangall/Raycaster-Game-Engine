@@ -43,6 +43,7 @@ SRCS	= main.c \
 	movement_key.c \
 	raycasting.c \
 	raycasting_utils.c \
+	raycasting_collision.c \
 	load_textures.c \
 	parser/parser.c parser/parse_file.c parser/parse_file_utils.c parser/process_map_elements.c  parser/process_map_content.c parser/utils_free.c parser/init.c parser/process_map_content_height_width.c parser/process_map_content_checks.c parser/process_map_content_check_spaces.c parser/utils_prints.c parser/process_map_elements_rgb.c parser/process_map_elements_rgb_utils.c parser/utils_prints_elements.c parser/process_map_content_check_spaces_utils.c
 

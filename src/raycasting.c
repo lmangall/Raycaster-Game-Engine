@@ -6,29 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:00:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:07:35 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
-
-int	wall_hit(float x, float y, t_data *data)
-{
-	int	x_position;
-	int	y_position;
-
-	if (x < 0 || y < 0)
-		return (0);
-	x_position = floor(x / TILE_SIZE);
-	y_position = floor(y / TILE_SIZE);
-	if ((y_position >= data->map->height || x_position >= data->map->width))
-		return (0);
-	if (data->map->grid[y_position]
-		&& x_position <= (int)strlen(data->map->grid[y_position]))
-		if (data->map->grid[y_position][x_position] == '1')
-			return (0);
-	return (1);
-}
+#include "cub3d.h"
 
 void	update_ray(t_data *data)
 {
@@ -52,59 +34,7 @@ void	update_ray(t_data *data)
 	data->ray->lower_pixel = lower_pixel;
 }
 
-float	find_x_collision(t_data *data, float angl)
-{
-	float	x;
-	float	y;
-	float	x_step;
-	float	y_step;
-	int		pixel;
-
-	y_step = TILE_SIZE;
-	x_step = TILE_SIZE / tan(angl);
-	angl = normalize_angle(angl);
-	y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
-	pixel = check_collision_adjust_step(angl, &y, &y_step, 'y');
-	x = data->player->x_pos_px + (y - data->player->y_pos_px) / tan(angl);
-	update_steps_direction(angl, &x_step, 'y');
-	while (wall_hit(x, y - pixel, data))
-	{
-		x += x_step;
-		y += y_step;
-	}
-	data->ray->horizontal_x = x;
-	data->ray->horizontal_y = y;
-	return (sqrt(pow(x - data->player->x_pos_px, 2) + pow(y
-				- data->player->y_pos_px, 2)));
-}
-
-float	find_y_collision(t_data *data, float angl)
-{
-	float	x;
-	float	y;
-	float	x_step;
-	float	y_step;
-	int		pixel;
-
-	x_step = TILE_SIZE;
-	y_step = TILE_SIZE * tan(angl);
-	angl = normalize_angle(angl);
-	x = floor(data->player->x_pos_px / TILE_SIZE) * TILE_SIZE;
-	pixel = check_collision_adjust_step(angl, &x, &x_step, 'x');
-	y = data->player->y_pos_px + (x - data->player->x_pos_px) * tan(angl);
-	update_steps_direction(angl, &y_step, 'x');
-	while (wall_hit(x - pixel, y, data))
-	{
-		x += x_step;
-		y += y_step;
-	}
-	data->ray->vertical_x = x;
-	data->ray->vertical_y = y;
-	return (sqrt(pow(x - data->player->x_pos_px, 2) + pow(y
-				- data->player->y_pos_px, 2)));
-}
-
-static void	update_length_and_collision_orientation(t_data *data)
+void	update_length_and_collision_orientation(t_data *data)
 {
 	double	x_collision;
 	double	y_collision;

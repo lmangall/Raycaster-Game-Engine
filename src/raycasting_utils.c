@@ -6,11 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:45 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:17:49 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:07:35 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 int	ray_direction(float angle, char plane)
 {
@@ -31,54 +31,20 @@ int	ray_direction(float angle, char plane)
 	return (0);
 }
 
-int	update_steps_direction(float angle, float *step, char plane)
+int	wall_hit(float x, float y, t_data *data)
 {
-	if (plane == 'x')
-	{
-		if (ray_direction(angle, plane) == DOWN)
-		{
-			if (*step < 0)
-				*step *= -1;
-		}
-		else if (*step > 0)
-			*step *= -1;
-	}
-	else if (plane == 'y')
-	{
-		if (ray_direction(angle, plane) == RIGHT)
-		{
-			if (*step > 0)
-				*step *= -1;
-		}
-		else
-		{
-			if (*step < 0)
-				*step *= -1;
-		}
-	}
-	return (0);
-}
+	int	x_position;
+	int	y_position;
 
-int	check_collision_adjust_step(float angle, float *inter, float *step,
-		char plane)
-{
-	if (plane == 'y')
-	{
-		if (ray_direction(angle, 'x') == DOWN)
-		{
-			*inter += TILE_SIZE;
-			return (-1);
-		}
-		*step *= -1;
-	}
-	else
-	{
-		if (ray_direction(angle, 'y') == LEFT)
-		{
-			*inter += TILE_SIZE;
-			return (-1);
-		}
-		*step *= -1;
-	}
+	if (x < 0 || y < 0)
+		return (0);
+	x_position = floor(x / TILE_SIZE);
+	y_position = floor(y / TILE_SIZE);
+	if ((y_position >= data->map->height || x_position >= data->map->width))
+		return (0);
+	if (data->map->grid[y_position]
+		&& x_position <= (int)strlen(data->map->grid[y_position]))
+		if (data->map->grid[y_position][x_position] == '1')
+			return (0);
 	return (1);
 }
