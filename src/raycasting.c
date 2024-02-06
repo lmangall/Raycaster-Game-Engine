@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:18:15 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:00:10 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ float	find_x_collision(t_data *data, float angl)
 
 	y_step = TILE_SIZE;
 	x_step = TILE_SIZE / tan(angl);
+	angl = normalize_angle(angl);
 	y = floor(data->player->y_pos_px / TILE_SIZE) * TILE_SIZE;
 	pixel = check_collision_adjust_step(angl, &y, &y_step, 'y');
 	x = data->player->x_pos_px + (y - data->player->y_pos_px) / tan(angl);
@@ -87,6 +88,7 @@ float	find_y_collision(t_data *data, float angl)
 
 	x_step = TILE_SIZE;
 	y_step = TILE_SIZE * tan(angl);
+	angl = normalize_angle(angl);
 	x = floor(data->player->x_pos_px / TILE_SIZE) * TILE_SIZE;
 	pixel = check_collision_adjust_step(angl, &x, &x_step, 'x');
 	y = data->player->y_pos_px + (x - data->player->x_pos_px) * tan(angl);
@@ -102,31 +104,34 @@ float	find_y_collision(t_data *data, float angl)
 				- data->player->y_pos_px, 2)));
 }
 
-void	raycasting(t_data *data)
+static void	update_length_and_collision_orientation(t_data *data)
 {
 	double	x_collision;
 	double	y_collision;
 
+	x_collision = find_x_collision(data, data->ray->angle_rd);
+	y_collision = find_y_collision(data, data->ray->angle_rd);
+	if (y_collision <= x_collision)
+	{
+		data->ray->length = y_collision;
+		data->ray->wall_collision_orientation = VERTICAL;
+	}
+	else
+	{
+		data->ray->length = x_collision;
+		data->ray->wall_collision_orientation = HORIZONTAL;
+	}
+}
+
+void	raycasting(t_data *data)
+{
 	data->ray->screen_x = 0;
 	data->ray->angle_rd = data->player->orientation_angle_rd
 		- (data->player->fov_rd / 2);
 	while (data->ray->screen_x < WINDOW_WIDTH)
 	{
 		data->ray->wall_collision_orientation = NO_COLLISION;
-		x_collision = find_x_collision(data,
-				normalize_angle(data->ray->angle_rd));
-		y_collision = find_y_collision(data,
-				normalize_angle(data->ray->angle_rd));
-		if (y_collision <= x_collision)
-		{
-			data->ray->length = y_collision;
-			data->ray->wall_collision_orientation = VERTICAL;
-		}
-		else
-		{
-			data->ray->length = x_collision;
-			data->ray->wall_collision_orientation = HORIZONTAL;
-		}
+		update_length_and_collision_orientation(data);
 		update_ray(data);
 		render_wall(data);
 		data->ray->screen_x++;
