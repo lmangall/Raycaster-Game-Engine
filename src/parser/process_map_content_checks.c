@@ -41,15 +41,7 @@ int	has_only_valid_chars(char *line)
 	{
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'W' && line[i] != 'E')
-		{
-			printf("Found invalid character\n");
-			printf("line[%d]: %c\n", i, line[i]);
-			if (line[i] == '\n')
-				printf("line[%d]: \\n\n", i);
-			if (line[i] == '\0')
-				printf("line[%d]: \\0\n", i);
 			return (FAILURE);
-		}
 		i++;
 	}
 	return (SUCCESS);
