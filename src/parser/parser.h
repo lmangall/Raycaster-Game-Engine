@@ -46,25 +46,31 @@ int		str_isdigit(char *str);
 int		line_has_not_only_spaces(char *line);
 int		has_only_one_player(char *line);
 void	define_start_and_end(int *start, int *end, int idx, int line_len);
+void	handle_empty_map(char **lines_arr, size_t lines_nbr);
+void	free_str_arr(char **str_arr);
+void	remove_new_line(char *line);
 
 // * MAP CONTENT * //
 
 /*
- * Checks if a character is valid to be adjacent to a space in a map layout.
- *
- * This function is designed to determine whether a given character `c` is
- * considered valid when positioned next to a space within the context of a map.
- * In this specific implementation, valid characters are defined as either a
- * space (' ') or a wall ('1'). These characters are considered valid for
- * surrounding spaces, adhering to the rules for map construction or validation
- * where walls and spaces are the primary elements of interest.
- *
- * @param c The character to be checked for its validity next to a space.
- *
- * @return Returns SUCCESS if the character is either a space (' ') or a wall
- * ('1'), indicating it is valid to be adjacent to a space. Returns FAILURE
- * otherwise, indicating the character is not valid in the given context.
- */
+	* Checks if a character is valid to be adjacent to a space in a map layout.
+	*
+	* This function is designed to determine whether a given character `c` is
+	* considered valid when positioned next to a space within the context of a map.
+	* In this specific implementation,
+		valid characters are defined as either a
+	* space (' ') or a wall ('1'). These characters are considered valid for
+	* surrounding spaces,
+		adhering to the rules for map construction or validation
+	* where walls and spaces are the primary elements of interest.
+	*
+	* @param c The character to be checked for its validity next to a space.
+	*
+	* @return Returns SUCCESS if the character is either a space (' ') or a wall
+	* ('1'),
+		indicating it is valid to be adjacent to a space. Returns FAILURE
+	* otherwise, indicating the character is not valid in the given context.
+	*/
 int		is_valid_char(char c);
 int		is_valid_char(char c);
 
