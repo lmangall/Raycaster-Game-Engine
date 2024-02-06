@@ -22,34 +22,6 @@ void	print_texture_paths(t_textures_paths *textures_paths)
 	ft_printf("textures_paths->east: %s\n", textures_paths->east);
 }
 
-void	print_elements_status(t_map_elements *elements)
-{
-	if (elements->no == NOT_FOUND)
-		ft_printf("NO : NOT_FOUND\n");
-	else
-		ft_printf("NO : FOUND\n");
-	if (elements->so == NOT_FOUND)
-		ft_printf("SO : NOT_FOUND\n");
-	else
-		ft_printf("SO : FOUND\n");
-	if (elements->we == NOT_FOUND)
-		ft_printf("WE: NOT FOUND\n");
-	else
-		ft_printf("WE: FOUND\n");
-	if (elements->ea == NOT_FOUND)
-		ft_printf("EA: NOT FOUND\n");
-	else
-		ft_printf("EA: FOUND\n");
-	if (elements->c == NOT_FOUND)
-		ft_printf("C: NOT FOUND\n");
-	else
-		ft_printf("C: FOUND\n");
-	if (elements->f == NOT_FOUND)
-		ft_printf("F: NOT FOUND\n");
-	else
-		ft_printf("F: FOUND\n");
-}
-
 void	print_ceiling_and_floor(t_rgba *c, t_rgba *f)
 {
 	ft_printf("The saved ceiling and floor colors are:\n");
@@ -63,4 +35,32 @@ void	print_map_elements(t_data *data)
 	ft_printf("The correct number of map elements have been found.\n");
 	print_texture_paths(data->map->textures_paths);
 	print_ceiling_and_floor(&data->map->c, &data->map->f);
+}
+
+void	print_elements_status(t_map_elements *elements)
+{
+	if (elements->no == NOT_FOUND)
+		printf("NO : NOT_FOUND\n");
+	else
+		printf("NO : FOUND\n");
+	if (elements->so == NOT_FOUND)
+		printf("SO : NOT_FOUND\n");
+	else
+		printf("SO : FOUND\n");
+	if (elements->we == NOT_FOUND)
+		printf("WE: NOT FOUND\n");
+	else
+		printf("WE: FOUND\n");
+	if (elements->ea == NOT_FOUND)
+		printf("EA: NOT FOUND\n");
+	else
+		printf("EA: FOUND\n");
+	if (elements->c == NOT_FOUND)
+		printf("C: NOT FOUND\n");
+	else
+		printf("C: FOUND\n");
+	if (elements->f == NOT_FOUND)
+		printf("F: NOT FOUND\n");
+	else
+		printf("F: FOUND\n");
 }

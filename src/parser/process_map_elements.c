@@ -78,7 +78,6 @@ void	process_map_elements_line(char *line, t_data *data,
 {
 	if (line[0] == '\0')
 		return ;
-	// while (*line == ' ')
 	while (ft_isspace(*line))
 		line++;
 	if (check_identifier(line, "NO", &elements->no, data) == SUCCESS)
