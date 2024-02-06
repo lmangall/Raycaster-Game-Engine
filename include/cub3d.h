@@ -245,6 +245,7 @@ typedef struct s_ray
 {
 	double angle_rd; /**< Ray angle. */
 	double				length;
+	double				middle_ray_length;
 	t_wall_collision	wall_collision_orientation;
 	double				horizontal_x;
 	double				horizontal_y;
@@ -318,6 +319,14 @@ double					adjust_mirroring(double x, double width, double angle,
 int						ray_direction(float angle, char plane);
 void					update_length_and_collision_orientation(t_data *data);
 
+// movement
+void					move_player_forward(t_data *data, double move_x,
+							double move_y);
+void					move_player_backward(t_data *data, double move_x,
+							double move_y);
+void					move_player_lateral(t_data *data, double move_x,
+							double move_y);
+
 // init:
 void					init_player_original_orientation(t_data *data);
 
@@ -335,6 +344,8 @@ void					free_exit_parser(t_data *data, char *error_message);
 
 // OLD PARSER:
 char					*cub_to_str(char *map);
+
+// int						is_wall_safe(t_data *data, double x, double y);
 
 void					render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 

@@ -6,11 +6,13 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:43 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 11:16:47 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:20:35 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+#define SAFETY_DISTANCE 10
 
 void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 {
@@ -28,19 +30,20 @@ void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 	}
 }
 
-static void	move_player_forward(t_data *data, double move_x, double move_y)
+void	move_player_forward(t_data *data, double move_x, double move_y)
 {
 	move_x = cos(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
 	move_y = sin(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
 	if (!is_wall(data, (move_x + data->player->x_pos_px), (move_y
 				+ data->player->y_pos_px)))
-	{
-		data->player->x_pos_px = roundf(data->player->x_pos_px + move_x);
-		data->player->y_pos_px = roundf(data->player->y_pos_px + move_y);
-	}
+		if (data->ray->middle_ray_length > SAFETY_DISTANCE)
+		{
+			data->player->x_pos_px = roundf(data->player->x_pos_px + move_x);
+			data->player->y_pos_px = roundf(data->player->y_pos_px + move_y);
+		}
 }
 
-static void	move_player_backward(t_data *data, double move_x, double move_y)
+void	move_player_backward(t_data *data, double move_x, double move_y)
 {
 	move_x = -cos(data->player->orientation_angle_rd)
 		* PLAYER_TRANSLATION_SPEED;
@@ -54,7 +57,7 @@ static void	move_player_backward(t_data *data, double move_x, double move_y)
 	}
 }
 
-static void	move_player_lateral(t_data *data, double move_x, double move_y)
+void	move_player_lateral(t_data *data, double move_x, double move_y)
 {
 	if (data->player->lateral_move == L_LEFT)
 	{
