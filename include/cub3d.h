@@ -336,6 +336,8 @@ void					free_exit_parser(t_data *data, char *error_message);
 // OLD PARSER:
 char					*cub_to_str(char *map);
 
+// int						is_wall_safe(t_data *data, double x, double y);
+
 void					render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 
 // TEXTURES:     UPDATE DOXY
