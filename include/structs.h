@@ -6,14 +6,14 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 18:47:13 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:11:28 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_STRUCTS_H
 # define CUB3D_STRUCTS_H
 
-# include "functions.h"
+# include "structs.h"
 # include "MLX42.h"
 # include "libft.h"
 # include <fcntl.h>
