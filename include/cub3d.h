@@ -314,8 +314,9 @@ int						reverse_bytes(int c);
 double					adjust_mirroring(double x, double width, double angle,
 							char plane);
 
-// raycasting utils
+// raycasting
 int						ray_direction(float angle, char plane);
+void					update_length_and_collision_orientation(t_data *data);
 
 // init:
 void					init_player_original_orientation(t_data *data);
