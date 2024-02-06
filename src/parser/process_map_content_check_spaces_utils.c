@@ -13,7 +13,7 @@
 #include "cub3d.h"
 #include "parser.h"
 
-int	is_valid_space_sorrounding_char(char c)
+int	is_valid_char(char c)
 {
 	if (c == ' ' || c == '1')
 		return (SUCCESS);

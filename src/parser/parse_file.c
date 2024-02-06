@@ -54,6 +54,11 @@ char	**build_lines_arr(int fd, size_t *lines_arr_size, size_t *lines_nbr)
 		(*lines_nbr)++;
 	}
 	lines_arr[*lines_nbr] = NULL;
+	if (*lines_nbr == 0)
+	{
+		free_str_arr(lines_arr);
+		error_exit("Empty file");
+	}
 	close(fd);
 	return (lines_arr);
 }

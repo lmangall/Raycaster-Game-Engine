@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:17 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:07 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:25:55 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,12 @@ char	*remove_new_line_char_new(char *str)
 int	load_textures(t_data *data)
 {
 	t_textures	*textures;
-	char		*north;
-	char		*south;
-	char		*west;
-	char		*east;
 
 	textures = ft_calloc(1, sizeof(t_textures));
-	north = remove_new_line_char_new(data->map->textures_paths->north);
-	south = remove_new_line_char_new(data->map->textures_paths->south);
-	west = remove_new_line_char_new(data->map->textures_paths->west);
-	east = remove_new_line_char_new(data->map->textures_paths->east);
-	textures->north = mlx_load_png(north);
-	textures->south = mlx_load_png(south);
-	textures->west = mlx_load_png(west);
-	textures->east = mlx_load_png(east);
+	textures->north = mlx_load_png(data->map->textures_paths->north);
+	textures->south = mlx_load_png(data->map->textures_paths->south);
+	textures->west = mlx_load_png(data->map->textures_paths->west);
+	textures->east = mlx_load_png(data->map->textures_paths->east);
 	data->textures = textures;
 	return (0);
 }
