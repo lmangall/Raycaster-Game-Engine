@@ -32,7 +32,7 @@ void	*handle_ft_calloc(size_t *lines_arr_size, int fd)
 {
 	char	**lines_arr;
 
-	lines_arr = ft_calloc(*lines_arr_size + 1, sizeof(char *) );
+	lines_arr = ft_calloc(*lines_arr_size + 1, sizeof(char *));
 	if (!lines_arr)
 	{
 		close(fd);
