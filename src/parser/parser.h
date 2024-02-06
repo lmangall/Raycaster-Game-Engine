@@ -12,7 +12,16 @@
 
 #ifndef PARSER_H
 # define PARSER_H
+# define PARSER_H
 
+void	process_map_elements(char **lines_arr, int *i, t_map *map,
+			t_data *data);
+void	process_map_content(char **lines_arr, int first_line, t_data *data);
+void	process_map_elements_line(char *line, t_data *data,
+			t_map_elements *elements);
+void	process_map(char **lines_arr, t_map *map, t_data *data);
+void	free_str_arr(char **str_arr);
+t_map	*init_map(t_map *map);
 void	process_map_elements(char **lines_arr, int *i, t_map *map,
 			t_data *data);
 void	process_map_content(char **lines_arr, int first_line, t_data *data);
@@ -57,11 +66,17 @@ void	define_start_and_end(int *start, int *end, int idx, int line_len);
  * otherwise, indicating the character is not valid in the given context.
  */
 int		is_valid_char(char c);
+int		is_valid_char(char c);
 
 // * MAP ELEMENTS * //
 
 // * PRINT * //
 
+void	print_map_elements(t_data *data);
+void	print_map_final(t_data *data);
+void	print_elements_status(t_map_elements *elements);
+void	print_texture_paths(t_textures_paths *texture_paths);
+void	print_ceiling_and_floor(t_rgba *c, t_rgba *f);
 void	print_map_elements(t_data *data);
 void	print_map_final(t_data *data);
 void	print_elements_status(t_map_elements *elements);

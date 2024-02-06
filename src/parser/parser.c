@@ -13,10 +13,19 @@
 #include "cub3d.h"
 #include "parser.h"
 
+// The message says 'seems to be empty or incomplete' because
+// we perform this check at the beginning and after
+// processing the map elements, so we can't be sure if the map
+// is empty or incomplete at this point.
+// For a most customized message, we should add a flag
+
 void	skip_empty_lines(char **lines_arr, int *i)
 {
 	int	j;
 
+	printf("Skipping empty lines...\n");
+	printf("i = %d\n", *i);
+	printf("lines_arr[i] = %s\n", lines_arr[*i]);
 	while (lines_arr[*i] != NULL)
 	{
 		j = 0;
@@ -29,7 +38,7 @@ void	skip_empty_lines(char **lines_arr, int *i)
 	if (lines_arr[*i] == NULL)
 	{
 		free_str_arr(lines_arr);
-		error_exit("The map seems to be empty");
+		error_exit("The map seems to be empty or incomplete!");
 	}
 }
 
@@ -58,6 +67,10 @@ void	process_map(char **lines_arr, t_map *map, t_data *data)
 	}
 	if (data->debug == ALL)
 		ft_printf("Processing map content...\n");
+	// while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
+	// 		|| lines_arr[i][0] == '\n'))
+	// 	i++;
+	skip_empty_lines(lines_arr, &i);
 	process_map_content(lines_arr, i, data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
