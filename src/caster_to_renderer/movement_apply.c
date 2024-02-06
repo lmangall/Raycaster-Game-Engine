@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:43 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 18:14:23 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:20:35 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 	}
 }
 
-static void	move_player_forward(t_data *data, double move_x, double move_y)
+void	move_player_forward(t_data *data, double move_x, double move_y)
 {
 	move_x = cos(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
 	move_y = sin(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
@@ -43,7 +43,7 @@ static void	move_player_forward(t_data *data, double move_x, double move_y)
 		}
 }
 
-static void	move_player_backward(t_data *data, double move_x, double move_y)
+void	move_player_backward(t_data *data, double move_x, double move_y)
 {
 	move_x = -cos(data->player->orientation_angle_rd)
 		* PLAYER_TRANSLATION_SPEED;
@@ -57,7 +57,7 @@ static void	move_player_backward(t_data *data, double move_x, double move_y)
 	}
 }
 
-static void	move_player_lateral(t_data *data, double move_x, double move_y)
+void	move_player_lateral(t_data *data, double move_x, double move_y)
 {
 	if (data->player->lateral_move == L_LEFT)
 	{

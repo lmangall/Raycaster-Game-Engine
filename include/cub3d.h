@@ -319,6 +319,14 @@ double					adjust_mirroring(double x, double width, double angle,
 int						ray_direction(float angle, char plane);
 void					update_length_and_collision_orientation(t_data *data);
 
+// movement
+void					move_player_forward(t_data *data, double move_x,
+							double move_y);
+void					move_player_backward(t_data *data, double move_x,
+							double move_y);
+void					move_player_lateral(t_data *data, double move_x,
+							double move_y);
+
 // init:
 void					init_player_original_orientation(t_data *data);
 
