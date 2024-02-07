@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:07:19 by lmangall          #+#    #+#             */
-/*   Updated: 2023/05/10 13:33:33 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:15:45 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_atoi(const char *str)
 	nb = 0;
 	i = 0;
 	mult = 1;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\r'
-		||str[i] == '\t' || str[i] == '\v' || str[i] == '\f')
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\r' || str[i] == '\t'
+		|| str[i] == '\v' || str[i] == '\f')
 	{
 		i++;
 	}
@@ -39,15 +39,3 @@ int	ft_atoi(const char *str)
 	}
 	return (mult * nb);
 }
-/*
-int main(void)
-{
-	char *str;
-	str = "985";
-	
-	int i1 = atoi(str);
-	int i2 = ft_atoi(str);
-	
-	printf("atoi: %d\nft_atoi: %d\n", i1, i2);
-}
-*/

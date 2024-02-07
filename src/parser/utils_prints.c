@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prints.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:00 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:40:01 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:17:07 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,11 @@ void	print_lines_arr(char **lines_arr)
 {
 	int	i;
 
-	printf("Printing lines_arr...\n");
 	if (lines_arr == NULL)
-	{
-		printf("No lines to print.\n");
 		return ;
-	}
 	i = 0;
 	while (lines_arr[i] != NULL)
-	{
-		printf("%s\n", lines_arr[i]);
 		i++;
-	}
 }
 
 void	print_map_grid(char **str_arri, int map_height)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/07 14:34:57 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:18:36 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void	skip_empty_lines(char **lines_arr, int *i)
 {
 	int	j;
 
-	printf("Skipping empty lines...\n");
-	printf("i = %d\n", *i);
-	printf("lines_arr[i] = %s\n", lines_arr[*i]);
 	while (lines_arr[*i] != NULL)
 	{
 		j = 0;

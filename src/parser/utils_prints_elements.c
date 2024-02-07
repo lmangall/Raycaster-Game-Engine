@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prints_elements.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:39:47 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:39:48 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:17:44 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ void	print_map_elements(t_data *data)
 void	print_elements_status(t_map_elements *elements)
 {
 	if (elements->no == NOT_FOUND)
-		printf("NO : NOT_FOUND\n");
+		ft_printf("NO : NOT_FOUND\n");
 	else
-		printf("NO : FOUND\n");
+		ft_printf("NO : FOUND\n");
 	if (elements->so == NOT_FOUND)
-		printf("SO : NOT_FOUND\n");
+		ft_printf("SO : NOT_FOUND\n");
 	else
-		printf("SO : FOUND\n");
+		ft_printf("SO : FOUND\n");
 	if (elements->we == NOT_FOUND)
-		printf("WE: NOT FOUND\n");
+		ft_printf("WE: NOT FOUND\n");
 	else
-		printf("WE: FOUND\n");
+		ft_printf("WE: FOUND\n");
 	if (elements->ea == NOT_FOUND)
-		printf("EA: NOT FOUND\n");
+		ft_printf("EA: NOT FOUND\n");
 	else
-		printf("EA: FOUND\n");
+		ft_printf("EA: FOUND\n");
 	if (elements->c == NOT_FOUND)
-		printf("C: NOT FOUND\n");
+		ft_printf("C: NOT FOUND\n");
 	else
-		printf("C: FOUND\n");
+		ft_printf("C: FOUND\n");
 	if (elements->f == NOT_FOUND)
-		printf("F: NOT FOUND\n");
+		ft_printf("F: NOT FOUND\n");
 	else
-		printf("F: FOUND\n");
+		ft_printf("F: FOUND\n");
 }
