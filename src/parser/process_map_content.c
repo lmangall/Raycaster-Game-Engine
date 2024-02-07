@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map_content.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:51:01 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/31 19:51:03 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:28:17 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

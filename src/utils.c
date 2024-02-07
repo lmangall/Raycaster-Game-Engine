@@ -17,6 +17,7 @@ void	free_str_arr(char **str_arr)
 	free(str_arr);
 	str_arr = NULL;
 }
+
 void	free_textures_paths(t_textures_paths *textures_paths)
 {
 	if (textures_paths == NULL)
@@ -71,14 +72,9 @@ void	free_map_data(t_data *data)
 	}
 }
 
-// data->mlx is not allocated memory, so we don't need to free it
-// data->img is the same right?
-
 void	free_data(t_data *data)
 {
 	free_map_data(data);
-	if (data->img != NULL)
-		mlx_delete_image(data->mlx, data->img);
 	if (data->ray != NULL)
 	{
 		free(data->ray);

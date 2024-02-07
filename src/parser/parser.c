@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/01/31 17:18:31 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:34:57 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	parser(int argc, char **argv, t_data *data)
 	char	**lines_arr;
 	t_map	*map;
 
-	lines_arr = ft_calloc(1, sizeof(char *));
+	lines_arr = NULL;
 	if (argc != 2)
 		error_exit("Wrong number of arguments. Usage is ./cub3D <map.cub>");
 	parse_file(argv[1], &lines_arr);
