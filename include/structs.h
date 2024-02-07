@@ -6,12 +6,12 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 14:00:12 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:13:36 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_STRUCTS_H
-# define CUB3D_STRUCTS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
 # include "MLX42.h"
 # include "libft.h"

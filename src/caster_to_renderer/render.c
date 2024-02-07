@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 13:02:03 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:18:55 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
 				- 1));
 	return (pixel_array[(int)y_pixel_coordinate * texture->width
-		+ (int)x_pixel_coordinate]);
+			+ (int)x_pixel_coordinate]);
 }
 
 void	render_wall(t_data *data)
