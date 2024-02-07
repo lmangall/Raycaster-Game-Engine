@@ -5,6 +5,15 @@
 # include "doxy.h"
 # include "structs.h"
 
+// render.c
+double			adjust_mirroring(double x, double width, double angle,
+					char plane);
+void			determine_plane_and_position(t_data *data, char *plane,
+					double *wall_hit_position);
+uint32_t		pixel_color(mlx_texture_t *texture, t_data *data,
+					int higher_pixel);
+void			render_wall(t_data *data);
+//
 char			*get_identifier_value(char *map_str, char *identifier);
 int				load_textures(t_data *data);
 void			free_exit(t_data *data);

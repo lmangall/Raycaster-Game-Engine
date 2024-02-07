@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:43 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 20:57:17 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:04:20 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	rotate_player(double *orientation_angle_rd, enum e_rotation direction)
 
 void	move_player_forward(t_data *data, double move_x, double move_y)
 {
-	move_x = cos(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
-	move_y = sin(data->player->orientation_angle_rd) * PLAYER_TRANSLATION_SPEED;
+	move_x = cos(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
+	move_y = sin(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
 	if (!is_wall(data, (move_x + data->player->x_pos_px), (move_y
 				+ data->player->y_pos_px)))
 	{
@@ -42,10 +42,8 @@ void	move_player_forward(t_data *data, double move_x, double move_y)
 
 void	move_player_backward(t_data *data, double move_x, double move_y)
 {
-	move_x = -cos(data->player->orientation_angle_rd)
-		* PLAYER_TRANSLATION_SPEED;
-	move_y = -sin(data->player->orientation_angle_rd)
-		* PLAYER_TRANSLATION_SPEED;
+	move_x = -cos(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
+	move_y = -sin(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
 	if (!is_wall(data, (move_x + data->player->x_pos_px), (move_y
 				+ data->player->y_pos_px)))
 	{
@@ -58,17 +56,13 @@ void	move_player_lateral(t_data *data, double move_x, double move_y)
 {
 	if (data->player->lateral_move == L_LEFT)
 	{
-		move_x = sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = -cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
+		move_x = sin(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
+		move_y = -cos(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
 	}
 	else if (data->player->lateral_move == L_RIGHT)
 	{
-		move_x = -sin(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
-		move_y = cos(data->player->orientation_angle_rd)
-			* PLAYER_TRANSLATION_SPEED;
+		move_x = -sin(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
+		move_y = cos(data->player->orientation_angle_rd) * MOVEMENT_SPEED;
 	}
 	if (!is_wall(data, (move_x + data->player->x_pos_px), (move_y
 				+ data->player->y_pos_px)))

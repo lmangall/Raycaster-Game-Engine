@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 12:50:51 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:02:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,39 +26,43 @@ double	adjust_mirroring(double x, double width, double angle, char plane)
 	return (adjusted_coordinate);
 }
 
+void	determine_plane_and_position(t_data *data, char *plane,
+		double *wall_hit_position)
+{
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
+	{
+		*plane = 'x';
+		*wall_hit_position = data->ray->horizontal_x;
+	}
+	else
+	{
+		*plane = 'y';
+		*wall_hit_position = data->ray->vertical_y;
+	}
+	*wall_hit_position = fmod(*wall_hit_position, TILE_SIZE);
+}
+
 uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 {
 	uint32_t	*pixel_array;
-	uint32_t	color;
 	char		plane;
 	double		wall_hit_position;
 	double		x_pixel_coordinate;
 	double		y_pixel_coordinate;
-	double		factor;
 
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		plane = 'x';
-	else
-		plane = 'y';
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-		wall_hit_position = data->ray->horizontal_x;
-	else
-		wall_hit_position = data->ray->vertical_y;
-	wall_hit_position = fmod(wall_hit_position, TILE_SIZE);
+	determine_plane_and_position(data, &plane, &wall_hit_position);
 	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
 			* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
-	factor = (double)texture->height / data->ray->wall_h;
 	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
-			+ (data->ray->wall_h / 2)) * factor;
-	if (y_pixel_coordinate < 0 || y_pixel_coordinate >= texture->height)
-		return (0);
+			+ (data->ray->wall_h / 2)) * ((double)texture->height
+			/ data->ray->wall_h);
+	y_pixel_coordinate = fmax(0.0, fmin(y_pixel_coordinate, texture->height
+				- 1));
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
 				- 1));
-	color = pixel_array[(int)y_pixel_coordinate * texture->width
-		+ (int)x_pixel_coordinate];
-	color = reverse_bytes(color);
-	return (color);
+	return (pixel_array[(int)y_pixel_coordinate * texture->width
+		+ (int)x_pixel_coordinate]);
 }
 
 void	render_wall(t_data *data)
@@ -72,54 +76,9 @@ void	render_wall(t_data *data)
 	while (higher_pixel < data->ray->lower_pixel)
 	{
 		color = pixel_color(texture, data, higher_pixel);
+		color = reverse_bytes(color);
 		if (color != 0)
-		// Only render if color is not 0 (outside texture bounds)
-		{
 			render_pixel(data, higher_pixel, color);
-		}
 		higher_pixel++;
 	}
-}
-
-mlx_texture_t	*texture_selection(t_data *data)
-{
-	double	angle;
-
-	angle = data->ray->angle_rd;
-	if (data->ray->wall_collision_orientation == HORIZONTAL)
-	{
-		if (angle > 0 && angle < M_PI)
-			return (data->textures->south);
-		else
-			return (data->textures->north);
-	}
-	else
-	{
-		if (angle > M_PI_2 && angle < (3 * M_PI_2))
-			return (data->textures->west);
-		else
-			return (data->textures->east);
-	}
-}
-
-void	init_ray(t_data *data)
-{
-	double	wall_h;
-	double	lower_pixel;
-	double	higher_pixel;
-
-	data->ray->length *= cos(normalize_angle(data->ray->angle_rd
-				- data->player->orientation_angle_rd));
-	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
-			/ tan(data->player->fov_rd / 2));
-	lower_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
-	higher_pixel = (WINDOW_HEIGHT / 2) - (wall_h / 2);
-	if (lower_pixel > WINDOW_HEIGHT)
-		lower_pixel = WINDOW_HEIGHT;
-	if (higher_pixel < 0)
-		higher_pixel = 0;
-	data->ray->current_texture = texture_selection(data);
-	data->ray->wall_h = wall_h;
-	data->ray->higher_pixel = higher_pixel;
-	data->ray->lower_pixel = lower_pixel;
 }
