@@ -5,6 +5,9 @@
 # include "doxy.h"
 # include "structs.h"
 
+void			init_data_parser(t_data *data);
+void			free_data(t_data *data);
+void			free_textures_mlx(t_textures *textures);
 char			*get_identifier_value(char *map_str, char *identifier);
 int				load_textures(t_data *data);
 void			free_exit(t_data *data);

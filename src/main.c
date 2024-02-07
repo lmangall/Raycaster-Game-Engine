@@ -34,8 +34,9 @@ int	main(int argc, char **argv)
 	mode = FULL_EXPERIENCE;
 	// mode = PARSE_ONLY;
 	// debug = OFF;
-	debug = ALL;
 	data = ft_calloc(1, sizeof(t_data));
+	init_data_parser(data);
+	debug = ALL;
 	data->debug = debug;
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)
