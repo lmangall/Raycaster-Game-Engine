@@ -78,8 +78,8 @@ void	free_map_data(t_data *data)
 void	free_data(t_data *data)
 {
 	free_map_data(data);
-	if (data->img != NULL)
-		mlx_delete_image(data->mlx, data->img);
+	// if (data->img != NULL)
+	// 	mlx_delete_image(data->mlx, data->img);
 	if (data->ray != NULL)
 	{
 		free(data->ray);
