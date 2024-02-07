@@ -46,9 +46,95 @@ This project is not just about the end product; it's also a journey of learning 
 
 https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
 
-as a gif:
 
-https://github.com/lmangall/cub3D/assets/107299611/420ed7a6-31b0-4f58-b0f2-8ed0c2d96483
+__________________________________
+
+# Generating a Valgrind Suppression File
+
+A Valgrind suppression file is a mechanism to filter out known and acceptable memory leaks or errors during the execution of a program. This guide outlines the process of creating a Valgrind suppression file, including both manual and automatic methods.
+
+## Manual Suppression File Creation
+
+1. **Identify Leaks:**
+   - Run your program with Valgrind to detect memory leaks or errors.
+     ```bash
+     valgrind --leak-check=full ./your_program
+     ```
+
+2. **Extract Suppression Information:**
+   - Review Valgrind's output and identify errors or leaks that you want to suppress.
+   - Extract relevant information such as function names, library references, and leak types.
+
+3. **Create Suppression File:**
+**Suppression File Syntax:**
+
+- Start with a pair of curly braces `{}` enclosing the suppression details.
+- The first line inside the braces is a name for the suppression, chosen by you for easy identification.
+- The second line specifies the type of Valgrind tool the suppression applies to, such as `Memcheck:Leak` for memory leaks.
+- The third line, `match-leak-kinds`, is optional and specifies the kinds of leaks to match: definite, possible, indirect, still-reachable, etc.
+- Subsequent lines use patterns like `fun:function_name` to match the function names in the call stack of the detected error or `obj:library_name` for matching specific libraries.
+- The suppression entry ends when the closing brace `}` is reached.
+
+**Example:**
+
+```c
+{
+   ignore_lodepng_decode_leak
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:lodepng_decode
+   fun:lodepng_decode_memory
+   fun:lodepng_decode_file
+   fun:mlx_load_png
+   fun:load_textures
+   fun:main
+}
+
+{
+   ignore_mlx_leak_general
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   ...
+   obj:*libmlx42*
+}
+
+{
+   ignore_glfw_leak_general
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   ...
+   obj:*glfw*
+}
+```
 
 
+4. **Apply Suppression File:**
+   - Run your program with the created suppression file.
+     ```bash
+     valgrind --leak-check=full --suppressions=your_suppressions.supp ./your_program
+     ```
 
+## Automatic Suppression File Generation
+
+1. **Generate Valgrind Log:**
+   - Run your program with Valgrind and generate a log file with suppression information.
+     ```bash
+     valgrind --leak-check=full --gen-suppressions=all --log-file=valgrind_log.txt ./your_program
+     ```
+
+2. **Use Suppressions Script:**
+   - Utilize a script to parse the Valgrind log and create a suppression file automatically.
+   - Example script: [Parse_valgrind_suppressions.sh](https://wiki.wxwidgets.org/Parse_valgrind_suppressions.sh)
+
+3. **Refine Suppression File:**
+   - Review the generated suppression file and refine it by removing unnecessary entries or adjusting patterns.
+   - Focus on keeping suppressions relevant to your program's specific issues.
+
+4. **Apply Suppression File:**
+   - Run your program with the refined suppression file.
+     ```bash
+     valgrind --leak-check=full --suppressions=your_refined_suppressions.supp ./your_program
+     ```
