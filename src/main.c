@@ -6,7 +6,7 @@
 /*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:21:16 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:25:54 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv)
 	debug = OFF;
 	data = ft_calloc(1, sizeof(t_data));
 	init_data_parser(data);
-	// debug = ALL;
 	data->debug = debug;
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)
