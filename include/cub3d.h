@@ -53,5 +53,6 @@ void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
 void			check_file(char *map_file);
 void			render_wall(t_data *data);
+void	free_texture_paths(t_textures_paths *textures_paths);
 
 #endif // CUB3D_H
