@@ -33,6 +33,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 
 SRCS	= main.c \
+		utils.c \
     	caster_to_renderer/init.c \
     	caster_to_renderer/render.c \
     	caster_to_renderer/render_background.c \
@@ -51,7 +52,7 @@ SRCS	= main.c \
 		parser/process_map_elements.c \
 		parser/process_map_content.c \
 		parser/utils_free.c \
-		parser/init.c \
+		parser/init_parser.c \
 		parser/process_map_content_height_width.c \
 		parser/process_map_content_checks.c \
 		parser/process_map_content_check_spaces.c \

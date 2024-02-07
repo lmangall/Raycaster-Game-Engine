@@ -52,3 +52,15 @@ t_map	*init_map(t_map *map)
 	map->f.b = 0;
 	return (map);
 }
+
+void	init_data_parser(t_data *data)
+{
+	data->argv = NULL;
+	data->img = NULL;
+	data->mlx = NULL;
+	data->ray = NULL;
+	data->map = NULL;
+	data->player = NULL;
+	data->textures = NULL;
+	data->debug = OFF;
+}
