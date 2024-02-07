@@ -5,12 +5,19 @@
 # include "doxy.h"
 # include "structs.h"
 
-void			init_data_parser(t_data *data);
-void			free_data(t_data *data);
-void			free_textures_mlx(t_textures *textures);
-char			*get_identifier_value(char *map_str, char *identifier);
-int				load_textures(t_data *data);
-void			free_exit(t_data *data);
+void init_data_parser(t_data *data);
+void free_data(t_data *data);
+void free_textures_mlx(t_textures *textures);
+
+// render.c
+double adjust_mirroring(double x, double width, double angle, char plane);
+void determine_plane_and_position(t_data *data, char *plane, double *wall_hit_position);
+uint32_t pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel);
+void render_wall(t_data *data);
+
+char      *get_identifier_value(char *map_str, char *identifier);
+int       load_textures(t_data *data);
+void      free_exit(t_data *data);
 void			ft_reles(mlx_key_data_t keydata, t_data *data);
 void			key_pressed(t_data *data);
 void			key_hook(void *tmp);
