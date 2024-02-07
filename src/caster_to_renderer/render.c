@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:50:51 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,19 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 	uint32_t	color;
 	char		plane;
 	double		wall_hit_position;
+	double		x_pixel_coordinate;
+	double		y_pixel_coordinate;
+	double		factor;
 
-	double x_pixel_coordinate, y_pixel_coordinate, factor;
-	plane = (data->ray->wall_collision_orientation == HORIZONTAL) ? 'x' : 'y';
-	wall_hit_position = fmod((plane == 'x' ? data->ray->horizontal_x : data->ray->vertical_y),
-			TILE_SIZE);
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
+		plane = 'x';
+	else
+		plane = 'y';
+	if (data->ray->wall_collision_orientation == HORIZONTAL)
+		wall_hit_position = data->ray->horizontal_x;
+	else
+		wall_hit_position = data->ray->vertical_y;
+	wall_hit_position = fmod(wall_hit_position, TILE_SIZE);
 	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
 			* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
