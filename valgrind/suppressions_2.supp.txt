@@ -1,0 +1,37 @@
+{
+   ignore_libX11_related_leaks
+   Memcheck:Leak
+   fun:malloc
+   obj:*libX11.so*
+}
+
+{
+   ignore_glfw_related_leaks
+   Memcheck:Leak
+   fun:malloc
+   fun:glfwInit
+   obj:*libglfw.so*
+}
+
+{
+   ignore_libc_init_leaks
+   Memcheck:Leak
+   fun:malloc
+   fun:__libc_start_main
+   fun:_dl_init
+}
+
+{
+   ignore_libstdcpp_leaks
+   Memcheck:Leak
+   fun:operator new
+   obj:*libstdc++.so*
+}
+
+{
+   ignore_libLLVM_leaks
+   Memcheck:Leak
+   fun:operator new
+   obj:*libLLVM-*
+}
+

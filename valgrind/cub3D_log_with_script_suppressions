@@ -1,0 +1,97 @@
+==24234== Memcheck, a memory error detector
+==24234== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==24234== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==24234== Command: ./cub3D maps/map.cub
+==24234== Parent PID: 6519
+==24234== 
+==24234== 
+==24234== HEAP SUMMARY:
+==24234==     in use at exit: 16,366,480 bytes in 3,766 blocks
+==24234==   total heap usage: 65,660 allocs, 61,894 frees, 185,801,636 bytes allocated
+==24234== 
+==24234== LEAK SUMMARY:
+==24234==    definitely lost: 0 bytes in 0 blocks
+==24234==    indirectly lost: 0 bytes in 0 blocks
+==24234==      possibly lost: 0 bytes in 0 blocks
+==24234==    still reachable: 0 bytes in 0 blocks
+==24234==         suppressed: 16,366,480 bytes in 3,766 blocks
+==24234== 
+==24234== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 17 from 17)
+--24234-- 
+--24234-- used_suppression:      4 <insert_a_suppression_name_here> cub3Dsuppressions.supp:74 suppressed: 7,974,976 bytes in 4 blocks
+--24234-- used_suppression:      4 <insert_a_suppression_name_here> cub3Dsuppressions.supp:715 suppressed: 7,974,976 bytes in 4 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:843 suppressed: 72,704 bytes in 1 blocks
+--24234-- used_suppression:      3 <insert_a_suppression_name_here> cub3Dsuppressions.supp:629 suppressed: 90,264 bytes in 3 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:662 suppressed: 49,164 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:199 suppressed: 26,180 bytes in 21 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:307 suppressed: 15,208 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:548 suppressed: 8,328 bytes in 21 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:394 suppressed: 8,192 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:612 suppressed: 8,176 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:985 suppressed: 8,176 bytes in 1 blocks
+--24234-- used_suppression:   2054 <insert_a_suppression_name_here> cub3Dsuppressions.supp:739 suppressed: 88,591 bytes in 2,054 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:53 suppressed: 4,064 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:367 suppressed: 3,640 bytes in 91 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:757 suppressed: 3,600 bytes in 50 blocks
+--24234-- used_suppression:    198 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1009 suppressed: 60,336 bytes in 419 blocks
+--24234-- used_suppression:     71 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1122 suppressed: 37,704 bytes in 208 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1071 suppressed: 2,678 bytes in 55 blocks
+--24234-- used_suppression:      3 <insert_a_suppression_name_here> cub3Dsuppressions.supp:680 suppressed: 3,928 bytes in 23 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1256 suppressed: 2,088 bytes in 2 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:567 suppressed: 2,210 bytes in 176 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:165 suppressed: 2,433 bytes in 182 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:879 suppressed: 1,281 bytes in 1 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1204 suppressed: 1,661 bytes in 99 blocks
+--24234-- used_suppression:     34 <insert_a_suppression_name_here> cub3Dsuppressions.supp:791 suppressed: 2,267 bytes in 36 blocks
+--24234-- used_suppression:     11 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1105 suppressed: 5,160 bytes in 24 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:968 suppressed: 800 bytes in 50 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:428 suppressed: 791 bytes in 21 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:697 suppressed: 791 bytes in 21 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:235 suppressed: 752 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:728 suppressed: 536 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:530 suppressed: 352 bytes in 1 blocks
+--24234-- used_suppression:      3 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1273 suppressed: 392 bytes in 17 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1353 suppressed: 286 bytes in 6 blocks
+--24234-- used_suppression:      5 <insert_a_suppression_name_here> cub3Dsuppressions.supp:2 suppressed: 576 bytes in 5 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1221 suppressed: 352 bytes in 2 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:131 suppressed: 200 bytes in 2 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:477 suppressed: 168 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1238 suppressed: 160 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:914 suppressed: 160 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1062 suppressed: 144 bytes in 1 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:951 suppressed: 160 bytes in 2 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:998 suppressed: 128 bytes in 1 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1088 suppressed: 256 bytes in 2 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:324 suppressed: 128 bytes in 4 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:826 suppressed: 112 bytes in 14 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:464 suppressed: 96 bytes in 4 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:584 suppressed: 158 bytes in 10 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:774 suppressed: 80 bytes in 5 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:411 suppressed: 80 bytes in 3 blocks
+--24234-- used_suppression:     33 <insert_a_suppression_name_here> cub3Dsuppressions.supp:19 suppressed: 1,756 bytes in 33 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:37 suppressed: 128 bytes in 2 blocks
+--24234-- used_suppression:      6 <insert_a_suppression_name_here> cub3Dsuppressions.supp:897 suppressed: 384 bytes in 6 blocks
+--24234-- used_suppression:     16 <insert_a_suppression_name_here> cub3Dsuppressions.supp:148 suppressed: 1,024 bytes in 16 blocks
+--24234-- used_suppression:      4 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1303 suppressed: 256 bytes in 4 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1192 suppressed: 64 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:342 suppressed: 64 bytes in 1 blocks
+--24234-- used_suppression:     20 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1026 suppressed: 888 bytes in 20 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1139 suppressed: 49 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1157 suppressed: 49 bytes in 1 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:809 suppressed: 96 bytes in 2 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:494 suppressed: 48 bytes in 1 blocks
+--24234-- used_suppression:      3 <insert_a_suppression_name_here> cub3Dsuppressions.supp:601 suppressed: 144 bytes in 3 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:121 suppressed: 48 bytes in 1 blocks
+--24234-- used_suppression:      4 <insert_a_suppression_name_here> cub3Dsuppressions.supp:254 suppressed: 96 bytes in 4 blocks
+--24234-- used_suppression:      4 <insert_a_suppression_name_here> cub3Dsuppressions.supp:384 suppressed: 96 bytes in 4 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1370 suppressed: 16 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1320 suppressed: 16 bytes in 1 blocks
+--24234-- used_suppression:      2 <insert_a_suppression_name_here> cub3Dsuppressions.supp:646 suppressed: 32 bytes in 2 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:518 suppressed: 9 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:281 suppressed: 8 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:507 suppressed: 8 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:1175 suppressed: 8 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:350 suppressed: 6 bytes in 1 blocks
+--24234-- used_suppression:      1 <insert_a_suppression_name_here> cub3Dsuppressions.supp:932 suppressed: 0 bytes in 1 blocks
+==24234== 
+==24234== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 17 from 17)
