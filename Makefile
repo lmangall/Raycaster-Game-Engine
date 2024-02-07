@@ -20,7 +20,7 @@ endif
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
-	CFLAGS += -fsanitize=address -g -O1
+# CFLAGS += -fsanitize=address -g -O1
 # $(info "Darwin OS detected, CFLAGS changed to $(CFLAGS))
 endif
 
