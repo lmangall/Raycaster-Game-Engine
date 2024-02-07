@@ -121,16 +121,6 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    match-leak-kinds: reachable
-   fun:malloc
-   fun:ft_calloc
-   fun:load_textures
-   fun:init_data
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
    fun:calloc
    obj:/usr/lib/aarch64-linux-gnu/libX11.so.6.4.0
    fun:_XlcCreateLC
@@ -253,15 +243,6 @@
 {
    <insert_a_suppression_name_here>
    Memcheck:Leak
-   match-leak-kinds: indirect
-   fun:malloc
-   fun:mlx_load_png
-   fun:load_textures
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
    match-leak-kinds: reachable
    fun:_Znwm
    obj:/usr/lib/aarch64-linux-gnu/libLLVM-15.so.1
@@ -276,15 +257,6 @@
    fun:dl_open_worker
    fun:_dl_catch_exception
    fun:_dl_open
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:ft_calloc
-   fun:parser
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
@@ -343,14 +315,6 @@
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
-   fun:ft_calloc
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
    fun:strdup
    obj:/usr/lib/aarch64-linux-gnu/libX11.so.6.4.0
    obj:/usr/lib/aarch64-linux-gnu/libX11.so.6.4.0
@@ -379,16 +343,6 @@
    fun:_XrmInitParseInfo
    obj:/usr/lib/aarch64-linux-gnu/libX11.so.6.4.0
    fun:XrmGetStringDatabase
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
-   fun:mlx_load_png
-   fun:load_textures
-   fun:init_data
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
@@ -715,30 +669,6 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    match-leak-kinds: reachable
-   fun:malloc
-   fun:lodepng_decode
-   fun:lodepng_decode_memory
-   fun:lodepng_decode_file
-   fun:mlx_load_png
-   fun:load_textures
-   fun:init_data
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:ft_easy_realloc
-   fun:resize_lines_arr
-   fun:parse_file
-   fun:parser
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
    fun:_Znwm
    obj:/usr/lib/aarch64-linux-gnu/libLLVM-15.so.1
    obj:/usr/lib/aarch64-linux-gnu/libLLVM-15.so.1
@@ -997,17 +927,6 @@
 {
    <insert_a_suppression_name_here>
    Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:ft_calloc
-   fun:init_map_helper
-   fun:init_map
-   fun:parser
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
    match-leak-kinds: indirect
    fun:malloc
    obj:/usr/lib/aarch64-linux-gnu/dri/virtio_gpu_dri.so
@@ -1057,15 +976,6 @@
    fun:dl_open_worker
    fun:_dl_catch_exception
    fun:_dl_open
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:ft_calloc
-   fun:load_textures
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
@@ -1268,18 +1178,6 @@
    fun:XrmGetStringDatabase
    fun:glfwInit
    fun:mlx_init
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: indirect
-   fun:malloc
-   fun:stored_s_to_str
-   fun:get_next_line
-   fun:build_lines_arr
-   fun:parse_file
-   fun:parser
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
