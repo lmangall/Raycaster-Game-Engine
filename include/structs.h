@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 13:04:20 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:12:31 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_ROTATION_SPEED 0.045
-# define MOVEMENT_SPEED 4
+# define PLAYER_TRANSLATION_SPEED 4
 # define ERROR_OPENING_FILE "File not found or corrupted."
 // Ray directions
 # define RIGHT 10

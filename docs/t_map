@@ -20,7 +20,7 @@
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_ROTATION_SPEED 0.045
-# define MOVEMENT_SPEED 4
+# define PLAYER_TRANSLATION_SPEED 4
 # define ERROR_OPENING_FILE "File not found or corrupted."
 # define SUCCESS 0
 # define FAILURE 1
