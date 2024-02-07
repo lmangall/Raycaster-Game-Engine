@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:02 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:45:04 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:58:37 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ t_map	*init_map(t_map *map)
 
 void	init_data_parser(t_data *data)
 {
-	data->argv = NULL;
 	data->img = NULL;
 	data->mlx = NULL;
 	data->ray = NULL;

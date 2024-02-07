@@ -1,11 +1,11 @@
 /* functions_doxygen.h */
 
 #ifndef CUB3D_FUNCTIONS_DOXYGEN_H
-#define CUB3D_FUNCTIONS_DOXYGEN_H
+# define CUB3D_FUNCTIONS_DOXYGEN_H
 
-#include "structs.h"
-#include "MLX42.h"
-#include "libft.h"
+# include "MLX42.h"
+# include "libft.h"
+# include "structs.h"
 
 /**
  * @brief Adjusts a coordinate for mirroring based on specified conditions.
@@ -25,9 +25,7 @@
  *
  * @return Adjusted coordinate after considering mirroring conditions.
  */
-double					adjust_mirroring(double x, double width, double angle,
-							char plane);
-
+double	adjust_mirroring(double x, double width, double angle, char plane);
 
 // TEXTURES:     UPDATE DOXY
 /**
@@ -45,32 +43,25 @@ double					adjust_mirroring(double x, double width, double angle,
 	* the identifier is not found or memory allocation fails. The caller is
 	* responsible for freeing the allocated memory.
 	*/
-char			*get_identifier_value(char *map_str, char *identifier);
+char	*get_identifier_value(char *map_str, char *identifier);
 
-int				load_textures(t_data *data);
+int		load_textures(t_data *data);
 
 /**
  * @brief Function to handle cleanup and exit the game.
  * @param data Pointer to the t_data structure.
  */
-void			free_exit(t_data *data);
+void	free_exit(t_data *data);
 
-/**
- * @brief Function to handle key release events.
- * @param keydata Key data for the pressed key.
- * @param data Pointer to the t_data structure.
- */
-void			ft_reles(mlx_key_data_t keydata, t_data *data);
-
-void			key_pressed(t_data *data);
+void	key_pressed(t_data *data);
 // void	key_released(t_data *data);
-void			key_hook(void *tmp);
-void			apply_movement(t_data *data, double move_x, double move_y);
+void	key_hook(void *tmp);
+void	apply_movement(t_data *data, double move_x, double move_y);
 
-void			key_pressed(t_data *data);
+void	key_pressed(t_data *data);
 // void	key_released(t_data *data);
-void			key_hook(void *tmp);
-void			apply_movement(t_data *data, double move_x, double move_y);
+void	key_hook(void *tmp);
+void	apply_movement(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to handle key press events.
@@ -78,7 +69,7 @@ void			apply_movement(t_data *data, double move_x, double move_y);
  * @param tmp Extra param we can pass to the mlx_key hook that will be assigned
  * to the t_data.
  */
-void			mlx_key(mlx_key_data_t keydata, void *tmp);
+void	mlx_key(mlx_key_data_t keydata, void *tmp);
 
 /**
  * @brief Function to rotate the player based on key input.
@@ -86,8 +77,7 @@ void			mlx_key(mlx_key_data_t keydata, void *tmp);
  * @param i Integer indicating the direction of rotation (1 for right, 0 for
  * left).
  */
-void			rotate_player(double *orientation_angle_rd,
-					enum e_rotation direction);
+void	rotate_player(double *orientation_angle_rd, enum e_rotation direction);
 
 /**
  * @brief Function to move the player based on key input.
@@ -95,7 +85,7 @@ void			rotate_player(double *orientation_angle_rd,
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void			move_player(t_data *data, double move_x, double move_y);
+void	move_player(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to handle player movement and rotation based on key input.
@@ -103,7 +93,7 @@ void			move_player(t_data *data, double move_x, double move_y);
  * @param move_x Amount to move in the x-direction.
  * @param move_y Amount to move in the y-direction.
  */
-void			hook(t_data *data, double move_x, double move_y);
+void	hook(t_data *data, double move_x, double move_y);
 
 /**
  * @brief Function to put a pixel on the screen.
@@ -112,20 +102,20 @@ void			hook(t_data *data, double move_x, double move_y);
  * @param y Y-coordinate of the pixel.
  * @param color Color of the pixel.
  */
-void			render_pixel(t_data *data, int y, int color);
+void	render_pixel(t_data *data, int y, int color);
 
 /**
  * @brief Function to normalize an angle to be within the range [0, 2 * PI).
  * @param angle Angle to be normalized.
  * @return Normalized angle.
  */
-float			normalize_angle(float angle);
+float	normalize_angle(float angle);
 
 /**
  * @brief Renders the floor and ceiling of the scene.
  * @param mlx The main data structure.
  */
-void			render_floor_ceiling(t_data *data);
+void	render_floor_ceiling(t_data *data);
 
 /**
  * @brief Function to get the color of the wall based on its orientation.
@@ -133,7 +123,7 @@ void			render_floor_ceiling(t_data *data);
  * @param colision_orientation Flag indicating wall orientation).
  * @return Color of the wall.
  */
-int				get_color(t_data *data, int collision_orientation);
+int		get_color(t_data *data, int collision_orientation);
 
 /**
  * @brief Function to draw a wall on the screen.
@@ -142,14 +132,13 @@ int				get_color(t_data *data, int collision_orientation);
  * @param higher_pixel Top pixel of the wall.
  * @param lower_pixel Bottom pixel of the wall.
  */
-void			draw_wall(t_data *data, int ray, int higher_pixel,
-					int lower_pixel);
+void	draw_wall(t_data *data, int ray, int higher_pixel, int lower_pixel);
 
 /**
  * @brief Function to cast rays and render the walls in the game.
  * @param data Pointer to the t_data structure.
  */
-void			raycasting(t_data *data);
+void	raycasting(t_data *data);
 
 /**
  * @brief Update the step direction (+/−) based on the given angle and axis.
@@ -172,7 +161,7 @@ void			raycasting(t_data *data);
 
 	*       It adjusts the step based on the specified conditions in the unit circle.
  */
-int				update_steps_direction(float angle, float *step, char c);
+int		update_steps_direction(float angle, float *step, char c);
 
 /**
  * @brief Function to check and update intersection points for horizontal or
@@ -185,8 +174,8 @@ int				update_steps_direction(float angle, float *step, char c);
  * horizontal (1) or vertical (0) direction.
  * @return -1 if there is an intersection, 1 otherwise.
  */
-int				check_collision_adjust_step(float angle, float *inter,
-					float *step, char plane);
+int		check_collision_adjust_step(float angle, float *inter, float *step,
+			char plane);
 
 /**
  * @brief Function to check if a wall is hit based on coordinates.
@@ -195,7 +184,7 @@ int				check_collision_adjust_step(float angle, float *inter,
  * @param data Pointer to the t_data structure.
  * @return 1 if the wall is hit, 0 otherwise.
  */
-int				wall_hit(float x, float y, t_data *data);
+int		wall_hit(float x, float y, t_data *data);
 
 /**
  * @brief Function to get the horizontal intersection point of a wall.
@@ -203,7 +192,7 @@ int				wall_hit(float x, float y, t_data *data);
  * @param angl Angle of the ray.
  * @return Horizontal intersection distance.
  */
-float			find_x_collision(t_data *data, float angl);
+float	find_x_collision(t_data *data, float angl);
 
 /**
  * @brief Function to get the vertical intersection point of a wall.
@@ -211,32 +200,32 @@ float			find_x_collision(t_data *data, float angl);
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
  */
-float			find_y_collision(t_data *data, float angl);
+float	find_y_collision(t_data *data, float angl);
 
 /**
  * @brief Function to cast rays for rendering walls in the game.
  * @param data Pointer to the t_data structure.
  */
-void			cast_rays(t_data *data);
+void	cast_rays(t_data *data);
 
 /**
  * @brief Game loop function to handle player movement, ray casting, and
  * rendering.
  * @param tmp Pointer to the t_data structure.
  */
-void			game_hook(void *tmp);
+void	game_hook(void *tmp);
 
 /**
  * @brief Function to initialize the player structure.
  * @param data The t_data structure.
  */
-void			init_player(t_data *data);
+void	init_player(t_data *data);
 
 /**
  * @brief Function to start the Cub3D game.
  * @param map Pointer to the game data structure.
  */
-void			start_the_game(t_map *map, char *map_argv);
+void	start_the_game(t_map *map, char *map_argv);
 
 /**
  * @brief Main function to initialize the game and start the main loop.
@@ -254,8 +243,7 @@ void			start_the_game(t_map *map, char *map_argv);
  *
  * @param mlx The main data structure.
  */
-void			update_ray(t_data *data);
-int				load_textures(t_data *data);
-
+void	update_ray(t_data *data);
+int		load_textures(t_data *data);
 
 #endif // CUB3D_FUNCTIONS_DOXYGEN_H

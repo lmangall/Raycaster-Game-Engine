@@ -33,6 +33,8 @@
 		"__locale": "c",
 		"__string": "c",
 		"cub3d.h": "c",
-		"stat.h": "c"
+		"stat.h": "c",
+		"*.tcc": "cpp",
+		"ostream": "cpp"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 13:12:31 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:00:12 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,14 +159,12 @@ typedef struct s_ray
 {
 	double				angle_rd;
 	double				length;
-	double				middle_ray_length;
 	t_wall_collision	wall_collision_orientation;
 	double				horizontal_x;
 	double				horizontal_y;
 	double				vertical_x;
 	double				vertical_y;
 	int					wall_orientation;
-	int					is_wall;
 	int					screen_x;
 	mlx_texture_t		*current_texture;
 	int					wall_h;
@@ -177,7 +175,6 @@ typedef struct s_ray
 // The "main" struct
 typedef struct s_data
 {
-	char				*argv;
 	mlx_image_t			*img;
 	mlx_t				*mlx;
 	t_ray				*ray;
