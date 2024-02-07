@@ -76,8 +76,6 @@ void	free_map_data(t_data *data)
 
 void	free_data(t_data *data)
 {
-	int	i;
-
 	free_map_data(data);
 	if (data->argv != NULL)
 	{
