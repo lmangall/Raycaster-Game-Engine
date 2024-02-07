@@ -1,22 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doxy.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 15:03:48 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/07 15:15:36 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /* functions_doxygen.h */
 
-#ifndef CUB3D_FUNCTIONS_DOXYGEN_H
-# define CUB3D_FUNCTIONS_DOXYGEN_H
+#ifndef DOXY_H
+# define DOXY_H
 
 # include "MLX42.h"
 # include "libft.h"
 # include "structs.h"
-
 /**
  * @brief Adjusts a coordinate for mirroring based on specified conditions.
  *
-
-	* This function adjusts the given coordinate 'x' for mirroring effects based on the
- * specified mirroring plane ('x' or 'y'), the mirroring angle,
-	and the direction
-
-	* determined by the 'ray_direction' function. The adjustment ensures proper mirroring
- * behavior for rendering in a 2D space.
+ * This function adjusts the given coordinate 'x' for mirroring effects
+ * based on the specified mirroring plane ('x' or 'y'), the mirroring angle,
+ * and the direction
+ * determined by the 'ray_direction' function. The adjustment ensures proper
+ * mirroring behavior for rendering in a 2D space.
  *
  * @param x Original coordinate to be adjusted.
  * @param width Width of the mirroring region or surface.
@@ -27,22 +36,21 @@
  */
 double	adjust_mirroring(double x, double width, double angle, char plane);
 
-// TEXTURES:     UPDATE DOXY
 /**
-	* @brief Get the value associated with a given identifier in a string.
-	*
-	* This function finds the position of the identifier in the input string
-	* and retrieves the corresponding value. It skips spaces and returns the
-	* identified value as a dynamically allocated string.
-	*
-	* @param map_str The input string containing the identifier and its value.
-	* @param identifier The identifier whose value needs to be retrieved.
-	*
-	* @return A dynamically allocated string containing the value,
-		or NULL if
-	* the identifier is not found or memory allocation fails. The caller is
-	* responsible for freeing the allocated memory.
-	*/
+ * @brief Get the value associated with a given identifier in a string.
+ *
+ * This function finds the position of the identifier in the input string
+ * and retrieves the corresponding value. It skips spaces and returns the
+ * identified value as a dynamically allocated string.
+ *
+ * @param map_str The input string containing the identifier and its value.
+ * @param identifier The identifier whose value needs to be retrieved.
+ *
+ * @return A dynamically allocated string containing the value,
+ * or NULL if
+ * the identifier is not found or memory allocation fails. The caller is
+ * responsible for freeing the allocated memory.
+ */
 char	*get_identifier_value(char *map_str, char *identifier);
 
 int		load_textures(t_data *data);
@@ -53,13 +61,20 @@ int		load_textures(t_data *data);
  */
 void	free_exit(t_data *data);
 
+/**
+ * @brief Function to handle key release events.
+ * @param keydata Key data for the pressed key.
+ * @param data Pointer to the t_data structure.
+ */
+void	ft_reles(mlx_key_data_t keydata, t_data *data);
+
 void	key_pressed(t_data *data);
-// void	key_released(t_data *data);
+// void key_released(t_data *data);
 void	key_hook(void *tmp);
 void	apply_movement(t_data *data, double move_x, double move_y);
 
 void	key_pressed(t_data *data);
-// void	key_released(t_data *data);
+// void key_released(t_data *data);
 void	key_hook(void *tmp);
 void	apply_movement(t_data *data, double move_x, double move_y);
 
@@ -148,9 +163,10 @@ void	raycasting(t_data *data);
  * (=looking down).
  *
  * if we check y
- * we check if  the ray is looking left
+ * we check if the ray is looking left
+ *
 
-	* if the angle is greater than π/2 (90 degrees) and less than 3π/2 (270 degrees))
+	* if the angle is greater than π/2 (90 degrees) and less than 3π/2 (270 degrees
  *
  * @param angle The angle for which the step direction is updated.
  * @param step A pointer to the step value that will be updated.
@@ -158,8 +174,8 @@ void	raycasting(t_data *data);
  * @return Always returns 0.
  *
  * @note The function modifies the step value through the pointer.
-
-	*       It adjusts the step based on the specified conditions in the unit circle.
+ *
+ * It adjusts the step based on the specified conditions in the unit circle.
  */
 int		update_steps_direction(float angle, float *step, char c);
 
@@ -195,7 +211,8 @@ int		wall_hit(float x, float y, t_data *data);
 float	find_x_collision(t_data *data, float angl);
 
 /**
- * @brief Function to get the vertical intersection point of a wall.
+ * @brief Function to get the vertical intersection point
+ * of a wall.
  * @param data Pointer to the t_data structure.
  * @param angl Angle of the ray.
  * @return Vertical intersection distance.
@@ -238,12 +255,12 @@ void	start_the_game(t_map *map, char *map_argv);
  * This function initializes the parameters used in the raycasting process. It
  * calculates the wall height, top and bottom pixels of the wall on the screen,
  * and sets the current texture for rendering. Additionally,
-	it adjusts the ray's
- * distance to correct for fisheye distortion.
+ * it adjusts the ray's distance to correct for fisheye distortion.
  *
  * @param mlx The main data structure.
  */
 void	update_ray(t_data *data);
+
 int		load_textures(t_data *data);
 
 #endif // CUB3D_FUNCTIONS_DOXYGEN_H

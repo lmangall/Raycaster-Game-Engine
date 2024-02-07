@@ -6,7 +6,7 @@
 /*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:49:28 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/07 15:19:01 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:23:41 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	process_map(char **lines_arr, t_data *data)
 		i++;
 	}
 	while (lines_arr[i] != NULL && (lines_arr[i][0] == '\0'
-			|| lines_arr[i][0] == '\n'))
+		|| lines_arr[i][0] == '\n'))
 		i++;
 	process_map_content(lines_arr, data, i);
 	print_map_final(data);
