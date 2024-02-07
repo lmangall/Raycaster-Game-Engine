@@ -37,6 +37,7 @@ int	load_textures(t_data *data)
 {
 	t_textures	*textures;
 
+	ft_printf("\n\nLoading textures\n\n");
 	textures = ft_calloc(1, sizeof(t_textures));
 	textures->north = mlx_load_png(data->map->textures_paths->north);
 	textures->south = mlx_load_png(data->map->textures_paths->south);

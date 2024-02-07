@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)
 		free_exit_parser(data, "Chill! Parsing only mode is on!");
-	load_textures(data);
 	init_data(data);
 	render_background(data->mlx, data->map->c, data->map->f);
 	mlx_loop_hook(data->mlx, &key_hook, data);
