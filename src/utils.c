@@ -17,6 +17,7 @@ void	free_str_arr(char **str_arr)
 	free(str_arr);
 	str_arr = NULL;
 }
+
 void	free_textures_paths(t_textures_paths *textures_paths)
 {
 	if (textures_paths == NULL)
