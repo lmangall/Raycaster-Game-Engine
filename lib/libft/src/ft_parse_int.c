@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:39:36 by slombard          #+#    #+#             */
-/*   Updated: 2023/02/12 20:56:06 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:13:52 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ void	ft_parse_int(int nbr, int *count)
 	{
 		ft_putstr("-2147483648", count);
 		return ;
-	}	
+	}
 	ft_putnbr(nbr, count);
 }
