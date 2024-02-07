@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 19:49:28 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/07 15:17:26 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:23:41 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,14 @@ void	free_str_arr(char **str_arr)
 
 int	all_elements_found(t_map_elements *elements)
 {
-	printf("Checking if all elements have been found...\n");
 	if (elements->no == FOUND && elements->so == FOUND && elements->we == FOUND
 		&& elements->ea == FOUND && elements->c == FOUND
 		&& elements->f == FOUND)
 	{
-		printf("All elements found\n");
 		return (SUCCESS);
 	}
 	else
 	{
-		printf("Not all elements found\n");
 		return (FAILURE);
 	}
 }
@@ -49,7 +46,6 @@ void	process_map(char **lines_arr, t_data *data)
 	t_map			*map;
 	int				i;
 
-	printf("Processing map elements...\n");
 	init_elements_status(&elements);
 	map = init_map(map);
 	data->map = map;

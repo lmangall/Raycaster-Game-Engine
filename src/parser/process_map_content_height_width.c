@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map_content_height_width.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:18:30 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/01 17:18:31 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:18:20 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	calculate_height(char **lines_arr, int first_line, t_data *data)
 				"Content after empty line in map or empty line in a map");
 		i++;
 	}
-	printf("height: %d\n", height);
+	ft_printf("height: %d\n", height);
 	return (height);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 21:10:53 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:25:54 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	main(int argc, char **argv)
 	t_debug	debug;
 
 	mode = FULL_EXPERIENCE;
-	// mode = PARSE_ONLY;
-	// debug = OFF;
+	debug = OFF;
 	data = ft_calloc(1, sizeof(t_data));
 	init_data_parser(data);
-	debug = ALL;
 	data->debug = debug;
 	parser(argc, argv, data);
 	if (mode == PARSE_ONLY)

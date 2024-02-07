@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:59 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:53:00 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:18:06 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 void	error_exit(char *error_message)
 {
-	printf("Error\n");
-	printf("%s\n", error_message);
+	ft_printf("Error\n");
+	ft_printf("%s\n", error_message);
 	exit(EXIT_FAILURE);
 }
 
