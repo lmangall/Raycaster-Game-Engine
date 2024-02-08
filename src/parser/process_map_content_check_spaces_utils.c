@@ -13,12 +13,21 @@
 #include "cub3d.h"
 #include "parser.h"
 
+// This function is called for a space and check
+// if the space is surrounded by walls or ny another space
 int	is_valid_char(char c)
 {
+	printf("is_valid_char\n");
 	if (c == ' ' || c == '1')
+	{
+		printf("is_valid_char SUCCESS\n");
 		return (SUCCESS);
+	}
 	else
+	{
+		printf("is_valid_char FAILURE\n");
 		return (FAILURE);
+	}
 }
 
 void	define_start_and_end(int *start, int *end, int idx, int line_len)
