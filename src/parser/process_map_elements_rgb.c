@@ -27,17 +27,29 @@ void	build_rgb_values(char **line_ptr, char *identifier,
 	char	*end;
 	char	*rgb_str;
 
-	while (**line_ptr == ' ')
+	ft_printf("build_rgb_values\n");
+
+	// while (**line_ptr == ' ')
+	while(ft_isspace(**line_ptr))
 		(*line_ptr)++;
 	(*line_ptr) += ft_strlen(identifier);
-	while (**line_ptr == ' ')
+	// while (**line_ptr == ' ')
+	while(ft_isspace(**line_ptr))
 		(*line_ptr)++;
 	start = *line_ptr;
-	while (**line_ptr != ' ' && **line_ptr != '\0')
+	// while (**line_ptr != ' ' && **line_ptr != '\0')
+	while(!ft_isspace(**line_ptr) && **line_ptr != '\0')
 		(*line_ptr)++;
 	end = *line_ptr;
 	rgb_str = ft_substr(start, 0, end - start);
+	ft_printf("rgb_str: %s\n", rgb_str);
 	vars->rgb_values = ft_split(rgb_str, ',');
+	int i = 0;
+	while (vars->rgb_values[i] != NULL)
+	{
+		ft_printf("vars->rgb_values[%d]: %s\n", i, vars->rgb_values[i]);
+		i++;
+	}
 	free(rgb_str);
 }
 
@@ -46,6 +58,7 @@ void	check_number_and_quality_rgb_values(t_collect_elements_data_rgba *vars,
 {
 	int	i;
 
+printf("check_number_and_quality_rgb_values\n");
 	i = 0;
 	while (vars->rgb_values[i] != NULL)
 		i++;
@@ -57,7 +70,9 @@ void	check_number_and_quality_rgb_values(t_collect_elements_data_rgba *vars,
 	i = 0;
 	while (vars->rgb_values[i] != NULL)
 	{
-		if (!str_isdigit(vars->rgb_values[i]))
+		ft_printf("before if(!str_isdigit(vars->rgb_values[i])\n");
+		ft_printf("vars->rgb_values[%d]: %s\n", i, vars->rgb_values[i]);
+		if (str_isdigit(vars->rgb_values[i]) == FAILURE)
 		{
 			free_str_arr(vars->rgb_values);
 			free_exit_parser(data, "Invalid RGB values\n");
@@ -87,7 +102,7 @@ void	convert_and_check_range_rgb_values(t_collect_elements_data_rgba *vars,
 void	collect_elements_data_rgba(char *line, char *identifier, t_data *data)
 {
 	t_collect_elements_data_rgba	vars;
-
+	ft_printf("collect_elements_data_rgba\n");
 	vars.target = NULL;
 	if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)
 		vars.target = &data->map->c;

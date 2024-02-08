@@ -30,6 +30,8 @@ void	init_map_helper(t_map_elements *elements,
 	elements->f = NOT_FOUND;
 }
 
+// rgb values initialiised to 256 to check if they are set
+
 t_map	*init_map(t_map *map)
 {
 	t_textures_paths	*textures_paths;
@@ -44,12 +46,12 @@ t_map	*init_map(t_map *map)
 	map->player_found = NOT_FOUND;
 	map->width = 0;
 	map->height = 0;
-	map->c.r = 0;
-	map->c.g = 0;
-	map->c.b = 0;
-	map->f.r = 0;
-	map->f.g = 0;
-	map->f.b = 0;
+	map->c.r = 256;
+	map->c.g = 256;
+	map->c.b = 256;
+	map->f.r = 256;
+	map->f.g = 256;
+	map->f.b = 256;
 	return (map);
 }
 

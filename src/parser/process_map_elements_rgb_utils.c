@@ -25,12 +25,19 @@ int	str_isdigit(char *str)
 {
 	int	i;
 
+	ft_printf("str_isdigit\n");
+
 	i = 0;
 	while (str[i] != '\0')
 	{
 		if (!char_isdigit(str[i]))
+		{
+			ft_printf("str_isdigit: FAILURE\n");
 			return (FAILURE);
+
+		}
 		i++;
 	}
+	ft_printf("str_isdigit: SUCCESS\n");
 	return (SUCCESS);
 }
