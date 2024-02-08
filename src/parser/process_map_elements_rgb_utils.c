@@ -25,10 +25,11 @@ int	str_isdigit(char *str)
 {
 	int	i;
 
+
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!char_isdigit(str[i]))
+		if (char_isdigit(str[i]) == FAILURE)
 			return (FAILURE);
 		i++;
 	}
