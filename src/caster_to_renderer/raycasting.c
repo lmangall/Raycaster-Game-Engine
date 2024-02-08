@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 14:00:00 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:10:28 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ mlx_texture_t	*texture_selection(t_data *data)
 	double	angle;
 
 	angle = data->ray->angle_rd;
+	angle = normalize_angle(angle);
 	if (data->ray->wall_collision_orientation == HORIZONTAL)
 	{
-		if (angle > 0 && angle < M_PI)
+		if (angle >= 0 && angle < M_PI)
 			return (data->textures->south);
 		else
 			return (data->textures->north);
 	}
 	else
 	{
-		if (angle > M_PI_2 && angle < (3 * M_PI_2))
+		if (angle > M_PI_2 && angle <= (3 * M_PI_2))
 			return (data->textures->west);
 		else
 			return (data->textures->east);
@@ -81,7 +82,7 @@ void	raycasting(t_data *data)
 		- (data->player->fov_rd / 2);
 	while (data->ray->screen_x < WINDOW_WIDTH)
 	{
-		data->ray->wall_collision_orientation = NO_COLLISION;
+		// data->ray->wall_collision_orientation = NO_COLLISION;
 		update_length_and_collision_orientation(data);
 		update_ray(data);
 		render_wall(data);
