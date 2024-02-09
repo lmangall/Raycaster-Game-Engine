@@ -1,6 +1,11 @@
 # cub3D
 
 
+
+Check this out:
+https://www.youtube.com/watch?v=X6AR2RMB5tE&ab_channel=ThePrimeagen
+
+
 from ccatano: 
 - fabs, stand for float abs, is a function we need from the math library
 - parsing is difficult, yet similar to so_long
@@ -66,30 +71,14 @@ GitHub provides an "Issues" tab for effective project management. Here's how to 
 ### Opening Issues
 
 - **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. This helps in better tracking and organization.
-
-### Issue Details
-
 - **Tags:** Use relevant tags to categorize and label issues (e.g., `bug`, `feature`, `documentation`, etc.).
-
 - **Assignees:** Assign issues to team members responsible for their resolution.
-
-## Branching Strategy
-
-- **Branch Naming:** Create branches for new features or bug fixes with clear and descriptive names.
-
-- **Keeping Main Working:** The `main` branch should always be in a working state. Avoid pushing directly to `main`.
+- **Branch Naming:** We found practical to create the branch right from the issue tab in Github
 
 ## Pull Requests (PRs)
 
-- **PR Opening:** Open a pull request once changes are ready for review.
-
+- **PR Opening:** Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push"
 - **PR Review:** Collaborators review each other's code by commenting on the PR.
-
-- **Assignee:** Assign the PR to the person responsible for reviewing and merging.
-
-- **Never Push to Main:** Never push directly to `main`. Changes should always go through the PR process.
-
-- **PR Acceptance:** Collaborators must accept PRs before merging. This ensures code review and quality control.
 
 ## Protection of Main Branch
 
@@ -98,16 +87,12 @@ GitHub provides an "Issues" tab for effective project management. Here's how to 
 ### Example Workflow
 
 1. **Issue Creation:** Open an issue for a new task or bug.
-
 2. **Branching:** Create a new branch for the issue - e.g., `feature/add-new-feature`.
-
 3. **Commits:** Make frequent, small commits and reference the issue number in the commit message.
-
 4. **Pull Request:** Open a pull request once the work is complete.
-
 5. **Review:** Collaborators review the code, add comments, and suggest changes if necessary.
-
-6. **Approval:** Once approved, the PR is merged into `main`.
+6. **Approval:** Once approved, the PR is merged into `main`,
+7. the issue is closed and the branch deleted
 
 Remember, effective communication is key to successful collaboration. Happy coding!
 
