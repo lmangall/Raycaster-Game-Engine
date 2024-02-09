@@ -46,8 +46,92 @@ This project is not just about the end product; it's also a journey of learning 
 
 https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
 
+________________________________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________________________________
 
-__________________________________
+________________________________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________________________________
+
+
+# Collaboration Guide using Git and GitHub
+
+## Overview
+
+This guide outlines best practices for collaborative development using Git and GitHub. Effective collaboration involves clear communication, issue tracking, and a streamlined pull request (PR) process.
+
+## Issues on GitHub
+
+GitHub provides an "Issues" tab for effective project management. Here's how to make the most of it:
+
+### Opening Issues
+
+- **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. This helps in better tracking and organization.
+
+### Issue Details
+
+- **Tags:** Use relevant tags to categorize and label issues (e.g., `bug`, `feature`, `documentation`, etc.).
+
+- **Assignees:** Assign issues to team members responsible for their resolution.
+
+## Branching Strategy
+
+- **Branch Naming:** Create branches for new features or bug fixes with clear and descriptive names.
+
+- **Keeping Main Working:** The `main` branch should always be in a working state. Avoid pushing directly to `main`.
+
+## Pull Requests (PRs)
+
+- **PR Opening:** Open a pull request once changes are ready for review.
+
+- **PR Review:** Collaborators review each other's code by commenting on the PR.
+
+- **Assignee:** Assign the PR to the person responsible for reviewing and merging.
+
+- **Never Push to Main:** Never push directly to `main`. Changes should always go through the PR process.
+
+- **PR Acceptance:** Collaborators must accept PRs before merging. This ensures code review and quality control.
+
+## Protection of Main Branch
+
+- **Main Protection:** While we've decided not to protect the `main` branch, it is crucial to follow the rule of never pushing directly to it.
+
+### Example Workflow
+
+1. **Issue Creation:** Open an issue for a new task or bug.
+
+2. **Branching:** Create a new branch for the issue - e.g., `feature/add-new-feature`.
+
+3. **Commits:** Make frequent, small commits and reference the issue number in the commit message.
+
+4. **Pull Request:** Open a pull request once the work is complete.
+
+5. **Review:** Collaborators review the code, add comments, and suggest changes if necessary.
+
+6. **Approval:** Once approved, the PR is merged into `main`.
+
+Remember, effective communication is key to successful collaboration. Happy coding!
+
+
+
+| Command                               | Description                                          |
+|---------------------------------------|------------------------------------------------------|
+| `git branch`                          | List, create, or delete branches.                    |
+| `git fetch --all`                     | Fetch all branches from the remote repository.       |
+| `git checkout my_branch`               | Switch to the specified branch.                      |
+| `git stash`                           | Save changes that are not ready to be committed.    |
+| `git stash pop`                       | Apply stashed changes and remove them from the stash.|
+| `git log`                             | Display commit logs.                                 |
+| `git log --oneline`                   | Display abbreviated commit hashes and messages.      |
+| `git log --graph`                     | Display a text-based graph of the commit history.   |
+| `git log -n 5`                        | Show the last 5 commits.                             |
+| `git log -p`                          | Show changes introduced in each commit.              |
+
+Note: Make sure to replace `my_branch` with the actual branch name you want to checkout. These commands are just a starting point, and there are many more Git commands and options available for various scenarios. Feel free to explore Git documentation for more details on each command.
+
+
+
+________________________________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________________________________
 
 # Generating a Valgrind Suppression File
 
@@ -138,3 +222,7 @@ A Valgrind suppression file is a mechanism to filter out known and acceptable me
      ```bash
      valgrind --leak-check=full --suppressions=your_refined_suppressions.supp ./your_program
      ```
+
+
+
+________________________________________________________________________________________________________________________________________
