@@ -70,9 +70,12 @@ GitHub provides an "Issues" tab for effective project management. Here's how to 
 
 ### Opening Issues
 
-- **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. This helps in better tracking and organization.
+- **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. 
+      This helps in better tracking (collaborators know what is going on) and organization.
 - **Tags:** Use relevant tags to categorize and label issues (e.g., `bug`, `feature`, `documentation`, etc.).
 - **Assignees:** Assign issues to team members responsible for their resolution.
+- **Conversation:** Use the conversation part of the issue to explain a problem, ask questions and stay up to date
+      you can @people and #issue or #commit or #pullrequest 
 - **Branch Naming:** We found practical to create the branch right from the issue tab in Github
 
 ## Pull Requests (PRs)
