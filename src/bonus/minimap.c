@@ -11,19 +11,20 @@ void minimap(t_data *data)
 	int i;
 	int j;
 
-	mlx_image_t *minimap;
 
 
-	minimap_height = WINDOW_HEIGHT / 5;
-	minimap_width = WINDOW_WIDTH / 5;
+	// minimap_height = WINDOW_HEIGHT / 5;
+	// minimap_width = WINDOW_WIDTH / 5;
+	minimap_height = 150;
+	minimap_width = 300;
 	minimap_offset_x = 20;
 	minimap_offset_y = 20;
 	i = 0;
 	j = 0;
-	minimap = mlx_new_image(data->mlx, minimap_width, minimap_height);
-	if (minimap == NULL)
+	data->minimap = mlx_new_image(data->mlx, minimap_width, minimap_height);
+	if (data->minimap == NULL)
 	{
-		// free_data
+		printf("Error: minimap is NULL\n");
 		return ;
 	}
 	while (j < minimap_height)
@@ -31,13 +32,19 @@ void minimap(t_data *data)
 		i = 0;
 		while (i < minimap_width)
 		{
-			mlx_put_pixel(minimap, i, j, RGBA(0, 0, 0, 255));
+			mlx_put_pixel(data->minimap, i, j, RGBA(255, 255, 255, 255));
 			i++;
 		}
 		j++;
 	}
-	mlx_image_to_window(data->mlx, minimap, minimap_offset_x, minimap_offset_y);
-	data->minimap = minimap;
-	// minimap->instances[0].z = -1;
+	mlx_image_to_window(data->mlx, data->minimap, minimap_offset_x, minimap_offset_y);
+	// print instance count of minimap
+	// printf("instances of img: %zu\n", data->img->count);
+	// printf("z-idx of img: %d\n", data->img->instances[0].z);
+	// printf("instances of data->minimap: %zu\n", data->minimap->count);
+	// printf("z-idx of data->minimap: %d\n", data->minimap->instances[0].z);
+	// printf("instances of background: %zu\n", data->background->count);
+	// printf("z-idx of background: %d\n", data->background->instances[0].z);
+	// data->minimap = minimap;
 
 }

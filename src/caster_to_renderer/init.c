@@ -15,8 +15,10 @@
 void	init_data(t_data *data)
 {
 	load_textures(data);
-	data->ray = calloc(1, sizeof(t_ray));
-	data->player = calloc(1, sizeof(t_player));
+	// data->ray = calloc(1, sizeof(t_ray));
+	// data->player = calloc(1, sizeof(t_player));
+	data->ray = ft_calloc(1, sizeof(t_ray));
+	data->player = ft_calloc(1, sizeof(t_player));
 	init_player(data);
 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", 0);
 }

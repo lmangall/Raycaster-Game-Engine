@@ -19,11 +19,12 @@ void	game_hook(void *tmp)
 	data = (t_data *)tmp;
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
+	if (data->minimap)
+		mlx_delete_image(data->mlx, data->minimap);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	if (data->minimap)
-		mlx_delete_image(data->mlx, data->minimap);
+
 	minimap(data);
 }
 
@@ -43,7 +44,7 @@ int	main(int argc, char **argv)
 	if (mode == PARSE_ONLY)
 		free_exit_parser(data, "Chill! Parsing only mode is on!");
 	init_data(data);
-	render_background(data->mlx, data->map->c, data->map->f);
+	render_background(data->mlx, data->map->c, data->map->f, data);
 	mlx_loop_hook(data->mlx, &key_hook, data);
 	mlx_loop_hook(data->mlx, &game_hook, data);
 	mlx_loop(data->mlx);

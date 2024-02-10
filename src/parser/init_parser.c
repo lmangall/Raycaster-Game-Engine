@@ -59,6 +59,7 @@ void	init_data_parser(t_data *data)
 {
 	data->img = NULL;
 	data->minimap = NULL;
+	data->background = NULL;
 	data->mlx = NULL;
 	data->ray = NULL;
 	data->map = NULL;

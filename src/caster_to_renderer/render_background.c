@@ -46,7 +46,7 @@ static uint32_t	rgba_to_int(t_rgba color)
 	return (color.r << 24 | color.g << 16 | color.b << 8 | 255);
 }
 
-void	render_background(mlx_t *mlx, t_rgba c, t_rgba f)
+void	render_background(mlx_t *mlx, t_rgba c, t_rgba f, t_data *data)
 {
 	mlx_image_t	*image;
 	uint32_t	top_color;
@@ -57,4 +57,5 @@ void	render_background(mlx_t *mlx, t_rgba c, t_rgba f)
 	image = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	render_background_pixel(image, top_color, bottom_color);
 	mlx_image_to_window(mlx, image, 0, 0);
+	data->background = image;
 }

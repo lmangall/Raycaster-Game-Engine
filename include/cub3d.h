@@ -51,7 +51,7 @@ void			game_hook(void *tmp);
 void			init_player(t_data *data);
 void			update_ray(t_data *data);
 void			init_data(t_data *data);
-void			render_background(mlx_t *mlx, t_rgba c, t_rgba f);
+void			render_background(mlx_t *mlx, t_rgba c, t_rgba f, t_data *data);
 void			free_exit_parser(t_data *data, char *error_message);
 void			parser(int argc, char **argv, t_data *data);
 void			init_player_original_orientation(t_data *data);
