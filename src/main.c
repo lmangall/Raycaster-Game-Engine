@@ -26,6 +26,8 @@ void	game_hook(void *tmp)
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 
 	minimap(data);
+	
+	mlx_image_to_window(data->mlx, data->minimap, 50, 50);
 }
 
 // place render_background somewhere else ?
