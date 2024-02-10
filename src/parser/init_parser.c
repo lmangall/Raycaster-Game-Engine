@@ -58,6 +58,7 @@ t_map	*init_map(t_map *map)
 void	init_data_parser(t_data *data)
 {
 	data->img = NULL;
+	data->minimap = NULL;
 	data->mlx = NULL;
 	data->ray = NULL;
 	data->map = NULL;

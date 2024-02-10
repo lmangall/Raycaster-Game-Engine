@@ -67,4 +67,8 @@ void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
 void			render_wall(t_data *data);
 
+// BONUS
+
+void minimap(t_data *data);
+
 #endif // CUB3D_H

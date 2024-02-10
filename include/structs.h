@@ -176,6 +176,7 @@ typedef struct s_ray
 typedef struct s_data
 {
 	mlx_image_t			*img;
+	mlx_image_t		*minimap;
 	mlx_t				*mlx;
 	t_ray				*ray;
 	t_map				*map;

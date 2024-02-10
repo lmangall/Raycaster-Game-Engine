@@ -20,7 +20,7 @@ endif
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
-# CFLAGS += -fsanitize=address -g -O1
+	CFLAGS += -fsanitize=address -g -O1
 # $(info "Darwin OS detected, CFLAGS changed to $(CFLAGS))
 endif
 
@@ -60,7 +60,8 @@ SRCS	= main.c \
 		parser/process_map_elements_rgb.c \
 		parser/process_map_elements_rgb_utils.c \
 		parser/utils_prints_elements.c \
-		parser/process_map_content_check_spaces_utils.c
+		parser/process_map_content_check_spaces_utils.c \
+		bonus/minimap.c
 
 SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
 # OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))

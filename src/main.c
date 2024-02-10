@@ -22,6 +22,9 @@ void	game_hook(void *tmp)
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	raycasting(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	if (data->minimap)
+		mlx_delete_image(data->mlx, data->minimap);
+	minimap(data);
 }
 
 // place render_background somewhere else ?
