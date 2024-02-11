@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 16:34:48 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:07:16 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ mlx_texture_t	*texture_selection(t_data *data)
 void	update_ray(t_data *data)
 {
 	double	wall_h;
-	double	lower_pixel;
-	double	higher_pixel;
+	double	wall_bot_pixel;
+	double	wall_top_pixel;
 
 	data->ray->length *= cos(normalize_angle(data->ray->angle_rd
 				- data->player->orientation_angle_rd));
 	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
 			/ tan(data->player->fov_rd / 2));
-	lower_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
-	higher_pixel = (WINDOW_HEIGHT / 2) - (wall_h / 2);
-	if (lower_pixel > WINDOW_HEIGHT)
-		lower_pixel = WINDOW_HEIGHT;
-	if (higher_pixel < 0)
-		higher_pixel = 0;
+	wall_bot_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_h / 2);
+	if (wall_bot_pixel > WINDOW_HEIGHT)
+		wall_bot_pixel = WINDOW_HEIGHT;
+	if (wall_top_pixel < 0)
+		wall_top_pixel = 0;
 	data->ray->current_texture = texture_selection(data);
 	data->ray->wall_h = wall_h;
-	data->ray->higher_pixel = higher_pixel;
-	data->ray->lower_pixel = lower_pixel;
+	data->ray->wall_top_pixel = wall_top_pixel;
+	data->ray->wall_bot_pixel = wall_bot_pixel;
 }
 
 void	update_length_and_collision_orientation(t_data *data)
@@ -88,7 +88,7 @@ void	raycasting(void *tmp)
 		// data->ray->wall_collision_orientation = NO_COLLISION;
 		update_length_and_collision_orientation(data);
 		update_ray(data);
-		render_wall(data);
+		render_wall_background(data);
 		data->ray->screen_x++;
 		data->ray->angle_rd += (data->player->fov_rd / WINDOW_WIDTH);
 	}

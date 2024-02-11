@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 16:29:12 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:09:01 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	determine_plane_and_position(t_data *data, char *plane,
 	*wall_hit_position = fmod(*wall_hit_position, TILE_SIZE);
 }
 
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
+uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int wall_top_pixel)
 {
 	uint32_t	*pixel_array;
 	char		plane;
@@ -54,7 +54,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
 			* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
-	y_pixel_coordinate = (higher_pixel - (WINDOW_HEIGHT / 2)
+	y_pixel_coordinate = (wall_top_pixel - (WINDOW_HEIGHT / 2)
 			+ (data->ray->wall_h / 2)) * ((double)texture->height
 			/ data->ray->wall_h);
 	y_pixel_coordinate = fmax(0.0, fmin(y_pixel_coordinate, texture->height
@@ -65,41 +65,27 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 			+ (int)x_pixel_coordinate]);
 }
 
-void	render_wall(t_data *data)
+void	render_wall_background(t_data *data)
 {
-	int				higher_pixel;
+	int				rendered_pixel;
+	int 			i;
 	uint32_t		color;
 	mlx_texture_t	*texture;
-
-	texture = data->ray->current_texture;
-	higher_pixel = data->ray->higher_pixel;
-
-	int i;
-
+	
 	i = 0;
-		uint32_t	top_color;
-	uint32_t	bottom_color;
-
-	top_color = rgba_to_int(data->map->c);
-	bottom_color = rgba_to_int(data->map->f);
-		while (i < higher_pixel)
+	texture = data->ray->current_texture;
+	rendered_pixel = data->ray->wall_top_pixel;
+	while (++i < rendered_pixel)
+		render_pixel(data, i, data->map->c_color); 
+	while (rendered_pixel < data->ray->wall_bot_pixel)
 	{
-		render_pixel(data, i, top_color); 
-		i++;
-	}
-
-	while (higher_pixel < data->ray->lower_pixel)
-	{
-		color = pixel_color(texture, data, higher_pixel);
+		color = pixel_color(texture, data, rendered_pixel);
 		color = reverse_bytes(color);
 		if (color != 0)
-			render_pixel(data, higher_pixel, color);
-		higher_pixel++;
+			render_pixel(data, rendered_pixel, color);
+		rendered_pixel++;
 	}
-	i = data->ray->lower_pixel;
-	while ( i < WINDOW_HEIGHT)
-	{
-		render_pixel(data, i, bottom_color);
-		i++;
-	}
+	i = data->ray->wall_bot_pixel;
+	while ( ++i < WINDOW_HEIGHT)
+		render_pixel(data, i, data->map->f_color);
 }

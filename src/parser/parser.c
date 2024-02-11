@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/07 15:18:36 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:02:55 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,11 @@ void	parser(int argc, char **argv, t_data *data)
 	check_texture_paths(data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
+	
+	///
+
+	data->map->c_color = rgba_to_int(data->map->c);
+	data->map->f_color = rgba_to_int(data->map->f);
+
+	///
 }

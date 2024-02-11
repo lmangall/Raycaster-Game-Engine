@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 16:34:51 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:06:59 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ double			adjust_mirroring(double x, double width, double angle,
 void			determine_plane_and_position(t_data *data, char *plane,
 					double *wall_hit_position);
 uint32_t		pixel_color(mlx_texture_t *texture, t_data *data,
-					int higher_pixel);
+					int wall_top_pixel);
 void			render_wall(t_data *data);
 
 char			*get_identifier_value(char *map_str, char *identifier);
@@ -66,7 +66,7 @@ void			error_exit(char *error_msg);
 void			*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
-void			render_wall(t_data *data);
+void			render_wall_background(t_data *data);
 
 // BONUS
 
