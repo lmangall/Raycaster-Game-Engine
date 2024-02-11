@@ -12,24 +12,35 @@
 
 #include "cub3d.h"
 
-void game_hook(void *tmp)
+void	game_hook(void *tmp)
 {
 	t_data	*data;
 
 	data = (t_data *)tmp;
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
+	// if (data->minimap->img)
+	// 	mlx_delete_image(data->mlx, data->minimap->img);
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	// data->minimap->img = mlx_new_image(data->mlx, data->minimap->width,
+	// 	data->minimap->height);
+	raycasting(data);
+	// render_minimap(data);
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	// mlx_image_to_window(data->mlx, data->minimap->img, 50, 50);
+}
+
+void minimap_hook(void *tmp)
+{
+	t_data *data;
+
+	data = (t_data *)tmp;
 	if (data->minimap->img)
 		mlx_delete_image(data->mlx, data->minimap->img);
-	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->minimap->img = mlx_new_image(data->mlx, data->minimap->width,
 		data->minimap->height);
-	raycasting(data);
 	render_minimap(data);
 	mlx_image_to_window(data->mlx, data->minimap->img, 50, 50);
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	
-	
 
 }
 
@@ -108,6 +119,7 @@ int	main(int argc, char **argv)
 	render_background(data->mlx, data->map->c, data->map->f, data);
 	mlx_loop_hook(data->mlx, &key_hook, data);
 	mlx_loop_hook(data->mlx, &game_hook, data);
+	mlx_loop_hook(data->mlx, &minimap_hook, data);
 	mlx_loop(data->mlx);
 	free_exit(data);
 	return (0);
