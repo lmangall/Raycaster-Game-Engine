@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/08 01:10:28 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:34:48 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,11 @@ void	update_length_and_collision_orientation(t_data *data)
 	}
 }
 
-void	raycasting(t_data *data)
+void	raycasting(void *tmp)
 {
+		t_data	*data;
+
+	data = (t_data *)tmp;
 	data->ray->screen_x = 0;
 	data->ray->angle_rd = data->player->orientation_angle_rd
 		- (data->player->fov_rd / 2);

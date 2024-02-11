@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 16:22:45 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:34:51 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			rotate_player(double *orientation_angle_rd,
 					enum e_rotation direction);
 void			render_pixel(t_data *data, int y, int color);
 float			normalize_angle(float angle);
-void			raycasting(t_data *data);
+void			raycasting(void *tmp);
 int				update_steps_direction(float angle, float *step, char c);
 int				check_collision_adjust_step(float angle, float *inter,
 					float *step, char plane);
@@ -53,7 +53,6 @@ void			game_hook(void *tmp);
 void			init_player(t_data *data);
 void			update_ray(t_data *data);
 void			init_data(t_data *data);
-void			render_background(mlx_t *mlx, t_rgba c, t_rgba f, t_data *data);
 void			free_exit_parser(t_data *data, char *error_message);
 void			parser(int argc, char **argv, t_data *data);
 void			init_player_original_orientation(t_data *data);
@@ -71,6 +70,6 @@ void			render_wall(t_data *data);
 
 // BONUS
 
-void render_minimap(t_data *data);
+void			render_minimap(void *tmp);
 
 #endif // CUB3D_H

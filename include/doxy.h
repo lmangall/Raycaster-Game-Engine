@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:03:48 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:15:36 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:35:23 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,11 @@ int		get_color(t_data *data, int collision_orientation);
  */
 void	draw_wall(t_data *data, int ray, int higher_pixel, int lower_pixel);
 
-/**
- * @brief Function to cast rays and render the walls in the game.
- * @param data Pointer to the t_data structure.
- */
-void	raycasting(t_data *data);
+// /**
+//  * @brief Function to cast rays and render the walls in the game.
+//  * @param data Pointer to the t_data structure.
+//  */
+// void	raycasting(t_data *data);
 
 /**
  * @brief Update the step direction (+/−) based on the given angle and axis.

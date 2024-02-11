@@ -2,8 +2,13 @@
 
 #define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
 
-void	render_minimap(t_data *data)
+void	render_minimap(void *tmp)
 {
+
+		t_data	*data;
+
+	data = (t_data *)tmp;
+
 	double scale_x;
 	double scale_y;
 	int player_pos_x;
