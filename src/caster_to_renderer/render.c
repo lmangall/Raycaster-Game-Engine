@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:18:55 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:03:16 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,36 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int higher_pixel)
 
 void	render_wall(t_data *data)
 {
-	int				higher_pixel;
-	uint32_t		color;
-	mlx_texture_t	*texture;
+    int				higher_pixel;
+    uint32_t		color;
+    mlx_texture_t	*texture;
+    int             i;
+	// int			    background_color;
 
-	texture = data->ray->current_texture;
-	higher_pixel = data->ray->higher_pixel;
-	while (higher_pixel < data->ray->lower_pixel)
-	{
-		color = pixel_color(texture, data, higher_pixel);
-		color = reverse_bytes(color);
-		if (color != 0)
-			render_pixel(data, higher_pixel, color);
-		higher_pixel++;
-	}
+	// background_color = 0x00FF00;
+	// reverse_bytes(background_color);
+    texture = data->ray->current_texture;
+    higher_pixel = data->ray->higher_pixel;
+
+    i = 0;
+    while (i < higher_pixel)
+    {
+        render_pixel(data, i, 0x00FF00);
+    }
+
+    while (higher_pixel < data->ray->lower_pixel)
+    {
+        color = pixel_color(texture, data, higher_pixel);
+        color = reverse_bytes(color);
+        if (color != 0)
+            render_pixel(data, higher_pixel, color);
+        higher_pixel++;
+    }
+
+    i = data->ray->lower_pixel;
+    while (i < WINDOW_HEIGHT)
+    {
+        render_pixel(data, i, 0x00FF00); 
+        i++;
+    }
 }

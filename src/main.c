@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 15:48:45 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 15:53:06 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void game_hook(void *tmp)
 	data = (t_data *)tmp;
 	// if (data->img)
 	// 	mlx_delete_image(data->mlx, data->img);
-		render_background(data->mlx, data->map->c, data->map->f, data);
 
 	// data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	raycasting(data);
@@ -85,6 +84,7 @@ int	main(int argc, char **argv)
 	init_data(data);
 	mlx_loop_hook(data->mlx, &key_hook, data);
 
+		// render_background(data->mlx, data->map->c, data->map->f, data);
 
 
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
