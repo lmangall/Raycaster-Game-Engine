@@ -2,32 +2,23 @@
 
 #define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
 
-
-
 void	render_minimap(t_data *data)
 {
+	double scale_x;
+	double scale_y;
+	int player_pos_x;
+	int player_pos_y;
 
 
 	int i;
 	int j;
-	// int minimap_z_depth;
 
-
-	// minimap_height = WINDOW_HEIGHT / 5;
-	// minimap_width = WINDOW_WIDTH / 5;
 	data->minimap->height = 150;
 	data->minimap->width = 300;
 	data->minimap->offset_x = 20;
 	data->minimap->offset_y = 20;
 	i = 0;
 	j = 0;
-	// minimap_z_depth = 0;
-	// data->minimap = mlx_new_image(data->mlx, minimap_width, minimap_height);
-	// if (data->minimap == NULL)
-	// {
-	// 	printf("Error: minimap is NULL\n");
-	// 	return ;
-	// }
 	while (j < data->minimap->height)
 	{
 		i = 0;
@@ -38,22 +29,25 @@ void	render_minimap(t_data *data)
 		}
 		j++;
 	}
+	// Calculate the scale of the minimap
+	scale_x = (double)data->minimap->width / ((double)data->map->width * TILE_SIZE);
+	scale_y = (double)data->minimap->height / ((double)data->map->height * TILE_SIZE);
+	// Calculate the player position on the minimap
+	player_pos_x = (int)data->player->x_pos_px  * scale_x;
+	player_pos_y = (int)data->player->y_pos_px  * scale_y;
 
-	// mlx_image_to_window(data->mlx, data->minimap, minimap_offset_x,
-	// minimap_offset_y);
-	// if (data->img && data->img->count > 0)
-	// {
-	// 	printf("data->img->count > 0\n");
-	// 	// Ensure the minimap is always rendered above the main game view
-	// 	minimap_z_depth = data->img->instances[0].z + 10;
-	// 	if (data->minimap->count > 0)
-	// 	{
-	// 		printf("data->minimap->count > 0\n");
-	// 		mlx_set_instance_depth(&(data->minimap->instances[0]),
-	// 			minimap_z_depth);
-	// 	}
-	// }
-	// print instance count of minimap
+	// Draw the player on the minimap as small square
+int half_size = 3; // Half the size of the square to make it centered on the player
+for (int dx = -half_size; dx <= half_size; dx++) {
+    for (int dy = -half_size; dy <= half_size; dy++) {
+        int x = player_pos_x + dx;
+        int y = player_pos_y + dy;
+        if (x >= 0 && x < data->minimap->width && y >= 0 && y < data->minimap->height) {
+            mlx_put_pixel(data->minimap->img, x, y, RGBA(255, 0, 0, 255));
+        }
+    }
+}
+	
 
-	// data->minimap = minimap;
+
 }

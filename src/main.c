@@ -17,8 +17,8 @@ void game_hook(void *tmp)
 	t_data	*data;
 
 	data = (t_data *)tmp;
-	// if (data->img)
-	// 	mlx_delete_image(data->mlx, data->img);
+	if (data->img)
+		mlx_delete_image(data->mlx, data->img);
 	if (data->minimap->img)
 		mlx_delete_image(data->mlx, data->minimap->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
