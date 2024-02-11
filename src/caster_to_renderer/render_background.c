@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:20 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:22:47 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	render_background_pixel(mlx_image_t *img, uint32_t top_color,
 	}
 }
 
-static uint32_t	rgba_to_int(t_rgba color)
+ uint32_t	rgba_to_int(t_rgba color)
 {
 	return (color.r << 24 | color.g << 16 | color.b << 8 | 255);
 }
