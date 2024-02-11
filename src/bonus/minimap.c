@@ -19,6 +19,9 @@ void	render_minimap(t_data *data)
 	data->minimap->offset_y = 20;
 	i = 0;
 	j = 0;
+	mlx_image_t *image;
+	image = mlx_new_image(data->mlx, data->minimap->width, data->minimap->height);
+	data->minimap->img = image;
 	while (j < data->minimap->height)
 	{
 		i = 0;

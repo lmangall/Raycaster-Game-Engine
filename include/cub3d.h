@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:15:49 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 14:55:27 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "MLX42.h"
 # include "doxy.h"
 # include "structs.h"
+void minimap_hook(void *tmp);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
