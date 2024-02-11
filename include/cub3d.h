@@ -69,6 +69,6 @@ void			render_wall(t_data *data);
 
 // BONUS
 
-void minimap(t_data *data);
+void render_minimap(t_data *data);
 
 #endif // CUB3D_H

@@ -172,11 +172,20 @@ typedef struct s_ray
 	int					lower_pixel;
 }						t_ray;
 
+typedef struct s_minimap
+{
+	int			offset_x;
+	int			offset_y;
+	int			width;
+	int			height;
+	mlx_image_t	*img;
+}				t_minimap;
+
 // The "main" struct
 typedef struct s_data
 {
 	mlx_image_t			*img;
-	mlx_image_t			*minimap;
+	t_minimap			*minimap;
 	mlx_image_t			*background;
 	mlx_t				*mlx;
 	t_ray				*ray;
