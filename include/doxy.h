@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:03:48 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:07:16 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:04:54 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,15 +139,6 @@ void	render_floor_ceiling(t_data *data);
  * @return Color of the wall.
  */
 int		get_color(t_data *data, int collision_orientation);
-
-/**
- * @brief Function to draw a wall on the screen.
- * @param data Pointer to the t_data structure.
- * @param ray Ray representing the current column.
- * @param wall_top_pixel Top pixel of the wall.
- * @param wall_bot_pixel Bottom pixel of the wall.
- */
-void	draw_wall(t_data *data, int ray, int wall_top_pixel, int wall_bot_pixel);
 
 // void	raycasting(t_data *data);
 
