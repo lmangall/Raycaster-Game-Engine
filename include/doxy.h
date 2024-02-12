@@ -140,16 +140,6 @@ void	render_floor_ceiling(t_data *data);
  */
 int		get_color(t_data *data, int collision_orientation);
 
-/**
- * @brief Function to draw a wall on the screen.
- * @param data Pointer to the t_data structure.
- * @param ray Ray representing the current column.
- * @param wall_top_pixel Top pixel of the wall.
- * @param wall_top_pixel Bottom pixel of the wall.
- */
-void	draw_wall(t_data *data, int ray, int wall_top_pixel,
-			int wall_top_pixel);
-
 // void	raycasting(t_data *data);
 
 /**
