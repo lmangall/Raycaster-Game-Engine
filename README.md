@@ -58,7 +58,7 @@ ________________________________________________________________________________
 ________________________________________________________________________________________________________________________________________
 
 
-# Collaboration Guide using Git and GitHub
+# Collaboration Guide using Git and GitHub                  => add about _rebasing_ and explanation  on local/remote branches + command to set remote
 
 ## Overview
 
