@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:09:01 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:00:00 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	render_wall_background(t_data *data)
 	rendered_pixel = data->ray->wall_top_pixel;
 	while (++i < rendered_pixel)
 		render_pixel(data, i, data->map->c_color); 
-	while (rendered_pixel < data->ray->wall_bot_pixel)
+	while (rendered_pixel < data->ray->wall_top_pixel)
 	{
 		color = pixel_color(texture, data, rendered_pixel);
 		color = reverse_bytes(color);
@@ -85,7 +85,7 @@ void	render_wall_background(t_data *data)
 			render_pixel(data, rendered_pixel, color);
 		rendered_pixel++;
 	}
-	i = data->ray->wall_bot_pixel;
+	i = data->ray->wall_top_pixel;
 	while ( ++i < WINDOW_HEIGHT)
 		render_pixel(data, i, data->map->f_color);
 }

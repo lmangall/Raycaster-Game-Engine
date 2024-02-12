@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 08:52:03 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:00:00 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef struct s_ray
 	mlx_texture_t		*current_texture;
 	int					wall_h;
 	int					wall_top_pixel;
-	int					wall_bot_pixel;
+	int					wall_top_pixel;
 }						t_ray;
 
 typedef struct s_minimap

@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:07:16 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:00:00 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ mlx_texture_t	*texture_selection(t_data *data)
 void	update_ray(t_data *data)
 {
 	double	wall_h;
-	double	wall_bot_pixel;
+	double	wall_top_pixel;
 	double	wall_top_pixel;
 
 	data->ray->length *= cos(normalize_angle(data->ray->angle_rd
 				- data->player->orientation_angle_rd));
 	wall_h = (TILE_SIZE / data->ray->length) * ((WINDOW_WIDTH / 2)
 			/ tan(data->player->fov_rd / 2));
-	wall_bot_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
+	wall_top_pixel = (WINDOW_HEIGHT / 2) + (wall_h / 2);
 	wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_h / 2);
-	if (wall_bot_pixel > WINDOW_HEIGHT)
-		wall_bot_pixel = WINDOW_HEIGHT;
+	if (wall_top_pixel > WINDOW_HEIGHT)
+		wall_top_pixel = WINDOW_HEIGHT;
 	if (wall_top_pixel < 0)
 		wall_top_pixel = 0;
 	data->ray->current_texture = texture_selection(data);
 	data->ray->wall_h = wall_h;
 	data->ray->wall_top_pixel = wall_top_pixel;
-	data->ray->wall_bot_pixel = wall_bot_pixel;
+	data->ray->wall_top_pixel = wall_top_pixel;
 }
 
 void	update_length_and_collision_orientation(t_data *data)
