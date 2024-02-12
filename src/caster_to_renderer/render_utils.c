@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:27 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:52:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	render_pixel(t_data *data, int y, int color)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	pixelstart = &data->img->pixels[(y * WINDOW_WIDTH + data->ray->screen_x)
+	pixelstart = &data->image->pixels[(y * WINDOW_WIDTH + data->ray->screen_x)
 		* 4];
 	mlx_draw_pixel(pixelstart, color);
 }

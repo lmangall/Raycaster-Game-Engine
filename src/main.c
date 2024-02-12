@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 01:43:56 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:52:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int argc, char **argv)
 		free_exit_parser(data, "Chill! Parsing only mode is on!");
 	init_data(data);
 	mlx_loop_hook(data->mlx, &key_hook, data);
-	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	data->image = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
 	mlx_loop_hook(data->mlx, &raycasting, data);
 	mlx_loop_hook(data->mlx, &render_minimap, data);
 	mlx_put_string(data->mlx, "bio_blissful_foo_dogs_baguettes_spaghettis_poachers", 400, 10);

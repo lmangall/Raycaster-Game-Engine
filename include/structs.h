@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 01:41:02 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:52:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,14 +184,14 @@ typedef struct s_minimap
 	double		scale_y;
 	int			player_position_x;
 	int			player_position_y;
-	mlx_image_t	*img;
+	mlx_image_t	*image;
 }				t_minimap;
 
 
 // The "main" struct
 typedef struct s_data
 {
-	mlx_image_t			*img;
+	mlx_image_t			*image;
 	t_minimap			*minimap;
 	mlx_image_t			*background;
 	mlx_t				*mlx;

@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:15:52 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:19:05 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:52:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	free_textures_mlx(t_textures *textures)
 
 void	free_exit(t_data *data)
 {
-	if (data->img)
-		mlx_delete_image(data->mlx, data->img);
+	if (data->image)
+		mlx_delete_image(data->mlx, data->image);
 	mlx_close_window(data->mlx);
 	if (data->mlx)
 		mlx_terminate(data->mlx);
