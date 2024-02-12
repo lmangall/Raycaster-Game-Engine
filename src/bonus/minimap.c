@@ -8,6 +8,8 @@ static void init_minimap(t_data *data)
 	data->minimap->width = 300;
 	data->minimap->offset_x = 20;
 	data->minimap->offset_y = 20;
+	data->minimap->scale_x = (double)data->minimap->width / (double)data->map->width;
+	data->minimap->scale_y = (double)data->minimap->height / (double)data->map->height;
 	// data->minimap->player_position_x = (int)(data->player->x_pos_px / TILE_SIZE);
 	// data->minimap->player_position_y = (int)(data->player->y_pos_px / TILE_SIZE);
 }
@@ -29,11 +31,38 @@ static void draw_background(t_data *data)
 	}
 }
 
+static void draw_block(t_data *data, int x, int y)
+{
+	int dx = 0;
+	int block_width;
+	int block_height;
+	// int color = RGBA(255, 255, 255, 255);
+
+
+	block_width = (int)data->minimap->scale_x + 1;
+	block_height = (int)data->minimap->scale_y + 1;
+	while (dx < block_width)
+	{
+		int dy = 0;
+		while (dy < block_height)
+		{
+			int pixel_x = x + dx;
+			int pixel_y = y + dy;
+			if (pixel_x < data->minimap->width && pixel_y < data->minimap->height)
+			{
+				data->ray->screen_x = pixel_x;
+				render_pixel(data, pixel_y, RGBA(255, 255, 255, 255));
+			}
+			dy++;
+		}
+		dx++;
+	}
+}
+
 static void draw_walls(t_data *data)
 {
-	double scale_x = (double)data->minimap->width / data->map->width;
-	double scale_y = (double)data->minimap->height / data->map->height;
-	int color = RGBA(255, 255, 255, 255); // White color for walls
+	int x;
+	int y;
 
 	int i = 0;
 	while (i < data->map->width)
@@ -41,12 +70,11 @@ static void draw_walls(t_data *data)
 		int j = 0;
 		while (j < data->map->height)
 		{
-			if (data->map->grid[j][i] == '1') // Assuming '1' represents a wall
+			if (data->map->grid[j][i] == '1')
 			{
-				int x = (int)(i * scale_x);
-				int y = (int)(j * scale_y);
-				data->ray->screen_x = x;
-				render_pixel(data, y, color);
+				x = (int)(i * data->minimap->scale_x);
+				y = (int)(j * data->minimap->scale_y);
+				draw_block(data, x, y);
 			}
 			j++;
 		}
