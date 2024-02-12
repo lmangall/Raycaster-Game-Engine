@@ -31,7 +31,7 @@ static void draw_background(t_data *data)
 	}
 }
 
-static void draw_block(t_data *data, int x, int y)
+static void render_block(t_data *data, int x, int y)
 {
 	int dx = 0;
 	int block_width;
@@ -59,7 +59,7 @@ static void draw_block(t_data *data, int x, int y)
 	}
 }
 
-static void draw_walls(t_data *data)
+static void render_walls(t_data *data)
 {
 	int x;
 	int y;
@@ -74,7 +74,7 @@ static void draw_walls(t_data *data)
 			{
 				x = (int)(i * data->minimap->scale_x);
 				y = (int)(j * data->minimap->scale_y);
-				draw_block(data, x, y);
+				render_block(data, x, y);
 			}
 			j++;
 		}
@@ -117,6 +117,37 @@ static void draw_player(t_data *data)
 	}
 }
 
+static void render_player_ray(t_data *data)
+{
+	// Define the length of the ray and the color
+	int ray_length = 50; // Adjust as needed
+	int color = RGBA(0, 255, 0, 255); // Green color for the ray
+
+	// Calculate the player's position on the minimap
+	double scale_x = (double)data->minimap->width / ((double)data->map->width * TILE_SIZE);
+	double scale_y = (double)data->minimap->height / ((double)data->map->height * TILE_SIZE);
+	int player_pos_x = (int)(data->player->x_pos_px * scale_x);
+	int player_pos_y = (int)(data->player->y_pos_px * scale_y);
+
+	// Calculate the end point of the ray
+	// int end_x = player_pos_x + (int)(ray_length * cos(data->player->orientation_angle_rd));
+	// int end_y = player_pos_y + (int)(ray_length * sin(data->player->orientation_angle_rd));
+
+	// Draw the ray
+	int dx = 0;
+	while (dx <= ray_length)
+	{
+		int x = player_pos_x + (int)(dx * cos(data->player->orientation_angle_rd));
+		int y = player_pos_y + (int)(dx * sin(data->player->orientation_angle_rd));
+		if (x >= 0 && x < data->minimap->width && y >= 0 && y < data->minimap->height)
+		{
+			data->ray->screen_x = x;
+			render_pixel(data, y, color);
+		}
+		dx++;
+	}
+}
+
 void render_minimap(void *tmp)
 {
 	t_data	*data;
@@ -124,6 +155,7 @@ void render_minimap(void *tmp)
 	data = (t_data *)tmp;
 	init_minimap(data);
 	draw_background(data);
-	draw_walls(data);
+	render_walls(data);
 	draw_player(data);
+	render_player_ray(data);
 }
