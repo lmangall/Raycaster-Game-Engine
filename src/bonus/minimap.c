@@ -4,8 +4,7 @@
 
 void	render_minimap(void *tmp)
 {
-
-		t_data	*data;
+	t_data *data;
 
 	data = (t_data *)tmp;
 
@@ -13,7 +12,10 @@ void	render_minimap(void *tmp)
 	double scale_y;
 	int player_pos_x;
 	int player_pos_y;
-
+	int dx;
+	int dy;
+	int x;
+	int y;
 
 	int i;
 	int j;
@@ -35,24 +37,33 @@ void	render_minimap(void *tmp)
 		j++;
 	}
 	// Calculate the scale of the minimap
-	scale_x = (double)data->minimap->width / ((double)data->map->width * TILE_SIZE);
-	scale_y = (double)data->minimap->height / ((double)data->map->height * TILE_SIZE);
+	scale_x = (double)data->minimap->width / ((double)data->map->width
+		* TILE_SIZE);
+	scale_y = (double)data->minimap->height / ((double)data->map->height
+		* TILE_SIZE);
 	// Calculate the player position on the minimap
-	player_pos_x = (int)data->player->x_pos_px  * scale_x;
-	player_pos_y = (int)data->player->y_pos_px  * scale_y;
+	player_pos_x = (int)data->player->x_pos_px * scale_x;
+	player_pos_y = (int)data->player->y_pos_px * scale_y;
 
 	// Draw the player on the minimap as small square
-int half_size = 3; // Half the size of the square to make it centered on the player
-for (int dx = -half_size; dx <= half_size; dx++) {
-    for (int dy = -half_size; dy <= half_size; dy++) {
-        int x = player_pos_x + dx;
-        int y = player_pos_y + dy;
-        if (x >= 0 && x < data->minimap->width && y >= 0 && y < data->minimap->height) {
-            mlx_put_pixel(data->img, x, y, RGBA(255, 0, 0, 255));
-        }
-    }
-}
-	
+	int half_size = 3;
+	// Half the size of the square to make it centered on the player
 
-
+	dx = -half_size;
+	while (dx <= half_size)
+	{
+		dy = -half_size;
+		while (dy <= half_size)
+		{
+			x = player_pos_x + dx;
+			y = player_pos_y + dy;
+			if (x >= 0 && x < data->minimap->width && y >= 0
+				&& y < data->minimap->height)
+			{
+				mlx_put_pixel(data->img, x, y, RGBA(255, 0, 0, 255));
+			}
+			dy++;
+		}
+		dx++;
+	}
 }
