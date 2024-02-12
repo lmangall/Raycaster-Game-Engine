@@ -4,14 +4,14 @@
 
 static void init_minimap(t_data *data)
 {
-	data->minimap->height = 150;
-	data->minimap->width = 300;
-	data->minimap->offset_x = 20;
-	data->minimap->offset_y = 20;
-	data->minimap->scale_x = (double)data->minimap->width / (double)data->map->width;
-	data->minimap->scale_y = (double)data->minimap->height / (double)data->map->height;
-	// data->minimap->player_position_x = (int)(data->player->x_pos_px / TILE_SIZE);
-	// data->minimap->player_position_y = (int)(data->player->y_pos_px / TILE_SIZE);
+    data->minimap->height = 150;
+    data->minimap->width = 300;
+    data->minimap->offset_x = 20;
+    data->minimap->offset_y = 20;
+    data->minimap->scale_x = (double)data->minimap->width / (double)data->map->width;
+    data->minimap->scale_y = (double)data->minimap->height / (double)data->map->height;
+    data->minimap->player_position_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
+    data->minimap->player_position_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
 }
 
 static void draw_background(t_data *data)
@@ -119,9 +119,8 @@ static void draw_player(t_data *data)
 
 static void render_player_ray(t_data *data)
 {
-	// Define the length of the ray and the color
-	int ray_length = 50; // Adjust as needed
-	int color = RGBA(0, 255, 0, 255); // Green color for the ray
+	int ray_length = 50;
+	int color = RGBA(0, 255, 0, 255);
 
 	// Calculate the player's position on the minimap
 	double scale_x = (double)data->minimap->width / ((double)data->map->width * TILE_SIZE);
@@ -129,11 +128,6 @@ static void render_player_ray(t_data *data)
 	int player_pos_x = (int)(data->player->x_pos_px * scale_x);
 	int player_pos_y = (int)(data->player->y_pos_px * scale_y);
 
-	// Calculate the end point of the ray
-	// int end_x = player_pos_x + (int)(ray_length * cos(data->player->orientation_angle_rd));
-	// int end_y = player_pos_y + (int)(ray_length * sin(data->player->orientation_angle_rd));
-
-	// Draw the ray
 	int dx = 0;
 	while (dx <= ray_length)
 	{
