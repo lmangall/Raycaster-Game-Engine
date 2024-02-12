@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 11:06:32 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:06:51 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	determine_plane_and_position(t_data *data, char *plane,
 	*wall_hit_position = fmod(*wall_hit_position, TILE_SIZE);
 }
 
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int wall_top_pixel)
+uint32_t	pixel_color(mlx_texture_t *texture, t_data *data,
+		int wall_top_pixel)
 {
 	uint32_t	*pixel_array;
 	char		plane;
@@ -62,21 +63,21 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int wall_top_pixel)
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
 				- 1));
 	return (pixel_array[(int)y_pixel_coordinate * texture->width
-			+ (int)x_pixel_coordinate]);
+		+ (int)x_pixel_coordinate]);
 }
 
 void	render_wall_background(t_data *data)
 {
 	int				rendered_pixel;
-	int 			i;
+	int				i;
 	uint32_t		color;
 	mlx_texture_t	*texture;
-	
+
 	i = 0;
 	texture = data->ray->current_texture;
 	rendered_pixel = data->ray->wall_top_pixel;
 	while (++i < rendered_pixel)
-		render_pixel(data, i, data->map->c_color); 
+		render_pixel(data, i, data->map->c_color);
 	while (rendered_pixel < data->ray->wall_top_pixel)
 	{
 		color = pixel_color(texture, data, rendered_pixel);
@@ -86,6 +87,6 @@ void	render_wall_background(t_data *data)
 		rendered_pixel++;
 	}
 	i = data->ray->wall_top_pixel;
-	while ( ++i < WINDOW_HEIGHT)
+	while (++i < WINDOW_HEIGHT)
 		render_pixel(data, i, data->map->f_color);
 }

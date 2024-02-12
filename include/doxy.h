@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:03:48 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 11:00:00 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:06:56 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ int		get_color(t_data *data, int collision_orientation);
  * @param wall_top_pixel Top pixel of the wall.
  * @param wall_top_pixel Bottom pixel of the wall.
  */
-void	draw_wall(t_data *data, int ray, int wall_top_pixel, int wall_top_pixel);
+void	draw_wall(t_data *data, int ray, int wall_top_pixel,
+			int wall_top_pixel);
 
 // void	raycasting(t_data *data);
 

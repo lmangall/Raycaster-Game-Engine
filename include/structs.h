@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 11:06:05 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:06:56 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,17 +176,16 @@ typedef struct s_ray
 
 typedef struct s_minimap
 {
-	int			offset_x;
-	int			offset_y;
-	int			width;
-	int			height;
-	double		scale_x;
-	double		scale_y;
-	int			player_position_x;
-	int			player_position_y;
-	mlx_image_t	*image;
-}				t_minimap;
-
+	int					offset_x;
+	int					offset_y;
+	int					width;
+	int					height;
+	double				scale_x;
+	double				scale_y;
+	int					player_position_x;
+	int					player_position_y;
+	mlx_image_t			*image;
+}						t_minimap;
 
 // The "main" struct
 typedef struct s_data
