@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 21:43:31 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:07:16 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ typedef struct s_map
 	int					height;
 	t_rgba				c;
 	t_rgba				f;
+	int					c_color;
+	int					f_color;
 	t_textures_paths	*textures_paths;
 	t_map_elements		elements;
 
@@ -168,14 +170,25 @@ typedef struct s_ray
 	int					screen_x;
 	mlx_texture_t		*current_texture;
 	int					wall_h;
-	int					higher_pixel;
-	int					lower_pixel;
+	int					wall_top_pixel;
+	int					wall_bot_pixel;
 }						t_ray;
+
+typedef struct s_minimap
+{
+	int			offset_x;
+	int			offset_y;
+	int			width;
+	int			height;
+	mlx_image_t	*img;
+}				t_minimap;
 
 // The "main" struct
 typedef struct s_data
 {
 	mlx_image_t			*img;
+	t_minimap			*minimap;
+	mlx_image_t			*background;
 	mlx_t				*mlx;
 	t_ray				*ray;
 	t_map				*map;

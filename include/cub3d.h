@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:15:49 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/11 23:06:59 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "MLX42.h"
 # include "doxy.h"
 # include "structs.h"
+void minimap_hook(void *tmp);
+ uint32_t	rgba_to_int(t_rgba color);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
@@ -27,7 +29,7 @@ double			adjust_mirroring(double x, double width, double angle,
 void			determine_plane_and_position(t_data *data, char *plane,
 					double *wall_hit_position);
 uint32_t		pixel_color(mlx_texture_t *texture, t_data *data,
-					int higher_pixel);
+					int wall_top_pixel);
 void			render_wall(t_data *data);
 
 char			*get_identifier_value(char *map_str, char *identifier);
@@ -40,7 +42,7 @@ void			rotate_player(double *orientation_angle_rd,
 					enum e_rotation direction);
 void			render_pixel(t_data *data, int y, int color);
 float			normalize_angle(float angle);
-void			raycasting(t_data *data);
+void			raycasting(void *tmp);
 int				update_steps_direction(float angle, float *step, char c);
 int				check_collision_adjust_step(float angle, float *inter,
 					float *step, char plane);
@@ -51,7 +53,6 @@ void			game_hook(void *tmp);
 void			init_player(t_data *data);
 void			update_ray(t_data *data);
 void			init_data(t_data *data);
-void			render_background(mlx_t *mlx, t_rgba c, t_rgba f);
 void			free_exit_parser(t_data *data, char *error_message);
 void			parser(int argc, char **argv, t_data *data);
 void			init_player_original_orientation(t_data *data);
@@ -65,6 +66,10 @@ void			error_exit(char *error_msg);
 void			*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
-void			render_wall(t_data *data);
+void			render_wall_background(t_data *data);
+
+// BONUS
+
+void			render_minimap(void *tmp);
 
 #endif // CUB3D_H

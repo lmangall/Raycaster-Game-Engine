@@ -57,7 +57,15 @@ t_map	*init_map(t_map *map)
 
 void	init_data_parser(t_data *data)
 {
+	t_minimap	*minimap;
+	minimap = ft_calloc(1, sizeof(t_minimap));
+	data->minimap = minimap;
+	data->minimap->img = NULL;
+	data->minimap->height = WINDOW_HEIGHT / 5;
+	data->minimap->width = WINDOW_WIDTH / 5;
+
 	data->img = NULL;
+	data->background = NULL;
 	data->mlx = NULL;
 	data->ray = NULL;
 	data->map = NULL;
