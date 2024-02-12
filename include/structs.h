@@ -171,7 +171,6 @@ typedef struct s_ray
 	mlx_texture_t		*current_texture;
 	int					wall_h;
 	int					wall_top_pixel;
-	int					wall_top_pixel;
 }						t_ray;
 
 typedef struct s_minimap
