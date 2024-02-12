@@ -47,7 +47,7 @@ void	render_minimap(void *tmp)
 
 	// Draw the player on the minimap as small square
 	int half_size = 3;
-		// Half the size of the square to make it centered on the player
+	// Half the size of the square to make it centered on the player
 
 	dx = -half_size;
 	while (dx <= half_size)
