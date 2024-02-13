@@ -32,7 +32,7 @@ MLX42_DIR = ../MLX42
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS	= main.c 
+SRCS	= main.c figure_utils.c 
 OBJ = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 # SRC	= $(addprefix $(SRC_DIR)/, $(SRCS))
 # OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
