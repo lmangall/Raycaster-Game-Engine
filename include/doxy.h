@@ -111,16 +111,24 @@ void	move_player(t_data *data, double move_x, double move_y);
 void	hook(t_data *data, double move_x, double move_y);
 
 /**
- * @brief Function to put a pixel on the screen.
- * @param data Pointer to the t_data structure.
- * @param x X-coordinate of the pixel.
- * @param y Y-coordinate of the pixel.
- * @param color Color of the pixel.
+ * @brief Renders a pixel at the specified coordinates within an image.
+ *
+
+
+	* @param image Pointer to the mlx_image_t structure representing the target image.
+ * @param x X-coordinate of the pixel to be rendered.
+ * @param y Y-coordinate of the pixel to be rendered.
+ * @param color The color value of the pixel to be rendered.
+
+	* @return Returns a pointer to the start of the pixel data within the image's pixel buffer. If the image is NULL,
+	or if the coordinates are out of bounds, returns NULL.
  */
-void	render_pixel(t_data *data, int y, int color);
+
+uint8_t	*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y, int color);
 
 /**
- * @brief Function to normalize an angle to be within the range [0, 2 * PI).
+ * @brief Function to normalize an angle to be within the range [0, 2
+ * PI).
  * @param angle Angle to be normalized.
  * @return Normalized angle.
  */
