@@ -98,6 +98,7 @@ clean:
 
 fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)
+	@rm -rf $(MLX42_DIR)
 	@rm -f $(NAME)
 	@echo "$(GREEN) Full cleaned $(RESET)"
 
