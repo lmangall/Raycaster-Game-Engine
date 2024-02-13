@@ -4,7 +4,6 @@
 
 static void	init_minimap(t_data *data)
 {
-<<<<<<< HEAD
 	data->minimap->height = 150;
 	data->minimap->width = 300;
 	data->minimap->offset_x = 20;
@@ -107,9 +106,10 @@ static void	draw_player(t_data *data)
 	int		dy;
 	int		x;
 	int		y;
+	int		half_size;
 
-	int half_size = 3;
-		// Half the size of the square to make it centered on the player
+	half_size = 3;
+	// Half the size of the square to make it centered on the player
 	scale_x = (double)data->minimap->width / ((double)data->map->width
 		* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
