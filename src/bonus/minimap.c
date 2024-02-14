@@ -9,9 +9,9 @@ static void	init_minimap(t_data *data)
 	data->minimap->offset_x = 20;
 	data->minimap->offset_y = 20;
 	data->minimap->scale_x = (double)data->minimap->width
-		/ (double)data->map->width;
+		/ ((double)data->map->width * TILE_SIZE);
 	data->minimap->scale_y = (double)data->minimap->height
-		/ (double)data->map->height;
+		/ ((double)data->map->height * TILE_SIZE);
 	data->minimap->player_position_x = (int)(data->player->x_pos_px
 		* data->minimap->scale_x);
 	data->minimap->player_position_y = (int)(data->player->y_pos_px
@@ -24,7 +24,7 @@ static void	render_background(t_data *data)
 	int	y;
 	int	minimap_background_color;
 
-	printf("render background\n");
+	// printf("render background\n");
 	x = 0;
 	y = 0;
 	minimap_background_color = RGBA(0, 0, 0, 255);
@@ -49,7 +49,7 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 	int	block_height;
 	int	block_color;
 
-	printf("render block\n");
+	// printf("render block\n");
 	y = 0;
 	// Add +1 to include the last pixel and compensate for rounding down
 	// when converting scales to integers.
@@ -107,10 +107,20 @@ static void	render_player(t_data *data)
 	int	y;
 	int	half_size;
 
-	printf("render player\n");
+	// printf("render player\n");
 	half_size = 3;
+	// printf("minimap->width: %d, minimap->height: %d\n", data->minimap->width,
+	// 	data->minimap->height);
+	// printf("map->width: %d, map->height: %d\n", data->map->width,
+	// 	data->map->height);
+	// printf("player->x_pos_px: %d, player->y_pos_px: %d\n",
+	// 	data->player->x_pos_px, data->player->y_pos_px);
+	// printf("minimap->scale_x: %f, minimap->scale_y: %f\n",
+	// 	data->minimap->scale_x, data->minimap->scale_y);
 	player_pos_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
+	// printf("player_pos_x: %d, player_pos_y: %d\n", player_pos_x,
+	// player_pos_y);
 	player_color = RGBA(255, 0, 0, 255);
 	y = player_pos_y - half_size;
 	while (y <= player_pos_y + half_size)

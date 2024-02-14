@@ -30,6 +30,9 @@ uint8_t	*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y, int color)
 		printf("Error: image is null\n");
 		return (NULL);
 	}
+	// printf("y: %d, x: %d\n", y, x);
+	// printf("image->height: %d, image->width: %d\n", image->height,
+	// image->width);
 	if (y < 0 || y > image->height || x < 0 || x > image->width)
 	{
 		printf("Pixel is out of bounds\n");
