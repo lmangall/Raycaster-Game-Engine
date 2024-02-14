@@ -24,6 +24,7 @@ static void	render_background(t_data *data)
 	int	y;
 	int	minimap_background_color;
 
+	printf("render background\n");
 	x = 0;
 	y = 0;
 	minimap_background_color = RGBA(0, 0, 0, 255);
@@ -32,8 +33,7 @@ static void	render_background(t_data *data)
 		x = 0;
 		while (x < data->minimap->width)
 		{
-			if (render_pixel(data->minimap->img, x, y,
-					minimap_background_color) == NULL)
+			if (render_pixel(data->img, x, y, minimap_background_color) == NULL)
 				free_exit(data);
 			x++;
 		}
@@ -49,6 +49,7 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 	int	block_height;
 	int	block_color;
 
+	printf("render block\n");
 	y = 0;
 	// Add +1 to include the last pixel and compensate for rounding down
 	// when converting scales to integers.
@@ -63,7 +64,7 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 			if (x + offset_x > data->minimap->width || y
 				+ offset_y > data->minimap->height)
 				break ;
-			if (render_pixel(data->minimap->img, x + offset_x, y + offset_y,
+			if (render_pixel(data->img, x + offset_x, y + offset_y,
 					block_color) == NULL)
 				free_exit(data);
 			x++;
@@ -106,6 +107,7 @@ static void	render_player(t_data *data)
 	int	y;
 	int	half_size;
 
+	printf("render player\n");
 	half_size = 3;
 	player_pos_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
@@ -118,7 +120,7 @@ static void	render_player(t_data *data)
 		{
 			if (!(x < 0 || x >= data->minimap->width || y < 0))
 				break ;
-			if (render_pixel(data->minimap->img, x, y, player_color) == NULL)
+			if (render_pixel(data->img, x, y, player_color) == NULL)
 				free_exit(data);
 			x++;
 		}
@@ -138,6 +140,7 @@ static void	render_ray(t_data *data)
 	int		x;
 	int		y;
 
+	printf("render ray\n");
 	ray_length = 50;
 	ray_color = RGBA(0, 255, 0, 255);
 	// Calculate the player's position on the minimap
@@ -156,7 +159,7 @@ static void	render_ray(t_data *data)
 			&& y < data->minimap->height)
 		{
 			data->ray->screen_x = x;
-			render_pixel(data->minimap->img, x, y, ray_color);
+			render_pixel(data->img, x, y, ray_color);
 		}
 		dx++;
 	}
