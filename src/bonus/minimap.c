@@ -13,9 +13,9 @@ static void	init_minimap(t_data *data)
 	data->minimap->scale_y = (double)data->minimap->height
 		/ (double)data->map->height;
 	data->minimap->player_position_x = (int)(data->player->x_pos_px
-		* data->minimap->scale_x);
+			* data->minimap->scale_x);
 	data->minimap->player_position_y = (int)(data->player->y_pos_px
-		* data->minimap->scale_y);
+			* data->minimap->scale_y);
 }
 
 static void	draw_background(t_data *data)
@@ -38,7 +38,7 @@ static void	draw_background(t_data *data)
 	}
 }
 
-static void	render_block(t_data *data, int x, int y)
+static void	render_block(t_data *data, int x, int y, int color)
 {
 	int	dx;
 	int	block_width;
@@ -48,7 +48,6 @@ static void	render_block(t_data *data, int x, int y)
 	int	pixel_y;
 
 	dx = 0;
-	// int color = RGBA(255, 255, 255, 255);
 	block_width = (int)data->minimap->scale_x + 1;
 	block_height = (int)data->minimap->scale_y + 1;
 	while (dx < block_width)
@@ -62,7 +61,7 @@ static void	render_block(t_data *data, int x, int y)
 				&& pixel_y < data->minimap->height)
 			{
 				data->ray->screen_x = pixel_x;
-				render_pixel(data, pixel_y, RGBA(255, 255, 255, 255));
+				render_pixel(data, pixel_y, color);
 			}
 			dy++;
 		}
@@ -87,7 +86,7 @@ static void	render_walls(t_data *data)
 			{
 				x = (int)(i * data->minimap->scale_x);
 				y = (int)(j * data->minimap->scale_y);
-				render_block(data, x, y);
+				render_block(data, x, y, RGBA(255, 255, 255, 255));
 			}
 			j++;
 		}
@@ -111,9 +110,9 @@ static void	draw_player(t_data *data)
 	half_size = 3;
 	// Half the size of the square to make it centered on the player
 	scale_x = (double)data->minimap->width / ((double)data->map->width
-		* TILE_SIZE);
+			* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
-		* TILE_SIZE);
+			* TILE_SIZE);
 	player_pos_x = (int)(data->player->x_pos_px * scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * scale_y);
 	color = RGBA(255, 0, 0, 255);
@@ -157,9 +156,9 @@ static void	render_player_ray(t_data *data)
 	color = RGBA(0, 255, 0, 255);
 	// Calculate the player's position on the minimap
 	scale_x = (double)data->minimap->width / ((double)data->map->width
-		* TILE_SIZE);
+			* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
-		* TILE_SIZE);
+			* TILE_SIZE);
 	player_pos_x = (int)(data->player->x_pos_px * scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * scale_y);
 	dx = 0;
@@ -177,6 +176,34 @@ static void	render_player_ray(t_data *data)
 	}
 }
 
+// render a sprite on the minimap
+// the sprite is represented by a blue square
+// the sprite is a "2" in the map
+static void	render_sprite(t_data *data)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	y;
+
+	i = 0;
+	while (i < data->map->width)
+	{
+		j = 0;
+		while (j < data->map->height)
+		{
+			if (data->map->grid[j][i] == '2')
+			{
+				x = (int)(i * data->minimap->scale_x);
+				y = (int)(j * data->minimap->scale_y);
+				render_block(data, x, y, RGBA(0, 0, 255, 255));
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	render_minimap(void *tmp)
 {
 	t_data *data;
@@ -185,6 +212,7 @@ void	render_minimap(void *tmp)
 	init_minimap(data);
 	draw_background(data);
 	render_walls(data);
+	render_sprite(data);
 	draw_player(data);
 	render_player_ray(data);
 }
