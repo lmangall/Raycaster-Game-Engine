@@ -31,7 +31,6 @@ static void	render_background(t_data *data)
 	int	y;
 	int	minimap_background_color;
 
-	// printf("render background\n");
 	x = 0;
 	y = 0;
 	minimap_background_color = RGBA(0, 0, 0, 255);
@@ -48,8 +47,6 @@ static void	render_background(t_data *data)
 	}
 }
 
-// Why we need ft_max: see Note 1
-// offset_x and offset_y are vaues in tiles
 static void	render_block(int offset_x, int offset_y, t_data *data)
 {
 	int		x_px;
@@ -78,15 +75,7 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 		{
 			if (x_px + offset_x_px >= data->minimap->width || y_px
 				+ offset_y_px >= data->minimap->height)
-			{
-				// printf("minimap->width: %d, minimap->height: %d\n",
-				// data->minimap->width, data->minimap->height);
-				// printf("x_px + offset_x_px: %d, y_px + offset_y_px: %d\n",
-					x_px
-				// + offset_x_px, y_px + offset_y_px);
-				printf("break\n");
 				break ;
-			}
 			if (render_pixel(data->img, x_px + offset_x_px, y_px + offset_y_px,
 					block_color) == NULL)
 				free_exit(data);
@@ -95,17 +84,12 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 		y_px++;
 	}
 }
-// offset_x and offset_y are values in tiles, not pixels
-// but they should be converted to pixels to render the block
-// map->width and map->height are in tiles
-// render walls operates with tiles
+
 static void	render_walls(t_data *data)
 {
 	int	y;
 	int	x;
 
-	// int	offset_x;
-	// int	offset_y;
 	y = 0;
 	while (y < data->map->height)
 	{
@@ -113,13 +97,7 @@ static void	render_walls(t_data *data)
 		while (x < data->map->width)
 		{
 			if (data->map->grid[y][x] == '1')
-			{
-				printf("x: %d, y: %d\n", x, y);
-				// offset_x = (int)(x * data->minimap->scale_x);
-				// offset_y = (int)(y * data->minimap->scale_y);
-				// render_block(offset_x, offset_y, data);
 				render_block(x, y, data);
-			}
 			x++;
 		}
 		y++;
@@ -135,20 +113,9 @@ static void	render_player(t_data *data)
 	int	y;
 	int	half_size;
 
-	// printf("render player\n");
 	half_size = 3;
-	// printf("minimap->width: %d, minimap->height: %d\n", data->minimap->width,
-	// 	data->minimap->height);
-	// printf("map->width: %d, map->height: %d\n", data->map->width,
-	// 	data->map->height);
-	// printf("player->x_pos_px: %d, player->y_pos_px: %d\n",
-	// 	data->player->x_pos_px, data->player->y_pos_px);
-	// printf("minimap->scale_x: %f, minimap->scale_y: %f\n",
-	// 	data->minimap->scale_x, data->minimap->scale_y);
 	player_pos_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
-	// printf("player_pos_x: %d, player_pos_y: %d\n", player_pos_x,
-	// player_pos_y);
 	player_color = RGBA(255, 0, 0, 255);
 	y = player_pos_y - half_size;
 	while (y <= player_pos_y + half_size)
@@ -156,17 +123,11 @@ static void	render_player(t_data *data)
 		x = player_pos_x - half_size;
 		while (x <= player_pos_x + half_size)
 		{
-			// if ((x < 0 || x >= data->minimap->width || y < 0))
-			// 	break ;
-			// if (render_pixel(data->img, x, y, player_color) == NULL)
-			// 	free_exit(data);
 			if (x >= 0 && x < data->minimap->width && y >= 0
 				&& y < data->minimap->height)
 			{
 				if (render_pixel(data->img, x, y, player_color) == NULL)
-				{
-					free_exit(data); // Handle potential error from render_pixel
-				}
+					free_exit(data);
 			}
 			x++;
 		}
@@ -186,10 +147,8 @@ static void	render_ray(t_data *data)
 	int		x;
 	int		y;
 
-	// printf("render ray\n");
 	ray_length = 50;
 	ray_color = RGBA(0, 255, 0, 255);
-	// Calculate the player's position on the minimap
 	scale_x = (double)data->minimap->width / ((double)data->map->width
 		* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
@@ -213,7 +172,7 @@ static void	render_ray(t_data *data)
 
 void	render_minimap(void *tmp)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = (t_data *)tmp;
 	init_minimap(data);
@@ -222,12 +181,3 @@ void	render_minimap(void *tmp)
 	render_player(data);
 	render_ray(data);
 }
-
-// Note 1
-/*
-
-The reason for using ft_max in calculating block_width and block_height is to ensure that every element we attempt to draw on the minimap has a visible representation. When scaling down from the game world to the minimap,
-	the calculated dimensions for smaller elements might round down to zero due to the scale factor. Using ft_max guarantees that each element occupies at least one pixel on the minimap,
-	making sure it's visibly represented even if it's significantly smaller than the scale might suggest.
-
-*/
