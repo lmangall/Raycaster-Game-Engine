@@ -49,11 +49,11 @@ static void	render_background(t_data *data)
 }
 
 // Why we need ft_max: see Note 1
-
+// offset_x and offset_y are vaues in tiles
 static void	render_block(int offset_x, int offset_y, t_data *data)
 {
-	int		x;
-	int		y;
+	int		x_px;
+	int		y_px;
 	int		block_width_px;
 	int		block_height_px;
 	double	block_width_px_f;
@@ -62,55 +62,50 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 	int		offset_x_px;
 	int		offset_y_px;
 
-	offset_x_px = offset_x * TILE_SIZE;
-	offset_y_px = offset_y * TILE_SIZE;
-	// printf("render block\n");
-	y = 0;
-	// Add +1 to include the last pixel and compensate for rounding down
-	// when converting scales to integers.
-	// block_width = (int)data->minimap->scale_x + 1;
+	// Consider here also the evenutally padding of the minimap
+	offset_x_px = offset_x * TILE_SIZE * data->minimap->scale_x;
+	offset_y_px = offset_y * TILE_SIZE * data->minimap->scale_y;
+	y_px = 0;
 	block_width_px_f = data->minimap->scale_x * TILE_SIZE;
 	block_height_px_f = data->minimap->scale_y * TILE_SIZE;
-	block_width_px = ft_max(block_width_px_f, 1);
-	block_height_px = ft_max(block_height_px_f, 1);
+	block_width_px = ft_max((int)block_width_px_f, 1);
+	block_height_px = ft_max((int)block_height_px_f, 1);
 	block_color = RGBA(255, 255, 255, 255);
-	// printf("scale_x: %f, scale_y: %f\n", data->minimap->scale_x,
-	// data->minimap->scale_y);
-	// printf("block_width: %d\n", block_width_px);
-	// printf("block_height: %d\n", block_height_px);
-	while (y < block_height_px)
+	while (y_px < block_height_px)
 	{
-		x = 0;
-		while (x < block_width_px)
+		x_px = 0;
+		while (x_px < block_width_px)
 		{
-			if (x + offset_x_px >= data->minimap->width || y
+			if (x_px + offset_x_px >= data->minimap->width || y_px
 				+ offset_y_px >= data->minimap->height)
 			{
-				printf("x + offset_x_px: %d, y + offset_y_px: %d\n", x
-					+ offset_x_px, y + offset_y_px);
+				// printf("minimap->width: %d, minimap->height: %d\n",
+				// data->minimap->width, data->minimap->height);
+				// printf("x_px + offset_x_px: %d, y_px + offset_y_px: %d\n",
+					x_px
+				// + offset_x_px, y_px + offset_y_px);
 				printf("break\n");
 				break ;
 			}
-			// if (render_pixel(data->img, x + offset_x, y + offset_y,
-			// block_color) == NULL)
-			if (render_pixel(data->img, x + offset_x_px, y + offset_y_px,
+			if (render_pixel(data->img, x_px + offset_x_px, y_px + offset_y_px,
 					block_color) == NULL)
 				free_exit(data);
-			x++;
+			x_px++;
 		}
-		y++;
+		y_px++;
 	}
 }
 // offset_x and offset_y are values in tiles, not pixels
 // but they should be converted to pixels to render the block
 // map->width and map->height are in tiles
+// render walls operates with tiles
 static void	render_walls(t_data *data)
 {
-	int	offset_x;
-	int	offset_y;
 	int	y;
 	int	x;
 
+	// int	offset_x;
+	// int	offset_y;
 	y = 0;
 	while (y < data->map->height)
 	{
@@ -119,9 +114,11 @@ static void	render_walls(t_data *data)
 		{
 			if (data->map->grid[y][x] == '1')
 			{
-				offset_x = (int)(x * data->minimap->scale_x);
-				offset_y = (int)(y * data->minimap->scale_y);
-				render_block(offset_x, offset_y, data);
+				printf("x: %d, y: %d\n", x, y);
+				// offset_x = (int)(x * data->minimap->scale_x);
+				// offset_y = (int)(y * data->minimap->scale_y);
+				// render_block(offset_x, offset_y, data);
+				render_block(x, y, data);
 			}
 			x++;
 		}
@@ -159,10 +156,18 @@ static void	render_player(t_data *data)
 		x = player_pos_x - half_size;
 		while (x <= player_pos_x + half_size)
 		{
-			if ((x < 0 || x >= data->minimap->width || y < 0))
-				break ;
-			if (render_pixel(data->img, x, y, player_color) == NULL)
-				free_exit(data);
+			// if ((x < 0 || x >= data->minimap->width || y < 0))
+			// 	break ;
+			// if (render_pixel(data->img, x, y, player_color) == NULL)
+			// 	free_exit(data);
+			if (x >= 0 && x < data->minimap->width && y >= 0
+				&& y < data->minimap->height)
+			{
+				if (render_pixel(data->img, x, y, player_color) == NULL)
+				{
+					free_exit(data); // Handle potential error from render_pixel
+				}
+			}
 			x++;
 		}
 		y++;
