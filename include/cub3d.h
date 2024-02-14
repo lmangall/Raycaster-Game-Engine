@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:06:59 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:44:49 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include "MLX42.h"
 # include "doxy.h"
 # include "structs.h"
-void minimap_hook(void *tmp);
- uint32_t	rgba_to_int(t_rgba color);
+void			minimap_hook(void *tmp);
+uint32_t		rgba_to_int(t_rgba color);
+
+void			render_sprite(t_data *data);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);

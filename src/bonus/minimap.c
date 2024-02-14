@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/14 09:29:52 by lmangall          #+#    #+#             */
+/*   Updated: 2024/02/14 09:51:52 by lmangall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 #define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
@@ -179,7 +191,7 @@ static void	render_player_ray(t_data *data)
 // render a sprite on the minimap
 // the sprite is represented by a blue square
 // the sprite is a "2" in the map
-static void	render_sprite(t_data *data)
+static void	render_mini_sprite(t_data *data)
 {
 	int	i;
 	int	j;
@@ -212,7 +224,7 @@ void	render_minimap(void *tmp)
 	init_minimap(data);
 	draw_background(data);
 	render_walls(data);
-	render_sprite(data);
+	render_mini_sprite(data);
 	draw_player(data);
 	render_player_ray(data);
 }

@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:17 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 22:37:26 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:02:40 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	load_textures(t_data *data)
 	textures->south = mlx_load_png(data->map->textures_paths->south);
 	textures->west = mlx_load_png(data->map->textures_paths->west);
 	textures->east = mlx_load_png(data->map->textures_paths->east);
+	textures->sprite = mlx_load_png("sprites/sprite.png");
 	data->textures = textures;
 	return (0);
 }

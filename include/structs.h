@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 01:20:12 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:59:55 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_textures
 	mlx_texture_t		*east;
 	mlx_texture_t		*floor;
 	mlx_texture_t		*ceiling;
+	mlx_texture_t		*sprite;
 }						t_textures;
 
 typedef struct s_map_elements
@@ -176,16 +177,16 @@ typedef struct s_ray
 
 typedef struct s_minimap
 {
-	int			offset_x;
-	int			offset_y;
-	int			width;
-	int			height;
-	double		scale_x;
-	double		scale_y;
-	int			player_position_x;
-	int			player_position_y;
-	mlx_image_t	*img;
-}				t_minimap;
+	int					offset_x;
+	int					offset_y;
+	int					width;
+	int					height;
+	double				scale_x;
+	double				scale_y;
+	int					player_position_x;
+	int					player_position_y;
+	mlx_image_t			*img;
+}						t_minimap;
 
 // The "main" struct
 typedef struct s_data
@@ -198,6 +199,7 @@ typedef struct s_data
 	t_map				*map;
 	t_player			*player;
 	t_textures			*textures;
+	mlx_texture_t		*sprite;
 	t_debug				debug;
 }						t_data;
 
