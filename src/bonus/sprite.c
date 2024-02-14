@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:29:52 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/14 10:44:36 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:52:09 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,15 @@
 // 	return (data->sprite);
 // }
 
-static uint32_t	sprite_pixel_color(mlx_texture_t *sprite, double sprite_x,
-		double sprite_y)
+static uint32_t	sprite_pixel_color(mlx_texture_t *sprite, int sprite_x,
+		int sprite_y)
 {
 	uint32_t	*sprite_pixels;
-	int			sprite_pixel_x;
-	int			sprite_pixel_y;
 	uint32_t	color;
 
 	sprite_pixels = (uint32_t *)sprite->pixels;
-	// Scaling
-	sprite_x = sprite_x / TILE_SIZE * sprite->width;
-	sprite_y = sprite_y / TILE_SIZE * sprite->height;
-	sprite_x = fmax(0.0, fmin(sprite_x, sprite->width - 1));
-	sprite_y = fmax(0.0, fmin(sprite_y, sprite->height - 1));
-	sprite_pixel_x = (int)sprite_x;
-	sprite_pixel_y = (int)sprite_y;
 	// Sample pixel color from the sprite texture
-	color = sprite_pixels[sprite_pixel_y * sprite->width + sprite_pixel_x];
+	color = sprite_pixels[sprite_y * sprite->width + sprite_x];
 	return (color);
 }
 
@@ -69,12 +60,17 @@ void	render_sprite(t_data *data)
 			sprite_x = (int)(world_x + pixel_x - sprite->width / 2);
 			sprite_y = (int)(world_y + pixel_y - sprite->height / 2);
 			// Ensure that the calculated pixel coordinates are within the bounds of the sprite dimensions
-			if (sprite_x >= 0 && sprite_x < (int)sprite->width && sprite_y >= 0
-				&& sprite_y < (int)sprite->height) // Cast to int
+			if (sprite_x >= 0 && sprite_x < (int)data->img->width
+				&& sprite_y >= 0 && sprite_y < (int)data->img->height)
+				// Cast to int
 			{
-				color = sprite_pixel_color(sprite, sprite_x, sprite_y);
-				color = reverse_bytes(color);
-				mlx_put_pixel(data->img, sprite_x, sprite_y, color);
+				color = sprite_pixel_color(sprite, pixel_x, pixel_y);
+				// Check for transparency
+				if ((color & 0xFF000000) != 0) // If alpha value is not 0
+				{
+					color = reverse_bytes(color);
+					mlx_put_pixel(data->img, sprite_x, sprite_y, color);
+				}
 			}
 			pixel_y++;
 		}
