@@ -21,17 +21,26 @@ static void	mlx_draw_pixel(uint8_t *pixel, uint32_t color)
 	*(pixel++) = (uint8_t)(color & 0xFF);
 }
 
-void	render_pixel(t_data *data, int y, int color)
+uint8_t	*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y, int color)
 {
 	uint8_t	*pixelstart;
 
-	if (y < 0)
-		return ;
-	else if (y >= WINDOW_HEIGHT)
-		return ;
-	pixelstart = &data->img->pixels[(y * WINDOW_WIDTH + data->ray->screen_x)
-		* 4];
+	if (image == NULL)
+	{
+		printf("Error: image is null\n");
+		return (NULL);
+	}
+	// printf("y: %d, x: %d\n", y, x);
+	// printf("image->height: %d, image->width: %d\n", image->height,
+	// image->width);
+	if (y < 0 || y > image->height || x < 0 || x > image->width)
+	{
+		printf("Pixel is out of bounds\n");
+		return (NULL);
+	}
+	pixelstart = &image->pixels[(y * image->width + x) * PIXEL_SIZE_BYTES];
 	mlx_draw_pixel(pixelstart, color);
+	return (pixelstart);
 }
 
 float	normalize_angle(float angle)

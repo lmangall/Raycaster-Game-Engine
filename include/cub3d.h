@@ -16,8 +16,8 @@
 # include "MLX42.h"
 # include "doxy.h"
 # include "structs.h"
-void minimap_hook(void *tmp);
- uint32_t	rgba_to_int(t_rgba color);
+void			minimap_hook(void *tmp);
+uint32_t		rgba_to_int(t_rgba color);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
@@ -40,7 +40,8 @@ void			key_hook(void *tmp);
 void			apply_movement(t_data *data, double move_x, double move_y);
 void			rotate_player(double *orientation_angle_rd,
 					enum e_rotation direction);
-void			render_pixel(t_data *data, int y, int color);
+uint8_t			*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
+					int color);
 float			normalize_angle(float angle);
 void			raycasting(void *tmp);
 int				update_steps_direction(float angle, float *step, char c);

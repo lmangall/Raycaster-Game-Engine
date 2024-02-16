@@ -40,6 +40,8 @@
 # define LEFT 9
 # define UP 8
 # define DOWN 7
+// Pixel size in bytes
+# define PIXEL_SIZE_BYTES 4
 
 // Parser enums for clear code:
 typedef enum e_mode
@@ -176,16 +178,16 @@ typedef struct s_ray
 
 typedef struct s_minimap
 {
-	int			offset_x;
-	int			offset_y;
-	int			width;
-	int			height;
-	double		scale_x;
-	double		scale_y;
-	int			player_position_x;
-	int			player_position_y;
-	mlx_image_t	*img;
-}				t_minimap;
+	int					offset_x;
+	int					offset_y;
+	int					width;
+	int					height;
+	double				scale_x;
+	double				scale_y;
+	int					player_position_x;
+	int					player_position_y;
+	mlx_image_t			*img;
+}						t_minimap;
 
 // The "main" struct
 typedef struct s_data

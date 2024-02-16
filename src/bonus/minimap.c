@@ -2,6 +2,13 @@
 
 #define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
 
+static int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
 static void	init_minimap(t_data *data)
 {
 	data->minimap->height = 150;
@@ -9,142 +16,129 @@ static void	init_minimap(t_data *data)
 	data->minimap->offset_x = 20;
 	data->minimap->offset_y = 20;
 	data->minimap->scale_x = (double)data->minimap->width
-		/ (double)data->map->width;
+		/ ((double)data->map->width * TILE_SIZE);
 	data->minimap->scale_y = (double)data->minimap->height
-		/ (double)data->map->height;
+		/ ((double)data->map->height * TILE_SIZE);
 	data->minimap->player_position_x = (int)(data->player->x_pos_px
 		* data->minimap->scale_x);
 	data->minimap->player_position_y = (int)(data->player->y_pos_px
 		* data->minimap->scale_y);
 }
 
-static void	draw_background(t_data *data)
+static void	render_background(t_data *data)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
+	int	minimap_background_color;
 
-	i = 0;
-	j = 0;
-	while (i < data->minimap->width)
+	x = 0;
+	y = 0;
+	minimap_background_color = RGBA(0, 0, 0, 255);
+	while (y < data->minimap->height)
 	{
-		data->ray->screen_x = i;
-		j = 0;
-		while (j < data->minimap->height)
+		x = 0;
+		while (x < data->minimap->width)
 		{
-			render_pixel(data, j, 0x80000000);
-			j++;
+			if (render_pixel(data->img, x, y, minimap_background_color) == NULL)
+				free_exit(data);
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
-static void	render_block(t_data *data, int x, int y)
+static void	render_block(int offset_x, int offset_y, t_data *data)
 {
-	int	dx;
-	int	block_width;
-	int	block_height;
-	int	dy;
-	int	pixel_x;
-	int	pixel_y;
+	int		x_px;
+	int		y_px;
+	int		block_width_px;
+	int		block_height_px;
+	double	block_width_px_f;
+	double	block_height_px_f;
+	int		block_color;
+	int		offset_x_px;
+	int		offset_y_px;
 
-	dx = 0;
-	// int color = RGBA(255, 255, 255, 255);
-	block_width = (int)data->minimap->scale_x + 1;
-	block_height = (int)data->minimap->scale_y + 1;
-	while (dx < block_width)
+	// Consider here also the evenutally padding of the minimap
+	offset_x_px = offset_x * TILE_SIZE * data->minimap->scale_x;
+	offset_y_px = offset_y * TILE_SIZE * data->minimap->scale_y;
+	y_px = 0;
+	block_width_px_f = data->minimap->scale_x * TILE_SIZE;
+	block_height_px_f = data->minimap->scale_y * TILE_SIZE;
+	block_width_px = ft_max((int)block_width_px_f, 1);
+	block_height_px = ft_max((int)block_height_px_f, 1);
+	block_color = RGBA(255, 255, 255, 255);
+	while (y_px < block_height_px)
 	{
-		dy = 0;
-		while (dy < block_height)
+		x_px = 0;
+		while (x_px < block_width_px)
 		{
-			pixel_x = x + dx;
-			pixel_y = y + dy;
-			if (pixel_x < data->minimap->width
-				&& pixel_y < data->minimap->height)
-			{
-				data->ray->screen_x = pixel_x;
-				render_pixel(data, pixel_y, RGBA(255, 255, 255, 255));
-			}
-			dy++;
+			if (x_px + offset_x_px >= data->minimap->width || y_px
+				+ offset_y_px >= data->minimap->height)
+				break ;
+			if (render_pixel(data->img, x_px + offset_x_px, y_px + offset_y_px,
+					block_color) == NULL)
+				free_exit(data);
+			x_px++;
 		}
-		dx++;
+		y_px++;
 	}
 }
 
 static void	render_walls(t_data *data)
 {
-	int	x;
 	int	y;
-	int	i;
-	int	j;
+	int	x;
 
-	i = 0;
-	while (i < data->map->width)
+	y = 0;
+	while (y < data->map->height)
 	{
-		j = 0;
-		while (j < data->map->height)
+		x = 0;
+		while (x < data->map->width)
 		{
-			if (data->map->grid[j][i] == '1')
-			{
-				x = (int)(i * data->minimap->scale_x);
-				y = (int)(j * data->minimap->scale_y);
-				render_block(data, x, y);
-			}
-			j++;
+			if (data->map->grid[y][x] == '1')
+				render_block(x, y, data);
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
-static void	draw_player(t_data *data)
+static void	render_player(t_data *data)
 {
-	double	scale_x;
-	double	scale_y;
-	int		player_pos_x;
-	int		player_pos_y;
-	int		color;
-	int		dx;
-	int		dy;
-	int		x;
-	int		y;
-	int		half_size;
+	int	player_pos_x;
+	int	player_pos_y;
+	int	player_color;
+	int	x;
+	int	y;
+	int	half_size;
 
 	half_size = 3;
-	// Half the size of the square to make it centered on the player
-	scale_x = (double)data->minimap->width / ((double)data->map->width
-		* TILE_SIZE);
-	scale_y = (double)data->minimap->height / ((double)data->map->height
-		* TILE_SIZE);
-	player_pos_x = (int)(data->player->x_pos_px * scale_x);
-	player_pos_y = (int)(data->player->y_pos_px * scale_y);
-	color = RGBA(255, 0, 0, 255);
-	render_pixel(data, player_pos_y - half_size, color);
-	render_pixel(data, player_pos_y + half_size, color);
-	render_pixel(data, player_pos_y, color);
-	render_pixel(data, player_pos_y, color);
-	dx = -half_size;
-	while (dx <= half_size)
+	player_pos_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
+	player_pos_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
+	player_color = RGBA(255, 0, 0, 255);
+	y = player_pos_y - half_size;
+	while (y <= player_pos_y + half_size)
 	{
-		dy = -half_size;
-		while (dy <= half_size)
+		x = player_pos_x - half_size;
+		while (x <= player_pos_x + half_size)
 		{
-			x = player_pos_x + dx;
-			y = player_pos_y + dy;
 			if (x >= 0 && x < data->minimap->width && y >= 0
 				&& y < data->minimap->height)
 			{
-				data->ray->screen_x = x;
-				render_pixel(data, y, color);
+				if (render_pixel(data->img, x, y, player_color) == NULL)
+					free_exit(data);
 			}
-			dy++;
+			x++;
 		}
-		dx++;
+		y++;
 	}
 }
 
-static void	render_player_ray(t_data *data)
+static void	render_ray(t_data *data)
 {
 	int		ray_length;
-	int		color;
+	int		ray_color;
 	double	scale_x;
 	double	scale_y;
 	int		player_pos_x;
@@ -154,8 +148,7 @@ static void	render_player_ray(t_data *data)
 	int		y;
 
 	ray_length = 50;
-	color = RGBA(0, 255, 0, 255);
-	// Calculate the player's position on the minimap
+	ray_color = RGBA(0, 255, 0, 255);
 	scale_x = (double)data->minimap->width / ((double)data->map->width
 		* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
@@ -171,7 +164,7 @@ static void	render_player_ray(t_data *data)
 			&& y < data->minimap->height)
 		{
 			data->ray->screen_x = x;
-			render_pixel(data, y, color);
+			render_pixel(data->img, x, y, ray_color);
 		}
 		dx++;
 	}
@@ -183,8 +176,8 @@ void	render_minimap(void *tmp)
 
 	data = (t_data *)tmp;
 	init_minimap(data);
-	draw_background(data);
+	render_background(data);
 	render_walls(data);
-	draw_player(data);
-	render_player_ray(data);
+	render_player(data);
+	render_ray(data);
 }

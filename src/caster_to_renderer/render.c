@@ -42,7 +42,8 @@ void	determine_plane_and_position(t_data *data, char *plane,
 	*wall_hit_position = fmod(*wall_hit_position, TILE_SIZE);
 }
 
-uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int wall_top_pixel)
+uint32_t	pixel_color(mlx_texture_t *texture, t_data *data,
+		int wall_top_pixel)
 {
 	uint32_t	*pixel_array;
 	char		plane;
@@ -52,40 +53,49 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data, int wall_top_pixel)
 
 	determine_plane_and_position(data, &plane, &wall_hit_position);
 	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
-			* texture->width, texture->width, data->ray->angle_rd, plane);
+		* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
 	y_pixel_coordinate = (wall_top_pixel - (WINDOW_HEIGHT / 2)
-			+ (data->ray->wall_h / 2)) * ((double)texture->height
-			/ data->ray->wall_h);
+		+ (data->ray->wall_h / 2)) * ((double)texture->height
+		/ data->ray->wall_h);
 	y_pixel_coordinate = fmax(0.0, fmin(y_pixel_coordinate, texture->height
-				- 1));
+			- 1));
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
-				- 1));
+			- 1));
 	return (pixel_array[(int)y_pixel_coordinate * texture->width
-			+ (int)x_pixel_coordinate]);
+		+ (int)x_pixel_coordinate]);
 }
 
 void	render_wall_background(t_data *data)
 {
 	int				rendered_pixel;
-	int 			i;
+	int				i;
 	uint32_t		color;
 	mlx_texture_t	*texture;
-	
+
 	i = 0;
 	texture = data->ray->current_texture;
 	rendered_pixel = data->ray->wall_top_pixel;
 	while (++i < rendered_pixel)
-		render_pixel(data, i, data->map->c_color); 
+		if ((render_pixel(data->img, data->ray->screen_x, i,
+					data->map->c_color) == NULL))
+			free_exit(data);
+	// render_pixel(data, i, data->map->c_color);
 	while (rendered_pixel < data->ray->wall_bot_pixel)
 	{
 		color = pixel_color(texture, data, rendered_pixel);
 		color = reverse_bytes(color);
 		if (color != 0)
-			render_pixel(data, rendered_pixel, color);
+			if ((render_pixel(data->img, data->ray->screen_x, rendered_pixel,
+						color) == NULL))
+				free_exit(data);
+		// render_pixel(data, rendered_pixel, color);
 		rendered_pixel++;
 	}
 	i = data->ray->wall_bot_pixel;
-	while ( ++i < WINDOW_HEIGHT)
-		render_pixel(data, i, data->map->f_color);
+	while (++i < WINDOW_HEIGHT)
+		if ((render_pixel(data->img, data->ray->screen_x, i,
+					data->map->f_color) == NULL))
+			free_exit(data);
+	// render_pixel(data, i, data->map->f_color);
 }
