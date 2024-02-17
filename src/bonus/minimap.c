@@ -2,14 +2,14 @@
 
 #define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
 
-static int	ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
 	if (a > b)
 		return (a);
 	return (b);
 }
 
-static void	init_minimap(t_data *data)
+void	minimap_init(t_data *data)
 {
 	data->minimap->height = 150;
 	data->minimap->width = 300;
@@ -20,12 +20,12 @@ static void	init_minimap(t_data *data)
 	data->minimap->scale_y = (double)data->minimap->height
 		/ ((double)data->map->height * TILE_SIZE);
 	data->minimap->player_position_x = (int)(data->player->x_pos_px
-		* data->minimap->scale_x);
+			* data->minimap->scale_x);
 	data->minimap->player_position_y = (int)(data->player->y_pos_px
-		* data->minimap->scale_y);
+			* data->minimap->scale_y);
 }
 
-static void	render_background(t_data *data)
+void	minimap_render_background(t_data *data)
 {
 	int	x;
 	int	y;
@@ -47,7 +47,7 @@ static void	render_background(t_data *data)
 	}
 }
 
-static void	render_block(int offset_x, int offset_y, t_data *data)
+void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 {
 	int		x_px;
 	int		y_px;
@@ -85,7 +85,7 @@ static void	render_block(int offset_x, int offset_y, t_data *data)
 	}
 }
 
-static void	render_walls(t_data *data)
+void	minimap_render_walls(t_data *data)
 {
 	int	y;
 	int	x;
@@ -97,14 +97,14 @@ static void	render_walls(t_data *data)
 		while (x < data->map->width)
 		{
 			if (data->map->grid[y][x] == '1')
-				render_block(x, y, data);
+				minimap_render_block(x, y, data);
 			x++;
 		}
 		y++;
 	}
 }
 
-static void	render_player(t_data *data)
+void	minimap_render_player(t_data *data)
 {
 	int	player_pos_x;
 	int	player_pos_y;
@@ -135,7 +135,7 @@ static void	render_player(t_data *data)
 	}
 }
 
-static void	render_ray(t_data *data)
+void	minimap_render_ray(t_data *data)
 {
 	int		ray_length;
 	int		ray_color;
@@ -150,9 +150,9 @@ static void	render_ray(t_data *data)
 	ray_length = 50;
 	ray_color = RGBA(0, 255, 0, 255);
 	scale_x = (double)data->minimap->width / ((double)data->map->width
-		* TILE_SIZE);
+			* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
-		* TILE_SIZE);
+			* TILE_SIZE);
 	player_pos_x = (int)(data->player->x_pos_px * scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * scale_y);
 	dx = 0;
@@ -175,9 +175,9 @@ void	render_minimap(void *tmp)
 	t_data *data;
 
 	data = (t_data *)tmp;
-	init_minimap(data);
-	render_background(data);
-	render_walls(data);
-	render_player(data);
-	render_ray(data);
+	minimap_init(data);
+	minimap_render_background(data);
+	minimap_render_walls(data);
+	minimap_render_player(data);
+	minimap_render_ray(data);
 }

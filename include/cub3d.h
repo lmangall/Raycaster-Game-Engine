@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:06:59 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:29:48 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "doxy.h"
 # include "structs.h"
 void			minimap_hook(void *tmp);
-uint32_t		rgba_to_int(t_rgba color);
+// uint32_t		rgba_to_int(t_rgba color);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
@@ -67,7 +67,7 @@ void			error_exit(char *error_msg);
 void			*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
-void			render_wall_background(t_data *data);
+void			render_wall_and_background(t_data *data);
 
 // BONUS
 
