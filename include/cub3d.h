@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/17 19:29:48 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 20:44:40 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "doxy.h"
 # include "structs.h"
 void			minimap_hook(void *tmp);
-// uint32_t		rgba_to_int(t_rgba color);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
@@ -43,7 +42,7 @@ void			rotate_player(double *orientation_angle_rd,
 uint8_t			*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
 					int color);
 float			normalize_angle(float angle);
-void			raycasting(void *tmp);
+void			calculate_and_render_rays(void *tmp);
 int				update_steps_direction(float angle, float *step, char c);
 int				check_collision_adjust_step(float angle, float *inter,
 					float *step, char plane);
