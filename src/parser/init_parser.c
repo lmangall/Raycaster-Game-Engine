@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:02 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/07 13:58:37 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:39:41 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ t_map	*init_map(t_map *map)
 void	init_data_parser(t_data *data)
 {
 	t_minimap	*minimap;
+
 	minimap = ft_calloc(1, sizeof(t_minimap));
 	data->minimap = minimap;
 	data->minimap->img = NULL;
 	data->minimap->height = WINDOW_HEIGHT / 5;
 	data->minimap->width = WINDOW_WIDTH / 5;
-
 	data->img = NULL;
 	data->background = NULL;
 	data->mlx = NULL;

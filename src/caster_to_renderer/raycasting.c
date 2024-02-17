@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:17:53 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:07:16 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:39:27 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,36 @@ mlx_texture_t	*texture_selection(t_data *data)
 			return (data->textures->east);
 	}
 }
+
+// static double	get_fisheye_correction_factor(double fov_deg)
+// {
+// 	double	standard_fov;
+// 	double	standard_correction;
+// 	double	large_fov;
+// 	double	large_correction;
+// 	double	correction;
+
+// 	// Correction factors for standard FOV (60 degrees) and 120 degrees
+// 	standard_fov = 60.0;
+// 	standard_correction = 1.0;
+// 	large_fov = 120.0;
+// 	large_correction = 6.0;
+// 	// Linearly interpolate between the standard and large correction factors
+// 	correction = standard_correction + (large_correction - standard_correction)
+// 		* ((fov_deg - standard_fov) / (large_fov - standard_fov));
+// 	return (correction);
+// }
+
+// void	update_ray(t_data *data)
+// {
+// 	double	wall_h;
+// 	double	wall_bot_pixel;
+// 	double	wall_top_pixel;
+// 	double	correction_factor;
+
+// 	correction_factor = get_fisheye_correction_factor(FOV);
+// 	data->ray->length *= cos(normalize_angle((data->ray->angle_rd
+// 					- data->player->orientation_angle_rd) / correction_factor));
 
 void	update_ray(t_data *data)
 {
@@ -77,7 +107,7 @@ void	update_length_and_collision_orientation(t_data *data)
 
 void	raycasting(void *tmp)
 {
-		t_data	*data;
+	t_data	*data;
 
 	data = (t_data *)tmp;
 	data->ray->screen_x = 0;
