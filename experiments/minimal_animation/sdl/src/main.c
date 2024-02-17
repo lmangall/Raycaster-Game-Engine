@@ -2,8 +2,8 @@
 #include <SDL_image.h>
 #include <stdbool.h>
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 300;
+const int SCREEN_HEIGHT = 300;
 
 // Start SDL and create window
 bool init(void);
@@ -98,7 +98,7 @@ int main(void) {
 
         // Animation frame
         int frame = 0;
-        int totalFrames = 15;
+        int totalFrames = 14;
         int spriteWidth = 24;
         int spriteHeight = 24;
 
@@ -106,7 +106,7 @@ int main(void) {
         SDL_Rect gCurrentClip = {0, 0, spriteWidth, spriteHeight};
 
         // Desired frame rate
-        const int FPS = 30;
+        const int FPS = 15;
         const int frameDelay = 1000 / FPS;
 
         // While application is running
@@ -118,15 +118,24 @@ int main(void) {
               quit = true;
           }
           // clear the screen
-          SDL_FillRect(gScreenSurface, NULL, 0x000000);
+          SDL_FillRect(gScreenSurface, NULL, 0xFFFFFFFF);
 
           // Calculate the frame to show
 
           gCurrentClip.x = spriteWidth * (frame % totalFrames);
 
+          SDL_Rect stretchRect;
+          stretchRect.x = 0; // Position where you want to draw the sprite
+          stretchRect.y = 0;
+          stretchRect.w = spriteWidth * 3;  // Double the original width
+          stretchRect.h = spriteHeight * 3; // Double the original height
+
           // Render the current frame
-          SDL_BlitSurface(gSpriteSheetSurface, &gCurrentClip, gScreenSurface,
-                          NULL);
+          //   SDL_BlitSurface(gSpriteSheetSurface, &gCurrentClip,
+          //   gScreenSurface,
+          //                   NULL);
+          SDL_BlitScaled(gSpriteSheetSurface, &gCurrentClip, gScreenSurface,
+                         &stretchRect);
 
           // Update the surface
           SDL_UpdateWindowSurface(gWindow);
