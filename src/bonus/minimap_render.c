@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:38 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 16:17:15 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:38:03 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 
 	offset_x *= TILE_SIZE * data->minimap->scale_x;
 	offset_y *= TILE_SIZE * data->minimap->scale_y;
-	block_width_px = data->minimap->scale_x * TILE_SIZE;
-	block_height_px = data->minimap->scale_y * TILE_SIZE;
+	block_width_px = data->minimap->scale_x * TILE_SIZE + 1;
+	block_height_px = data->minimap->scale_y * TILE_SIZE + 1;
 	y = 0;
 	while (y < block_height_px)
 	{
