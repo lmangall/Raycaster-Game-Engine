@@ -6,12 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:31 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 16:34:28 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 20:44:38 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 int	main(int argc, char **argv)
 {
@@ -31,9 +30,9 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(data->mlx, &key_hook, data);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	mlx_loop_hook(data->mlx, &raycasting, data);
+	mlx_loop_hook(data->mlx, &calculate_and_render_rays, data);
 	mlx_loop_hook(data->mlx, &render_minimap, data);
 	mlx_loop(data->mlx);
-	free_exit(data);	
+	free_exit(data);
 	return (0);
 }

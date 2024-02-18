@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:15:49 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:06:59 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:12:27 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include "MLX42.h"
 # include "doxy.h"
+# include "minimap.h"
 # include "structs.h"
-void			minimap_hook(void *tmp);
+
 uint32_t		rgba_to_int(t_rgba color);
+void			minimap_hook(void *tmp);
 
 void			init_data_parser(t_data *data);
 void			free_data(t_data *data);
@@ -43,7 +45,7 @@ void			rotate_player(double *orientation_angle_rd,
 uint8_t			*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
 					int color);
 float			normalize_angle(float angle);
-void			raycasting(void *tmp);
+void			calculate_and_render_rays(void *tmp);
 int				update_steps_direction(float angle, float *step, char c);
 int				check_collision_adjust_step(float angle, float *inter,
 					float *step, char plane);
@@ -67,7 +69,7 @@ void			error_exit(char *error_msg);
 void			*handle_ft_calloc(size_t *lines_arr_size, int fd);
 void			*handle_ft_easy_realloc(char **lines_arr, size_t old_size,
 					size_t new_size, int fd);
-void			render_wall_background(t_data *data);
+void			render_wall_and_background(t_data *data);
 
 // BONUS
 

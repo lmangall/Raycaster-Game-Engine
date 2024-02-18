@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/11 23:09:01 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/17 20:44:25 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data,
 
 	determine_plane_and_position(data, &plane, &wall_hit_position);
 	x_pixel_coordinate = adjust_mirroring((wall_hit_position / TILE_SIZE)
-		* texture->width, texture->width, data->ray->angle_rd, plane);
+			* texture->width, texture->width, data->ray->angle_rd, plane);
 	pixel_array = (uint32_t *)texture->pixels;
 	y_pixel_coordinate = (wall_top_pixel - (WINDOW_HEIGHT / 2)
-		+ (data->ray->wall_h / 2)) * ((double)texture->height
-		/ data->ray->wall_h);
+			+ (data->ray->wall_h / 2)) * ((double)texture->height
+			/ data->ray->wall_h);
 	y_pixel_coordinate = fmax(0.0, fmin(y_pixel_coordinate, texture->height
-			- 1));
+				- 1));
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
-			- 1));
+				- 1));
 	return (pixel_array[(int)y_pixel_coordinate * texture->width
 		+ (int)x_pixel_coordinate]);
 }
 
-void	render_wall_background(t_data *data)
+void	render_wall_and_background(t_data *data)
 {
 	int				rendered_pixel;
 	int				i;
@@ -80,7 +80,6 @@ void	render_wall_background(t_data *data)
 		if ((render_pixel(data->img, data->ray->screen_x, i,
 					data->map->c_color) == NULL))
 			free_exit(data);
-	// render_pixel(data, i, data->map->c_color);
 	while (rendered_pixel < data->ray->wall_bot_pixel)
 	{
 		color = pixel_color(texture, data, rendered_pixel);
@@ -89,7 +88,6 @@ void	render_wall_background(t_data *data)
 			if ((render_pixel(data->img, data->ray->screen_x, rendered_pixel,
 						color) == NULL))
 				free_exit(data);
-		// render_pixel(data, rendered_pixel, color);
 		rendered_pixel++;
 	}
 	i = data->ray->wall_bot_pixel;

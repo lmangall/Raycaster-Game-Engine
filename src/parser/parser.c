@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/11 23:02:55 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 09:46:16 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	check_texture_paths(t_data *data)
 		free_exit_parser(data, "Wrong texture path");
 }
 
+uint32_t	rgba_to_int(t_rgba color)
+{
+	return (color.r << 24 | color.g << 16 | color.b << 8 | 255);
+}
+
 void	parser(int argc, char **argv, t_data *data)
 {
 	char	**lines_arr;
@@ -98,11 +103,8 @@ void	parser(int argc, char **argv, t_data *data)
 	check_texture_paths(data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
-	
 	///
-
 	data->map->c_color = rgba_to_int(data->map->c);
 	data->map->f_color = rgba_to_int(data->map->f);
-
 	///
 }
