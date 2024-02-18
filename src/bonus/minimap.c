@@ -1,8 +1,6 @@
 #include "cub3d.h"
 
-#define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
-
-int	ft_max(int a, int b)
+static int	max(int a, int b)
 {
 	if (a > b)
 		return (a);
@@ -29,17 +27,17 @@ void	minimap_render_background(t_data *data)
 {
 	int	x;
 	int	y;
-	int	minimap_background_color;
 
+	t_rgba minimap_background_color = {0, 0, 0, 0}; // Corrected initialization
 	x = 0;
 	y = 0;
-	minimap_background_color = RGBA(0, 0, 0, 255);
 	while (y < data->minimap->height)
 	{
 		x = 0;
 		while (x < data->minimap->width)
 		{
-			if (render_pixel(data->img, x, y, minimap_background_color) == NULL)
+			if (render_pixel(data->img, x, y,
+					rgba_to_int(minimap_background_color)) == NULL)
 				free_exit(data);
 			x++;
 		}
@@ -49,25 +47,25 @@ void	minimap_render_background(t_data *data)
 
 void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 {
-	int		x_px;
-	int		y_px;
-	int		block_width_px;
-	int		block_height_px;
-	double	block_width_px_f;
-	double	block_height_px_f;
-	int		block_color;
-	int		offset_x_px;
-	int		offset_y_px;
+	int			x_px;
+	int			y_px;
+	int			block_width_px;
+	int			block_height_px;
+	double		block_width_px_f;
+	double		block_height_px_f;
+	uint32_t	block_color;
+	int			offset_x_px;
+	int			offset_y_px;
 
-	// Consider here also the evenutally padding of the minimap
+	t_rgba block_color_rgb = {255, 255, 255, 255}; // Corrected initialization
 	offset_x_px = offset_x * TILE_SIZE * data->minimap->scale_x;
 	offset_y_px = offset_y * TILE_SIZE * data->minimap->scale_y;
 	y_px = 0;
 	block_width_px_f = data->minimap->scale_x * TILE_SIZE;
 	block_height_px_f = data->minimap->scale_y * TILE_SIZE;
-	block_width_px = ft_max((int)block_width_px_f, 1);
-	block_height_px = ft_max((int)block_height_px_f, 1);
-	block_color = RGBA(255, 255, 255, 255);
+	block_width_px = max((int)block_width_px_f, 1);
+	block_height_px = max((int)block_height_px_f, 1);
+	block_color = rgba_to_int(block_color_rgb);
 	while (y_px < block_height_px)
 	{
 		x_px = 0;
@@ -103,20 +101,20 @@ void	minimap_render_walls(t_data *data)
 		y++;
 	}
 }
-
 void	minimap_render_player(t_data *data)
 {
-	int	player_pos_x;
-	int	player_pos_y;
-	int	player_color;
-	int	x;
-	int	y;
-	int	half_size;
+	int			player_pos_x;
+	int			player_pos_y;
+	uint32_t	player_color;
+	int			x;
+	int			y;
+	int			half_size;
 
+	t_rgba player_color_rgb = {255, 0, 0, 255}; // Corrected initialization
 	half_size = 3;
 	player_pos_x = (int)(data->player->x_pos_px * data->minimap->scale_x);
 	player_pos_y = (int)(data->player->y_pos_px * data->minimap->scale_y);
-	player_color = RGBA(255, 0, 0, 255);
+	player_color = rgba_to_int(player_color_rgb);
 	y = player_pos_y - half_size;
 	while (y <= player_pos_y + half_size)
 	{
@@ -137,18 +135,19 @@ void	minimap_render_player(t_data *data)
 
 void	minimap_render_ray(t_data *data)
 {
-	int		ray_length;
-	int		ray_color;
-	double	scale_x;
-	double	scale_y;
-	int		player_pos_x;
-	int		player_pos_y;
-	int		dx;
-	int		x;
-	int		y;
+	int			ray_length;
+	double		scale_x;
+	double		scale_y;
+	int			player_pos_x;
+	int			player_pos_y;
+	int			dx;
+	int			x;
+	int			y;
+	uint32_t	ray_color;
 
+	t_rgba ray_color_rgb = {0, 255, 0, 255}; // Corrected initialization
 	ray_length = 50;
-	ray_color = RGBA(0, 255, 0, 255);
+	ray_color = rgba_to_int(ray_color_rgb);
 	scale_x = (double)data->minimap->width / ((double)data->map->width
 			* TILE_SIZE);
 	scale_y = (double)data->minimap->height / ((double)data->map->height
@@ -172,7 +171,7 @@ void	minimap_render_ray(t_data *data)
 
 void	render_minimap(void *tmp)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = (t_data *)tmp;
 	minimap_init(data);

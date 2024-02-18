@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/17 20:43:11 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 09:46:16 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	check_texture_paths(t_data *data)
 		free_exit_parser(data, "Wrong texture path");
 }
 
-static uint32_t	rgba_to_int(t_rgba color)
+uint32_t	rgba_to_int(t_rgba color)
 {
 	return (color.r << 24 | color.g << 16 | color.b << 8 | 255);
 }
