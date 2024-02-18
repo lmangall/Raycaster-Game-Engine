@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:38 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 10:35:54 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:10:36 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 
 	offset_x_px = offset_x * TILE_SIZE * data->minimap->scale_x;
 	offset_y_px = offset_y * TILE_SIZE * data->minimap->scale_y;
-	block_width_px = max((int)(data->minimap->scale_x * TILE_SIZE), 1);
-	block_height_px = max((int)(data->minimap->scale_y * TILE_SIZE), 1);
+	block_width_px = data->minimap->scale_x * TILE_SIZE;
+	block_height_px = data->minimap->scale_y * TILE_SIZE;
 	y = 0;
 	while (y < block_height_px)
 	{
@@ -121,20 +121,18 @@ void	minimap_render_player(t_data *data)
 void	minimap_render_ray(t_data *data)
 {
 	int	ray_length;
-	int	player_pos_x;
-	int	player_pos_y;
 	int	dx;
 	int	x;
 	int	y;
 
 	ray_length = 50;
-	player_pos_x = data->minimap->player_position_x;
-	player_pos_y = data->minimap->player_position_y;
 	dx = 0;
 	while (dx <= ray_length)
 	{
-		x = player_pos_x + (int)(dx * cos(data->player->orientation_angle_rd));
-		y = player_pos_y + (int)(dx * sin(data->player->orientation_angle_rd));
+		x = data->minimap->player_position_x
+			+ (int)(dx * cos(data->player->orientation_angle_rd));
+		y = data->minimap->player_position_y
+			+ (int)(dx * sin(data->player->orientation_angle_rd));
 		if (x >= 0 && x < data->minimap->width && y >= 0
 			&& y < data->minimap->height)
 		{

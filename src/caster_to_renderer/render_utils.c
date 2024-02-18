@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:27 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 12:13:10 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:48:53 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ uint8_t	*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y, int color)
 		printf("Error: image is null\n");
 		return (NULL);
 	}
-	// printf("y: %d, x: %d\n", y, x);
-	// printf("image->height: %d, image->width: %d\n", image->height,
-	// image->width);
 	if (y < 0 || y > image->height || x < 0 || x > image->width)
 	{
 		printf("Pixel is out of bounds\n");

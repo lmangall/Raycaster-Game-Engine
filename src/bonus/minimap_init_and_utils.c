@@ -6,18 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:15 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 10:38:44 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:56:05 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
 
 static void	minimap_color_init(t_data *data)
 {
@@ -42,7 +35,6 @@ static void	minimap_color_init(t_data *data)
 	minimap_background_color.g = 0;
 	minimap_background_color.b = 0;
 	minimap_background_color.a = 255;
-	// Assigning the calculated values to the data structure
 	data->minimap->block_color = rgba_to_int(block_color_rgb);
 	data->minimap->player_color = rgba_to_int(player_color_rgb);
 	data->minimap->ray_color = rgba_to_int(ray_color_rgb);
