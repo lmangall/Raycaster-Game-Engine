@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:38 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 16:10:36 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:15:00 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,26 +90,22 @@ void	minimap_render_walls(t_data *data)
 
 void	minimap_render_player(t_data *data)
 {
-	int	player_pos_x;
-	int	player_pos_y;
 	int	x;
 	int	y;
 	int	half_size;
 
 	half_size = 3;
-	player_pos_x = data->minimap->player_position_x;
-	player_pos_y = data->minimap->player_position_y;
-	y = player_pos_y - half_size;
-	while (y <= player_pos_y + half_size)
+	y = data->minimap->player_position_y - half_size;
+	while (y <= data->minimap->player_position_y + half_size)
 	{
-		x = player_pos_x - half_size;
-		while (x <= player_pos_x + half_size)
+		x = data->minimap->player_position_x - half_size;
+		while (x <= data->minimap->player_position_x + half_size)
 		{
 			if (x >= 0 && x < data->minimap->width && y >= 0
 				&& y < data->minimap->height)
 			{
-				if (render_pixel(data->img, x, y,
-						data->minimap->player_color) == NULL)
+				if (render_pixel(data->img, x, y, data->minimap->player_color)
+					== NULL)
 					free_exit(data);
 			}
 			x++;
