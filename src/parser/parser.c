@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/18 09:46:16 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:17:36 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void	parser(int argc, char **argv, t_data *data)
 	check_texture_paths(data);
 	if (data->debug == ALL || data->debug == ONLY_FINAL)
 		print_map_final(data);
-	///
 	data->map->c_color = rgba_to_int(data->map->c);
 	data->map->f_color = rgba_to_int(data->map->f);
-	///
 }

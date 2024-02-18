@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:38 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 16:15:00 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:17:15 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 {
 	int	block_width_px;
 	int	block_height_px;
-	int	offset_x_px;
-	int	offset_y_px;
 	int	x;
 	int	y;
 
-	offset_x_px = offset_x * TILE_SIZE * data->minimap->scale_x;
-	offset_y_px = offset_y * TILE_SIZE * data->minimap->scale_y;
+	offset_x *= TILE_SIZE * data->minimap->scale_x;
+	offset_y *= TILE_SIZE * data->minimap->scale_y;
 	block_width_px = data->minimap->scale_x * TILE_SIZE;
 	block_height_px = data->minimap->scale_y * TILE_SIZE;
 	y = 0;
@@ -57,10 +55,10 @@ void	minimap_render_block(int offset_x, int offset_y, t_data *data)
 		x = 0;
 		while (x < block_width_px)
 		{
-			if (x + offset_x_px >= data->minimap->width || y
-				+ offset_y_px >= data->minimap->height)
+			if (x + offset_x >= data->minimap->width || y
+				+ offset_y >= data->minimap->height)
 				break ;
-			if (render_pixel(data->img, x + offset_x_px, y + offset_y_px,
+			if (render_pixel(data->img, x + offset_x, y + offset_y,
 					data->minimap->block_color) == NULL)
 				free_exit(data);
 			x++;
