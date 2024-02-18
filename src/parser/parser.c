@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:18:29 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/18 16:17:36 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:45:29 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "parser.h"
-
-// The message says 'seems to be empty or incomplete' because
-// we perform this check at the beginning and after
-// processing the map elements, so we can't be sure if the map
-// is empty or incomplete at this point.
-// For a most customized message, we should add a flag
 
 void	skip_empty_lines(char **lines_arr, int *i)
 {
@@ -66,7 +60,6 @@ void	process_map(char **lines_arr, t_map *map, t_data *data)
 	process_map_content(lines_arr, i, data);
 }
 
-// Todo: refactor following DRY
 void	check_texture_paths(t_data *data)
 {
 	if (open(data->map->textures_paths->north, O_RDONLY) == -1)
