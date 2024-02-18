@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:02 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/17 20:44:22 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:09:01 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	init_data_parser(t_data *data)
 
 	minimap = ft_calloc(1, sizeof(t_minimap));
 	data->minimap = minimap;
-	data->minimap->img = NULL;
 	data->minimap->height = WINDOW_HEIGHT / 5;
 	data->minimap->width = WINDOW_WIDTH / 5;
 	data->img = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slombard <slombard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:29 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/07 15:19:31 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:22:53 by slombard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,11 @@ void	free_data(t_data *data)
 	}
 	if (data->textures != NULL)
 		free_textures_mlx(data->textures);
+	if (data->minimap != NULL)
+	{
+		free(data->minimap);
+		data->minimap = NULL;
+	}
 	free(data);
 	data = NULL;
 }
