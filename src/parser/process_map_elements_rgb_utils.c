@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map_elements_rgb_utils.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:52:12 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:05:40 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	char_isdigit(char c)
 int	str_isdigit(char *str)
 {
 	int	i;
-
 
 	i = 0;
 	while (str[i] != '\0')

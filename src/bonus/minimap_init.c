@@ -6,18 +6,11 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 10:35:15 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 18:36:33 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:56:05 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
 
 static void	minimap_color_init(t_data *data)
 {

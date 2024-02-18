@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/17 20:44:25 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:51:41 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ uint32_t	pixel_color(mlx_texture_t *texture, t_data *data,
 	x_pixel_coordinate = fmax(0.0, fmin(x_pixel_coordinate, texture->width
 				- 1));
 	return (pixel_array[(int)y_pixel_coordinate * texture->width
-		+ (int)x_pixel_coordinate]);
+			+ (int)x_pixel_coordinate]);
 }
 
 void	render_wall_and_background(t_data *data)
@@ -71,10 +71,8 @@ void	render_wall_and_background(t_data *data)
 	int				rendered_pixel;
 	int				i;
 	uint32_t		color;
-	mlx_texture_t	*texture;
 
 	i = 0;
-	texture = data->ray->current_texture;
 	rendered_pixel = data->ray->wall_top_pixel;
 	while (++i < rendered_pixel)
 		if ((render_pixel(data->img, data->ray->screen_x, i,
@@ -82,7 +80,7 @@ void	render_wall_and_background(t_data *data)
 			free_exit(data);
 	while (rendered_pixel < data->ray->wall_bot_pixel)
 	{
-		color = pixel_color(texture, data, rendered_pixel);
+		color = pixel_color(data->ray->current_texture, data, rendered_pixel);
 		color = reverse_bytes(color);
 		if (color != 0)
 			if ((render_pixel(data->img, data->ray->screen_x, rendered_pixel,
@@ -95,5 +93,4 @@ void	render_wall_and_background(t_data *data)
 		if ((render_pixel(data->img, data->ray->screen_x, i,
 					data->map->f_color) == NULL))
 			free_exit(data);
-	// render_pixel(data, i, data->map->f_color);
 }

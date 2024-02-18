@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map_elements_rgb.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slombard <slombard@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:25 by slombard          #+#    #+#             */
-/*   Updated: 2024/02/05 15:52:26 by slombard         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:08:37 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ void	build_rgb_values(char **line_ptr, char *identifier,
 	char	*start;
 	char	*end;
 	char	*rgb_str;
+	int		i;
 
-	while(ft_isspace(**line_ptr))
+	i = 0;
+	while (ft_isspace(**line_ptr))
 		(*line_ptr)++;
 	(*line_ptr) += ft_strlen(identifier);
-	while(ft_isspace(**line_ptr))
+	while (ft_isspace(**line_ptr))
 		(*line_ptr)++;
 	start = *line_ptr;
-	while(!ft_isspace(**line_ptr) && **line_ptr != '\0')
+	while (!ft_isspace(**line_ptr) && **line_ptr != '\0')
 		(*line_ptr)++;
 	end = *line_ptr;
 	rgb_str = ft_substr(start, 0, end - start);
 	vars->rgb_values = ft_split(rgb_str, ',');
-	int i = 0;
 	while (vars->rgb_values[i] != NULL)
 		i++;
 	free(rgb_str);
@@ -49,7 +50,7 @@ void	check_number_and_quality_rgb_values(t_collect_elements_data_rgba *vars,
 {
 	int	i;
 
-printf("check_number_and_quality_rgb_values\n");
+	printf("check_number_and_quality_rgb_values\n");
 	i = 0;
 	while (vars->rgb_values[i] != NULL)
 		i++;
@@ -91,6 +92,7 @@ void	convert_and_check_range_rgb_values(t_collect_elements_data_rgba *vars,
 void	collect_elements_data_rgba(char *line, char *identifier, t_data *data)
 {
 	t_collect_elements_data_rgba	vars;
+
 	vars.target = NULL;
 	if (ft_strncmp(identifier, "C", ft_strlen(identifier)) == 0)
 		vars.target = &data->map->c;

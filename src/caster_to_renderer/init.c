@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:16:04 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/06 22:37:27 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:47:08 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	init_data(t_data *data)
 {
 	load_textures(data);
-	// data->ray = calloc(1, sizeof(t_ray));
-	// data->player = calloc(1, sizeof(t_player));
 	data->ray = ft_calloc(1, sizeof(t_ray));
 	data->player = ft_calloc(1, sizeof(t_player));
 	init_player(data);

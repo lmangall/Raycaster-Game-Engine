@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:03:48 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/17 20:44:20 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:29:21 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ void	hook(t_data *data, double move_x, double move_y);
  *
 
 
-	* @param image Pointer to the mlx_image_t structure representing the target image.
+* @param image Pointer to the mlx_image_t structure representing the image.
  * @param x X-coordinate of the pixel to be rendered.
  * @param y Y-coordinate of the pixel to be rendered.
  * @param color The color value of the pixel to be rendered.
 
-	* @return Returns a pointer to the start of the pixel data within the image's pixel buffer. If the image is NULL,
-	or if the coordinates are out of bounds, returns NULL.
+* @return a pointer to the start of the data within the image's pixel buffer.
+* If the image is NULL, or if the coordinates are out of bounds, returns NULL.
  */
 
 uint8_t	*render_pixel(mlx_image_t *image, uint32_t x, uint32_t y, int color);
