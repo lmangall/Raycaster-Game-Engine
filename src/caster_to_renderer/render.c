@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:18:41 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/18 15:51:41 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:08:41 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	render_wall_and_background(t_data *data)
 				free_exit(data);
 		rendered_pixel++;
 	}
-	i = data->ray->wall_bot_pixel;
+	i = data->ray->wall_bot_pixel - 1;
 	while (++i < WINDOW_HEIGHT)
 		if ((render_pixel(data->img, data->ray->screen_x, i,
 					data->map->f_color) == NULL))
