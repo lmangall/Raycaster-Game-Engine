@@ -30,6 +30,7 @@
     "cub3d.h": "c",
     "stat.h": "c",
     "*.tcc": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "doxy.h": "c"
   }
 }

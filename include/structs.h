@@ -6,7 +6,7 @@
 /*   By: lmangall <lmangall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:26:37 by lmangall          #+#    #+#             */
-/*   Updated: 2024/02/12 01:20:12 by lmangall         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:22:06 by lmangall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ typedef struct s_minimap
 	double				scale_y;
 	int					player_position_x;
 	int					player_position_y;
+	uint32_t			player_color;
+	uint32_t			block_color;
+	uint32_t			ray_color;
 	mlx_image_t			*img;
 }						t_minimap;
 
