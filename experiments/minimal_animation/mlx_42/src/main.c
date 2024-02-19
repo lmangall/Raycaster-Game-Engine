@@ -147,7 +147,7 @@ int main(void) {
     printf("Error creating image\n");
     return (1);
   }
-  frames = NULL;
+  frames = malloc(sizeof(mlx_frames_t));
   init_frames(frames);
   frames->num_frames = 15;
   frames->sizes.frame_height = 24;
