@@ -1,40 +1,18 @@
-# cub3D
 
+# Raycaster Game Engine
 
+This is a Doom-like raycaster game engine, coded in C as a team work with  @552020. This project is designed to recreate the classic 3D effect found in early first-person shooters using raycasting technology. This engine offers a glimpse into the workings of a pioneering technology in the gaming industry.
 
-Check this out:
-https://www.youtube.com/watch?v=X6AR2RMB5tE&ab_channel=ThePrimeagen
+________________________________________________________________________________________________________________________________________
+# Collaboration Unlocked
 
+**Many Readmes document the implementation of the code and the math behind, therefore we thought that if something has to be shared, it is comething else : This Readme document our workflow findings for team project and organizing your work. If you are starting out with git and github as a tool to work in a team, this is for you.**
 
-from ccatano: 
-- fabs, stand for float abs, is a function we need from the math library
-- parsing is difficult, yet similar to so_long
-- 
+https://github.com/lmangall/cub3D/assets/107299611/7a620d24-8317-4a4f-865b-7d5cbda8c5e0
 
+https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
 
-ressources:
-
-https://pikuma.com/courses/raycasting-engine-tutorial-algorithm-javascript
-https://lodev.org/cgtutor/raycasting.html
-
-Youtube raycasting video
-https://www.youtube.com/watch?v=NbSee-XM7WA&ab_channel=javidx9
-
-
-Library:
-MLX 42 - https://github.com/codam-coding-college/MLX42
-https://github.com/codam-coding-college/MLX42/wiki
-
-.vscode/
-
-
-categories for the future readme:
-- maths and algo
-- learning others than directly related to the project (makefile, issue trackin...g)
-- 
-
-
-
+________________________________________________________________________________________________________________________________________
 
 ## Learning Focus
 
@@ -49,14 +27,6 @@ This project is not just about the end product; it's also a journey of learning 
 - **Branching Model:** Understand the importance of branching in collaborative development and choose an appropriate branching strategy.
 - **Feature Branches:** Develop features and enhancements in isolated branches before merging into the main codebase.
 
-https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
-
-________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
-
-________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
-
 
 # Collaboration Guide using Git and GitHub                  => add about _rebasing_ and explanation  on local/remote branches + command to set remote
 
@@ -65,7 +35,7 @@ ________________________________________________________________________________
 This guide outlines best practices for collaborative development using Git and GitHub. Effective collaboration involves clear communication, issue tracking, and a streamlined pull request (PR) process.
 
 <details>
-  <summary><strong>Issue Creation:</strong> Open an issue for a new task or bug.</summary>
+  <summary><strong>1. Issue Creation:</strong> Open an issue for a new task or bug.</summary>
   <br/>
   Opening Issues<br/>
   Frequent Issue Creation: Open an issue for each small feature, bug, or task. This helps in better tracking (collaborators know what is going on) and organization.<br/>
@@ -76,39 +46,41 @@ This guide outlines best practices for collaborative development using Git and G
 </details>
 <br/>
 <details>
-  <summary><strong>Branching:</strong> Create a new branch for the issue.</summary>
+  <summary><strong>2. Branching:</strong> Create a new branch for the issue.</summary>
   <br/>
-  Content
+  - We found practical to create the branch right from the issue tab in Github
 </details>
 <br/>
 <details>
-  <summary><strong>Commits:</strong> Make frequent, small commits (you can reference the issue number in the commit message)</summary>
+  <summary><strong>Commits:</strong>3. Make frequent, small commits (you can reference the issue number in the commit message)</summary>
   <br/>
-  Content
+  - following the CI/CD principles
+  - the code is easier to debug, there are less conflicts
+  - it is a real collaboration, not just splitting the work, as each person is aware of update in its teammate code
 </details>
 <br/>
 <details>
-  <summary><strong>Pull Request:</strong> Open a pull request once the work is complete.</summary>
+  <summary><strong>4. Pull Request:</strong> Open a pull request once the work is complete.</summary>
   <br/>
-  Pull Requests (PRs)<br/>
+  A PR is when a developer pushes changes to a branch in a fork of a repository and then submits a request to the original repository to merge those changes to main
   PR Opening: Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push")<br/>
-  PR Review: Collaborators review each other's code by commenting on the PR.<br/>
+  PR Review: Collaborators can comment on the PR.<br/>
 </details>
 <br/>
 <details>
-  <summary><strong>Review:</strong> Collaborators review the code, add comments, and suggest changes if necessary.</summary>
+  <summary><strong>Review:</strong>5. Collaborators review the code, add comments, and suggest changes if necessary.</summary>
   <br/>
   Content
 </details>
 <br/>
 <details>
-  <summary><strong>Approval:</strong> Once approved, the PR is merged into `main`,</summary>
+  <summary><strong>Approval:</strong>6. Once approved, the PR is merged into `main`,</summary>
   <br/>
   Content
 </details>
 <br/>
 <details>
-  <summary>the issue is closed and the branch deleted</summary>
+  <summary>7. the issue is closed and the branch deleted</summary>
   <br/>
   Protection of Main Branch<br/>
   Main Protection: While we've decided not to protect the main branch, it is crucial to follow the rule of never pushing directly to it.<br/>
