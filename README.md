@@ -85,13 +85,13 @@ GitHub provides an "Issues" tab for effective project management. Here's how to 
 
 ## Protection of Main Branch
 
-- **Main Protection:** While we've decided not to protect the `main` branch, it is crucial to follow the rule of never pushing directly to it.
+- **Main Protection:** The `main` branch is protected. Working in a team of 2 each push to main or pulling merge to main has to be reviewed by teammate.
 
 ### Example Workflow
 
 1. **Issue Creation:** Open an issue for a new task or bug.
-2. **Branching:** Create a new branch for the issue - e.g., `feature/add-new-feature`.
-3. **Commits:** Make frequent, small commits and reference the issue number in the commit message.
+2. **Branching:** Create a new branch for the issue.
+3. **Commits:** Make frequent, small commits (you can reference the issue number in the commit message)
 4. **Pull Request:** Open a pull request once the work is complete.
 5. **Review:** Collaborators review the code, add comments, and suggest changes if necessary.
 6. **Approval:** Once approved, the PR is merged into `main`,
@@ -104,26 +104,30 @@ Remember, effective communication is key to successful collaboration. Happy codi
 | Command                               | Description                                          |
 |---------------------------------------|------------------------------------------------------|
 | `git branch`                          | List, create, or delete branches.                    |
+| `git log`                             | Display commit logs.                                 |
 | `git fetch --all`                     | Fetch all branches from the remote repository.       |
 | `git checkout my_branch`               | Switch to the specified branch.                      |
 | `git stash`                           | Save changes that are not ready to be committed.    |
 | `git stash pop`                       | Apply stashed changes and remove them from the stash.|
-| `git log`                             | Display commit logs.                                 |
+
+
+| git log  additional options           | Description                                          |
+|---------------------------------------|------------------------------------------------------|
 | `git log --oneline`                   | Display abbreviated commit hashes and messages.      |
 | `git log --graph`                     | Display a text-based graph of the commit history.   |
 | `git log -n 5`                        | Show the last 5 commits.                             |
 | `git log -p`                          | Show changes introduced in each commit.              |
 
-Note: Make sure to replace `my_branch` with the actual branch name you want to checkout. These commands are just a starting point, and there are many more Git commands and options available for various scenarios. Feel free to explore Git documentation for more details on each command.
-
 
 
 ________________________________________________________________________________________________________________________________________
 ________________________________________________________________________________________________________________________________________
 
-# Generating a Valgrind Suppression File   => add this link https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
+# Generating a Valgrind Suppression File
 
 A Valgrind suppression file is a mechanism to filter out known and acceptable memory leaks or errors during the execution of a program. This guide outlines the process of creating a Valgrind suppression file, including both manual and automatic methods.
+[Valgrind Suppression File Howto](https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto)
+
 
 ## Manual Suppression File Creation
 
