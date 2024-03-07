@@ -64,38 +64,56 @@ ________________________________________________________________________________
 
 This guide outlines best practices for collaborative development using Git and GitHub. Effective collaboration involves clear communication, issue tracking, and a streamlined pull request (PR) process.
 
-## Issues on GitHub
+<details>
+  <summary><strong>Issue Creation:</strong> Open an issue for a new task or bug.</summary>
+  <br/>
+  Opening Issues<br/>
+  Frequent Issue Creation: Open an issue for each small feature, bug, or task. This helps in better tracking (collaborators know what is going on) and organization.<br/>
+  Tags: Use relevant tags to categorize and label issues (e.g., bug, feature, documentation, etc.).<br/>
+  Assignees: Assign issues to team members responsible for their resolution.<br/>
+  Conversation: Use the conversation part of the issue to explain a problem, ask questions and stay up to date you can @people and #issue or #commit or #pullrequest<br/>
+  Branch Naming: We found practical to create the branch right from the issue tab in Github<br/>
+</details>
+<br/>
+<details>
+  <summary><strong>Branching:</strong> Create a new branch for the issue.</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary><strong>Commits:</strong> Make frequent, small commits (you can reference the issue number in the commit message)</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary><strong>Pull Request:</strong> Open a pull request once the work is complete.</summary>
+  <br/>
+  Pull Requests (PRs)<br/>
+  PR Opening: Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push")<br/>
+  PR Review: Collaborators review each other's code by commenting on the PR.<br/>
+</details>
+<br/>
+<details>
+  <summary><strong>Review:</strong> Collaborators review the code, add comments, and suggest changes if necessary.</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary><strong>Approval:</strong> Once approved, the PR is merged into `main`,</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary>the issue is closed and the branch deleted</summary>
+  <br/>
+  Protection of Main Branch<br/>
+  Main Protection: While we've decided not to protect the main branch, it is crucial to follow the rule of never pushing directly to it.<br/>
+</details>
 
-GitHub provides an "Issues" tab for effective project management. Here's how to make the most of it:
-
-### Opening Issues
-
-- **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. 
-      This helps in better tracking (collaborators know what is going on) and organization.
-- **Tags:** Use relevant tags to categorize and label issues (e.g., `bug`, `feature`, `documentation`, etc.).
-- **Assignees:** Assign issues to team members responsible for their resolution.
-- **Conversation:** Use the conversation part of the issue to explain a problem, ask questions and stay up to date
-      you can @people and #issue or #commit or #pullrequest 
-- **Branch Naming:** We found practical to create the branch right from the issue tab in Github
-
-## Pull Requests (PRs)
-
-- **PR Opening:** Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push"
-- **PR Review:** Collaborators review each other's code by commenting on the PR.
-
-## Protection of Main Branch
-
-- **Main Protection:** While we've decided not to protect the `main` branch, it is crucial to follow the rule of never pushing directly to it.
-
-### Example Workflow
-
-1. **Issue Creation:** Open an issue for a new task or bug.
-2. **Branching:** Create a new branch for the issue - e.g., `feature/add-new-feature`.
-3. **Commits:** Make frequent, small commits and reference the issue number in the commit message.
-4. **Pull Request:** Open a pull request once the work is complete.
-5. **Review:** Collaborators review the code, add comments, and suggest changes if necessary.
-6. **Approval:** Once approved, the PR is merged into `main`,
-7. the issue is closed and the branch deleted
 
 Remember, effective communication is key to successful collaboration. Happy coding!
 
