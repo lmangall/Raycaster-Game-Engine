@@ -10,8 +10,6 @@ ________________________________________________________________________________
 
 https://github.com/lmangall/cub3D/assets/107299611/7a620d24-8317-4a4f-865b-7d5cbda8c5e0
 
-https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
-
 ________________________________________________________________________________________________________________________________________
 
 ## Learning Focus
@@ -28,7 +26,22 @@ This project is not just about the end product; it's also a journey of learning 
 - **Feature Branches:** Develop features and enhancements in isolated branches before merging into the main codebase.
 
 
-# Collaboration Guide using Git and GitHub                  => add about _rebasing_ and explanation  on local/remote branches + command to set remote
+## Git core: Local and remote branches:
+
+Git branches enable developers to work on features or fixes in isolation. 
+
+- **Local branches** are branches in your local Git repository. Work here before you're ready to share or merge changes.
+    - Create a new branch: `git branch <branch-name>`
+    - Switch to a branch: `git checkout <branch-name>`
+
+- **Remote branches** are references to the state of branches in a remote repository. They track the shared work.
+    - Track a remote branch: `git checkout --track origin/<branch-name>`
+    - Push local branch to remote: `git push -u origin <branch-name>`
+
+Local changes don't affect remote branches until pushed, facilitating isolated development and review.
+
+*Tracking a remote means your local branch will keep up with changes in the remote repository, automatically syncing your work with the latest updates from others. This is crucial for collaboration and ensuring your changes are compatible with the project's current state.*
+
 
 ## Overview
 
@@ -91,7 +104,7 @@ Remember, effective communication is key to successful collaboration. Happy codi
 
 
 
-| Command                               | Description                                          |
+| basic git commands                    | Description                                          |
 |---------------------------------------|------------------------------------------------------|
 | `git branch`                          | List, create, or delete branches.                    |
 | `git fetch --all`                     | Fetch all branches from the remote repository.       |
@@ -99,19 +112,21 @@ Remember, effective communication is key to successful collaboration. Happy codi
 | `git stash`                           | Save changes that are not ready to be committed.    |
 | `git stash pop`                       | Apply stashed changes and remove them from the stash.|
 | `git log`                             | Display commit logs.                                 |
+
+
+| Additionnal git log commands          | Description                                          |
+|---------------------------------------|------------------------------------------------------|
 | `git log --oneline`                   | Display abbreviated commit hashes and messages.      |
 | `git log --graph`                     | Display a text-based graph of the commit history.   |
 | `git log -n 5`                        | Show the last 5 commits.                             |
 | `git log -p`                          | Show changes introduced in each commit.              |
 
-Note: Make sure to replace `my_branch` with the actual branch name you want to checkout. These commands are just a starting point, and there are many more Git commands and options available for various scenarios. Feel free to explore Git documentation for more details on each command.
 
 
 
 ________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
 
-# Generating a Valgrind Suppression File   => add this link https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
+# Generating a Valgrind Suppression File 
 
 A Valgrind suppression file is a mechanism to filter out known and acceptable memory leaks or errors during the execution of a program. This guide outlines the process of creating a Valgrind suppression file, including both manual and automatic methods.
 
