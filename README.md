@@ -1,40 +1,16 @@
-# cub3D
 
+# Raycaster Game Engine
 
+This is a Doom-like raycaster game engine, coded in C as a team work with  @552020. This project is designed to recreate the classic 3D effect found in early first-person shooters using raycasting technology. This engine offers a glimpse into the workings of a pioneering technology in the gaming industry.
 
-Check this out:
-https://www.youtube.com/watch?v=X6AR2RMB5tE&ab_channel=ThePrimeagen
+________________________________________________________________________________________________________________________________________
+# Collaboration Unlocked
 
+**Many Readmes document the implementation of the code and the math behind, therefore we thought that if something has to be shared, it is comething else : This Readme document our workflow findings for team project and organizing your work. If you are starting out with git and github as a tool to work in a team, this is for you.**
 
-from ccatano: 
-- fabs, stand for float abs, is a function we need from the math library
-- parsing is difficult, yet similar to so_long
-- 
+https://github.com/lmangall/cub3D/assets/107299611/7a620d24-8317-4a4f-865b-7d5cbda8c5e0
 
-
-ressources:
-
-https://pikuma.com/courses/raycasting-engine-tutorial-algorithm-javascript
-https://lodev.org/cgtutor/raycasting.html
-
-Youtube raycasting video
-https://www.youtube.com/watch?v=NbSee-XM7WA&ab_channel=javidx9
-
-
-Library:
-MLX 42 - https://github.com/codam-coding-college/MLX42
-https://github.com/codam-coding-college/MLX42/wiki
-
-.vscode/
-
-
-categories for the future readme:
-- maths and algo
-- learning others than directly related to the project (makefile, issue trackin...g)
-- 
-
-
-
+________________________________________________________________________________________________________________________________________
 
 ## Learning Focus
 
@@ -49,59 +25,86 @@ This project is not just about the end product; it's also a journey of learning 
 - **Branching Model:** Understand the importance of branching in collaborative development and choose an appropriate branching strategy.
 - **Feature Branches:** Develop features and enhancements in isolated branches before merging into the main codebase.
 
-https://github.com/lmangall/cub3D/assets/107299611/f83001c3-fcf2-4a82-b670-e54634979c40
 
-________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
+## Git core: Local and remote branches:
 
-________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
+Git branches enable developers to work on features or fixes in isolation. 
 
+- **Local branches** are branches in your local Git repository. Work here before you're ready to share or merge changes.
+    - Create a new branch: `git branch <branch-name>`
+    - Switch to a branch: `git checkout <branch-name>`
 
-# Collaboration Guide using Git and GitHub                  => add about _rebasing_ and explanation  on local/remote branches + command to set remote
+- **Remote branches** are references to the state of branches in a remote repository. They track the shared work.
+    - Track a remote branch: `git checkout --track origin/<branch-name>`
+    - Push local branch to remote: `git push -u origin <branch-name>`
+
+Local changes don't affect remote branches until pushed, facilitating isolated development and review.
+
+*Tracking a remote means your local branch will keep up with changes in the remote repository, automatically syncing your work with the latest updates from others. This is crucial for collaboration and ensuring your changes are compatible with the project's current state.*
+
 
 ## Overview
 
 This guide outlines best practices for collaborative development using Git and GitHub. Effective collaboration involves clear communication, issue tracking, and a streamlined pull request (PR) process.
 
-## Issues on GitHub
+<details>
+  <summary><strong>1. Issue Creation:</strong> Open an issue for a new task or bug.</summary>
+  <br/>
+  Opening Issues<br/>
+  Frequent Issue Creation: Open an issue for each small feature, bug, or task. This helps in better tracking (collaborators know what is going on) and organization.<br/>
+  Tags: Use relevant tags to categorize and label issues (e.g., bug, feature, documentation, etc.).<br/>
+  Assignees: Assign issues to team members responsible for their resolution.<br/>
+  Conversation: Use the conversation part of the issue to explain a problem, ask questions and stay up to date you can @people and #issue or #commit or #pullrequest<br/>
+  Branch Naming: We found practical to create the branch right from the issue tab in Github<br/>
+</details>
+<br/>
+<details>
+  <summary><strong>2. Branching:</strong> Create a new branch for the issue.</summary>
+  <br/>
+  - We found practical to create the branch right from the issue tab in Github
+</details>
+<br/>
+<details>
+  <summary><strong>Commits:</strong>3. Make frequent, small commits (you can reference the issue number in the commit message)</summary>
+  <br/>
+  - following the CI/CD principles
+  - the code is easier to debug, there are less conflicts
+  - it is a real collaboration, not just splitting the work, as each person is aware of update in its teammate code
+</details>
+<br/>
+<details>
+  <summary><strong>4. Pull Request:</strong> Open a pull request once the work is complete.</summary>
+  <br/>
+  A PR is when a developer pushes changes to a branch in a fork of a repository and then submits a request to the original repository to merge those changes to main
+  PR Opening: Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push")<br/>
+  PR Review: Collaborators can comment on the PR.<br/>
+</details>
+<br/>
+<details>
+  <summary><strong>Review:</strong>5. Collaborators review the code, add comments, and suggest changes if necessary.</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary><strong>Approval:</strong>6. Once approved, the PR is merged into `main`,</summary>
+  <br/>
+  Content
+</details>
+<br/>
+<details>
+  <summary>7. the issue is closed and the branch deleted</summary>
+  <br/>
+  Protection of Main Branch<br/>
+  Main Protection: While we've decided not to protect the main branch, it is crucial to follow the rule of never pushing directly to it.<br/>
+</details>
 
-GitHub provides an "Issues" tab for effective project management. Here's how to make the most of it:
-
-### Opening Issues
-
-- **Frequent Issue Creation:** Open an issue for each small feature, bug, or task. 
-      This helps in better tracking (collaborators know what is going on) and organization.
-- **Tags:** Use relevant tags to categorize and label issues (e.g., `bug`, `feature`, `documentation`, etc.).
-- **Assignees:** Assign issues to team members responsible for their resolution.
-- **Conversation:** Use the conversation part of the issue to explain a problem, ask questions and stay up to date
-      you can @people and #issue or #commit or #pullrequest 
-- **Branch Naming:** We found practical to create the branch right from the issue tab in Github
-
-## Pull Requests (PRs)
-
-- **PR Opening:** Open a pull request once changes are ready for review. (the main repo page on Github will offer you the option after a "fresh push"
-- **PR Review:** Collaborators review each other's code by commenting on the PR.
-
-## Protection of Main Branch
-
-- **Main Protection:** While we've decided not to protect the `main` branch, it is crucial to follow the rule of never pushing directly to it.
-
-### Example Workflow
-
-1. **Issue Creation:** Open an issue for a new task or bug.
-2. **Branching:** Create a new branch for the issue - e.g., `feature/add-new-feature`.
-3. **Commits:** Make frequent, small commits and reference the issue number in the commit message.
-4. **Pull Request:** Open a pull request once the work is complete.
-5. **Review:** Collaborators review the code, add comments, and suggest changes if necessary.
-6. **Approval:** Once approved, the PR is merged into `main`,
-7. the issue is closed and the branch deleted
 
 Remember, effective communication is key to successful collaboration. Happy coding!
 
 
 
-| Command                               | Description                                          |
+| basic git commands                    | Description                                          |
 |---------------------------------------|------------------------------------------------------|
 | `git branch`                          | List, create, or delete branches.                    |
 | `git fetch --all`                     | Fetch all branches from the remote repository.       |
@@ -109,19 +112,21 @@ Remember, effective communication is key to successful collaboration. Happy codi
 | `git stash`                           | Save changes that are not ready to be committed.    |
 | `git stash pop`                       | Apply stashed changes and remove them from the stash.|
 | `git log`                             | Display commit logs.                                 |
+
+
+| Additionnal git log commands          | Description                                          |
+|---------------------------------------|------------------------------------------------------|
 | `git log --oneline`                   | Display abbreviated commit hashes and messages.      |
 | `git log --graph`                     | Display a text-based graph of the commit history.   |
 | `git log -n 5`                        | Show the last 5 commits.                             |
 | `git log -p`                          | Show changes introduced in each commit.              |
 
-Note: Make sure to replace `my_branch` with the actual branch name you want to checkout. These commands are just a starting point, and there are many more Git commands and options available for various scenarios. Feel free to explore Git documentation for more details on each command.
 
 
 
 ________________________________________________________________________________________________________________________________________
-________________________________________________________________________________________________________________________________________
 
-# Generating a Valgrind Suppression File   => add this link https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
+# Generating a Valgrind Suppression File 
 
 A Valgrind suppression file is a mechanism to filter out known and acceptable memory leaks or errors during the execution of a program. This guide outlines the process of creating a Valgrind suppression file, including both manual and automatic methods.
 
