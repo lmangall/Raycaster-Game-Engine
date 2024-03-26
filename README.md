@@ -104,14 +104,17 @@ Remember, effective communication is key to successful collaboration. Happy codi
 
 
 
-| basic git commands                    | Description                                          |
-|---------------------------------------|------------------------------------------------------|
-| `git branch`                          | List, create, or delete branches.                    |
-| `git fetch --all`                     | Fetch all branches from the remote repository.       |
-| `git checkout my_branch`               | Switch to the specified branch.                      |
-| `git stash`                           | Save changes that are not ready to be committed.    |
-| `git stash pop`                       | Apply stashed changes and remove them from the stash.|
-| `git log`                             | Display commit logs.                                 |
+| basic git commands                    | Description                                              |
+|---------------------------------------|----------------------------------------------------------|
+| `git branch`                          | List, create, or delete branches.                        |
+| `git fetch --all`                     | Fetch all branches from the remote repository.           |
+| `git checkout my_branch`              | Switch to the specified branch.                          |
+| `git stash`                           | Save changes that are not ready to be committed.         |
+| `git stash pop`                       | Apply stashed changes and remove them from the stash.    |
+| `git log`                             | Display commit logs.                                     |
+| `git branch <branch-name>`            | Create a new branch.                                     |
+| `git push --set-upstream origin <branch-name>` | Push the branch to the remote repository and set it to track the remote branch. |
+
 
 
 | Additionnal git log commands          | Description                                          |
